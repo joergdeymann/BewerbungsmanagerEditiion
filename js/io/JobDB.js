@@ -12,7 +12,9 @@ export class JobDB {
     // anderen Store verwendet wurde. So bleibt der Store für jede Operation zuverlässig verfügbar.
     async ensureStore() {
         await this.ready;
-        await LocalDB.use(JobDB.storeName);
+        if (LocalDB.storeName !== JobDB.storeName) {
+            await LocalDB.use(JobDB.storeName);
+        }    
     }
 
     async save(jobModel) {
