@@ -8,6 +8,10 @@ Diese Datei beschreibt den aktuell vorgesehenen Verzeichnisbaum.
 
 - `js/API/` – Zugriff auf Datenhaltung und externe Schnittstellen.
   - `LocalDB.js` – generischer Zugriff auf die IndexedDB (Object Stores, CRUD).
+- `js/models/` – reine Datenmodelle ohne UI- oder DOM-Logik.
+  - `JobModel.js`, `JobDetailModel.js`, `CompanyModel.js`, `ContactModel.js`,
+    `AddressModel.js`, `StreetModel.js`, `CityModel.js`,
+    `QualificationModel.js`, `ReferenceModel.js`
 
 ## Regeln
 
