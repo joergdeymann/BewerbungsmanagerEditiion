@@ -8,7 +8,7 @@ Diese Datei beschreibt den aktuell vorgesehenen Verzeichnisbaum.
 
 - `js/API/` – Zugriff auf Datenhaltung und externe Schnittstellen.
   - `LocalDB.js` – generischer Zugriff auf die IndexedDB (Object Stores, CRUD).
-  - `JobDB.js` – speichert und lädt `AppModel`-Daten über `LocalDB` im Store `Bewerbungsmanager`.
+  - `AppDB.js` – speichert und lädt `AppModel`-Daten über `LocalDB` im Store `Bewerbungsmanager`.
 - `js/models/` – reine Datenmodelle ohne UI- oder DOM-Logik.
   - `AppModel.js`, `JobModel.js`, `CompanyModel.js`, `ContactModel.js`,
     `AddressModel.js`, `StreetModel.js`, `CityModel.js`,

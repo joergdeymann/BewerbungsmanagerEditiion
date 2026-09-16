@@ -1,19 +1,19 @@
 import { LocalDB } from "./LocalDB.js";
 import { AppModel } from "../models/AppModel.js";
 
-export class JobDB {
+export class AppDB {
     static storeName = "Bewerbungsmanager";
 
     constructor() {
-        this.ready = LocalDB.use(JobDB.storeName);
+        this.ready = LocalDB.use(AppDB.storeName);
     }
 
     // Wählt den Object Store erneut aus, falls LocalDB zwischenzeitlich für einen
     // anderen Store verwendet wurde. So bleibt der Store für jede Operation zuverlässig verfügbar.
     async ensureStore() {
         await this.ready;
-        if (LocalDB.storeName !== JobDB.storeName) {
-            await LocalDB.use(JobDB.storeName);
+        if (LocalDB.storeName !== AppDB.storeName) {
+            await LocalDB.use(AppDB.storeName);
         }
     }
 
