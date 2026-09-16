@@ -39,6 +39,9 @@
 - `.gitignore` darf nur geändert werden, wenn dies ausdrücklich angefordert wurde.
 - Ein erfolgreicher Push ist Voraussetzung für alle nachfolgenden Verarbeitungsschritte.
 - Wenn der Push nicht erfolgreich ausgeführt wurde, wird die Verarbeitung an dieser Stelle beendet.
+- Die KI pusht nicht selbst. Nach der Übergabe geänderter oder neuer Dateien wird die Verarbeitung angehalten, bis der Push bestätigt wurde.
+- Erst nach der Bestätigung des Pushs wird der nächste Schritt begonnen.
+- Vor dem nächsten Schritt wird der aktuelle Stand aus dem Repository erneut gelesen.
 
 ## Schreibfehler
 
