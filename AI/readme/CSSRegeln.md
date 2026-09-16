@@ -1,0 +1,22 @@
+# CSS-Regeln
+
+- `global.css` enthält gängige, übergreifend verwendete Formatierungen, z. B. `mt-8`.
+- `root.css` enthält Formatierungen für `body` sowie globale CSS-Variablen.
+- Häufig verwendete Farben und Schattierungen werden als CSS-Variablen definiert.
+- Buttons erhalten eine eigene CSS-Datei.
+- Eingabefelder erhalten eine eigene CSS-Datei.
+- Standard-Sektionen erhalten eine eigene CSS-Datei.
+- Header und Footer erhalten eine eigene CSS-Datei.
+- Formatierte, gruppierte Bereiche erhalten eine eigene CSS-Datei.
+- Formatierte, gruppierte Bereiche haben Vorrang vor der allgemeinen Aufteilung. Gehören mehrere Elemente zu einem solchen Bereich, werden sie gemeinsam in einer Datei definiert.
+- Beispiel für einen speziellen Bereich:
+  - `.spezial header`
+  - `.spezial section`
+  - `.spezial article`
+  - `.spezial footer`
+- Animationen werden in einer eigenen CSS-Datei definiert.
+- `@media`-Regeln werden nach ihrem Anwendungsbereich getrennt:
+  - `screen` (normale Bildschirmdarstellung)
+  - `print` (Druckdarstellung)
+  - `mobile` (kleine Breiten für Handys)
+- `@media`-Regeln werden jeweils in der dafür vorgesehenen CSS-Datei definiert und nicht über andere CSS-Dateien verteilt.

@@ -1,0 +1,94 @@
+{
+    "application": {
+        "meta": {
+            "id": "",
+            "status": "",
+            "createdAt": "",
+            "updatedAt": ""
+        },
+        "sources": [
+            {
+                "id": 0,
+                "name": "",
+                "capturedAt": "",
+                "title": "",
+                "sourceCode": ""
+            }
+        ],
+        "references": {
+            "importedUrls": [
+                {
+                    "name": "",
+                    "url": ""
+                }
+            ]
+        },
+        "job": {
+            "companyId": 0,
+            "contactId": 0,
+            "title": "",
+            "referenceNumber": "",
+            "employmentType": "",
+            "salary": "",
+            "vacationPay": "",
+            "christmasPay": "",
+            "workModel": "",
+            "tasks": [],
+            "tags": []
+        },
+        "companies": [
+            {
+                "id": 0,
+                "name": "",
+                "legalForm": "",
+                "relationship": "Hauptsitz",
+                "address": {
+                    "street": "",
+                    "houseNumber": "",
+                    "zipCountry": "",
+                    "zip": "",
+                    "city": "",
+                    "country": "",
+                    "postBox": ""
+                },
+                "website": "",
+                "verifiedAt": "",
+                "img": "",
+                "industry": "",
+                "size": "",
+                "founded": "",
+                "description": "",
+                "specialties": [],
+                "foundImages": []
+            }
+        ],
+        "contacts": [
+            {
+                "id": 0,
+                "role": "",
+                "name": "",
+                "img": "",
+                "phone": "",
+                "email": ""
+            }
+        ],
+        "qualifications": {
+            "required": {
+                "tags": [],
+                "content": []
+            },
+            "preferred": {
+                "tags": [],
+                "content": []
+            },
+            "personal": {
+                "tags": [],
+                "content": []
+            }
+        },
+        "benefits": {
+            "tags": [],
+            "content": []
+        }
+    }
+}
