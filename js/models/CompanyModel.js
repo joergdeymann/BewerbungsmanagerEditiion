@@ -14,8 +14,7 @@ export class CompanyModel {
         this.verifiedAt = "";
         this.description = "";
         this.specialties = [];
-        this.img = "";
-        this.foundImages = [];
+        this.images = [];
     }
 
     get data() {
@@ -27,13 +26,12 @@ export class CompanyModel {
             address: this.address.data,
             website: this.website,
             verifiedAt: this.verifiedAt,
-            img: this.img,
             industry: this.industry,
             size: this.size,
             founded: this.founded,
             description: this.description,
             specialties: this.specialties,
-            foundImages: this.foundImages
+            images: this.images
         };
     }
 
@@ -45,13 +43,12 @@ export class CompanyModel {
         this.relationship = raw.relationship ?? this.relationship;
         this.website = raw.website ?? this.website;
         this.verifiedAt = raw.verifiedAt ?? this.verifiedAt;
-        this.img = raw.img ?? this.img;
         this.industry = raw.industry ?? this.industry;
         this.size = raw.size ?? this.size;
         this.founded = raw.founded ?? this.founded;
         this.description = raw.description ?? this.description;
         this.specialties = raw.specialties ?? this.specialties;
-        this.foundImages = raw.foundImages ?? this.foundImages;
+        this.images = raw.images ?? this.images;
         this.address.data = raw.address;
     }
 

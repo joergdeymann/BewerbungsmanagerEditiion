@@ -14,7 +14,7 @@ Alle Models stellen ihre Daten über `get data` / `set data` bereit. Die flache 
   `referenceNumber`, `tasks`, `tags`.
 - `CompanyModel` – Firmendaten: `id`, `name`, `legalForm`, `relationship`, `industry`,
   `size`, `founded`, `website`, `address`, `verifiedAt`, `description`, `specialties`,
-  `img`, `foundImages`. `relationship` unterscheidet Hauptsitz, Filiale und Arbeitsort.
+  `images`. `relationship` unterscheidet Hauptsitz, Filiale und Arbeitsort.
 - `ContactModel` – Ansprechpartner: `name`, `email`, `phone`.
 - `AddressModel` – Anschrift aus `StreetModel`, `CityModel` und `postBox`.
   `lines(company, contact)` setzt die vollständige Postanschrift zusammen und holt
@@ -24,6 +24,8 @@ Alle Models stellen ihre Daten über `get data` / `set data` bereit. Die flache 
 - `QualificationModel` – drei Bereiche `required`, `preferred`, `personal`,
   jeweils mit `tags` und `content`.
 - `ReferenceModel` – Quelle einer Erfassung: `id`, `name`, `url`, `capturedAt`, `content`.
+- `BenefitsModel` – Benefits als `tags` + `content`, gleiches Format wie ein Bereich
+  von `QualificationModel`.
 
 ## Beziehungen
 
