@@ -1,38 +1,18 @@
 {
     "application": {
-        "meta": {
-            "id": "",
-            "status": "",
-            "createdAt": "",
-            "updatedAt": ""
-        },
-        "sources": [
-            {
-                "id": 0,
-                "name": "",
-                "capturedAt": "",
-                "title": "",
-                "sourceCode": ""
-            }
-        ],
-        "references": {
-            "importedUrls": [
-                {
-                    "name": "",
-                    "url": ""
-                }
-            ]
-        },
+        "id": 0,
+        "createDate": "",
         "job": {
             "companyId": 0,
             "contactId": 0,
             "title": "",
-            "referenceNumber": "",
+            "workLocation": "",
             "employmentType": "",
+            "workModel": "",
             "salary": "",
             "vacationPay": "",
             "christmasPay": "",
-            "workModel": "",
+            "referenceNumber": "",
             "tasks": [],
             "tags": []
         },
@@ -53,42 +33,40 @@
                 },
                 "website": "",
                 "verifiedAt": "",
-                "img": "",
                 "industry": "",
                 "size": "",
                 "founded": "",
                 "description": "",
                 "specialties": [],
-                "foundImages": []
+                "images": []
             }
         ],
         "contacts": [
             {
-                "id": 0,
-                "role": "",
                 "name": "",
-                "img": "",
-                "phone": "",
-                "email": ""
+                "email": "",
+                "phone": ""
             }
         ],
         "qualifications": {
-            "required": {
-                "tags": [],
-                "content": []
-            },
-            "preferred": {
-                "tags": [],
-                "content": []
-            },
-            "personal": {
-                "tags": [],
-                "content": []
-            }
+            "required": { "tags": [], "content": [] },
+            "preferred": { "tags": [], "content": [] },
+            "personal": { "tags": [], "content": [] }
         },
         "benefits": {
             "tags": [],
             "content": []
-        }
+        },
+        "references": [
+            {
+                "id": 0,
+                "name": "",
+                "url": "",
+                "capturedAt": "",
+                "content": ""
+            }
+        ],
+        "actionHistory": [],
+        "importedRawData": []
     }
 }

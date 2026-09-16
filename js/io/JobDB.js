@@ -14,7 +14,7 @@ export class JobDB {
         await this.ready;
         if (LocalDB.storeName !== JobDB.storeName) {
             await LocalDB.use(JobDB.storeName);
-        }    
+        }
     }
 
     async save(jobModel) {
