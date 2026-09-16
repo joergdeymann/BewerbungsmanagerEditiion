@@ -8,8 +8,8 @@ Alle Models stellen ihre Daten über `get data` / `set data` bereit. Die flache 
 ## Models
 
 - `JobModel` – Klammer um einen Datensatz: `id`, `createDate`, `status`, `updatedAt`,
-  `company`, `contacts`, `benefits`, `application`, `references`, `actionHistory`,
-  `importedRawData`.
+  `job`, `company`, `contacts`, `qualifications`, `benefits`, `application`,
+  `references`, `actionHistory`, `importedRawData`.
 - `JobDetailModel` – Stellendaten: `companyId`, `contactId`, `title`, `workLocation`,
   `employmentType`, `workModel`, `salary`, `vacationPay`, `christmasPay`,
   `referenceNumber`, `tasks`, `tags`.

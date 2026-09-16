@@ -3,6 +3,8 @@ import { ContactModel } from './ContactModel.js';
 import { BenefitsModel } from './BenefitsModel.js';
 import { ApplicationModel } from './ApplicationModel.js';
 import { ReferenceModel } from './ReferenceModel.js';
+import { JobDetailModel } from './JobDetailModel.js';
+import { QualificationModel } from './QualificationModel.js';
 
 export class JobModel {
     constructor() {
@@ -10,10 +12,12 @@ export class JobModel {
         this.createDate = new Date().toISOString();
         this.status = "";
         this.updatedAt = "";
+        this.job = new JobDetailModel();
         this.company = new CompanyModel();
         
         // Jetzt als leere Listen (Arrays) initialisiert
         this.contacts = []; 
+        this.qualifications = new QualificationModel();
         this.benefits = new BenefitsModel(); 
         this.application = new ApplicationModel();
         this.references = [];
@@ -28,8 +32,10 @@ export class JobModel {
             createDate: this.createDate,
             status: this.status,
             updatedAt: this.updatedAt,
+            job: this.job.data,
             company: this.company,
             contacts: this.contacts.map(contact => contact.data), 
+            qualifications: this.qualifications.data,
             benefits: this.benefits, // Angenommen, das ist ein einfaches Array oder wird analog behandelt
             application: this.application.data,
             references: this.references.map(reference => reference.data),
@@ -48,6 +54,14 @@ export class JobModel {
         this.company = raw.company ?? this.company;
         this.actionHistory = raw.actionHistory ?? this.actionHistory;
         this.importedRawData = raw.importedRawData ?? this.importedRawData;
+
+        if (raw.job) {
+            this.job.data = raw.job;
+        }
+
+        if (raw.qualifications) {
+            this.qualifications.data = raw.qualifications;
+        }
 
         if (raw.application) {
             this.application.data = raw.application;

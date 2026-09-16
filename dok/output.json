@@ -1,5 +1,5 @@
 {
-    "application": {
+    "app": {
         "id": 0,
         "createDate": "",
         "status": "",
@@ -52,15 +52,24 @@
             }
         ],
         "qualifications": {
-            "required": { "tags": [], "content": [] },
-            "preferred": { "tags": [], "content": [] },
-            "personal": { "tags": [], "content": [] }
+            "required": {
+                "tags": [],
+                "content": []
+            },
+            "preferred": {
+                "tags": [],
+                "content": []
+            },
+            "personal": {
+                "tags": [],
+                "content": []
+            }
         },
         "benefits": {
             "tags": [],
             "content": []
         },
-        "applicationDetails": {
+        "application": {
             "status": "",
             "appliedAt": "",
             "channel": "portal",
