@@ -1,5 +1,5 @@
 import {ContactModel} from './ContactModel.js';
-import {BenefitModel} from './BenefitModel.js';
+import {BenefitsModel} from './BenefitsModel.js';
 
 export class JobModel {
     constructor() {

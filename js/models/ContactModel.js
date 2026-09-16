@@ -1,5 +1,5 @@
 // ContactModel.js
-export default class ContactModel {
+export class ContactModel {
     constructor() {
         this.name = "";
         this.email = "";
