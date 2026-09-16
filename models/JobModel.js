@@ -1,112 +1,49 @@
-import { CompanyModel } from './CompanyModel.js';
-import { ContactModel } from './ContactModel.js';
-import { BenefitsModel } from './BenefitsModel.js';
-import { ApplicationModel } from './ApplicationModel.js';
-import { ReferenceModel } from './ReferenceModel.js';
-
 export class JobModel {
     constructor() {
-        this.id = 0;
-        this.createDate = new Date().toISOString();
-        this.status = "";
-        this.updatedAt = "";
-        this.company = new CompanyModel();
-        
-        // Jetzt als leere Listen (Arrays) initialisiert
-        this.contacts = []; 
-        this.benefits = new BenefitsModel(); 
-        this.application = new ApplicationModel();
-        this.references = [];
-        
-        this.actionHistory = [];
-        this.importedRawData = [];
+        this.companyId = 0;
+        this.contactId = 0;
+        this.title = "";
+        this.workLocation = "";
+        this.employmentType = "";
+        this.workModel = "";
+        this.salary = "";
+        this.vacationPay = "";
+        this.christmasPay = "";
+        this.referenceNumber = "";
+        this.tasks = [];
+        this.tags = [];
     }
 
     get data() {
         return {
-            id: this.id,
-            createDate: this.createDate,
-            status: this.status,
-            updatedAt: this.updatedAt,
-            company: this.company,
-            contacts: this.contacts.map(contact => contact.data), 
-            benefits: this.benefits, // Angenommen, das ist ein einfaches Array oder wird analog behandelt
-            application: this.application.data,
-            references: this.references.map(reference => reference.data),
-            actionHistory: this.actionHistory,
-            importedRawData: this.importedRawData
+            companyId: this.companyId,
+            contactId: this.contactId,
+            title: this.title,
+            workLocation: this.workLocation,
+            employmentType: this.employmentType,
+            workModel: this.workModel,
+            salary: this.salary,
+            vacationPay: this.vacationPay,
+            christmasPay: this.christmasPay,
+            referenceNumber: this.referenceNumber,
+            tasks: this.tasks,
+            tags: this.tags
         };
     }
 
     set data(raw) {
         if (!raw) return;
-
-        this.id = raw.id ?? this.id;
-        this.createDate = raw.createDate ?? this.createDate;
-        this.status = raw.status ?? this.status;
-        this.updatedAt = raw.updatedAt ?? this.updatedAt;
-        this.company = raw.company ?? this.company;
-        this.actionHistory = raw.actionHistory ?? this.actionHistory;
-        this.importedRawData = raw.importedRawData ?? this.importedRawData;
-
-        if (raw.application) {
-            this.application.data = raw.application;
-        }
-
-        // DIE ARRAYS IM SETTER ANPASSEN:
-        if (raw.contacts && Array.isArray(raw.contacts)) {
-            // Wir leeren das aktuelle Array, um Duplikate beim erneuten Laden zu verhindern
-            this.contacts = []; 
-            
-            // Jeden rohen Kontakteintrag in ein echtes Modell umwandeln
-            for (const rawContact of raw.contacts) {
-                const contactInstance = new ContactModel();
-                contactInstance.data = rawContact; // Nutzt den Setter von ContactModel
-                this.contacts.push(contactInstance); // Ab in die Liste!
-            };
-        }
-
-        if (raw.references && Array.isArray(raw.references)) {
-            this.references = [];
-
-            for (const rawReference of raw.references) {
-                const referenceInstance = new ReferenceModel();
-                referenceInstance.data = rawReference;
-                this.references.push(referenceInstance);
-            }
-        }
+        this.companyId = raw.companyId ?? this.companyId;
+        this.contactId = raw.contactId ?? this.contactId;
+        this.title = raw.title ?? this.title;
+        this.workLocation = raw.workLocation ?? this.workLocation;
+        this.employmentType = raw.employmentType ?? this.employmentType;
+        this.workModel = raw.workModel ?? this.workModel;
+        this.salary = raw.salary ?? this.salary;
+        this.vacationPay = raw.vacationPay ?? this.vacationPay;
+        this.christmasPay = raw.christmasPay ?? this.christmasPay;
+        this.referenceNumber = raw.referenceNumber ?? this.referenceNumber;
+        this.tasks = raw.tasks ?? this.tasks;
+        this.tags = raw.tags ?? this.tags;
     }
-
-	static fromData(raw) {
-        const model = new JobModel();
-        model.id = raw.id;
-        model.company = raw.company;
-        model.createDate = raw.createDate;
-        // ... hier alle Felder zuweisen
-        return model;
-    }
-	
-	// HILFSMETHODE: Erstellt und pusht einen neuen Kontakt direkt als Modell
-	addContact(contactOrName, email = "", phone = "") {
-        if (contactOrName instanceof ContactModel) {
-            this.contacts.push(contactOrName);
-            return contactOrName;
-        }
-
-        const newContact = new ContactModel();
-        newContact.name = contactOrName;
-        newContact.email = email;
-        newContact.phone = phone;
-        
-        this.contacts.push(newContact);
-        return newContact;
-    }
-
-    addContact(contact) {	
-		this.contacts.push(contact)
-	
-	}	
-	
-	
-	
 }

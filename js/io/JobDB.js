@@ -1,5 +1,5 @@
 import { LocalDB } from "./LocalDB.js";
-import { JobModel } from "../models/JobModel.js";
+import { AppModel } from "../models/AppModel.js";
 
 export class JobDB {
     static storeName = "Bewerbungsmanager";
@@ -17,9 +17,9 @@ export class JobDB {
         }
     }
 
-    async save(jobModel) {
+    async save(appModel) {
         await this.ensureStore();
-        return LocalDB.updateOrAdd(jobModel.data);
+        return LocalDB.updateOrAdd(appModel.data);
     }
 
     async get(id) {
@@ -27,8 +27,8 @@ export class JobDB {
         const raw = await LocalDB.get(id);
         if (!raw) return null;
 
-        const job = new JobModel();
-        job.data = raw;
-        return job;
+        const app = new AppModel();
+        app.data = raw;
+        return app;
     }
 }

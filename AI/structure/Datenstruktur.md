@@ -7,16 +7,18 @@ Alle Models stellen ihre Daten über `get data` / `set data` bereit. Die flache 
 
 ## Models
 
-- `JobModel` – Klammer um einen Datensatz: `id`, `createDate`, `status`, `updatedAt`,
-  `job`, `company`, `contacts`, `qualifications`, `benefits`, `application`,
-  `references`, `actionHistory`, `importedRawData`.
-- `JobDetailModel` – Stellendaten: `companyId`, `contactId`, `title`, `workLocation`,
+- `AppModel` – Klammer um einen Datensatz (vormals `JobModel`), entspricht dem
+  JSON-Wrapper `app`: `id`, `createDate`, `status`, `updatedAt`, `job`, `company`,
+  `contacts`, `qualifications`, `benefits`, `application`, `references`,
+  `actionHistory`, `importedRawData`.
+- `JobModel` – Stellendaten (vormals `JobDetailModel`, entspricht JSON-Schlüssel
+  `job`): `companyId`, `contactId`, `title`, `workLocation`,
   `employmentType`, `workModel`, `salary`, `vacationPay`, `christmasPay`,
   `referenceNumber`, `tasks`, `tags`.
 - `CompanyModel` – Firmendaten: `id`, `name`, `legalForm`, `relationship`, `industry`,
   `size`, `founded`, `website`, `address`, `verifiedAt`, `description`, `specialties`,
   `images`. `relationship` unterscheidet Hauptsitz, Filiale und Arbeitsort. Aktuell hält
-  `JobModel` genau eine `CompanyModel`-Instanz (keine Liste); eine Filialliste ist
+  `AppModel` genau eine `CompanyModel`-Instanz (keine Liste); eine Filialliste ist
   zurückgestellt.
 - `ContactModel` – Ansprechpartner: `id`, `role`, `name`, `img`, `email`, `phone`.
 - `AddressModel` – Anschrift aus `StreetModel`, `CityModel` und `postBox`.
@@ -27,7 +29,7 @@ Alle Models stellen ihre Daten über `get data` / `set data` bereit. Die flache 
 - `QualificationModel` – drei Bereiche `required`, `preferred`, `personal`,
   jeweils mit `tags` und `content`.
 - `ReferenceModel` – Quelle einer Erfassung: `id`, `name`, `url`, `capturedAt`, `content`.
-  Wird als Liste (`references`) direkt von `JobModel` geführt.
+  Wird als Liste (`references`) direkt von `AppModel` geführt.
 - `BenefitsModel` – Benefits als `tags` + `content`, gleiches Format wie ein Bereich
   von `QualificationModel`.
 - `ApplicationModel` – die eigentliche Bewerbung: `status`, `appliedAt`, `channel`
@@ -49,11 +51,11 @@ Alle Models stellen ihre Daten über `get data` / `set data` bereit. Die flache 
 ## Beziehungen
 
 ```text
-JobModel
+AppModel
+ ├─ JobModel
  ├─ CompanyModel ─ AddressModel ─ StreetModel
  │                              └ CityModel
  ├─ ContactModel (Liste)
- ├─ JobDetailModel
  ├─ QualificationModel
  ├─ BenefitsModel
  ├─ ReferenceModel (Liste)
