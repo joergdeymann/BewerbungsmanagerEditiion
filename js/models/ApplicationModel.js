@@ -1,4 +1,4 @@
-import { StatusHistoryModel } from "./StatusHistoryModel.js";
+import { ApplicationStatusHistoryModel } from "./ApplicationStatusHistoryModel.js";
 import { ApplicationHistoryModel } from "./ApplicationHistoryModel.js";
 
 export class ApplicationModel {
@@ -43,7 +43,7 @@ export class ApplicationModel {
         if (raw.statusHistory && Array.isArray(raw.statusHistory)) {
             this.statusHistory = [];
             for (const rawEntry of raw.statusHistory) {
-                const entry = new StatusHistoryModel();
+                const entry = new ApplicationStatusHistoryModel();
                 entry.data = rawEntry;
                 this.statusHistory.push(entry);
             }
@@ -60,7 +60,7 @@ export class ApplicationModel {
     }
 
     addStatus(status, reason = "") {
-        const entry = new StatusHistoryModel();
+        const entry = new ApplicationStatusHistoryModel();
         entry.date = new Date().toISOString();
         entry.status = status;
         entry.reason = reason;

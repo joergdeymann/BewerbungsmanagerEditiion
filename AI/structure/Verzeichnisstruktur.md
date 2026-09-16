@@ -13,7 +13,7 @@ Diese Datei beschreibt den aktuell vorgesehenen Verzeichnisbaum.
   - `AppModel.js`, `JobModel.js`, `CompanyModel.js`, `ContactModel.js`,
     `AddressModel.js`, `StreetModel.js`, `CityModel.js`,
     `QualificationModel.js`, `ReferenceModel.js`, `BenefitsModel.js`,
-    `ApplicationModel.js`, `StatusHistoryModel.js`, `ApplicationHistoryModel.js`,
+    `ApplicationModel.js`, `ApplicationStatusHistoryModel.js`, `ApplicationHistoryModel.js`,
     `ApplicationPortalModel.js`, `ApplicationEmailModel.js`,
     `ApplicationPhoneModel.js`, `ApplicationPersonalModel.js`
 

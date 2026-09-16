@@ -1,4 +1,4 @@
-export class StatusHistoryModel {
+export class ApplicationStatusHistoryModel {
     constructor() {
         this.date = "";
         this.status = "";

@@ -34,10 +34,10 @@ Alle Models stellen ihre Daten über `get data` / `set data` bereit. Die flache 
   von `QualificationModel`.
 - `ApplicationModel` – die eigentliche Bewerbung: `status`, `appliedAt`, `channel`
   (`portal` | `email` | `phone` | `personal`), `coverLetter`, `resume`,
-  `emailCoverLetter`, `signature`, `statusHistory` (Liste `StatusHistoryModel`),
-  `history` (Liste `ApplicationHistoryModel`). `addStatus(status, reason)` hängt einen
-  neuen Statuseintrag an und setzt `status`.
-- `StatusHistoryModel` – Statusänderung: `date`, `status`, `reason`.
+  `emailCoverLetter`, `signature`, `statusHistory` (Liste
+  `ApplicationStatusHistoryModel`), `history` (Liste `ApplicationHistoryModel`).
+  `addStatus(status, reason)` hängt einen neuen Statuseintrag an und setzt `status`.
+- `ApplicationStatusHistoryModel` – Statusänderung: `date`, `status`, `reason`.
 - `ApplicationHistoryModel` – ein Kontaktereignis: `channel` plus `entry`, das je nach
   `channel` eine Instanz von `ApplicationPortalModel`, `ApplicationEmailModel`,
   `ApplicationPhoneModel` oder `ApplicationPersonalModel` enthält.
@@ -60,7 +60,7 @@ AppModel
  ├─ BenefitsModel
  ├─ ReferenceModel (Liste)
  └─ ApplicationModel
-     ├─ StatusHistoryModel (Liste)
+     ├─ ApplicationStatusHistoryModel (Liste)
      └─ ApplicationHistoryModel (Liste)
          └─ entry: ApplicationPortalModel | ApplicationEmailModel |
                     ApplicationPhoneModel | ApplicationPersonalModel

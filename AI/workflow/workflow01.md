@@ -11,7 +11,7 @@
 ## Schritt „LocalDB“
 
 - Erstelle die Klasse `js/API/LocalDB`, die für das Laden und Speichern von Daten in der IndexedDB verantwortlich ist.
-- Prüfe, ob die Klasse statisch implementiert werden kann (siehe Schritt „JobDB“).
+- Prüfe, ob die Klasse statisch implementiert werden kann (siehe Schritt „AppDB“).
 - Verwende eine GUID als ID.
 - `json.id` enthält immer eine ID, `null`, `0` oder ist nicht vorhanden.
 - `add(json)` fügt einen neuen Datensatz hinzu und ignoriert eine mitgegebene ID. Die ID wird neu generiert.
@@ -48,11 +48,11 @@
   - später erweitern mit Bewerbung und Ausgabe
 
 
-## Schritt „JobDB“
+## Schritt „AppDB“
 
-- Erstelle die Klasse `js/API/JobDB`, die `LocalDB` verwendet.
+- Erstelle die Klasse `js/API/AppDB`, die `LocalDB` verwendet.
 - Rufe im Konstruktor `LocalDB.use("Bewerbungsmanager")` auf.
 - Erstelle eine Methode, die Daten aus einem `JobModel` mithilfe von `LocalDB` speichert.
 - Erstelle eine Methode, die anhand einer ID Daten über `LocalDB` abruft und als `JobModel` zurückgibt.
-- Wenn `LocalDB` statisch implementiert ist, muss `JobDB` keine eigene Instanz davon erstellen.
+- Wenn `LocalDB` statisch implementiert ist, muss `AppDB` keine eigene Instanz davon erstellen.
 - Stelle sicher, dass die ausgewählte Tabelle für alle nachfolgenden Datenbankoperationen zuverlässig verfügbar bleibt.
