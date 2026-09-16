@@ -12,7 +12,10 @@ Diese Datei beschreibt den aktuell vorgesehenen Verzeichnisbaum.
 - `js/models/` – reine Datenmodelle ohne UI- oder DOM-Logik.
   - `JobModel.js`, `JobDetailModel.js`, `CompanyModel.js`, `ContactModel.js`,
     `AddressModel.js`, `StreetModel.js`, `CityModel.js`,
-    `QualificationModel.js`, `ReferenceModel.js`, `BenefitsModel.js`
+    `QualificationModel.js`, `ReferenceModel.js`, `BenefitsModel.js`,
+    `ApplicationModel.js`, `StatusHistoryModel.js`, `ApplicationHistoryModel.js`,
+    `ApplicationPortalModel.js`, `ApplicationEmailModel.js`,
+    `ApplicationPhoneModel.js`, `ApplicationPersonalModel.js`
 
 ## Regeln
 

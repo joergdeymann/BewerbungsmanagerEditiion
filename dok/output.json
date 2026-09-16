@@ -2,6 +2,8 @@
     "application": {
         "id": 0,
         "createDate": "",
+        "status": "",
+        "updatedAt": "",
         "job": {
             "companyId": 0,
             "contactId": 0,
@@ -16,34 +18,35 @@
             "tasks": [],
             "tags": []
         },
-        "companies": [
-            {
-                "id": 0,
-                "name": "",
-                "legalForm": "",
-                "relationship": "Hauptsitz",
-                "address": {
-                    "street": "",
-                    "houseNumber": "",
-                    "zipCountry": "",
-                    "zip": "",
-                    "city": "",
-                    "country": "",
-                    "postBox": ""
-                },
-                "website": "",
-                "verifiedAt": "",
-                "industry": "",
-                "size": "",
-                "founded": "",
-                "description": "",
-                "specialties": [],
-                "images": []
-            }
-        ],
+        "company": {
+            "id": 0,
+            "name": "",
+            "legalForm": "",
+            "relationship": "Hauptsitz",
+            "address": {
+                "street": "",
+                "houseNumber": "",
+                "zipCountry": "",
+                "zip": "",
+                "city": "",
+                "country": "",
+                "postBox": ""
+            },
+            "website": "",
+            "verifiedAt": "",
+            "industry": "",
+            "size": "",
+            "founded": "",
+            "description": "",
+            "specialties": [],
+            "images": []
+        },
         "contacts": [
             {
+                "id": 0,
+                "role": "",
                 "name": "",
+                "img": "",
                 "email": "",
                 "phone": ""
             }
@@ -56,6 +59,35 @@
         "benefits": {
             "tags": [],
             "content": []
+        },
+        "applicationDetails": {
+            "status": "",
+            "appliedAt": "",
+            "channel": "portal",
+            "coverLetter": "",
+            "resume": "",
+            "emailCoverLetter": "",
+            "signature": "",
+            "statusHistory": [
+                {
+                    "date": "",
+                    "status": "",
+                    "reason": ""
+                }
+            ],
+            "history": [
+                {
+                    "channel": "portal",
+                    "entry": {
+                        "date": "",
+                        "portalName": "",
+                        "website": "",
+                        "username": "",
+                        "password": "",
+                        "information": ""
+                    }
+                }
+            ]
         },
         "references": [
             {
