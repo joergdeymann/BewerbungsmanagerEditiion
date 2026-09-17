@@ -1,4 +1,4 @@
-import { PostBoxConstants } from "../../../constants/PostBoxConstants.js";
+import { PostBoxConstants } from "../../constants/PostBoxConstants.js";
 
 export class PostBoxExtractor {
     constructor(lines) {

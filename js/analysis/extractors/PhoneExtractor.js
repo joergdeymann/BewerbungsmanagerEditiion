@@ -1,4 +1,4 @@
-import { CompanyConstants } from "../../../constants/CompanyConstants.js";
+import { CompanyConstants } from "../../constants/CompanyConstants.js";
 export class PhoneExtractor {
     constructor(lines) {
         this.lines = lines;

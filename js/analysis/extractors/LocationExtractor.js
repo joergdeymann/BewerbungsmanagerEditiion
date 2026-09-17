@@ -1,4 +1,4 @@
-import { LocationConstants } from "../../../constants/LocationConstants.js";
+import { LocationConstants } from "../../constants/LocationConstants.js";
 export class LocationExtractor {
     constructor(lines) {
         this.lines = lines;

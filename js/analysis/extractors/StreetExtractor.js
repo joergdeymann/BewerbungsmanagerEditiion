@@ -1,5 +1,5 @@
-import { CompanyConstants } from "../../../constants/CompanyConstants.js";
-import { AddressConstants } from "../../../constants/AddressConstants.js";
+import { CompanyConstants } from "../../constants/CompanyConstants.js";
+import { AddressConstants } from "../../constants/AddressConstants.js";
 
 export class StreetExtractor {
     constructor(lines) {

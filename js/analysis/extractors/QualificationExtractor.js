@@ -1,4 +1,4 @@
-import { ParserConstants } from "../../../constants/ParserConstants.js";
+import { ParserConstants } from "../../constants/ParserConstants.js";
 import { LineParser } from "../parser/LineParser.js";
 
 export class QualificationExtractor {

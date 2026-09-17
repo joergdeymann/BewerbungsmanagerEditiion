@@ -1,7 +1,4 @@
-import { stripBulletPrefix, uniqueSimilar } from "../TextCleanup.js";
-
 export class TaskExtractor {
-
     extract(text) {
         if (!text) return [];
 
@@ -10,6 +7,6 @@ export class TaskExtractor {
             .map(line => line.trim())
             .filter(Boolean);
 
-        return uniqueSimilar(lines.map(stripBulletPrefix));
+        return lines;
     }
 }

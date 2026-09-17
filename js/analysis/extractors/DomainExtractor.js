@@ -1,4 +1,4 @@
-import { WebConstants } from "../../../constants/WebConstants.js";
+import { WebConstants } from "../../constants/WebConstants.js";
 import { EmailExtractor } from "./EmailExtractor.js";
 export class DomainExtractor {
     constructor(lines) {

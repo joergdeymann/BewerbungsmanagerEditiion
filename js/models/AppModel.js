@@ -3,7 +3,7 @@ import { ContactModel } from './ContactModel.js';
 import { BenefitsModel } from './BenefitsModel.js';
 import { ApplicationModel } from './ApplicationModel.js';
 import { ReferenceModel } from './ReferenceModel.js';
-import { JobDetailModel } from './JobDetailModel.js';
+import { JobModel } from './JobModel.js';
 import { QualificationModel } from './QualificationModel.js';
 
 export class AppModel {
@@ -12,7 +12,7 @@ export class AppModel {
         this.createDate = new Date().toISOString();
         this.status = "";
         this.updatedAt = "";
-        this.job = new JobDetailModel();
+        this.job = new JobModel();
         this.company = new CompanyModel();
         
         // Jetzt als leere Listen (Arrays) initialisiert
@@ -92,7 +92,7 @@ export class AppModel {
     }
 
 	static fromData(raw) {
-        const model = new JobModel();
+        const model = new AppModel();
         model.id = raw.id;
         model.company = raw.company;
         model.createDate = raw.createDate;
@@ -120,7 +120,4 @@ export class AppModel {
 		this.contacts.push(contact)
 	
 	}	
-	
-	
-	
 }

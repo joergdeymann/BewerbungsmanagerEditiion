@@ -1,4 +1,4 @@
-import { ParserConstants } from "../../../constants/ParserConstants.js";
+import { ParserConstants } from "../../constants/ParserConstants.js";
 
 export class BenefitExtractor {
 
