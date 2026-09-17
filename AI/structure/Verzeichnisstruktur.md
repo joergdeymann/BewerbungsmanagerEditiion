@@ -5,7 +5,11 @@ Diese Datei beschreibt den aktuell vorgesehenen Verzeichnisbaum.
 > Die konkrete Projektstruktur ist noch zu ergänzen.
 
 ## Projektbereiche
-
+- `AI/structure/` – Verzeichnisstruktur, Datenstrukturebn auch `AppRecord.json` der KI-Vorgaben
+- `js/ui/` – UI-Logik (HTML, CSS, JavaScript)
+- `js/io/` – Zukunft: Daten-IO (lokale Datenbank, Dateisystem) jetzte noch `js/data/`
+- `js/utils/` – allgemeine Funktionen und Klassen, die wieder gebrauch werden
+- `js/constants/` – alle Konstanten des Projekts
 - `js/data/` – lokaler Datenzugriff (Persistenz), keine externen Aufrufe.
   - `LocalDB.js` – generischer Zugriff auf die IndexedDB (Object Stores, CRUD).
   - `AppDB.js` – speichert und lädt `AppModel`-Daten über `LocalDB` im Store `Bewerbungsmanager`.
