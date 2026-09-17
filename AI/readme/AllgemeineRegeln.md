@@ -51,3 +51,12 @@
 
 - Weise darauf hin, wenn ein Name besser gewählt werden könnte.
 - Namensänderungen dürfen nur nach vorheriger ausdrücklicher Absprache vorgenommen werden.
+
+
+## Ausgabestruktur
+
+- Änderungen **klar beschreiben und nummerieren**.
+- Bei kleinen Änderungen **diff**, bei größeren Änderungen **Codeausschnitt**, bei umfangreichen Änderungen **gesamte Datei** verwenden.
+- Pro Änderung **nur eine Darstellungsform** verwenden, niemals diff und Code gleichzeitig.
+- Die Analyse nach **maximal 5 gefundenen Änderungen** stoppen.
+
