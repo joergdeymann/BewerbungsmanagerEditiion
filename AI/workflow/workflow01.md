@@ -8,51 +8,26 @@
 - Warte nach jedem abgeschlossenen Schritt auf die manuelle Freigabe.
 - passe fehelende Daten und andere Formatierungen in der Datei /dok/Jobsoutput.json und im code an
 
-## Schritt „LocalDB“
+## Schritt Erstellen von Testdaten
+- Erstelle eine neie JSON Datei im ordner Testdaten auf grundlage der Datei /dok/Jobsinput.json.
+- Es sollen 5 Datensätze erzeugt werden und jeweils 3 Einträge pro Liste und UnterListe
+- Diese Daten bitte vorher in die Models eintragen und dann zusammen mit API-Methoden aus /js/API/LocalDB.js erzeugen.
+- die erstellte JSON bitte als neuen namen im /testdata verzeicnis speichern
+- lösche die Daten im Hauptspeicher, lade dann einen der datensätze und vegeleiche die JSON mit einen aus der kompletten liste
+- es sollte keine Differenzen da sein wenn ja code überarbeiten
+- einmal einen Wert ändern und den datensatz speicehrn, wird die rchige überschrieben ? was ist wwennid fehlt wird der Datensatz dann angehängt ?
 
-- Erstelle die Klasse `js/API/LocalDB`, die für das Laden und Speichern von Daten in der IndexedDB verantwortlich ist.
-- Prüfe, ob die Klasse statisch implementiert werden kann (siehe Schritt „AppDB“).
-- Verwende eine GUID als ID.
-- `json.id` enthält immer eine ID, `null`, `0` oder ist nicht vorhanden.
-- `add(json)` fügt einen neuen Datensatz hinzu und ignoriert eine mitgegebene ID. Die ID wird neu generiert.
-- `update(json)` aktualisiert einen bestehenden Datensatz anhand seiner ID.
-- `updateOrAdd(json)` prüft, ob ein Datensatz mit der angegebenen ID existiert, und ruft entsprechend `update` oder `add` auf.
-- `delete(id)` löscht den Datensatz mit der angegebenen ID.
-- `get(id)` ruft einen Datensatz anhand seiner ID ab. Ist `id` gleich `null` oder nicht angegeben, werden alle Datensätze zurückgegeben. Der Wert `0` gilt nicht als fehlende ID.
-- `create(name)` erstellt einen Object Store mit dem angegebenen Namen und legt einen Index für die ID an.
-- `use(name)` wählt einen vorhandenen Object Store für weitere Aktionen aus. Ist der Object Store nicht vorhanden, wird ein Fehler ausgelöst.
+## Schritt 1: app.js einführen und anpassen 
+- Es ibt eine HTML Strucktur die noch nicht im Repository steht ich möchte geren das wir das zusammen schrit für schritt durchgehen
 
-### Regeln für IDs und `updateOrAdd(json)`
+## Schritt 2: den Loader aktivieren daten ins JSON Arry laden
+- wenn die app erfolgreich die erste Seite laden kann, dann sollen die Daten geladen werden die in der Lokalen Datenbank stehen
 
-- Fehlt `json.id` oder ist sie `null` bzw. `0`, wird ein neuer Datensatz mit einer neu generierten GUID angelegt.
-- Ist eine gültige ID angegeben, wird geprüft, ob ein Datensatz mit dieser ID existiert.
-- Existiert der Datensatz, wird `update(json)` aufgerufen.
-- Existiert kein Datensatz mit dieser ID, wird `add(json)` aufgerufen. Dabei wird die mitgegebene ID ignoriert und eine neue GUID generiert.
+## Schritt 3: geladenene List im Eingangsbereich anzeigen (Berbeitungsbereich), und auch in der Anzeigeliste (Arbeitsbereich)
+- Im Bewerbungsmanager gibt es 2 Stellen wo die Auswahl für einen Datensatz ist, hier schon mal Teile vorbereiten, mit meiner Absprache
 
-## Schritt „Beispiele“
-
-- Erstelle anhand der JSON-Datei aus `/dok` vier Beispieldatensätze.
-- Speichere die Beispieldatensätze mithilfe der LocalDB Klasse unter dem Namen `Bewerbungsmanager`.
-
-## Schritt „Models“
-
-- Erstelle auf Basis der vorhandenen Modelle `JobModel` und `ContactModel` folgende Modelle:
-  - `CompanyModel` 
-    Firmenname, Branche, Beschäftigte, Grundungsdatum, / Jahr, Webseite, Adresse das Model einbinde, wie im Model, Verifizeiert, firmenbeschreibung, Spezialgebiete, Bilder
-  - `AdressModel` - gibt die Adresse zurück welche aus den Firmenname, Ansprechpartner, Strasse Hausnummer PLZ Darten und Stadt, Land, besteht die daten jeweisl aus den Models raussucehn
-  - `StreetModel` - aufgebaut aus Strassenname und und Hausnummer (name, houseNumber)
-  - `CityModel`- aufgebaut aus Länderkennzeichen,Postleitahl,Stadt,Land
-  - `JobDetailModel`- aufgebaut aus Titkle, Arbeitsort, Anstellungsartm, Arbeitsmodell, gehalt, referenznummen, Aufgaben
-  - `qualificationModel`- aufgebaut aus erforderliche Qualifikation, gewünschhte Qualifikationsname, Persönliche Stärken, SkillTAG in den jeweiligen bereichen 
-  - `ReferenceModel`- Webseite, Name, Erfassungs-Datum, Inhalt
-  - später erweitern mit Bewerbung und Ausgabe
+## Schritt 4: Die angeklickte Auswahl im Editor und im normalen Fenster anzeigen
+- nach Auswahl eines Datensatzes sollen die infos in den HTL Berieche aufgefüllt werden und die korrekte Anzeige in den Tabs soll passen
 
 
-## Schritt „AppDB“
 
-- Erstelle die Klasse `js/API/AppDB`, die `LocalDB` verwendet.
-- Rufe im Konstruktor `LocalDB.use("Bewerbungsmanager")` auf.
-- Erstelle eine Methode, die Daten aus einem `JobModel` mithilfe von `LocalDB` speichert.
-- Erstelle eine Methode, die anhand einer ID Daten über `LocalDB` abruft und als `JobModel` zurückgibt.
-- Wenn `LocalDB` statisch implementiert ist, muss `AppDB` keine eigene Instanz davon erstellen.
-- Stelle sicher, dass die ausgewählte Tabelle für alle nachfolgenden Datenbankoperationen zuverlässig verfügbar bleibt.
