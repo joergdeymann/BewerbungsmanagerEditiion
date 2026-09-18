@@ -5,7 +5,7 @@ export class AppDB {
     static storeName = "Bewerbungsmanager";
 
     constructor() {
-        this.ready = LocalDB.use(AppDB.storeName);
+        this.ready = LocalDB.create(AppDB.storeName);
     }
 
     // Wählt den Object Store erneut aus, falls LocalDB zwischenzeitlich für einen
@@ -13,7 +13,7 @@ export class AppDB {
     async ensureStore() {
         await this.ready;
         if (LocalDB.storeName !== AppDB.storeName) {
-            await LocalDB.use(AppDB.storeName);
+            await LocalDB.create(AppDB.storeName);
         }
     }
 

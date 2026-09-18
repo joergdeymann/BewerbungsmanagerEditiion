@@ -171,9 +171,8 @@ async function main() {
     const results = [];
     const log = (msg) => { console.log(msg); results.push(msg); };
 
-    // Object Store existiert nirgends im Code -> hier einmalig anlegen.
-    await LocalDB.create(AppDB.storeName);
-    log(`[OK] Object Store "${AppDB.storeName}" angelegt.`);
+    // Der Object Store wird jetzt automatisch von AppDB selbst angelegt
+    // (LocalDB.create() im Konstruktor), kein manueller Vorab-Schritt mehr nötig.
 
     // 1) 5 Datensätze über die Models bauen
     const records = [1, 2, 3, 4, 5].map(buildTestRecord);
