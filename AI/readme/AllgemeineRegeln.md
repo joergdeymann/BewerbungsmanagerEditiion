@@ -6,6 +6,8 @@
 - Code soll einfach und verständlich bleiben.
 - Keine unnötigen Abstraktionen oder zusätzlichen Klassen.
 - Bestehende Strukturen möglichst beibehalten, wenn keine technische Notwendigkeit zur Änderung besteht.
+- Keine doppelten Codes
+- Keine doppelten Texte
 
 ## Benennung
 

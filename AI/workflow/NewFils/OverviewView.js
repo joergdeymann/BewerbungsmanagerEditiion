@@ -82,6 +82,7 @@ export class OverviewView {
             c.style.width = "8em";
             root.querySelector("#list").classList.toggle("compact");
         };
+        
         const draw = () => {
             const search = root.querySelector("#search").value.toLowerCase().trim();
             const statusFilter = root.querySelector("#statusFilter").value;
