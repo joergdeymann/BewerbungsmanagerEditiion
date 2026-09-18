@@ -1,4 +1,4 @@
-import { JobConstants } from "../Constants/JobConstants.js";
+import { JobConstants } from "../../constants/JobConstants.js";
 import { ApplicationView } from "./ApplicationView.js";
 import { OverviewEvent } from "./events/OverviewEvent.js";
 import { OverviewFilterEvent } from "./events/OverviewFilterEvent.js";

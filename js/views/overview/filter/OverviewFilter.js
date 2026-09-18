@@ -1,4 +1,4 @@
-import { JobConstants } from "../../../Constants/JobConstants.js";
+import { JobConstants } from "../../../constants/JobConstants.js";
 
 export class OverviewFilter {
 
@@ -39,7 +39,7 @@ export class OverviewFilter {
 
         const text = [
             application.company?.name,
-            application.company?.city,
+            application.company?.address?.data?.city,
             application.job?.title
         ]
             .join(" ")
@@ -80,13 +80,13 @@ export class OverviewFilter {
             }
 
             if (sort === "new") {
-                return (b.createdAt || "")
-                    .localeCompare(a.createdAt || "");
+                return (b.createDate || "")
+                    .localeCompare(a.createDate || "");
             }
 
             if (sort === "old") {
-                return (a.createdAt || "")
-                    .localeCompare(b.createdAt || "");
+                return (a.createDate || "")
+                    .localeCompare(b.createDate || "");
             }
 
             return 0;

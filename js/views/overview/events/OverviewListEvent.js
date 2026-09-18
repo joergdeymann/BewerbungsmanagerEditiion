@@ -1,4 +1,5 @@
-import { JobConstants } from "../../Constants/JobConstants.js";
+import { JobConstants } from "../../../constants/JobConstants.js";
+import { ApplicationHistoryModel } from "../../../models/ApplicationHistoryModel.js";
 
 export class OverviewListEvent {
 
@@ -112,15 +113,17 @@ export class OverviewListEvent {
             return;
         }
 
-        application.communication =
-            application.communication || [];
-
-        application.communication.push({
-            id: crypto.randomUUID(),
-            type: "Telefonat",
-            text: note.trim(),
-            date: new Date().toISOString()
-        });
+        const entry = new ApplicationHistoryModel();
+        entry.data = {
+            channel: "phone",
+            entry: {
+                date: new Date().toISOString(),
+                phoneTo: "",
+                phoneFrom: "",
+                content: note.trim()
+            }
+        };
+        application.application.history.push(entry);
 
         this.view.repository.save(application);
         redraw();

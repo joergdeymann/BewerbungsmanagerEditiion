@@ -31,4 +31,14 @@ export class AppDB {
         app.data = raw;
         return app;
     }
+
+    async getAll() {
+        await this.ensureStore();
+        const rawList = await LocalDB.get();
+        return rawList.map(raw => {
+            const app = new AppModel();
+            app.data = raw;
+            return app;
+        });
+    }
 }

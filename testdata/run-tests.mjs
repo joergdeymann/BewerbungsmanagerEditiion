@@ -1,3 +1,4 @@
+import { JobConstants } from "../js/constants/JobConstants.js";
 import "fake-indexeddb/auto";
 import fs from "fs";
 
@@ -58,7 +59,7 @@ function buildHistoryEntry(channel, i) {
 function buildTestRecord(recordIndex) {
     const app = new AppModel();
 
-    app.status = "eingereicht";
+    app.status = JobConstants.STATUS.BEWORBEN;
     app.updatedAt = new Date().toISOString();
 
     // job
@@ -93,7 +94,7 @@ function buildTestRecord(recordIndex) {
         houseNumber: `${recordIndex}`,
         zipCountry: "D",
         zip: `4961${recordIndex}`,
-        city: "Quakenbrück",
+        city: `Quakenbrück`,
         country: "Deutschland",
         postBox: ""
     };
@@ -130,8 +131,16 @@ function buildTestRecord(recordIndex) {
     app.application.emailCoverLetter = `Mailanschreiben Text ${recordIndex}`;
     app.application.signature = `Unterschrift ${recordIndex}`;
 
-    // statusHistory (3)
-    const statuses = ["eingereicht", "in Prüfung", "Interview"];
+    // statusHistory (3), Endstatus variiert je Datensatz für sichtbare Unterschiede in der Übersicht
+    const finalStatusByRecord = [
+        JobConstants.STATUS.ENTWURF,
+        JobConstants.STATUS.BEWORBEN,
+        JobConstants.STATUS.EINGANG,
+        JobConstants.STATUS.RUECKRUF,
+        JobConstants.STATUS.ABGELEHNT
+    ];
+    const finalStatus = finalStatusByRecord[(recordIndex - 1) % finalStatusByRecord.length];
+    const statuses = [JobConstants.STATUS.BEWORBEN, JobConstants.STATUS.EINGANG, finalStatus];
     for (let i = 0; i < 3; i++) {
         const entry = new ApplicationStatusHistoryModel();
         entry.date = `2026-09-0${i + 1}`;
@@ -139,7 +148,7 @@ function buildTestRecord(recordIndex) {
         entry.reason = `Grund ${i + 1}`;
         app.application.statusHistory.push(entry);
     }
-    app.application.status = statuses[statuses.length - 1];
+    app.application.status = finalStatus;
 
     // history (3), zyklisch durch die drei Kanaltypen
     for (let i = 1; i <= 3; i++) {

@@ -1,6 +1,6 @@
-import { JobConstants } from "../Constants/JobConstants.js";
-import { FormatUtils } from "../Utils/FormatUtils.js";
-import { HtmlUtils } from "../Utils/HtmlUtils.js";
+import { JobConstants } from "../../constants/JobConstants.js";
+import { FormatUtils } from "../../utils/FormatUtils.js";
+import { HtmlUtils } from "../../utils/HtmlUtils.js";
 
 export class ApplicationView {
 
@@ -74,8 +74,7 @@ export class ApplicationView {
     }
 
     createCity(application) {
-        const city = application.company?.city || "—";
-
+        const city = application.company?.address?.data?.city || "—";
         return `
             <small class="toggler">
                 ${HtmlUtils.escape(city)}
