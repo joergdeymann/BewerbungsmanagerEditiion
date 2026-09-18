@@ -55,17 +55,17 @@
 
 
 
-## Schritt 2: Loader aktivieren
+## Schritt 4: Loader aktivieren
 
 * Nach erfolgreichem Laden der ersten Seite die Daten aus der LocalDB laden.
 * Die geladenen Daten in das vorgesehene JSON-Array übernehmen.
 
-## Schritt 3: Datensatzliste anzeigen
+## Schritt 5: Datensatzliste anzeigen
 
 * Die geladene Liste im **Eingangsbereich (Bearbeitung)** und im **Arbeitsbereich (Anzeigeliste)** bereitstellen.
 * Die konkrete Umsetzung vorher abstimmen.
 
-## Schritt 4: Datensatz anzeigen
+## Schritt 6: Datensatz anzeigen
 
 * Nach Auswahl eines Datensatzes die zugehörigen Daten in die vorgesehenen HTML-Bereiche des Editors und der normalen Anzeige übertragen.
 * Die zugehörigen Tabs korrekt aktualisieren.

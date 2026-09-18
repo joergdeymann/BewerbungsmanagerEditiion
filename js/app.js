@@ -1,5 +1,5 @@
 import { Router } from "./core/Router.js";
-import { ApplicationRepository } from "./services/ApplicationRepository.js";
+import { AppCache } from "./data/AppCache.js";
 import { OverviewView } from "./views/overview/OverviewView.js";
 
 // Editor/Detail existieren noch nicht (geplanter, späterer Schritt).
@@ -18,11 +18,11 @@ if (importUrlParam) {
 }
 
 const root = document.querySelector("#app");
-const repository = new ApplicationRepository();
-await repository.load();
+const appcache = new AppCache();
+await appcache.load();
 
 const router = new Router(root, {
-  "/": () => new OverviewView(repository),
+  "/": () => new OverviewView(appcache),
   // "/new": () => new EditorView(repository),
   // "/edit/:id": (params) => new EditorView(repository, params.id),
   // "/detail/:id": (params) => new DetailView(repository, params.id)

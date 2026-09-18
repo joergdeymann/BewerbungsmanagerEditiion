@@ -2,7 +2,7 @@ import { AppDB } from "../data/AppDB.js";
 
 // IndexedDB ist asynchron, Overview greift aber synchron auf getAll()/getById() zu.
 // Deshalb: einmal beim Start laden, danach aus dem Speicher-Array bedienen.
-export class ApplicationRepository {
+export class AppCache {
     constructor() {
         this.db = new AppDB();
         this.applications = [];
