@@ -1,4 +1,4 @@
-import { ParserConstants } from "../../../constants/ParserConstants.js"
+import { ParserConstants } from "../../constants/ParserConstants.js"
 import { SectionParser } from "./SectionParser.js"
 import { TextCleaner } from "./TextCleaner.js"
 import { CompanyExtractor } from "../extractors/CompanyExtractor.js"

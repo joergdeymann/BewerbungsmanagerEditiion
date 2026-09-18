@@ -1,5 +1,5 @@
-import { ParserConstants } from "../../../constants/ParserConstants.js";
-import { CompanyConstants } from "../../../constants/CompanyConstants.js";
+import { ParserConstants } from "../../constants/ParserConstants.js";
+import { CompanyConstants } from "../../constants/CompanyConstants.js";
 export class LineParser {
     // Patterns bleiben statisch: teuer zu bauen, ändern sich nie pro Zeile
     static TAG_PATTERNS = (() => {

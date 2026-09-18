@@ -4,7 +4,7 @@
 
 * Erstelle auf Basis von `/AI/structure/AppRecord.json` eine neue Testdatei in `/testdata`.
 * Erzeuge **5 Datensätze** mit jeweils **3 Einträgen pro Liste und Unterliste**.
-* Erstelle die Datensätze zunächst über die Models und anschließend über die API-Methoden aus `/js/API/LocalDB.js`.
+* Erstelle die Datensätze zunächst über die Models und anschließend über die API-Methoden aus `/js/data/LocalDB.js`.
 * Speichere die erzeugten Daten unter einem neuen Dateinamen in `/testdata`.
 * Leere den Hauptspeicher, lade einen Datensatz und vergleiche ihn mit dem entsprechenden Ausgangsdatensatz. Es dürfen keine Differenzen entstehen.
 * Ändere einen Wert und speichere den Datensatz. Prüfe, ob der bestehende Datensatz korrekt überschrieben wird.

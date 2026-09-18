@@ -3,7 +3,7 @@
 Diese Datei beschreibt die aktuell vorgesehenen Models, Datenstrukturen und deren Beziehungen.
 
 Alle Models stellen ihre Daten über `get data` / `set data` bereit. Die flache Form von
-`data` entspricht der JSON-Struktur aus `/dok/output.json`.
+`data` entspricht der JSON-Struktur aus `/AI/structure/AppRecord.json`.
 
 ## Models
 

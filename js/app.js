@@ -1,8 +1,11 @@
 import { Router } from "./core/Router.js";
-import { ApplicationRepository } from "./services/ApplicationRepository.js";
-import { OverviewView } from "./views/OverviewView.js";
-import { EditorView } from "./views/EditorView.js";
-import { DetailView } from "./views/DetailView.js";
+
+// Diese Schicht existiert noch nicht (geplanter, späterer Schritt).
+// Bis dahin auskommentiert, damit app.js fehlerfrei geladen werden kann.
+// import { ApplicationRepository } from "./services/ApplicationRepository.js";
+// import { OverviewView } from "./views/OverviewView.js";
+// import { EditorView } from "./views/EditorView.js";
+// import { DetailView } from "./views/DetailView.js";
 
 // Kommt der Aufruf vom Bookmarklet (siehe ImportTab.js) mit einer
 // mitgegebenen URL, merken wir sie kurz vor und springen direkt in
@@ -15,20 +18,21 @@ if (importUrlParam) {
     location.hash = "#/new";
 }
 
-const repository = new ApplicationRepository();
 const root = document.querySelector("#app");
 
-const router = new Router(root, {
-  "/": () => new OverviewView(repository),
-  "/new": () => new EditorView(repository),
-  "/edit/:id": (params) => new EditorView(repository, params.id),
-  "/detail/:id": (params) => new DetailView(repository, params.id)
-});
-
-document.addEventListener("click", event => {
-    const button = event.target.closest("[data-route]");
-    if (!button) return;
-    location.hash = button.dataset.route;
-});
-
-router.start();
+// TODO: sobald ApplicationRepository/Views existieren, Router wieder wie folgt aufbauen:
+// const repository = new ApplicationRepository();
+// const router = new Router(root, {
+//   "/": () => new OverviewView(repository),
+//   "/new": () => new EditorView(repository),
+//   "/edit/:id": (params) => new EditorView(repository, params.id),
+//   "/detail/:id": (params) => new DetailView(repository, params.id)
+// });
+//
+// document.addEventListener("click", event => {
+//     const button = event.target.closest("[data-route]");
+//     if (!button) return;
+//     location.hash = button.dataset.route;
+// });
+//
+// router.start();
