@@ -1,7 +1,7 @@
 # Allgemeine Regeln
 
 ## Grundsätze
-
+- Verbrauche so wenig Tokens wie möglich, nur soviele wie notwendig sind
 - Performance vor Schönheit.
 - Code soll einfach und verständlich bleiben.
 - Keine unnötigen Abstraktionen oder zusätzlichen Klassen.

@@ -1,21 +1,45 @@
 # Workflow01.md
 
-## Schritt 0: Testdaten erstellen und LocalDB prüfen
-
-* Erstelle auf Basis von `/AI/structure/AppRecord.json` eine neue Testdatei in `/testdata`.
-* Erzeuge **5 Datensätze** mit jeweils **3 Einträgen pro Liste und Unterliste**.
-* Erstelle die Datensätze zunächst über die Models und anschließend über die API-Methoden aus `/js/data/LocalDB.js`.
-* Speichere die erzeugten Daten unter einem neuen Dateinamen in `/testdata`.
-* Leere den Hauptspeicher, lade einen Datensatz und vergleiche ihn mit dem entsprechenden Ausgangsdatensatz. Es dürfen keine Differenzen entstehen.
-* Ändere einen Wert und speichere den Datensatz. Prüfe, ob der bestehende Datensatz korrekt überschrieben wird.
-* Speichere anschließend einen Datensatz ohne `id` und prüfe, ob er korrekt neu angelegt bzw. angehängt wird.
-* Bei Fehlern den Code korrigieren und den Test wiederholen.
 
 ## Schritt 1: `app.js` einführen
 
-* Die vorhandene HTML-Struktur liegt noch nicht im Repository.
-* HTML-Struktur und `app.js` **gemeinsam Schritt für Schritt** integrieren.
-* Keine eigenständigen Änderungen an der HTML-Struktur ohne Absprache.
+- Die vorhandene HTML-Struktur liegt noch nicht komplett im Repository.
+- HTML-Struktur und `app.js` **gemeinsam Schritt für Schritt** integrieren.
+- Keine eigenständigen Änderungen an der HTML-Struktur ohne Absprache.
+- `app.js` bildet nur den **Grundstock der Anwendung** und enthält den Router.
+- Die Views werden in `Overview`, `Edit`, `Work` und später weitere Bereiche aufgeteilt.
+- `Templates/` enthält ausschließlich die **HTML-Strukturen** der Views.
+- `Views/` übernimmt ausschließlich die **Verarbeitung** der Templates.
+- `UI/` definiert ausschließlich den **Datenfluss** zwischen Daten und Views.
+- `uiCompany.js` und `uiJob.js` dienen als Basis für den Datenfluss.
+
+### Abgleich `/workflow/NewFiles`
+
+- Dateien aus `/workflow/NewFiles` zunächst mit dem bestehenden Projekt abgleichen.
+- Nur benötigte Dateien bzw. Funktionen übernehmen.
+- Nicht benötigte Dateien verwerfen.
+- Andere Dateien aus `/workflow/NewFiles` **noch nicht bearbeiten**.
+
+### `ApplicationRepository.js`
+
+- `ApplicationRepository.js` ist strukturell an `LocalDB.js` angelehnt.
+- Prüfen, ob darin Funktionen enthalten sind, die für `LocalDB` oder andere bestehende Dateien benötigt werden.
+- Benötigte Funktionen übernehmen bzw. an der richtigen Stelle einordnen.
+- Nicht benötigte Funktionen nicht übernehmen 
+
+### `Overview`
+
+- `Overview` war bisher der erste aufgerufene Bereich und wird als erster View integriert.
+- `OverviewView.js` analysieren und aufteilen:
+  - Konstanten → `Constants`
+  - HTML-Struktur → `Templates`
+  - Verarbeitung → `Views`
+  - Datenfluss → `UI`
+- Nur `Overview` in diesem Schritt bearbeiten.
+- Andere Views/Files **noch nicht analysieren oder umbauen**.
+
+
+
 
 ## Schritt 2: Loader aktivieren
 
