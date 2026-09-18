@@ -33,10 +33,10 @@ export class AppModel {
             status: this.status,
             updatedAt: this.updatedAt,
             job: this.job.data,
-            company: this.company,
+            company: this.company.data,
             contacts: this.contacts.map(contact => contact.data), 
             qualifications: this.qualifications.data,
-            benefits: this.benefits, // Angenommen, das ist ein einfaches Array oder wird analog behandelt
+            benefits: this.benefits.data,
             application: this.application.data,
             references: this.references.map(reference => reference.data),
             actionHistory: this.actionHistory,
@@ -51,7 +51,6 @@ export class AppModel {
         this.createDate = raw.createDate ?? this.createDate;
         this.status = raw.status ?? this.status;
         this.updatedAt = raw.updatedAt ?? this.updatedAt;
-        this.company = raw.company ?? this.company;
         this.actionHistory = raw.actionHistory ?? this.actionHistory;
         this.importedRawData = raw.importedRawData ?? this.importedRawData;
 
@@ -59,8 +58,16 @@ export class AppModel {
             this.job.data = raw.job;
         }
 
+        if (raw.company) {
+            this.company.data = raw.company;
+        }
+
         if (raw.qualifications) {
             this.qualifications.data = raw.qualifications;
+        }
+
+        if (raw.benefits) {
+            this.benefits.data = raw.benefits;
         }
 
         if (raw.application) {
