@@ -12,7 +12,7 @@ export class RequirementsTemplate extends DetailBaseTemplate {
                         <div>
                             <h2>Anforderungen</h2>
                             <p>Diese Eigenschaften erwartet die Firma von Dir</p>
-                        </div
+                        </div>
                     </div>
                 </section>
                 

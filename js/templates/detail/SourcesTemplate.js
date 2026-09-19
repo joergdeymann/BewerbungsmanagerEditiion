@@ -15,7 +15,7 @@ export class SourcesTemplate extends DetailBaseTemplate {
                         <div>
                             <h2>Quellen</h2>
                             <p>Information wo die Daten herkommen</p>
-                        </div
+                        </div>
                     </div>
                 </section>
                 

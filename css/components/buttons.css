@@ -11,7 +11,7 @@ button {
    border-radius: 7px;
    padding: 0px 0.75rem;
    cursor: pointer;
-   background: var(--secondary);
+   background-color: var(--secondary);
    color: var(--secondary-text);
    font-family: inherit;
    font-weight: 400;
@@ -35,24 +35,24 @@ button:active {
 /* ---------- Farb-Modifikatoren (einzige erlaubte Variation) ---------- */
 
 button.secondary {
-   background: var(--secondary);
+   background-color: var(--secondary);
    color: var(--secondary-text);
 }
 
 button.primary {
-   background: var(--primary);
+   background-color: var(--primary);
    color: #fff;
 }
 
 
 .success,
 button[data-decision="accepted"] {
-   background: rgb(26, 175, 75);
+   background-color: rgb(26, 175, 75);
    color: #fff;
 }
 
 button.danger {
-   background: var(--danger);
+   background-color: var(--danger);
    color: #fff;
 }
 
@@ -80,13 +80,13 @@ button.width8em {
    justify-content: center;
    border: 1px solid rgba(0, 0, 0, 0.1);
    border-radius: var(--radius-sm);
-   background: var(--secondary);
+   background-color: var(--secondary);
    color: var(--text-muted);
    font-size: 16px;
 }
 
 .icon-button:hover {
-   background: var(--danger-light);
+   background-color: var(--danger-light);
    color: var(--danger);
    filter: none;
 }
@@ -99,7 +99,6 @@ button.output-action {
    flex-direction: column;
    gap: 8px;
    padding: 16px 10px;
-   background: var(--primary-light);
    background-color: rgba(224, 231, 255,0.7);
    border: 1px solid rgba(0, 0, 0, 0.1);
    height: auto;

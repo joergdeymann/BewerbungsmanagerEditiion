@@ -126,7 +126,7 @@ export class ApplicationTemplate extends DetailBaseTemplate {
                         <div>
                             <h2>Legende/ History</h2>
                             <p>Zeigt auf was du bereits alle getan hast</p>
-                        </div
+                        </div>
                     </div>
                 </section>
 

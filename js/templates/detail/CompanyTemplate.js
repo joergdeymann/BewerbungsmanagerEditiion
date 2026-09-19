@@ -14,7 +14,7 @@ export class CompanyTemplate extends DetailBaseTemplate {
                         <div>
                             <h2>Firmeninformation</h2>
                             <p>Alle Informationen über das Unternehmen.</p>
-                        </div
+                        </div>
                     </div>
                 </section>
                 
