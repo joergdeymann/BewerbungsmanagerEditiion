@@ -56,7 +56,7 @@ export class JobTemplate extends DetailBaseTemplate {
                     </div>
                     <div class="field">
                         <label>Aufgaben</label>
-                        ${this.list(application.job?.tasks || "—")}
+                        ${this.list(application.job?.tasks)}
                     </div>                    
                 </section>
             </section>

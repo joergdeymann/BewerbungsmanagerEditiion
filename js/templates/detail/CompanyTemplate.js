@@ -64,7 +64,7 @@ export class CompanyTemplate extends DetailBaseTemplate {
                     </div>
                     <div class="field">
                         <label>Spezialisierungen</label>
-                        ${this.list(application.company?.specialties || "—")}
+                        ${this.list(application.company?.specialties)}
                     </div>
                     <div class="field">
                         <label>Selbstbeschreibung</label>
