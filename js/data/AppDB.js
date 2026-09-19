@@ -41,4 +41,9 @@ export class AppDB {
             return app;
         });
     }
+
+    async delete(id) {
+        await this.ensureStore();
+        await LocalDB.delete(id);
+    }
 }

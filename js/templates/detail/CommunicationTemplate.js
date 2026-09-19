@@ -42,9 +42,10 @@ export class CommunicationTemplate extends DetailBaseTemplate {
 
     communicationList(application) {
         const communication =
-            application.communication || [];
+            (application.application?.history || [])
+                .filter(entry => entry.channel === "phone");
         return communication.length
-            ? communication.sort((a, b) => b.date.localeCompare(a.date))
+            ? communication.sort((a, b) => b.entry.date.localeCompare(a.entry.date))
                 .map(item =>
                     this.communicationItem(item)
                 )
@@ -58,8 +59,8 @@ export class CommunicationTemplate extends DetailBaseTemplate {
 
     communicationItem(item) {
 
-        const date = item.date
-            ? new Date(item.date).toLocaleString("de-DE", {
+        const date = item.entry.date
+            ? new Date(item.entry.date).toLocaleString("de-DE", {
                 day: "2-digit",
                 month: "2-digit",
                 year: "numeric",
@@ -74,9 +75,7 @@ export class CommunicationTemplate extends DetailBaseTemplate {
                 <div>
 
                     <strong>
-                        ${HtmlUtils.escape(
-                            item.type || "Notiz"
-                        )}
+                        Telefonat
                     </strong>
 
                     <small>
@@ -85,7 +84,7 @@ export class CommunicationTemplate extends DetailBaseTemplate {
 
                 </div>
 
-                <span class="text-content">${HtmlUtils.escape(item.text)}</span>
+                <span class="text-content">${HtmlUtils.escape(item.entry.content)}</span>
 
                 <span>
                     <button

@@ -13,12 +13,14 @@ const CHANNEL_MODELS = {
 
 export class ApplicationHistoryModel {
     constructor() {
+        this.id = crypto.randomUUID();
         this.channel = "";
         this.entry = null;
     }
 
     get data() {
         return {
+            id: this.id,
             channel: this.channel,
             entry: this.entry ? this.entry.data : null
         };
@@ -27,6 +29,7 @@ export class ApplicationHistoryModel {
     set data(raw) {
         if (!raw) return;
 
+        this.id = raw.id ?? this.id;
         this.channel = raw.channel ?? this.channel;
 
         const ModelClass = CHANNEL_MODELS[this.channel];

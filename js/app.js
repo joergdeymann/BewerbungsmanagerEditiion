@@ -1,10 +1,10 @@
 import { Router } from "./core/Router.js";
 import { AppCache } from "./data/AppCache.js";
 import { OverviewView } from "./views/overview/OverviewView.js";
+import { DetailView } from "./views/detail/DetailView.js";
 
-// Editor/Detail existieren noch nicht (geplanter, späterer Schritt).
+// Editor existiert noch nicht (geplanter, späterer Schritt).
 // import { EditorView } from "./views/EditorView.js";
-// import { DetailView } from "./views/DetailView.js";
 
 // Kommt der Aufruf vom Bookmarklet (siehe ImportTab.js) mit einer
 // mitgegebenen URL, merken wir sie kurz vor und springen direkt in
@@ -23,9 +23,9 @@ await appcache.load();
 
 const router = new Router(root, {
   "/": () => new OverviewView(appcache),
-  // "/new": () => new EditorView(repository),
-  // "/edit/:id": (params) => new EditorView(repository, params.id),
-  // "/detail/:id": (params) => new DetailView(repository, params.id)
+  // "/new": () => new EditorView(appcache),
+  // "/edit/:id": (params) => new EditorView(appcache, params.id),
+  "/detail/:id": (params) => new DetailView(appcache, params.id)
 });
 
 document.addEventListener("click", event => {

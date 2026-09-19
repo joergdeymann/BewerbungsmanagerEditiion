@@ -60,6 +60,9 @@
 - Änderungen **klar beschreiben und nummerieren**.
 - Bei kleinen Änderungen **diff**, bei größeren Änderungen **Codeausschnitt**, bei umfangreichen Änderungen **gesamte Datei** verwenden.
 - für jede Datei immer den Pfad angeben
+- bei "Alles herunterladen" soll die Verzeichnisstrucktur mitgespeichert werde
 - Pro Änderung **nur eine Darstellungsform** verwenden, niemals diff und Code gleichzeitig.
-- Die Analyse nach **maximal 5 gefundenen Änderungen** stoppen.
+
+## Vorgehensweise 
+- Teile die Analyse in kleine, logisch zusammenhängende Gruppen auf und bearbeite diese nacheinander vollständig.
 

@@ -1,6 +1,6 @@
 import { DetailBaseTemplate } from "./DetailBaseTemplate.js";
 import { HtmlUtils } from "../../utils/HtmlUtils.js";
-import { StatusUtils } from "../../utils/StatusUtils.js";
+import { JobConstants } from "../../constants/JobConstants.js";
 
 export class ApplicationTemplate extends DetailBaseTemplate {
 

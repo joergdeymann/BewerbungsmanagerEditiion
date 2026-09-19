@@ -1,6 +1,6 @@
 import { DetailBaseTemplate } from "./DetailBaseTemplate.js";
 import { HtmlUtils } from "../../utils/HtmlUtils.js";
-import { StatusUtils } from "../../utils/StatusUtils.js";
+import { JobConstants } from "../../constants/JobConstants.js";
 
 export class DetailHeaderTemplate extends DetailBaseTemplate {
 
@@ -8,13 +8,13 @@ export class DetailHeaderTemplate extends DetailBaseTemplate {
 
         const status =
             application.application?.status ||
-            "Nicht beworben";
+            JobConstants.STATUS.ENTWURF;
 
         return `
             <header class="app-header pb-0">
 
-                <span class="status-badge ${StatusUtils.getClass(status)}">
-                    ${HtmlUtils.escape(status)}
+                <span class="status-badge ${JobConstants.getClass(status)}">
+                    ${HtmlUtils.escape(JobConstants.STATUS_LABEL[status] || status)}
                 </span>
 
                 <div class="shrink-to-left">

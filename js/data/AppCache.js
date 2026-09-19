@@ -33,4 +33,9 @@ export class AppCache {
 
         return id;
     }
+
+    async delete(id) {
+        await this.db.delete(id);
+        this.applications = this.applications.filter(app => app.id !== id);
+    }
 }
