@@ -1,5 +1,6 @@
 import { DetailBaseTemplate } from "./DetailBaseTemplate.js";
 import { HtmlUtils } from "../../utils/HtmlUtils.js";
+import { FormatUtils } from "../../utils/FormatUtils.js";
 
 export class CompanyTemplate extends DetailBaseTemplate {
 
@@ -58,7 +59,7 @@ export class CompanyTemplate extends DetailBaseTemplate {
                     </div>
                     <div class="field">
                         <label>Verifiziert am</label>
-                        <p>${HtmlUtils.escape(HtmlUtils.toGermanDate(application.companyInformation?.verifiedAt || "—"))}</p>
+                        <p>${HtmlUtils.escape(FormatUtils.toGermanDate(application.companyInformation?.verifiedAt || "—"))}</p>
                     </div>
                     <div class="field">
                         <label>Spezialisierungen</label>

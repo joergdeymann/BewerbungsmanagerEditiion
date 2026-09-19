@@ -8,6 +8,12 @@ export class DetailBaseTemplate {
             return `<p class="muted">Keine Angaben</p>`;
         }
 
+        if (typeof items == "string") { // ##Temporärer Block wegen Fehler eingebaut bite siese Stelle fixen
+            return `
+                <ul>BUGFIX PLSE: ${items}
+                </ul>`;
+        }
+
         return `
             <ul>
                 ${items.map(item => `
