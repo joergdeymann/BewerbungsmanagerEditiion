@@ -27,17 +27,18 @@ export class CompanyTemplate extends DetailBaseTemplate {
                     <div class="field">
                         <label>Adresse</label>
                         <p>
-                            ${HtmlUtils.escape(application.company?.street || "")}<br>
+                            ${HtmlUtils.escape(application.company?.address?.data?.street || "")}
+                            ${HtmlUtils.escape(application.company?.address?.data?.houseNumber || "")}<br>
 
                             ${HtmlUtils.escape(
-                                application.company?.zip || ""
+                                application.company?.address?.data?.zip || ""
                             )}
                             ${HtmlUtils.escape(
-                                application.company?.city || ""
+                                application.company?.address?.data?.city || ""
                             )}<br>
 
                             ${HtmlUtils.escape(
-                                application.company?.country || ""
+                                application.company?.address?.data?.country || ""
                             )}
                         </p>
                     </div>
@@ -47,27 +48,27 @@ export class CompanyTemplate extends DetailBaseTemplate {
                     </div>
                     <div class="field">
                         <label>Branche</label>
-                        <p>${HtmlUtils.escape(application.companyInformation?.industry || "—")}</p>
+                        <p>${HtmlUtils.escape(application.company?.industry || "—")}</p>
                     </div>
                     <div class="field">
                         <label>Unternehmensgröße</label>
-                        <p>${HtmlUtils.escape(application.companyInformation?.size || "—")}</p>
+                        <p>${HtmlUtils.escape(application.company?.size || "—")}</p>
                     </div>
                     <div class="field">
                         <label>Gegründet</label>
-                        <p>${HtmlUtils.escape(application.companyInformation?.founded || "—")}</p>
+                        <p>${HtmlUtils.escape(application.company?.founded || "—")}</p>
                     </div>
                     <div class="field">
                         <label>Verifiziert am</label>
-                        <p>${HtmlUtils.escape(FormatUtils.toGermanDate(application.companyInformation?.verifiedAt || "—"))}</p>
+                        <p>${HtmlUtils.escape(FormatUtils.toGermanDate(application.company?.verifiedAt || "—"))}</p>
                     </div>
                     <div class="field">
                         <label>Spezialisierungen</label>
-                        ${this.list(application.companyInformation?.specialties || "—")}
+                        ${this.list(application.company?.specialties || "—")}
                     </div>
                     <div class="field">
                         <label>Selbstbeschreibung</label>
-                        <p>${HtmlUtils.escape(application.companyInformation?.description || "—")}</p>
+                        <p>${HtmlUtils.escape(application.company?.description || "—")}</p>
                     </div>
                     <div class="field">
                         <label>Tätigkeitsbeschreibung der Firma(ACHTUNG FALLSCHER INHALT)</label>
