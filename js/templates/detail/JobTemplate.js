@@ -24,7 +24,7 @@ export class JobTemplate extends DetailBaseTemplate {
                     </div>
                     <div class="field">
                         <label>Arbeitsort</label>
-                        <p>${HtmlUtils.escape(application.job?.location || "—")}</p>
+                        <p>${HtmlUtils.escape(application.job?.workLocation || "—")}</p>
                     </div>
                     <div class="field">
                         <label>Beschäftigungsart</label>
@@ -58,7 +58,7 @@ export class JobTemplate extends DetailBaseTemplate {
                     </div>
                     <div class="field">
                         <label>Aufgaben</label>
-                        ${this.list(application.tasks|| "—")}
+                        ${this.list(application.job?.tasks || "—")}
                     </div>                    
                 </section>
             </section>
