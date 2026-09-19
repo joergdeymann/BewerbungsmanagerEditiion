@@ -1,4 +1,4 @@
-import { JobConstants } from "../../../constants/JobConstants.js";
+import { JobConstants } from "../../constants/JobConstants.js";
 
 export class OverviewFilter {
 
