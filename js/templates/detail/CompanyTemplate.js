@@ -71,9 +71,8 @@ export class CompanyTemplate extends DetailBaseTemplate {
                         <p>${HtmlUtils.escape(application.company?.description || "—")}</p>
                     </div>
                     <div class="field">
-                        <label>Tätigkeitsbeschreibung der Firma(ACHTUNG FALLSCHER INHALT)</label>
-                        ${this.list(application.tasks || "—")}
-
+                        <label>Tätigkeitsbeschreibung der Firma</label>
+                        <p class="muted">Noch nicht implementiert</p>
                     </div>
                 </section>
             </section>

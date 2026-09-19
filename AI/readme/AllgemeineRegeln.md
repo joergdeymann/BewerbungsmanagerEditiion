@@ -66,3 +66,7 @@
 ## Vorgehensweise 
 - Teile die Analyse in kleine, logisch zusammenhängende Gruppen auf und bearbeite diese nacheinander vollständig.
 
+## Unvollständige Daten
+- Felder aus bestehenden Templates niemals entfernen, wenn keine passende Datenquelle existiert.
+- Stattdessen den Bereich mit leeren Daten bzw. dem Hinweis "Noch nicht implementiert" anzeigen.
+- Den offenen Punkt in `AI/workflow/todo.md` eintragen.

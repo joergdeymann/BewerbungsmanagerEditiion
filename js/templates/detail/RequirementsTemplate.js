@@ -19,20 +19,21 @@ export class RequirementsTemplate extends DetailBaseTemplate {
                 <section class="section-body">
                     <div class="field">
                         <label>Muss-Anforderungen</label>
-                        ${this.list(application.qualifications?.required)}
+                        ${this.list(application.qualifications?.required?.content)}
                     </div>
 
                     <div class="field">
                         <label>Fachliche Fähigkeiten / Technologien</label>
-                        ${this.list(application.skills)}
+                        <p class="muted">Noch nicht implementiert</p>
                     </div>
+
                     <div class="field">
                         <label>Persönliche Anforderungen</label>
-                        ${this.list(application.qualifications?.personal)}
+                        ${this.list(application.qualifications?.personal?.content)}
                     </div>
                     <div class="field">
                         <label>Wünschenswerte Kenntnisse</label>
-                        ${this.list(application.qualifications?.preferred)}
+                        ${this.list(application.qualifications?.preferred?.content)}
                     </div>
                 </section>
             </section>    
