@@ -52,9 +52,7 @@ export class JobTemplate extends DetailBaseTemplate {
                     </div>
                     <div class="field">
                         <label>Badges</label>
-                        <p>${(application.job?.tags || []).length
-                            ? application.job.tags.map(tag => `<span class="tag-badge">${HtmlUtils.escape(tag)}</span>`).join(" ")
-                            : "—"}</p>
+                        <p>${this.badges(application.job?.tags)}</p>
                     </div>
                     <div class="field">
                         <label>Aufgaben</label>

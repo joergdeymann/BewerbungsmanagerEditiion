@@ -1,5 +1,4 @@
 import { DetailBaseTemplate } from "./DetailBaseTemplate.js";
-import { HtmlUtils } from "../../utils/HtmlUtils.js";
 
 export class BenefitsTemplate extends DetailBaseTemplate {
 
@@ -24,9 +23,7 @@ export class BenefitsTemplate extends DetailBaseTemplate {
                     </div>
                     <div class="field">
                         <label>Badges</label>
-                        <p>${(application.benefits?.tags || []).length
-                            ? application.benefits.tags.map(tag => `<span class="tag-badge">${HtmlUtils.escape(tag)}</span>`).join(" ")
-                            : "—"}</p>
+                        <p>${this.badges(application.benefits?.tags)}</p>
                     </div>
                 </section>
             </section>

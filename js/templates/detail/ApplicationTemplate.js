@@ -8,7 +8,11 @@ export class ApplicationTemplate extends DetailBaseTemplate {
 
         const status =
             application.application?.status ||
-            "Nicht beworben";
+            JobConstants.STATUS.ENTWURF;
+
+        const portalEntry = [...(application.application?.history || [])]
+            .reverse()
+            .find(item => item.channel === "portal");
         
             return `
             <section class="subsection-display ">
@@ -30,16 +34,16 @@ export class ApplicationTemplate extends DetailBaseTemplate {
 
                     <div class="field">
                         <label>Bewerbungsweg</label>
-                        <p>${HtmlUtils.escape(application.application?.method ||"—")}</p>
+                        <p>${HtmlUtils.escape(application.application?.channel ||"—")}</p>
                     </div>
 
                     <div class="field">
                         <label>Portal</label>
-                        <p>${this.link(application.portal?.url)}</p> 
+                        <p>${this.link(portalEntry?.entry?.website)}</p> 
                     </div>
                     <div class="field"> 
                         <label>Benutzer</label>
-                        <p>${HtmlUtils.escape(application.portal?.username || "—")}</p>
+                        <p>${HtmlUtils.escape(portalEntry?.entry?.username || "—")}</p>
                     </div>
                     <div class="field"> 
                         <label>Kennziffer</label>
@@ -50,7 +54,7 @@ export class ApplicationTemplate extends DetailBaseTemplate {
                     <div class="field"> 
                         <label>Lebenslauf</label>
                         <div class="field-with-button">
-                            ${this.documentButton("Lebenslauf", application.documents?.resume)}
+                            ${this.documentButton("Lebenslauf", application.application?.resume)}
                             <button>+</button>
                         </div>
                     </div>          
@@ -58,7 +62,7 @@ export class ApplicationTemplate extends DetailBaseTemplate {
                     <div class="field">
                         <label>Anschreiben</label>
                         <div class="field-with-button">
-                            ${this.documentButton("Anschreiben", application.documents?.coverLetter)}
+                            ${this.documentButton("Anschreiben", application.application?.coverLetter)}
                             <button>+</button>
                         </div>
                     </div>
@@ -126,43 +130,46 @@ export class ApplicationTemplate extends DetailBaseTemplate {
                     </div>
                 </section>
 
-                <div class="flex-row left-side compact">
-                    <span class="status-badge compact status-rejected">Abgelehnt<br>29.08.2026</span>
-
-                    <div class="application-main">
-                        <strong>via Mail</strong>
-                    </div>
-
-                    <div class="application-main">
-                        <strong>BUTTON Details</strong>
-                    </div>
-                </div>
-
-                <div class="flex-row left-side compact">
-                    <span class="status-badge compact status-rejected">Abgelehnt<br>29.08.2026</span>
-
-                    <div class="application-main">
-                        <strong>via Mail</strong>
-                    </div>
-
-                    <div class="application-main">
-                        <strong>BUTTON Details</strong>
-                    </div>
-                </div>
-                <div class="flex-row left-side compact">
-                    <span class="status-badge compact status-rejected">Abgelehnt<br>29.08.2026</span>
-
-                    <div class="application-main">
-                        <strong>via Mail</strong>
-                    </div>
-
-                    <div class="application-main">
-                        <strong>BUTTON Details</strong>
-                    </div>
+                <div class="flex-row-list">
+                    ${this.historyList(application)}
                 </div>
             </section>
         `;
 
+    }
+
+    historyList(application) {
+        const history = application.application?.history || [];
+
+        if (!history.length) {
+            return `<p class="muted">Noch keine Einträge vorhanden.</p>`;
+        }
+
+        const channelLabel = {
+            portal: "via Portal",
+            email: "via Mail",
+            phone: "via Telefon",
+            personal: "Persönlich"
+        };
+
+        return [...history]
+            .sort((a, b) => (b.entry?.date || "").localeCompare(a.entry?.date || ""))
+            .map(item => {
+                const date = item.entry?.date
+                    ? new Date(item.entry.date).toLocaleDateString("de-DE")
+                    : "";
+
+                return `
+                    <div class="flex-row left-side compact">
+                        <span class="status-badge compact">${HtmlUtils.escape(date)}</span>
+
+                        <div class="application-main">
+                            <strong>${HtmlUtils.escape(channelLabel[item.channel] || item.channel)}</strong>
+                        </div>
+                    </div>
+                `;
+            })
+            .join("");
     }
 
     documentButton(label, url) {

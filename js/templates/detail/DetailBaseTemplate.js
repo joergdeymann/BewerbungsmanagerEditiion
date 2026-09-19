@@ -24,6 +24,17 @@ export class DetailBaseTemplate {
     }
 
 
+    badges(items) {
+
+        if (!items?.length) {
+            return "—";
+        }
+
+        return items
+            .map(item => `<span class="tag-badge">${HtmlUtils.escape(item)}</span>`)
+            .join(" ");
+    }
+
     links(urls) {
         const unique = [...new Set(urls ?? [])].filter(Boolean);
 
