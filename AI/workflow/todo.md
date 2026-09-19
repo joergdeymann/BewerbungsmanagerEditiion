@@ -15,6 +15,11 @@ bearbeitet werden.
   Entsprechung in einem Model. Wird aktuell mit "Noch nicht implementiert" angezeigt.
   Mögliche Quelle: `job.tags`.
 
+## SourcesTemplate.js
+- Felder "Stellenanzeige" (Link zur Stellenanzeige selbst) und "Quelle"
+  (z. B. LinkedIn/Indeed) haben keine Entsprechung in einem Model.
+  Wird aktuell mit "Noch nicht implementiert" angezeigt.
+
 ## Bearbeitung / Editor
 - Editier-Modus für Tabs (Eingabefelder, Speichern) existiert noch nicht,
   nur Anzeige. Siehe Rückfrage zu ContactTab.

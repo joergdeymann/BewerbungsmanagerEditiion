@@ -5,7 +5,7 @@ export class SourcesTemplate extends DetailBaseTemplate {
 
     render(application) {
 
-        const importedUrls = application.sources?.importedUrls || [];
+        const references = application.references || [];
 
         return `
             <section class="subsection-display">
@@ -28,22 +28,22 @@ export class SourcesTemplate extends DetailBaseTemplate {
                     
                     <div class="field">
                         <label>Stellenanzeige</label>
-                        ${this.link([application.sources?.jobPosting, application.application?.jobUrl])}
+                        <p class="muted">Noch nicht implementiert</p>
                     </div>
 
                     <div class="field">
                         <label>Unternehmensseite</label>
-                        ${this.link([application.sources?.companyWebsite, application.company?.website])}
+                        ${this.link(application.company?.website)}
                     </div>
 
                     <div class="field">
                         <label>Quelle</label>
-                        <p>${this.link(application.application?.source)}</p>
+                        <p class="muted">Noch nicht implementiert</p>
                     </div>
 
                     <div class="field">
                         <label>Weitere Quellen</label>
-                        ${this.link(importedUrls)}
+                        ${this.list(references.map(reference => `${reference.name}: ${reference.url}`))}
                     </div>
                 </section>
             </section>
