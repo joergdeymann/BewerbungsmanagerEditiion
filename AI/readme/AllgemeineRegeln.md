@@ -59,6 +59,7 @@
 
 - Änderungen **klar beschreiben und nummerieren**.
 - Bei kleinen Änderungen **diff**, bei größeren Änderungen **Codeausschnitt**, bei umfangreichen Änderungen **gesamte Datei** verwenden.
+- für jede Datei immer den Pfad angeben
 - Pro Änderung **nur eine Darstellungsform** verwenden, niemals diff und Code gleichzeitig.
 - Die Analyse nach **maximal 5 gefundenen Änderungen** stoppen.
 

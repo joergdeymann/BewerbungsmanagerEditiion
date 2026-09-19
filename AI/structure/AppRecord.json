@@ -39,7 +39,9 @@
             "founded": "",
             "description": "",
             "specialties": [],
-            "images": []
+            "images": [],
+            "email": "",
+            "phone": ""
         },
         "contacts": [
             {

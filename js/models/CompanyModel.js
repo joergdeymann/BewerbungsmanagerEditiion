@@ -10,6 +10,8 @@ export class CompanyModel {
         this.size = "";
         this.founded = "";
         this.website = "";
+        this.email = "";
+        this.phone = "";
         this.address = new AddressModel();
         this.verifiedAt = "";
         this.description = "";
@@ -25,6 +27,8 @@ export class CompanyModel {
             relationship: this.relationship,
             address: this.address.data,
             website: this.website,
+            email: this.email,
+            phone: this.phone,
             verifiedAt: this.verifiedAt,
             industry: this.industry,
             size: this.size,
@@ -42,6 +46,8 @@ export class CompanyModel {
         this.legalForm = raw.legalForm ?? this.legalForm;
         this.relationship = raw.relationship ?? this.relationship;
         this.website = raw.website ?? this.website;
+        this.email = raw.email ?? this.email;
+        this.phone = raw.phone ?? this.phone;
         this.verifiedAt = raw.verifiedAt ?? this.verifiedAt;
         this.industry = raw.industry ?? this.industry;
         this.size = raw.size ?? this.size;

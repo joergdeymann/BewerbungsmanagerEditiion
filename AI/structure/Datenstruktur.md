@@ -16,7 +16,7 @@ Alle Models stellen ihre Daten über `get data` / `set data` bereit. Die flache 
   `employmentType`, `workModel`, `salary`, `vacationPay`, `christmasPay`,
   `referenceNumber`, `tasks`, `tags`.
 - `CompanyModel` – Firmendaten: `id`, `name`, `legalForm`, `relationship`, `industry`,
-  `size`, `founded`, `website`, `address`, `verifiedAt`, `description`, `specialties`,
+  `size`, `founded`, `website`, `email`, `phone`, `address`, `verifiedAt`, `description`, `specialties`,
   `images`. `relationship` unterscheidet Hauptsitz, Filiale und Arbeitsort. Aktuell hält
   `AppModel` genau eine `CompanyModel`-Instanz (keine Liste); eine Filialliste ist
   zurückgestellt.
