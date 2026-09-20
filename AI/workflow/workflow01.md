@@ -2,18 +2,62 @@
 
 
 ## Schritt 1: `JobTemplate.js` 
-- Anordung  Gesuchte Stelle mit in der Überschrift Stelle: <gesuchte Stelle>, dann Arbeitsort bis Kennziffer mit class field-grid
-- Badges: auch wie es ist mit voller bereite, jeder Tag bekmmt noch zusätzlich eine umrahmnung und eine farbe wie die überschrift Buttons
+- Anordung  Gesuchte Stelle so wie es ist, dann Arbeitsort bis Kennziffer, die sektion mit class field-grid
+- Badges: wie es ist mit voller bereite, jeder Tag bekmmt noch zusätzlich eine umrahmnung und eine farbe wie die überschrift Buttons
 - Aufgaben bleibt dann unten wie es ist
-- Arbeitsort sollte die komplette Adresse stehen nd nicht nur die Stadt thuis.worklocation ist also ein AddressModel
+- Arbeitsort sollte die komplette Adresse stehen und nicht nur die Stadt this.worklocation ist also ein AddressModel
 - Worklocation als adresse in den Testdaten auufnehmen
-- fehlen Adressangbaen so müssen die von der Ffirma genommen werden
+- fehlen Adressangbaen so müssen die von der firma genommen werden
 - Arbeitsmodell soolen mehrere Möglich sein, die dann hier durch komma getrennt dargestellt werden
 - Gehalt mit dem ForamtUtil formatCurrency anzeigen
 - Urlaubsgeld sollte ein Betrag rein, ForamtUtil formatCurrency anzeigen
 - Weinnachtsgel sollte ien Betrag rein, ForamtUtil formatCurrency anzeigen
 
+## Schritt 1.1: `Ansprechpartner` 
+- Der Aktuelle Ansprechpartner wird oben angezeigt wie es jetzt ist
+- Darunter kommt eine Liste mit weiteren potentiellen Ansprechpartnern
+- Das AppModel sollte eine Liste von ContactModels haben. Das ist die Liste mit potenziellen Ansprechpartnern.
+- Es soll möglich seine einen aus der Liste auszuwählen und als aktuellen Ansprechpartner einzustellen.
+- Es soll möglich sein einen Kontankt zu ändern un Button in der Zeile öffnet ein Fenster, das die eingabe aller Kontaktdaten des ContactModels beinhaltet
+- Es soll möglich sein einen Kontankt hinzuzufügen, der Button am Ende der Liste oder am Anfang der Liste ermöglicht dies, die handhabung ist wie beim Ändern
+- Das Entfernen eines Eintrags muss auch möglich sein, dazu rufe ein bereits gebautes PopUp Fenster auf, passe es eventuell an wie eine MessageBox
+- jeder neue Eintrag wird sofort gespeichet, nachdem er erstellt/geändert/gelöscht wurde.
 
+## Schritt 1.2 `Firmeninformationen`
+- Das letzte Feld Tätigkeitsbeschreibung der Firma entspricht der Selbstbeschreibung der Firma und kann raus
+- hier auch für die kurzen Felder field-grid verwenden
+
+## Schritt 1.3 `Anforderungen`
+- Fachliche Fähigkeiten / Technologien entsprechen den Mussanforderungen das Feld kann hier auch weg
+- Für die restlichen Bereiche sollten hier die Schlagwörter aus den Textgeholt werden und darunter mittels wie due Tags in JobTemplate.js angezeigt werden
+- es gibt bereits einen Datenbakeintrag dafür 
+
+## Schritt 1.4 `Benefits`
+- die Tags wieder richtig formatieren (als Tag Kennzeigenen)
+
+## Schritt 1.5 `Quellen`
+- da brauche ich eigentlich nur eine Liste, Name der Quelle, Link zur Quelle und Datum der Erfassung Anzeige Reihenfolge Datum dann Name die die Verknüpfung enthält
+- Die Liste soll Sortierbarsein indem man auf die Überschriften klickt, (vorwärts und rückwräts)
+- Darin enthalt sind alles was mit http anfängt (das wäre der Link wo die Daten herkommen, zb Linkedin, oder die Firmenadresse, Links zu Bildern etc)
+- Die Liste soll auch eine Filterfunktion haben, die die Liste filtert, sobald man einen Suchbegriff eingibt, soll nur die Einträge angezeigt werden, die den Suchbegriff enthalten
+- Ein klick auf eine Zeile öffnet den Link in neuen Browsertab
+
+## Schritt 1.6 `Legende / History in Bewerbung & Ausgabe`
+- sieht gut aus wie es jetzt ist, aber sollte in in der section-body noch eine classe application-card haben oder das selbe in grau
+
+## Schritt 1.7 `Dokumente in Bewerbung & Ausgabe`
+- der + Button soll ein Explorerfenster zu auswählen öffen, wenneine Datei ausgewählt wurde wird die Datei als Guid.normale Endung im Ordner /documents gespeichert, der name Der Ursprünglicehn Datei wird zusammen mit dem neuen Link in das Model gespeichert, ich denke das muss dan noch angepasst werden als UploadFileModel welcher den Originallink und denneuen speichert, die Anzeige ist dann der Originallink ohne Verzeichnisse und Endung.
+- Beim "+" wird immer ein neuer eintrag erzeeugt, es soll aich ein "-" geben der die datei wieder löscht und aus der liste nimmt.
+- Beim Anschreiben soll gibt es nur eine Datei, beim Lebenslauf merhere
+- Ausserdem muss noch ein Eintrag Email-Anschreiben geben, welcher wie ANschreiben funktioniert
+
+## Schritt 1.8 `Dokumente in Notizen`
+- Die Notizen sollen beim Verlassen des Feldes gespeichert werden, 
+- Jede Änderungen solle nach bearbeitung gespeichert werden
+
+## Schritt 1.8 `Telefonate`
+- Überschrift sollte Kontakt heißen
+- es soll dann mehrere Buttons geben anstatt nur Telefonat spiechern, auch Telefonat, Whatsapp, Mail, Persönlich, die könnten per Radiobutton ausgewählt werden, hier git es noch keine Passende Formatierung, die dann dem UI entspricht, mach dafür eine passendes CSS Klasse, Der Bttun soll sich flexibel anpassen, sobald man den Radiobutton auswählt, muss der Text vom AbsendenButtton auch verändert werden. Standart ist immer Telefonat
 
 
 ## Schritt 1B: Überarbeitungen

@@ -23,5 +23,7 @@
 - `js/data` - lokaler Datenzugriff (Persistenz), keine externen Aufrufe
 - `js/io` - Zukunft: Daten-IO (lokale Datenbank, Dateisystem) jetzte noch `js/data/`
 - `js/models` - reine Datenmodelle ohne UI- oder DOM-Logik
-- `js/ui` - UI-Logik, DOM-Logik (HTML, CSS, JavaScript)
 - `js/utils` - allgemeine Funktionen und Klassen, die wieder gebrauch werden
+- `js/templates/` enthält ausschließlich die **HTML-Strukturen** der Views.
+- `js/views/` übernimmt ausschließlich die **Verarbeitung** der Templates.
+- `js/ui/` definiert ausschließlich den **Datenfluss** zwischen Daten und Views.
