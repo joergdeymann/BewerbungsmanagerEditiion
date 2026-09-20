@@ -71,9 +71,9 @@ export class ApplicationTemplate extends DetailBaseTemplate {
 
                     <div class="field"> 
                         <label>Kennwort</label>
-                        <p>${HtmlUtils.escape(portalEntry?.entry?.username || "—")}</p>
+                        <p>${HtmlUtils.escape(portalEntry?.entry?.password || "—")}</p>
                     </div>
-                </div
+                </div>
 
                 <div class="section-header">
                     <div>
@@ -168,7 +168,7 @@ export class ApplicationTemplate extends DetailBaseTemplate {
                     </div>
                 </section>
 
-                <div class="field-grid">
+                <div class="section-body">
                     ${this.historyList(application)}
                 </div>
             </section>
@@ -177,34 +177,101 @@ export class ApplicationTemplate extends DetailBaseTemplate {
     }
 
     historyList(application) {
-        const history = application.application?.history || [];
 
-        if (!history.length) {
+        const entries = [
+            ...this.creationEntries(application),
+            ...this.channelEntries(application),
+            ...this.statusEntries(application)
+        ];
+
+        if (!entries.length) {
             return `<p class="muted">Noch keine Einträge vorhanden.</p>`;
         }
 
-        const channelLabel = {
-            portal: "via Portal",
-            email: "via Mail",
-            phone: "via Telefon",
-            personal: "Persönlich"
-        };
-
-        return [...history]
-            .sort((a, b) => (b.entry?.date || "").localeCompare(a.entry?.date || ""))
-            .map(item => {
-                const date = item.entry?.date
-                    ? new Date(item.entry.date).toLocaleDateString("de-DE")
-                    : "";
-
-                return `
-                    <div class="field">
-                        <label>${HtmlUtils.escape(channelLabel[item.channel] || item.channel)}</label>
-                        <p>${HtmlUtils.escape(date)}</p>
-                    </div>
-                `;
-            })
+        return entries
+            .sort((a, b) => (b.date || "").localeCompare(a.date || ""))
+            .map(entry => this.historyItem(entry))
             .join("");
+    }
+
+    // "Neu angelegt" ist kein Kanal-Eintrag, sondern ergibt sich aus dem Anlegedatum.
+    creationEntries(application) {
+        if (!application.createDate) return [];
+
+        return [{
+            date: application.createDate,
+            action: "Neu angelegt",
+            info: ""
+        }];
+    }
+
+    channelEntries(application) {
+        const history = application.application?.history || [];
+        const contactName = application.contacts?.[0]?.name || "";
+
+        return history.map(item => {
+            const entry = item.entry || {};
+
+            switch (item.channel) {
+                case "portal":
+                    return {
+                        date: entry.date,
+                        action: `Daten aus ${entry.website || "Portal"} geladen`,
+                        info: entry.information || entry.portalName || ""
+                    };
+                case "email":
+                    return {
+                        date: entry.date,
+                        action: `Via Mail beworben an ${entry.emailTo || "—"}`
+                            + (contactName ? ` und ${contactName}` : ""),
+                        info: entry.subject || entry.content || ""
+                    };
+                case "phone":
+                    return {
+                        date: entry.date,
+                        action: "Rückruf erhalten",
+                        info: entry.content || ""
+                    };
+                case "personal":
+                    return {
+                        date: entry.date,
+                        action: "Bewerbung persönlich abgegeben",
+                        info: entry.content || ""
+                    };
+                default:
+                    return {
+                        date: entry.date,
+                        action: item.channel,
+                        info: entry.content || ""
+                    };
+            }
+        });
+    }
+
+    // Nur EINGANG wird als "Antwort erhalten" abgebildet - RUECKRUF kommt bereits
+    // über die Telefon-Kanal-Einträge (channelEntries), sonst gäbe es Dopplungen.
+    statusEntries(application) {
+        const statusHistory = application.application?.statusHistory || [];
+
+        return statusHistory
+            .filter(item => item.status === JobConstants.STATUS.EINGANG)
+            .map(item => ({
+                date: item.date,
+                action: "Antwort der Firma erhalten",
+                info: item.reason || ""
+            }));
+    }
+
+    historyItem(entry) {
+        return `
+            <details class="field history-entry">
+                <summary>
+                    <span>${HtmlUtils.escape(FormatUtils.toGermanDate(entry.date))}</span>
+                    <strong>${HtmlUtils.escape(entry.action)}</strong>
+                </summary>
+                <p>${HtmlUtils.escape(entry.info || "Keine weiteren Details.")}</p>
+            </details>
+        `;
     }
 
     documentButton(label, url) {

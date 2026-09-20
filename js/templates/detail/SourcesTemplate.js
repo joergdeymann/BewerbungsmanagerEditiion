@@ -33,7 +33,7 @@ export class SourcesTemplate extends DetailBaseTemplate {
 
                     <div class="field">
                         <label>Unternehmensseite</label>
-                        ${this.link(application.company?.website)}
+                        <p>${this.link(application.company?.website)}</p>
                     </div>
 
                     <div class="field">

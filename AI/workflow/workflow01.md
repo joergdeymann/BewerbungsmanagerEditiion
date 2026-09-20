@@ -1,16 +1,19 @@
 # Workflow01.md
 
 
-## Schritt 1: `Bererbung und Ausgabe` 
-- Portalinformationen, Prüfe ob die Daten richtig aus dem ApplicationPortalModel kommen auch über den Umweg. Das Kennwort was angegeben ist muss mit dem Passwort übereinstimmen und die anderen Felder müssen auch daher komen,
-- Die Legende History soll Flgende informationen anzeigen: Datum, was wurre gemacht, Kurzinfo
-- was wurde gemacht: 
-  - "Neu angelegt", "Daten aus <Webseite> geladen",
-  - "Beworben"," "Via Mail beworben an <Mail> und <Name>"
-  - "Antwort erhalten", "Antwort der Firma erhalten"
-  - "Rückruf erhalten", "Rückruf der Firma erhalten"
-  - und weitere Möglichkeiten
-- Die Zeile soll anklickbar sein, jede Zeile bekommt also ein eigenen sector
+## Schritt 1: `JobTemplate.js` 
+- Anordung  Gesuchte Stelle mit in der Überschrift Stelle: <gesuchte Stelle>, dann Arbeitsort bis Kennziffer mit class field-grid
+- Badges: auch wie es ist mit voller bereite, jeder Tag bekmmt noch zusätzlich eine umrahmnung und eine farbe wie die überschrift Buttons
+- Aufgaben bleibt dann unten wie es ist
+- Arbeitsort sollte die komplette Adresse stehen nd nicht nur die Stadt thuis.worklocation ist also ein AddressModel
+- Worklocation als adresse in den Testdaten auufnehmen
+- fehlen Adressangbaen so müssen die von der Ffirma genommen werden
+- Arbeitsmodell soolen mehrere Möglich sein, die dann hier durch komma getrennt dargestellt werden
+- Gehalt mit dem ForamtUtil formatCurrency anzeigen
+- Urlaubsgeld sollte ein Betrag rein, ForamtUtil formatCurrency anzeigen
+- Weinnachtsgel sollte ien Betrag rein, ForamtUtil formatCurrency anzeigen
+
+
 
 
 ## Schritt 1B: Überarbeitungen
