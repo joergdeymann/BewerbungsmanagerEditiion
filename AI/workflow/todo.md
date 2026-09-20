@@ -25,3 +25,11 @@ bearbeitet werden.
   nur Anzeige. Siehe Rückfrage zu ContactTab.
 - `ContactModel` unterstützt nur ein Bild (`img`), keine Bildergalerie
   wie im alten `ContactTab.js`/`ImageGallery.js`.
+
+## ApplicationTemplate.js / Legende
+- "Neu angelegt" und "Antwort der Firma erhalten" werden aktuell beim Rendern
+  aus `createDate`/`statusHistory` abgeleitet (nicht als echte `history`-Einträge
+  gespeichert). Sobald der Editor Datensätze anlegt bzw. Status ändert, sollten
+  diese Aktionen direkt als `ApplicationHistoryModel`-Einträge geschrieben werden.
+- `<details class="history-entry">` ist aktuell ungestylt (Browser-Standard).
+  Styling + Individualisierung pro Aktionstyp steht noch aus.
