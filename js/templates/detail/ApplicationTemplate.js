@@ -1,5 +1,6 @@
 import { DetailBaseTemplate } from "./DetailBaseTemplate.js";
 import { HtmlUtils } from "../../utils/HtmlUtils.js";
+import { FormatUtils } from "../../utils/FormatUtils.js";
 import { JobConstants } from "../../constants/JobConstants.js";
 
 export class ApplicationTemplate extends DetailBaseTemplate {
@@ -29,7 +30,7 @@ export class ApplicationTemplate extends DetailBaseTemplate {
                 <div class="field-grid">
                     <div class="field">
                         <label>Beworben am</label>
-                        <p>${HtmlUtils.escape(application.application?.appliedAt || "—")}</p>
+                        <p>${HtmlUtils.escape(FormatUtils.toGermanDate(application.application?.appliedAt || "—"))}</p>
                     </div>
 
                     <div class="field">
@@ -37,19 +38,56 @@ export class ApplicationTemplate extends DetailBaseTemplate {
                         <p>${HtmlUtils.escape(application.application?.channel ||"—")}</p>
                     </div>
 
-                    <div class="field">
-                        <label>Portal</label>
-                        <p>${this.link(portalEntry?.entry?.website)}</p> 
-                    </div>
-                    <div class="field"> 
-                        <label>Benutzer</label>
-                        <p>${HtmlUtils.escape(portalEntry?.entry?.username || "—")}</p>
-                    </div>
                     <div class="field"> 
                         <label>Kennziffer</label>
                         <p>${HtmlUtils.escape(application.job?.referenceNumber || "—")}</p>
                     </div>
+
+
                 </div>
+                <div class="section-header">
+                    <div>
+                        <span class="section-icon">⌘</span>
+
+                        <div>
+                            <h2>Portal-Informationen</h2>
+                            <p>
+                                Daten zum Login der Bewerbung.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field-grid">
+                    <div class="field">
+                        <label>Portal</label>
+                        <p>${this.link(portalEntry?.entry?.website)}</p> 
+                    </div>
+                    
+                    <div class="field"> 
+                        <label>Benutzer</label>
+                        <p>${HtmlUtils.escape(portalEntry?.entry?.username || "—")}</p>
+                    </div>
+
+                    <div class="field"> 
+                        <label>Kennwort</label>
+                        <p>${HtmlUtils.escape(portalEntry?.entry?.username || "—")}</p>
+                    </div>
+                </div
+
+                <div class="section-header">
+                    <div>
+                        <span class="section-icon">📝</span>
+
+                        <div>
+                            <h2>Dokumente</h2>
+                            <p>
+                                Alles was du an Unterlagen benötigtst
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="section-body">
                     <div class="field"> 
                         <label>Lebenslauf</label>
@@ -130,7 +168,7 @@ export class ApplicationTemplate extends DetailBaseTemplate {
                     </div>
                 </section>
 
-                <div class="flex-row-list">
+                <div class="field-grid">
                     ${this.historyList(application)}
                 </div>
             </section>
@@ -160,12 +198,9 @@ export class ApplicationTemplate extends DetailBaseTemplate {
                     : "";
 
                 return `
-                    <div class="flex-row left-side compact">
-                        <span class="status-badge compact">${HtmlUtils.escape(date)}</span>
-
-                        <div class="application-main">
-                            <strong>${HtmlUtils.escape(channelLabel[item.channel] || item.channel)}</strong>
-                        </div>
+                    <div class="field">
+                        <label>${HtmlUtils.escape(channelLabel[item.channel] || item.channel)}</label>
+                        <p>${HtmlUtils.escape(date)}</p>
                     </div>
                 `;
             })

@@ -1,21 +1,25 @@
 # Workflow01.md
 
 
-## Schritt 1: `app.js` einführen
+## Schritt 1: `Bererbung und Ausgabe` 
+- Portalinformationen, Prüfe ob die Daten richtig aus dem ApplicationPortalModel kommen auch über den Umweg. Das Kennwort was angegeben ist muss mit dem Passwort übereinstimmen und die anderen Felder müssen auch daher komen,
+- Die Legende History soll Flgende informationen anzeigen: Datum, was wurre gemacht, Kurzinfo
+- was wurde gemacht: 
+  - "Neu angelegt", "Daten aus <Webseite> geladen",
+  - "Beworben"," "Via Mail beworben an <Mail> und <Name>"
+  - "Antwort erhalten", "Antwort der Firma erhalten"
+  - "Rückruf erhalten", "Rückruf der Firma erhalten"
+  - und weitere Möglichkeiten
+- Die Zeile soll anklickbar sein, jede Zeile bekommt also ein eigenen sector
 
-- Die vorhandene HTML-Struktur liegt noch nicht komplett im Repository.
-- HTML-Struktur und `app.js` **gemeinsam Schritt für Schritt** integrieren.
-- Keine eigenständigen Änderungen an der HTML-Struktur ohne Absprache.
-- `app.js` bildet nur den **Grundstock der Anwendung** und enthält den Router.
-- Die Views werden in `Overview`, `Edit`, `Work` und später weitere Bereiche aufgeteilt.
+
+## Schritt 1B: Überarbeitungen
+Die vorhandenn Strucktur einmal überprüfen und logisch aufteilen
 - `Templates/` enthält ausschließlich die **HTML-Strukturen** der Views.
 - `Views/` übernimmt ausschließlich die **Verarbeitung** der Templates.
 - `UI/` definiert ausschließlich den **Datenfluss** zwischen Daten und Views.
-- `uiCompany.js` und `uiJob.js` dienen als Basis für den Datenfluss.
-- OverviewView einmal getrennt:
-    js/Constants/JobConstants.js Konstanten
-    js/utils/FormatUtils.js Formatierung
-    js/utils/HtmlUtils.js Status
+- Es gibt controller und events: Ich brauche ien Vorschlag ob man die Controller aufteilt oder nicht und schlage ein passende Strucktur im system vor wie es sauber angelegt werden soll
+
 
 
 ## Schritt 2: Erstellen der `OverviewView`
