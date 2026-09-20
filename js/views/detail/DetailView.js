@@ -12,6 +12,7 @@ import { DetailNavigationTemplate } from "../../templates/detail/DetailNavigatio
 
 import { DetailNavigationController } from "./events/DetailNavigationController.js";
 import { CommunicationSectionController } from "./events/CommunicationSectionController.js";
+import { ContactSectionController } from "./events/ContactSectionController.js";
 
 
 export class DetailView {
@@ -40,6 +41,9 @@ export class DetailView {
 
         this.communicationController =
             new CommunicationSectionController(repository);
+
+        this.contactController =
+            new ContactSectionController(repository);
     }
 
 
@@ -122,13 +126,21 @@ export class DetailView {
 
     bindSectionEvents(root, application, section) {
 
-        if (section !== "communication") {
+        if (section === "communication") {
+            this.communicationController.bind(
+                root,
+                application,
+                () => this.showSection(root, application, "communication")
+            );
             return;
         }
-        this.communicationController.bind(
-            root,
-            application,
-            () => this.showSection(root, application, "communication")
-        );
+
+        if (section === "contact") {
+            this.contactController.bind(
+                root,
+                application,
+                () => this.showSection(root, application, "contact")
+            );
+        }
     }
 }

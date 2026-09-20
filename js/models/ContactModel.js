@@ -1,6 +1,6 @@
 export class ContactModel {
     constructor() {
-        this.id = 0;
+        this.id = crypto.randomUUID();
         this.role = "";
         this.name = "";
         this.img = "";
