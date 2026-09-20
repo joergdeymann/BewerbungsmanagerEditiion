@@ -1,20 +1,31 @@
 {
     "app": [
         {
-            "id": "6c032f96-f16d-46c8-9d32-a9d435c4ac9b",
-            "createDate": "2026-09-19T13:46:27.950Z",
+            "id": "cdb9dbe9-01c3-4f42-9b3d-05e116934b29",
+            "createDate": "2026-09-20T23:22:16.731Z",
             "status": "BEWORBEN",
-            "updatedAt": "2026-09-19T13:46:27.950Z",
+            "updatedAt": "2026-09-20T23:22:16.733Z",
             "job": {
                 "companyId": 1,
                 "contactId": 1,
                 "title": "Testjob 1",
-                "workLocation": "Musterstadt 1",
+                "workLocation": {
+                    "street": "Arbeitsweg 1",
+                    "houseNumber": "1",
+                    "zipCountry": "D",
+                    "zip": "49621",
+                    "city": "Musterstadt 1",
+                    "country": "Deutschland",
+                    "postBox": ""
+                },
                 "employmentType": "Vollzeit",
-                "workModel": "Hybrid",
-                "salary": "41000 EUR",
-                "vacationPay": "ja",
-                "christmasPay": "ja",
+                "workModel": [
+                    "Vor Ort",
+                    "Hybrid"
+                ],
+                "salary": 41000,
+                "vacationPay": 1100,
+                "christmasPay": 1600,
                 "referenceNumber": "REF-1",
                 "tasks": [
                     "Aufgabe 1 (Job 1)",
@@ -163,7 +174,7 @@
                 ],
                 "history": [
                     {
-                        "id": "8f54d94a-a22b-46b8-bf70-3585a81e4b0a",
+                        "id": "c9be7d98-8f00-4a83-be6e-6e8104724293",
                         "channel": "portal",
                         "entry": {
                             "date": "2026-09-01",
@@ -175,7 +186,7 @@
                         }
                     },
                     {
-                        "id": "bec46e0f-8b5c-45ad-805b-a2735c18fd8f",
+                        "id": "35588e37-fb13-42d0-a66c-a5aa4b89cee7",
                         "channel": "email",
                         "entry": {
                             "date": "2026-09-02",
@@ -191,7 +202,7 @@
                         }
                     },
                     {
-                        "id": "95841caf-9380-477f-ad5c-2ceac1015c83",
+                        "id": "fbdcd450-cfce-43ba-9b7d-bd0b218e3366",
                         "channel": "phone",
                         "entry": {
                             "date": "2026-09-03",
@@ -237,20 +248,31 @@
             ]
         },
         {
-            "id": "f7fc81cc-3fb1-4c56-aec6-eb9984248c97",
-            "createDate": "2026-09-19T13:46:27.953Z",
+            "id": "c8c54f16-ebec-477c-8120-bbbbc2bc837c",
+            "createDate": "2026-09-20T23:22:16.737Z",
             "status": "BEWORBEN",
-            "updatedAt": "2026-09-19T13:46:27.953Z",
+            "updatedAt": "2026-09-20T23:22:16.737Z",
             "job": {
                 "companyId": 2,
                 "contactId": 2,
                 "title": "Testjob 2",
-                "workLocation": "Musterstadt 2",
+                "workLocation": {
+                    "street": "Arbeitsweg 2",
+                    "houseNumber": "2",
+                    "zipCountry": "D",
+                    "zip": "49622",
+                    "city": "Musterstadt 2",
+                    "country": "Deutschland",
+                    "postBox": ""
+                },
                 "employmentType": "Vollzeit",
-                "workModel": "Hybrid",
-                "salary": "42000 EUR",
-                "vacationPay": "ja",
-                "christmasPay": "ja",
+                "workModel": [
+                    "Vor Ort",
+                    "Hybrid"
+                ],
+                "salary": 42000,
+                "vacationPay": 1200,
+                "christmasPay": 1700,
                 "referenceNumber": "REF-2",
                 "tasks": [
                     "Aufgabe 1 (Job 2)",
@@ -399,7 +421,7 @@
                 ],
                 "history": [
                     {
-                        "id": "a06f59bc-f7ae-4d81-a02f-9295b26f9178",
+                        "id": "fadd7a1a-bcdd-4d4c-9da4-2cf76d7c64c5",
                         "channel": "portal",
                         "entry": {
                             "date": "2026-09-01",
@@ -411,7 +433,7 @@
                         }
                     },
                     {
-                        "id": "5782ecbc-6e8c-4c2e-8ee8-d3db06376cc8",
+                        "id": "e79445d8-7b96-4cf5-98eb-64a9388244b3",
                         "channel": "email",
                         "entry": {
                             "date": "2026-09-02",
@@ -427,7 +449,7 @@
                         }
                     },
                     {
-                        "id": "e24497ec-0418-4cb5-af5e-ce31236f2831",
+                        "id": "03975688-7daf-4349-b94b-e81921b3baef",
                         "channel": "phone",
                         "entry": {
                             "date": "2026-09-03",
@@ -473,20 +495,31 @@
             ]
         },
         {
-            "id": "513effdd-f928-41f3-a435-40f2d0e555a3",
-            "createDate": "2026-09-19T13:46:27.953Z",
+            "id": "875b0340-0f33-4e52-af61-d05e8d4c1c6c",
+            "createDate": "2026-09-20T23:22:16.737Z",
             "status": "BEWORBEN",
-            "updatedAt": "2026-09-19T13:46:27.953Z",
+            "updatedAt": "2026-09-20T23:22:16.737Z",
             "job": {
                 "companyId": 3,
                 "contactId": 3,
                 "title": "Testjob 3",
-                "workLocation": "Musterstadt 3",
+                "workLocation": {
+                    "street": "Arbeitsweg 3",
+                    "houseNumber": "3",
+                    "zipCountry": "D",
+                    "zip": "49623",
+                    "city": "Musterstadt 3",
+                    "country": "Deutschland",
+                    "postBox": ""
+                },
                 "employmentType": "Vollzeit",
-                "workModel": "Hybrid",
-                "salary": "43000 EUR",
-                "vacationPay": "ja",
-                "christmasPay": "ja",
+                "workModel": [
+                    "Vor Ort",
+                    "Hybrid"
+                ],
+                "salary": 43000,
+                "vacationPay": 1300,
+                "christmasPay": 1800,
                 "referenceNumber": "REF-3",
                 "tasks": [
                     "Aufgabe 1 (Job 3)",
@@ -635,7 +668,7 @@
                 ],
                 "history": [
                     {
-                        "id": "a60314f5-373d-4f43-b169-92ec3b50be53",
+                        "id": "d16aab33-cd5d-47ce-8ecb-a9b953e211e3",
                         "channel": "portal",
                         "entry": {
                             "date": "2026-09-01",
@@ -647,7 +680,7 @@
                         }
                     },
                     {
-                        "id": "b12c785f-ac62-4bf1-998b-8d25cb666dff",
+                        "id": "65b9cd07-1900-498e-9f36-64173f86dfcb",
                         "channel": "email",
                         "entry": {
                             "date": "2026-09-02",
@@ -663,7 +696,7 @@
                         }
                     },
                     {
-                        "id": "89befab4-d266-46be-920b-821506bb10e9",
+                        "id": "df668d5a-9280-40c0-beda-0b76f8e48d2d",
                         "channel": "phone",
                         "entry": {
                             "date": "2026-09-03",
@@ -709,20 +742,31 @@
             ]
         },
         {
-            "id": "6ab1849d-1916-4859-9a79-84f8b99adb59",
-            "createDate": "2026-09-19T13:46:27.953Z",
+            "id": "d8a554cd-018f-4dc4-8c5d-f1cc2c3ba93e",
+            "createDate": "2026-09-20T23:22:16.737Z",
             "status": "BEWORBEN",
-            "updatedAt": "2026-09-19T13:46:27.953Z",
+            "updatedAt": "2026-09-20T23:22:16.737Z",
             "job": {
                 "companyId": 4,
                 "contactId": 4,
                 "title": "Testjob 4",
-                "workLocation": "Musterstadt 4",
+                "workLocation": {
+                    "street": "Arbeitsweg 4",
+                    "houseNumber": "4",
+                    "zipCountry": "D",
+                    "zip": "49624",
+                    "city": "Musterstadt 4",
+                    "country": "Deutschland",
+                    "postBox": ""
+                },
                 "employmentType": "Vollzeit",
-                "workModel": "Hybrid",
-                "salary": "44000 EUR",
-                "vacationPay": "ja",
-                "christmasPay": "ja",
+                "workModel": [
+                    "Vor Ort",
+                    "Hybrid"
+                ],
+                "salary": 44000,
+                "vacationPay": 1400,
+                "christmasPay": 1900,
                 "referenceNumber": "REF-4",
                 "tasks": [
                     "Aufgabe 1 (Job 4)",
@@ -871,7 +915,7 @@
                 ],
                 "history": [
                     {
-                        "id": "b8ff88c3-1fc6-408a-bc5d-9ac6fe03c84b",
+                        "id": "c3df8872-b3a2-41bd-9e45-e13c93b8c72f",
                         "channel": "portal",
                         "entry": {
                             "date": "2026-09-01",
@@ -883,7 +927,7 @@
                         }
                     },
                     {
-                        "id": "a3514156-64e7-43fb-9188-88d06804e9f6",
+                        "id": "b628afef-e3df-4739-b48b-85820220ddef",
                         "channel": "email",
                         "entry": {
                             "date": "2026-09-02",
@@ -899,7 +943,7 @@
                         }
                     },
                     {
-                        "id": "450db30c-4989-4f53-bf35-11bb9384afaa",
+                        "id": "03c21373-da0c-4181-a734-10bea8c8c18b",
                         "channel": "phone",
                         "entry": {
                             "date": "2026-09-03",
@@ -945,20 +989,31 @@
             ]
         },
         {
-            "id": "5b5ef17e-bf17-4178-8c2c-7fe58b6ea2c1",
-            "createDate": "2026-09-19T13:46:27.953Z",
+            "id": "399a9325-efe2-472e-b273-c015ad93cb7f",
+            "createDate": "2026-09-20T23:22:16.737Z",
             "status": "BEWORBEN",
-            "updatedAt": "2026-09-19T13:46:27.953Z",
+            "updatedAt": "2026-09-20T23:22:16.737Z",
             "job": {
                 "companyId": 5,
                 "contactId": 5,
                 "title": "Testjob 5",
-                "workLocation": "Musterstadt 5",
+                "workLocation": {
+                    "street": "Arbeitsweg 5",
+                    "houseNumber": "5",
+                    "zipCountry": "D",
+                    "zip": "49625",
+                    "city": "Musterstadt 5",
+                    "country": "Deutschland",
+                    "postBox": ""
+                },
                 "employmentType": "Vollzeit",
-                "workModel": "Hybrid",
-                "salary": "45000 EUR",
-                "vacationPay": "ja",
-                "christmasPay": "ja",
+                "workModel": [
+                    "Vor Ort",
+                    "Hybrid"
+                ],
+                "salary": 45000,
+                "vacationPay": 1500,
+                "christmasPay": 2000,
                 "referenceNumber": "REF-5",
                 "tasks": [
                     "Aufgabe 1 (Job 5)",
@@ -1107,7 +1162,7 @@
                 ],
                 "history": [
                     {
-                        "id": "4d92d140-3892-42e8-b326-73c8741c602f",
+                        "id": "9ec74bb3-04af-46fe-baa2-b273e3f7bf45",
                         "channel": "portal",
                         "entry": {
                             "date": "2026-09-01",
@@ -1119,7 +1174,7 @@
                         }
                     },
                     {
-                        "id": "78489b49-c12b-4acc-af6e-50ba8b24a459",
+                        "id": "b4fd279b-7586-455c-ad12-fef1d12f158d",
                         "channel": "email",
                         "entry": {
                             "date": "2026-09-02",
@@ -1135,7 +1190,7 @@
                         }
                     },
                     {
-                        "id": "785b9522-877b-4e2e-b3ed-765546e490c5",
+                        "id": "da69b2fa-7a82-43c1-9ed9-51dcb0b5cb45",
                         "channel": "phone",
                         "entry": {
                             "date": "2026-09-03",

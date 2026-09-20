@@ -66,12 +66,20 @@ function buildTestRecord(recordIndex) {
     app.job.companyId = recordIndex;
     app.job.contactId = recordIndex;
     app.job.title = `Testjob ${recordIndex}`;
-    app.job.workLocation = `Musterstadt ${recordIndex}`;
+    app.job.workLocation.data = {
+        street: `Arbeitsweg ${recordIndex}`,
+        houseNumber: `${recordIndex}`,
+        zipCountry: "D",
+        zip: `4962${recordIndex}`,
+        city: `Musterstadt ${recordIndex}`,
+        country: "Deutschland",
+        postBox: ""
+    };
     app.job.employmentType = "Vollzeit";
-    app.job.workModel = "Hybrid";
-    app.job.salary = `${40000 + recordIndex * 1000} EUR`;
-    app.job.vacationPay = "ja";
-    app.job.christmasPay = "ja";
+    app.job.workModel = ["Vor Ort", "Hybrid"];
+    app.job.salary = 40000 + recordIndex * 1000;
+    app.job.vacationPay = 1000 + recordIndex * 100;
+    app.job.christmasPay = 1500 + recordIndex * 100;
     app.job.referenceNumber = `REF-${recordIndex}`;
     app.job.tasks = [1, 2, 3].map(n => `Aufgabe ${n} (Job ${recordIndex})`);
     app.job.tags = [1, 2, 3].map(n => `Tag${n}-${recordIndex}`);

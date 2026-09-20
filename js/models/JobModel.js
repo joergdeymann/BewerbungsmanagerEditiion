@@ -1,11 +1,13 @@
+import { AddressModel } from "./AddressModel.js";
+
 export class JobModel {
     constructor() {
         this.companyId = 0;
         this.contactId = 0;
         this.title = "";
-        this.workLocation = "";
+        this.workLocation = new AddressModel();
         this.employmentType = "";
-        this.workModel = "";
+        this.workModel = [];
         this.salary = "";
         this.vacationPay = "";
         this.christmasPay = "";
@@ -19,7 +21,7 @@ export class JobModel {
             companyId: this.companyId,
             contactId: this.contactId,
             title: this.title,
-            workLocation: this.workLocation,
+            workLocation: this.workLocation.data,
             employmentType: this.employmentType,
             workModel: this.workModel,
             salary: this.salary,
@@ -36,7 +38,7 @@ export class JobModel {
         this.companyId = raw.companyId ?? this.companyId;
         this.contactId = raw.contactId ?? this.contactId;
         this.title = raw.title ?? this.title;
-        this.workLocation = raw.workLocation ?? this.workLocation;
+        if (raw.workLocation) this.workLocation.data = raw.workLocation;
         this.employmentType = raw.employmentType ?? this.employmentType;
         this.workModel = raw.workModel ?? this.workModel;
         this.salary = raw.salary ?? this.salary;
