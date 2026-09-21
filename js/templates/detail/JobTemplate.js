@@ -23,7 +23,7 @@ export class JobTemplate extends DetailBaseTemplate {
                 <section class="section-body field-grid">
                     <div class="field">
                         <label>Arbeitsort</label>
-                        <p>${HtmlUtils.escape(workLocation || "—")}</p>
+                        <p>${workLocation ? HtmlUtils.escape(workLocation).replace(/\n/g, "<br>") : "—"}</p>
                     </div>
                     <div class="field">
                         <label>Beschäftigungsart</label>
@@ -68,19 +68,16 @@ export class JobTemplate extends DetailBaseTemplate {
 
     // Adresse der Arbeitsstelle - fehlen Angaben, wird die Firmenadresse verwendet.
     workLocationText(application) {
-        const own = application.job?.workLocation?.data;
-        const hasOwnAddress = own?.street || own?.city;
+        const own = application.job?.workLocation;
+        const ownData = own?.data;
+        const hasOwnAddress = ownData?.street || ownData?.city;
 
         const address = hasOwnAddress
             ? own
-            : application.company?.address?.data;
+            : application.company?.address;
 
         if (!address) return "";
 
-        return [
-            [address.street, address.houseNumber].filter(Boolean).join(" "),
-            [address.zip, address.city].filter(Boolean).join(" "),
-            address.country
-        ].filter(Boolean).join(", ");
+        return address.text();
     }
 }

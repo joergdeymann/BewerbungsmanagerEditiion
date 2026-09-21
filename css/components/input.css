@@ -86,6 +86,12 @@ textarea::-webkit-resizer {
    margin-bottom: 8px;
 }
 
+/* Höhere Spezifität nötig, da .section-body (content.css) sonst
+   wegen späterer Ladereihenfolge mit display:flex gewinnen würde. */
+.section-body.field-grid {
+   display: grid;
+}
+
 .field-wide {
    grid-column: span 2;
 }

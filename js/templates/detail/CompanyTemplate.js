@@ -18,7 +18,7 @@ export class CompanyTemplate extends DetailBaseTemplate {
                     </div>
                 </section>
                 
-                <section class="section-body">
+                <section class="section-body field-grid">
                     <div class="field">
                         <label>Firmenname</label>
                         <p>${HtmlUtils.escape(application.company?.name || "—")}</p>
@@ -62,6 +62,9 @@ export class CompanyTemplate extends DetailBaseTemplate {
                         <label>Verifiziert am</label>
                         <p>${HtmlUtils.escape(FormatUtils.toGermanDate(application.company?.verifiedAt || "—"))}</p>
                     </div>
+                </section>
+
+                <section class="section-body">
                     <div class="field">
                         <label>Spezialisierungen</label>
                         ${this.list(application.company?.specialties)}
@@ -69,10 +72,6 @@ export class CompanyTemplate extends DetailBaseTemplate {
                     <div class="field">
                         <label>Selbstbeschreibung</label>
                         <p>${HtmlUtils.escape(application.company?.description || "—")}</p>
-                    </div>
-                    <div class="field">
-                        <label>Tätigkeitsbeschreibung der Firma</label>
-                        <p class="muted">Noch nicht implementiert</p>
                     </div>
                 </section>
             </section>

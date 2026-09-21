@@ -5,10 +5,8 @@ oder für später geplante Funktionen. Wird ergänzt, sobald weitere Templates
 bearbeitet werden.
 
 ## CompanyTemplate.js
-- Feld "Tätigkeitsbeschreibung der Firma" hatte im alten Template `application.tasks`
-  (Job-Aufgaben) als Inhalt - bereits dort als falsch markiert ("ACHTUNG FALSCHER INHALT").
-  Keine passende Datenquelle in `CompanyModel` vorhanden. Wird aktuell mit
-  "Noch nicht implementiert" angezeigt.
+- Feld "Tätigkeitsbeschreibung der Firma" war ein Duplikat der Selbstbeschreibung
+  und wurde in Schritt 1.2 entfernt (explizite Entscheidung).
 
 ## RequirementsTemplate.js
 - Feld "Fachliche Fähigkeiten / Technologien" (`application.skills`) hat keine
