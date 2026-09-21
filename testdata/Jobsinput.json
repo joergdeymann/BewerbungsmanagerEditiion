@@ -1,10 +1,10 @@
 {
     "app": [
         {
-            "id": "aa896f05-01d7-4a81-9175-288ced484d4c",
-            "createDate": "2026-09-20T23:29:01.252Z",
+            "id": "a2b7fa5d-8a11-41d8-b58c-8008c0bc1eea",
+            "createDate": "2026-09-20T23:52:22.264Z",
             "status": "BEWORBEN",
-            "updatedAt": "2026-09-20T23:29:01.253Z",
+            "updatedAt": "2026-09-20T23:52:22.265Z",
             "job": {
                 "companyId": 1,
                 "contactId": 1,
@@ -174,7 +174,7 @@
                 ],
                 "history": [
                     {
-                        "id": "92124a1e-8d71-4f89-a784-f0ce7cc4a9ab",
+                        "id": "fe898714-840a-487f-83b7-7bcd39140321",
                         "channel": "portal",
                         "entry": {
                             "date": "2026-09-01",
@@ -186,7 +186,7 @@
                         }
                     },
                     {
-                        "id": "11c89604-627d-4dd0-af52-fa13ecac1463",
+                        "id": "da93444f-f830-4c89-8b5d-627f3b24f644",
                         "channel": "email",
                         "entry": {
                             "date": "2026-09-02",
@@ -202,7 +202,7 @@
                         }
                     },
                     {
-                        "id": "d1749d41-50cc-4e5c-96c7-392c42324356",
+                        "id": "3e2c9b40-8934-41a1-884f-1b5093bda548",
                         "channel": "phone",
                         "entry": {
                             "date": "2026-09-03",
@@ -248,10 +248,10 @@
             ]
         },
         {
-            "id": "ff72c751-43dc-46b1-9610-6b42447a526c",
-            "createDate": "2026-09-20T23:29:01.255Z",
+            "id": "b3513baa-e40a-41a0-ad80-b681901b1c1a",
+            "createDate": "2026-09-20T23:52:22.267Z",
             "status": "BEWORBEN",
-            "updatedAt": "2026-09-20T23:29:01.255Z",
+            "updatedAt": "2026-09-20T23:52:22.267Z",
             "job": {
                 "companyId": 2,
                 "contactId": 2,
@@ -421,7 +421,7 @@
                 ],
                 "history": [
                     {
-                        "id": "483fa50b-162e-432c-ba50-eddb85f1413a",
+                        "id": "f85ed59c-a61f-4302-991c-b5f5ef8e090b",
                         "channel": "portal",
                         "entry": {
                             "date": "2026-09-01",
@@ -433,7 +433,7 @@
                         }
                     },
                     {
-                        "id": "ec426fc5-3336-49cb-80c3-dd48ab37b90c",
+                        "id": "1a29bbdf-a5e1-46e2-83f1-3df70a20125f",
                         "channel": "email",
                         "entry": {
                             "date": "2026-09-02",
@@ -449,7 +449,7 @@
                         }
                     },
                     {
-                        "id": "85230a83-e471-4c7c-a490-bf9829b4c9bd",
+                        "id": "5c5d28c7-5eef-474e-9da1-b9d0b8fd2030",
                         "channel": "phone",
                         "entry": {
                             "date": "2026-09-03",
@@ -495,10 +495,10 @@
             ]
         },
         {
-            "id": "32df522d-f833-44c9-a5f0-0ec0039fbdb2",
-            "createDate": "2026-09-20T23:29:01.255Z",
+            "id": "0d0927cc-2070-4fcb-9981-24e6029933c9",
+            "createDate": "2026-09-20T23:52:22.267Z",
             "status": "BEWORBEN",
-            "updatedAt": "2026-09-20T23:29:01.255Z",
+            "updatedAt": "2026-09-20T23:52:22.267Z",
             "job": {
                 "companyId": 3,
                 "contactId": 3,
@@ -668,7 +668,7 @@
                 ],
                 "history": [
                     {
-                        "id": "4bdd2a04-d393-42f7-9872-181feededb40",
+                        "id": "e05342ea-a8cb-49d0-b20d-6abef7a3b1fc",
                         "channel": "portal",
                         "entry": {
                             "date": "2026-09-01",
@@ -680,7 +680,7 @@
                         }
                     },
                     {
-                        "id": "4a860a91-3128-4b80-b498-a7ac215b7fe3",
+                        "id": "0bff8602-5dea-4b69-975f-dd2f68f3bdb8",
                         "channel": "email",
                         "entry": {
                             "date": "2026-09-02",
@@ -696,7 +696,7 @@
                         }
                     },
                     {
-                        "id": "19ddeab7-bee8-4dff-b565-366bd4b3bd7a",
+                        "id": "a58b90df-84c5-4fea-b32b-12bb1993bd02",
                         "channel": "phone",
                         "entry": {
                             "date": "2026-09-03",
@@ -742,10 +742,10 @@
             ]
         },
         {
-            "id": "3e9c390d-d242-416e-9db9-40922eb444cd",
-            "createDate": "2026-09-20T23:29:01.255Z",
+            "id": "79696b54-02e9-434f-84fd-0447b76c4373",
+            "createDate": "2026-09-20T23:52:22.267Z",
             "status": "BEWORBEN",
-            "updatedAt": "2026-09-20T23:29:01.255Z",
+            "updatedAt": "2026-09-20T23:52:22.267Z",
             "job": {
                 "companyId": 4,
                 "contactId": 4,
@@ -915,7 +915,7 @@
                 ],
                 "history": [
                     {
-                        "id": "85446d5f-ae3f-4750-8b0b-cbd174f81eb0",
+                        "id": "f0c01e38-9688-4568-8793-4fee1323ceb3",
                         "channel": "portal",
                         "entry": {
                             "date": "2026-09-01",
@@ -927,7 +927,7 @@
                         }
                     },
                     {
-                        "id": "379a821d-e02b-4358-8fbd-f0714c7c91e5",
+                        "id": "fb7769cb-93e5-4f69-a2b0-63fa54505c91",
                         "channel": "email",
                         "entry": {
                             "date": "2026-09-02",
@@ -943,7 +943,7 @@
                         }
                     },
                     {
-                        "id": "9640c7ae-8dd8-4275-9d66-887df2e9d3db",
+                        "id": "5c9ecd1f-3f3c-44a1-bc2f-806ae1e70e22",
                         "channel": "phone",
                         "entry": {
                             "date": "2026-09-03",
@@ -989,10 +989,10 @@
             ]
         },
         {
-            "id": "a5fe6180-e21a-4c7e-81da-8bb048ca8d29",
-            "createDate": "2026-09-20T23:29:01.255Z",
+            "id": "4abc93c2-8b9c-450f-bafe-394785f45669",
+            "createDate": "2026-09-20T23:52:22.268Z",
             "status": "BEWORBEN",
-            "updatedAt": "2026-09-20T23:29:01.255Z",
+            "updatedAt": "2026-09-20T23:52:22.268Z",
             "job": {
                 "companyId": 5,
                 "contactId": 5,
@@ -1162,7 +1162,7 @@
                 ],
                 "history": [
                     {
-                        "id": "5cd63e54-a5b3-44a0-a1c1-b64186f553b7",
+                        "id": "acacd06a-77b5-4179-a268-59fa2b37544b",
                         "channel": "portal",
                         "entry": {
                             "date": "2026-09-01",
@@ -1174,7 +1174,7 @@
                         }
                     },
                     {
-                        "id": "a33d051a-825c-4d4b-8418-bc290cab45c5",
+                        "id": "529d1a09-ef61-44a1-82ff-365edab4446c",
                         "channel": "email",
                         "entry": {
                             "date": "2026-09-02",
@@ -1190,7 +1190,7 @@
                         }
                     },
                     {
-                        "id": "8800f86d-cb4b-4920-b8b9-f6bbdadf16e4",
+                        "id": "4cf4c568-936c-4e2d-86ef-b0c0a6e4fc6d",
                         "channel": "phone",
                         "entry": {
                             "date": "2026-09-03",

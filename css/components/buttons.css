@@ -48,12 +48,12 @@ button.primary {
 .success,
 button[data-decision="accepted"] {
    background-color: rgb(26, 175, 75);
-   color: #fff;
+   /* color: #fff; */
 }
 
 button.danger {
    background-color: var(--danger);
-   color: #fff;
+   color: rgba(255,255,255,0.8);
 }
 
 .primary:hover,
@@ -125,8 +125,9 @@ button.output-action:hover {
    font-weight: 400;
 }
 
-button[data-edit-communication],
-.field-with-button button {
+button[data-edit-communication]
+/* .field-with-button button { */
+{
    background-color: var(--button-add-bg);
 }
 

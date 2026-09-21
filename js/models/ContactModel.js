@@ -21,7 +21,7 @@ export class ContactModel {
 
     set data(raw) {
         if (!raw) return;
-        this.id = raw.id ?? this.id;
+        this.id = raw.id || this.id;
         this.role = raw.role ?? this.role;
         this.name = raw.name ?? this.name;
         this.img = raw.img ?? this.img;

@@ -45,7 +45,7 @@ export class ContactTemplate extends DetailBaseTemplate {
                 <section class="section-body">
                     <div class="field field-ultra-wide">
                         <label>Weitere Ansprechpartner</label>
-                        <div id="contactList">
+                        <div id="contactList" class="contact-list">
                             ${this.contactListRows(others)}
                         </div>
                         <button type="button" class="secondary" data-add-contact>+ Ansprechpartner hinzufügen</button>
@@ -62,10 +62,9 @@ export class ContactTemplate extends DetailBaseTemplate {
         }
 
         return others.map(contact => `
-            <div class="field-with-button">
+            <div class="field-with-button contact-row" data-select-contact="${HtmlUtils.escape(contact.id)}">
                 <span>${HtmlUtils.escape(contact.name || "—")}${contact.role ? " – " + HtmlUtils.escape(contact.role) : ""}</span>
                 <span>
-                    <button type="button" class="secondary" data-select-contact="${HtmlUtils.escape(contact.id)}">Als aktuell festlegen</button>
                     <button type="button" data-edit-contact="${HtmlUtils.escape(contact.id)}">Ändern</button>
                     <button type="button" class="danger" data-remove-contact="${HtmlUtils.escape(contact.id)}">Entfernen</button>
                 </span>

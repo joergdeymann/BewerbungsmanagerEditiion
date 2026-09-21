@@ -93,7 +93,7 @@ export class ApplicationTemplate extends DetailBaseTemplate {
                         <label>Lebenslauf</label>
                         <div class="field-with-button">
                             ${this.documentButton("Lebenslauf", application.application?.resume)}
-                            <button>+</button>
+                            <button class="success">+</button>
                         </div>
                     </div>          
 
@@ -101,7 +101,7 @@ export class ApplicationTemplate extends DetailBaseTemplate {
                         <label>Anschreiben</label>
                         <div class="field-with-button">
                             ${this.documentButton("Anschreiben", application.application?.coverLetter)}
-                            <button>+</button>
+                            <button class="success">+</button>
                         </div>
                     </div>
                 </div>

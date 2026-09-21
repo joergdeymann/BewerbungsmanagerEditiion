@@ -37,9 +37,11 @@ export class ContactSectionController {
     }
 
     bindSelect(root, application, onUpdate) {
-        root.querySelectorAll("[data-select-contact]").forEach(button => {
-            button.onclick = async () => {
-                const id = button.dataset.selectContact;
+        root.querySelectorAll("[data-select-contact]").forEach(row => {
+            row.onclick = async (event) => {
+                if (event.target.closest("button")) return;
+
+                const id = row.dataset.selectContact;
                 const index = application.contacts.findIndex(contact => contact.id === id);
                 if (index <= 0) return;
 

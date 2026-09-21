@@ -209,6 +209,20 @@
    padding: 8px;
 }
 
+.contact-list {
+   display: flex;
+   flex-direction: column;
+   gap: 2px;
+}
+
+.contact-row {
+   cursor: pointer;
+}
+
+.contact-row:hover {
+   background-color: var(--primary-light);
+}
+
 /* ---------- Dynamische Felder ---------- */
 
 .dynamic-fields {
