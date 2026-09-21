@@ -9,9 +9,9 @@ bearbeitet werden.
   und wurde in Schritt 1.2 entfernt (explizite Entscheidung).
 
 ## RequirementsTemplate.js
-- Feld "Fachliche Fähigkeiten / Technologien" (`application.skills`) hat keine
-  Entsprechung in einem Model. Wird aktuell mit "Noch nicht implementiert" angezeigt.
-  Mögliche Quelle: `job.tags`.
+- Feld "Fachliche Fähigkeiten / Technologien" war ein Duplikat der
+  Muss-Anforderungen und wurde in Schritt 1.3 entfernt. Stattdessen werden
+  jetzt die Tags aus `qualifications.*.tags` als Badges angezeigt.
 
 ## SourcesTemplate.js
 - Felder "Stellenanzeige" (Link zur Stellenanzeige selbst) und "Quelle"
