@@ -58,6 +58,15 @@
 ## Schritt 1.8 `Telefonate`
 - Überschrift sollte Kontakt heißen
 - es soll dann mehrere Buttons geben anstatt nur Telefonat spiechern, auch Telefonat, Whatsapp, Mail, Persönlich, die könnten per Radiobutton ausgewählt werden, hier git es noch keine Passende Formatierung, die dann dem UI entspricht, mach dafür eine passendes CSS Klasse, Der Bttun soll sich flexibel anpassen, sobald man den Radiobutton auswählt, muss der Text vom AbsendenButtton auch verändert werden. Standart ist immer Telefonat
+- Das Nachfrangen zu löschen dem aktuellen Design anpassen erst Ja dann Nein Ja ist in diesem Fall rot und Nein Grün, den Hintergrund anpassen und kleiner Border mit Schatttierung
+- Beim Verlassen des Textfeldes müssen die eingegebenen Daten erhalten bleiben wenn man die Tasb wechselt. Wenn man wieder zurückkommt, soo der Text wieder da stehen und der Cursor an alter stelle bleiben
+
+
+## Schritt 1.9 `Bewerbung löschen`
+- hier auch ein Popup ausführen anstatt alert, eine Vorlage gibt es ja schon, nach dem Löschen die overveiw Daten anpassen die gelöschte wird derzeit noch immer angezeigt
+
+## Schritt 1.9 `Ansprechpartner hinzufügen`
+- das Popup soll auch dem Design angepasst werden. Die Felder wie die ansicht designen, nur mit etwas helleren hintergrund anzeigen
 
 
 ## Schritt 1B: Überarbeitungen

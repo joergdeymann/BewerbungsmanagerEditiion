@@ -17,14 +17,14 @@ export class DetailNavigationTemplate extends DetailBaseTemplate {
 
                     <button
                         type="button"
-                        data-section="contact">
-                        Ansprechpartner
+                        data-section="job">
+                        Stelle
                     </button>
 
                     <button
                         type="button"
-                        data-section="job">
-                        Stelle
+                        data-section="contact">
+                        Ansprechpartner
                     </button>
 
                     <button
@@ -41,12 +41,6 @@ export class DetailNavigationTemplate extends DetailBaseTemplate {
 
                     <button
                         type="button"
-                        data-section="sources">
-                        Quellen
-                    </button>
-
-                    <button
-                        type="button"
                         data-section="application">
                         Bewerbung & Ausgabe
                     </button>
@@ -57,6 +51,11 @@ export class DetailNavigationTemplate extends DetailBaseTemplate {
                         Telefonate
                     </button>
 
+                    <button
+                        type="button"
+                        data-section="sources">
+                        Quellen
+                    </button>
                 </nav>
 
             </header>

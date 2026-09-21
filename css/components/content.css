@@ -657,9 +657,9 @@
     /* pointer-events: none; */
 }
 
-.history-entry summary {
+/* .history-entry summary {
     cursor: pointer;
-}
+} */
 
 
 .history-entry:hover {
