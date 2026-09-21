@@ -1,0 +1,34 @@
+/* ---------- Inhalts-Rahmen ---------- */
+/* Liegt NICHT mehr um die ganze Seite (Header inklusive), sondern
+   nur um den eigentlichen Inhalt direkt unterhalb eines
+   .app-header - dadurch grenzen zwei .app-header direkt
+   aneinander, und der Rahmen schließt nahtlos darunter an.
+   Keine eigene max-width/margin: die Seitenbreite wird bereits
+   von "body > main" (siehe layout/body.css) vorgegeben. */
+#editorTabContent {
+   flex: 1 1 auto;   /* ID-Selektor > Klassen-Selektor, überschreibt .content-frame */
+}
+
+.content-frame {
+   padding: 8px;
+   flex: 0 0 auto;
+
+   color: var(--text-main);
+   background-color: var(--bg-page);
+
+   border: 1px solid var(--border-color);
+   border-bottom-left-radius: var(--radius-md);
+   border-bottom-right-radius: var(--radius-md);
+   box-shadow: var(--shadow-sm);
+
+   display: flex;
+   flex-direction: column;
+   gap: 8px;
+   min-height: 0;
+}
+
+.content-frame:has(+ .app-footer) {
+   border-bottom: none;
+   border-bottom-left-radius: 0;
+   border-bottom-right-radius: 0;
+}

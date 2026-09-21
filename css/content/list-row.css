@@ -1,0 +1,12 @@
+/* ---------- Listenzeile mit Status + Titel (Übersicht & Detail) ---------- */
+
+.left-side {
+   gap: 8px;
+   flex: 1;
+   align-items: center;
+}
+
+#communicationText {
+   resize: vertical;
+}
+

@@ -1,0 +1,24 @@
+/* ---------- Wichtige Abschnitte / Badges ---------- */
+
+.important-section {
+   border: var(--important-border-size) solid var(--important-border-color);
+   background: #f5f7ff;
+}
+
+.important-badge {
+   padding: 6px 12px !important;
+   border-radius: var(--radius-lg);
+   background: var(--primary-light);
+   color: var(--primary) !important;
+   font-size: 12px !important;
+   font-weight: 600;
+   letter-spacing: 0.02em;
+   text-transform: uppercase;
+}
+
+.contact-actions {
+   display: flex;
+   gap: 12px;
+   margin-top: 20px;
+}
+

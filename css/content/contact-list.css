@@ -1,0 +1,21 @@
+/* ---------- Ansprechpartner-Liste ---------- */
+
+.contact-list {
+   display: flex;
+   flex-direction: column;
+   gap: 2px;
+}
+
+.contact-row {
+   cursor: pointer;
+   border-left: 4px solid transparent;
+}
+
+.contact-row:hover {
+   background-color: var(--primary-light);
+}
+
+.contact-row.active {
+   border-left-color: var(--primary);
+   background-color: var(--primary-light);
+}

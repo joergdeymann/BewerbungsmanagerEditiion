@@ -63,7 +63,7 @@ export class SourcesTemplate extends DetailBaseTemplate {
         }
 
         return references.map(reference => `
-            <div class="field-with-button contact-row sources-row" data-url="${HtmlUtils.escape(reference.url)}" data-date="${HtmlUtils.escape(reference.capturedAt || "")}" data-name="${HtmlUtils.escape(reference.name || "")}">
+            <div class="field-with-button contact-row" data-url="${HtmlUtils.escape(reference.url)}" data-date="${HtmlUtils.escape(reference.capturedAt || "")}" data-name="${HtmlUtils.escape(reference.name || "")}">
                 <span>${HtmlUtils.escape(reference.capturedAt || "—")}</span>
                 <span>${this.link(reference.url, reference.name)}</span>
             </div>

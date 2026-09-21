@@ -1,0 +1,55 @@
+/* ---------- Quellen / Links (Editor-Formular) ---------- */
+
+.source-list {
+   display: flex;
+   flex-direction: column;
+   gap: 14px;
+}
+
+.source-row {
+   display: grid;
+   grid-template-columns: 220px minmax(0, 1fr) 36px;
+   gap: 14px;
+   align-items: center;
+}
+
+.source-url-field {
+   min-width: 0;
+}
+
+/* ---------- Quellen-Liste (Detail-Tab) ---------- */
+
+.sources-header {
+   cursor: default;
+   font-weight: 600;
+   color: var(--text-muted);
+   background-color: transparent;
+}
+
+.sources-header:hover {
+   background-color: transparent;
+}
+
+.sources-header span[data-sort] {
+   cursor: pointer;
+   user-select: none;
+}
+
+.sort-arrow {
+   font-size: 10px;
+   margin-left: 4px;
+}
+
+/* Name/Link soll direkt nach dem Datum linksbündig stehen,
+   statt durch justify-content:space-between an den rechten Rand
+   gedrückt zu werden. */
+.sources-row span:last-child {
+   flex: 1;
+   text-align: left;
+}
+
+.sources-row span {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}

@@ -1,0 +1,38 @@
+/* ---------- Karten ---------- */
+
+.application-card {
+   padding: 8px;
+   background: var(--bg-card);
+   border: 1px solid var(--border-color);
+   border-radius: var(--radius-lg);
+   box-shadow: var(--shadow-sm);
+   transition: var(--transition);
+}
+
+.application-card:hover {
+   box-shadow: var(--shadow-md);
+}
+
+.import-card {
+   border-left: 4px solid var(--primary);
+}
+
+.output-card {
+   border-top: 3px solid var(--primary);
+}
+
+.output-actions {
+   display: grid;
+   grid-template-columns: repeat(3, minmax(0, 1fr));
+   gap: 14px;
+}
+
+@media (max-width: 900px) {
+   .output-actions {
+      grid-template-columns: 1fr;
+   }
+}
+
+.muted {
+   color: var(--text-muted);
+}

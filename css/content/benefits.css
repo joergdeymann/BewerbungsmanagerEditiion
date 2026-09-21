@@ -1,0 +1,74 @@
+/* ---------- Benefits ---------- */
+
+.benefits-container {
+   display: grid;
+   grid-template-columns: repeat(2, minmax(0, 1fr));
+   gap: 16px;
+}
+
+@media (max-width: 640px) {
+   .benefits-container {
+      grid-template-columns: 1fr;
+   }
+}
+
+.benefit-item {
+   display: flex;
+   gap: 16px;
+   padding: 20px;
+   background: var(--bg-card);
+   border: 1px solid var(--border-color);
+   border-radius: var(--radius-md);
+   box-shadow: var(--shadow-sm);
+   transition: var(--transition);
+}
+
+.benefit-item:hover {
+   transform: translateY(-2px);
+   box-shadow: var(--shadow-md);
+}
+
+.benefit-icon {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   width: 44px;
+   height: 44px;
+   flex-shrink: 0;
+   border-radius: var(--radius-sm);
+   background: var(--accent-light);
+   color: var(--accent);
+   font-size: 22px;
+}
+
+.benefit-content {
+   flex: 1;
+   display: flex;
+   flex-direction: column;
+   gap: 10px;
+}
+
+.benefit-content input,
+.benefit-content textarea {
+   width: 100%;
+   box-sizing: border-box;
+   border: 1px solid var(--border-color);
+   border-radius: var(--radius-sm);
+   padding: 10px;
+   font-family: inherit;
+   transition: var(--transition);
+}
+
+.benefit-content input:focus,
+.benefit-content textarea:focus {
+   border-color: var(--border-focus);
+   outline: none;
+   box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.1);
+}
+
+.benefit-title {
+   font-weight: 600;
+   color: var(--text-main);
+   font-size: 15px;
+}
+

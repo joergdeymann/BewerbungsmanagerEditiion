@@ -1,0 +1,42 @@
+/* ---------- Dynamische Felder ---------- */
+
+.dynamic-fields {
+   display: flex;
+   flex-direction: column;
+   gap: 16px;
+}
+
+.subsection-grid {
+   display: grid;
+   grid-template-columns: repeat(2, minmax(0, 1fr));
+   gap: 16px;
+   margin-top: 16px;
+}
+
+@media (max-width: 640px) {
+   .subsection-grid {
+      grid-template-columns: 1fr;
+   }
+}
+
+.dynamic-field {
+   padding: 18px;
+   background: var(--bg-card);
+   border: 1px solid var(--border-color);
+   border-radius: var(--radius-md);
+   box-shadow: var(--shadow-sm);
+}
+
+.dynamic-field-title {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   margin-bottom: 12px;
+   font-size: 14px;
+   font-weight: 600;
+   color: var(--text-muted);
+}
+
+.desired-field {
+   border-left: 4px solid var(--accent);
+}

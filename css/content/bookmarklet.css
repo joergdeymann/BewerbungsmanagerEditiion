@@ -1,0 +1,18 @@
+/* ---------- Bookmarklet-Hinweis (Import-Tab) ---------- */
+
+.bookmarklet-hint {
+   margin: 8px 0 16px;
+   font-size: 13px;
+}
+
+.bookmarklet-link {
+   display: inline-block;
+   margin-left: 6px;
+   padding: 4px 10px;
+   background: var(--secondary);
+   color: var(--secondary-text);
+   border-radius: var(--radius-sm);
+   font-weight: 600;
+   text-decoration: none;
+   cursor: grab;
+}
