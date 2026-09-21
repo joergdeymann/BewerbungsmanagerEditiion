@@ -645,3 +645,23 @@
    font-weight: 600;
    font-size: 13px;
 }
+
+.history-entry {
+    padding: 4px;
+    border-radius: 6px;
+    background-color: rgba(0, 0, 0, 0.03);
+    box-shadow: var(--shadow-lg);
+    color: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: var(--radius-sm);    
+    /* pointer-events: none; */
+}
+
+.history-entry summary {
+    cursor: pointer;
+}
+
+
+.history-entry:hover {
+    background-color: var(--primary-light);
+}
