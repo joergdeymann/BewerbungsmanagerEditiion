@@ -46,6 +46,12 @@ Diese Datei beschreibt den aktuell vorgesehenen Verzeichnisbaum.
   - `ApplicationPersonalModel.js`
 - `js/io/ImportJobPage.js`  - idee: importiert eine Seite mit einem Stellenanzeigen, Vorlage aus den Models und Ziel das DOM vielleicht heisen die auch DOM-Logik später, ich habe ja derzeit meein ui Verzeichnis für
 
+## Admin
+
+- `admin/` – Admin-UI
+  - `admin.js` – Admin-Funktionen
+  - `index.html` – Admin-UI
+
 ## Regeln
 
 - Änderungen am Verzeichnisbaum müssen hier nachgezogen werden.

@@ -7,7 +7,7 @@ export class ContactTemplate extends DetailBaseTemplate {
     render(application) {
 
         const uiContact = new UiContact(application);
-        const others = (application.contacts || []).slice(1);
+        const contacts = application.contacts || [];
 
         return `
             <section class="subsection-display">
@@ -44,9 +44,9 @@ export class ContactTemplate extends DetailBaseTemplate {
 
                 <section class="section-body">
                     <div class="field field-ultra-wide">
-                        <label>Weitere Ansprechpartner</label>
+                        <label>Ansprechpartner</label>
                         <div id="contactList" class="contact-list">
-                            ${this.contactListRows(others)}
+                            ${this.contactListRows(contacts)}
                         </div>
                         <button type="button" class="secondary" data-add-contact>+ Ansprechpartner hinzufügen</button>
                     </div>
@@ -56,16 +56,16 @@ export class ContactTemplate extends DetailBaseTemplate {
 
     }
 
-    contactListRows(others) {
-        if (!others.length) {
-            return `<p class="muted">Keine weiteren Ansprechpartner hinterlegt.</p>`;
+    contactListRows(contacts) {
+        if (!contacts.length) {
+            return `<p class="muted">Keine Ansprechpartner hinterlegt.</p>`;
         }
 
-        return others.map(contact => `
-            <div class="field-with-button contact-row" data-select-contact="${HtmlUtils.escape(contact.id)}">
+        return contacts.map((contact, index) => `
+            <div class="field-with-button contact-row${index === 0 ? " active" : ""}" data-select-contact="${HtmlUtils.escape(contact.id)}">
                 <span>${HtmlUtils.escape(contact.name || "—")}${contact.role ? " – " + HtmlUtils.escape(contact.role) : ""}</span>
                 <span>
-                    <button type="button" data-edit-contact="${HtmlUtils.escape(contact.id)}">Ändern</button>
+                    <button type="button" class="success" data-edit-contact="${HtmlUtils.escape(contact.id)}">Ändern</button>
                     <button type="button" class="danger" data-remove-contact="${HtmlUtils.escape(contact.id)}">Entfernen</button>
                 </span>
             </div>

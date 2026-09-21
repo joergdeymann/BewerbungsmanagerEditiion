@@ -110,7 +110,6 @@ function buildTestRecord(recordIndex) {
     // contacts (3)
     for (let i = 1; i <= 3; i++) {
         const contact = new ContactModel();
-        contact.id = i;
         contact.role = i === 1 ? "HR" : "Fachbereich";
         contact.name = `Kontakt ${i} (${recordIndex})`;
         contact.img = `kontakt${i}-${recordIndex}.png`;

@@ -48,7 +48,7 @@ button.primary {
 .success,
 button[data-decision="accepted"] {
    background-color: rgb(26, 175, 75);
-   /* color: #fff; */
+   color: rgba(255,255,255,0.8);
 }
 
 button.danger {

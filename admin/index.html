@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin – Bewerbungsmanager</title>
+    <link rel="stylesheet" href="../css/base/default.css">
+    <link rel="stylesheet" href="../css/base/style.css">
+    <link rel="stylesheet" href="../css/components/buttons.css">
+    <style>
+        body {
+            max-width: 480px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+        .admin-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        #adminStatus {
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: var(--radius-md);
+            background-color: rgba(0, 0, 0, 0.03);
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>Admin</h1>
+    <p class="muted">Nur per direktem Aufruf erreichbar, nicht Teil der eigentlichen App.</p>
+
+    <div class="admin-buttons">
+        <button type="button" class="primary" id="seedButton">Seed</button>
+        <button type="button" class="danger" id="clearButton">Clear</button>
+        <button type="button" class="secondary" id="backupButton">Backup</button>
+    </div>
+
+    <div id="adminStatus">Bereit.</div>
+
+    <script type="module">
+        import { seed, clear, backup } from "./admin.js";
+
+        const status = document.getElementById("adminStatus");
+
+        const run = (label, action) => async () => {
+            status.textContent = `${label} läuft...`;
+            try {
+                status.textContent = await action();
+            } catch (error) {
+                status.textContent = `Fehler: ${error.message}`;
+            }
+        };
+
+        document.getElementById("seedButton").onclick = run("Seed", seed);
+        document.getElementById("clearButton").onclick = run("Clear", clear);
+        document.getElementById("backupButton").onclick = run("Backup", backup);
+    </script>
+</body>
+</html>

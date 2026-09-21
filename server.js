@@ -32,9 +32,16 @@ async function serveStaticFile(req, res) {
             return true;
         }
 
-        const file = await fs.readFile(filePath);
+        const stats = await fs.stat(filePath);
 
-        const contentType = getContentType(filePath);
+        // Verzeichnis ohne Dateinamen (z.B. "/admin/") -> index.html darin verwenden
+        const resolvedPath = stats.isDirectory()
+            ? path.join(filePath, "index.html")
+            : filePath;
+
+        const file = await fs.readFile(resolvedPath);
+
+        const contentType = getContentType(resolvedPath);
 
         res.writeHead(200, {
             "Content-Type": contentType
