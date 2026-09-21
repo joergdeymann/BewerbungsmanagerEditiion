@@ -168,7 +168,7 @@ export class ApplicationTemplate extends DetailBaseTemplate {
                     </div>
                 </section>
 
-                <div class="section-body">
+                <div class="section-body application-card">
                     ${this.historyList(application)}
                 </div>
             </section>
