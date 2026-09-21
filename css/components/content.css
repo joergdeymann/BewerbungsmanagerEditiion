@@ -229,6 +229,27 @@
    background-color: var(--primary-light);
 }
 
+.sources-header {
+   cursor: default;
+   font-weight: 600;
+   color: var(--text-muted);
+   background-color: transparent;
+}
+
+.sources-header:hover {
+   background-color: transparent;
+}
+
+.sources-header span[data-sort] {
+   cursor: pointer;
+   user-select: none;
+}
+
+.sort-arrow {
+   font-size: 10px;
+   margin-left: 4px;
+}
+
 /* ---------- Dynamische Felder ---------- */
 
 .dynamic-fields {
