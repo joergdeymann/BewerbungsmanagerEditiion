@@ -43,3 +43,12 @@ bearbeitet werden.
   Stufe 3 springt zurück auf 0.
 - jeder Tag bekommt eine farbe, als hintergrund, grau bei Stufe 0, blau bei Stufe 1,
   grün bei Stufe 2, lila bei Stufe 3.
+
+## SourcesTemplate.js / Datenerfassung
+- Quellen (`references[]`) sollten bereits bei der Erfassung (Import/Analyse
+  einer Stellenanzeige) automatisch gespeichert werden - inkl. Firmenwebsite,
+  gefundener Bilder usw. als eigene `ReferenceModel`-Einträge.
+- Diese Erfassung selbst ist noch nicht implementiert. Aktuell müssen
+  Quellen manuell in `references[]` stehen, damit sie hier angezeigt werden.
+- `SourcesTemplate.js` zeigt bewusst nur, was in `references[]` gespeichert
+  ist - keine Live-Ableitung aus Firmenwebsite/Bildern mehr.

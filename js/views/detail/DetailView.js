@@ -13,6 +13,7 @@ import { DetailNavigationTemplate } from "../../templates/detail/DetailNavigatio
 import { DetailNavigationController } from "./events/DetailNavigationController.js";
 import { CommunicationSectionController } from "./events/CommunicationSectionController.js";
 import { ContactSectionController } from "./events/ContactSectionController.js";
+import { SourcesSectionController } from "./events/SourcesSectionController.js";
 
 
 export class DetailView {
@@ -44,6 +45,9 @@ export class DetailView {
 
         this.contactController =
             new ContactSectionController(repository);
+
+        this.sourcesController =
+            new SourcesSectionController();
     }
 
 
@@ -141,6 +145,11 @@ export class DetailView {
                 application,
                 () => this.showSection(root, application, "contact")
             );
+            return;
+        }
+
+        if (section === "sources") {
+            this.sourcesController.bind(root);
         }
     }
 }

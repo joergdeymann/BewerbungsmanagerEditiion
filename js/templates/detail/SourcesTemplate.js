@@ -41,13 +41,28 @@ export class SourcesTemplate extends DetailBaseTemplate {
                         <p class="muted">Noch nicht implementiert</p>
                     </div>
 
-                    <div class="field">
+                    <div class="field field-ultra-wide">
                         <label>Weitere Quellen</label>
-                        ${this.list(references.map(reference => `${reference.name}: ${reference.url}`))}
+                        <div id="sourcesList" class="contact-list">
+                            ${this.sourceRows(references)}
+                        </div>
                     </div>
                 </section>
             </section>
         `;
 
+    }
+
+    sourceRows(references) {
+        if (!references.length) {
+            return `<p class="muted">Keine weiteren Quellen erfasst.</p>`;
+        }
+
+        return references.map(reference => `
+            <div class="field-with-button contact-row" data-url="${HtmlUtils.escape(reference.url)}">
+                <span>${this.link(reference.url, reference.name)}</span>
+                <span>${HtmlUtils.escape(reference.capturedAt || "—")}</span>
+            </div>
+        `).join("");
     }
 }

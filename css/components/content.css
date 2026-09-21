@@ -646,6 +646,31 @@
    font-size: 13px;
 }
 
+.sources-table {
+   width: 100%;
+   border-collapse: collapse;
+   margin-top: 8px;
+}
+
+.sources-table th,
+.sources-table td {
+   text-align: left;
+   padding: 6px 10px;
+   border-bottom: 1px solid var(--border-color);
+}
+
+.sources-table th[data-sort] {
+   cursor: pointer;
+   user-select: none;
+}
+
+.sources-table tbody tr:hover {
+   background-color: var(--primary-light);
+}
+
+/*
+   Application History
+*/
 .history-entry {
     padding: 4px;
     border-radius: 6px;
@@ -654,12 +679,11 @@
     color: rgba(0, 0, 0, 0.6);
     border: 1px solid rgba(0, 0, 0, 0.05);
     border-radius: var(--radius-sm);    
-    /* pointer-events: none; */
 }
 
-/* .history-entry summary {
+.history-entry summary {
     cursor: pointer;
-} */
+}
 
 
 .history-entry:hover {

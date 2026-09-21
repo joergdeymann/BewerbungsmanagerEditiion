@@ -47,7 +47,7 @@ export class DetailBaseTemplate {
         return `<ul>${items}</ul>`;
     }
 
-    link(url) {
+    link(url, label = null) {
 
         if (!url) {
             return "—";
@@ -57,12 +57,13 @@ export class DetailBaseTemplate {
         }
 
         const safe = HtmlUtils.escape(url);
+        const text = label ? HtmlUtils.escape(label) : safe;
 
         return `
             <a href="${safe}"
                target="_blank"
                rel="noopener">
-                ${safe}
+                ${text}
             </a>
         `;
     }
