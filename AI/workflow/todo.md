@@ -31,3 +31,15 @@ bearbeitet werden.
   diese Aktionen direkt als `ApplicationHistoryModel`-Einträge geschrieben werden.
 - `<details class="history-entry">` ist aktuell ungestylt (Browser-Standard).
   Styling + Individualisierung pro Aktionstyp steht noch aus.
+
+## Tags / Kenntnisstufen (neues Feature)
+- Alle Tags aus allen Stellen der App sammeln (Job-Badges, Benefits-Tags,
+  Qualifikations-Tags aus allen drei Bereichen usw.) und daraus eine
+  zusätzliche einheitliche Tag-Liste erstellen.
+- Jedes Tag bekommt eine Kenntnisstufe: 0 = keine Kenntnisse,
+  1 = Grundkenntnisse, 2 = erweiterte Kenntnisse, 3 = Expertenkenntnisse.
+- Eigene Seite, auf der alle Tags als klickbare Elemente aufgelistet werden.
+- Klick auf ein Tag erhöht die Stufe um 1 (0→1→2→3), ein weiterer Klick bei
+  Stufe 3 springt zurück auf 0.
+- jeder Tag bekommt eine farbe, als hintergrund, grau bei Stufe 0, blau bei Stufe 1,
+  grün bei Stufe 2, lila bei Stufe 3.
