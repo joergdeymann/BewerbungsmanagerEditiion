@@ -21,7 +21,7 @@ button {
    height: var(--button-std-height);
 }
 
-button:hover:not(.active) {
+button:hover {
    filter: brightness(0.90);
    transform: translate(2px, 2px);
    box-shadow: 0 0px 2px rgba(0, 0, 0, 0.5);
@@ -56,7 +56,7 @@ button.danger {
    color: rgba(255,255,255,0.8);
 }
 
-.primary:hover:not(.active),
+.primary:hover,
 .success:hover,
 .danger:hover,
 button[data-decision="accepted"]:hover {

@@ -56,12 +56,12 @@ main .app-header {
    color: #fff;
 }
 
-.app-header button:hover {
+.app-header :not(.header-detail-view) :not(.primary) button:hover {
    background-color: var(--header-button-hover-bg);
    color: var(--header-button-hover-text);
 }
 
-.app-header button.active {
+.app-header :not(.header-detail-view) button.active {
    background-color: #444;
    color: #fff;
 }
