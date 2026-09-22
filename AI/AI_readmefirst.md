@@ -15,6 +15,8 @@ Bei einer Analyse nur den für die konkrete Aufgabe relevanten Code betrachten.
 - `readme/JavaScriptRegeln.md` – Regeln für JavaScript-Code, Klassen, Methoden und Imports.
 - `readme/Verzeichnisvorgaben.md` – Vorgaben für Aufbau und Organisation von Dateien und Verzeichnissen.
 - `readme/UIDOMModels.md` – Vorgaben für die Trennung von UI, DOM und Models.
+- `readme/Workflow_log.md` – Protokollierung der Änderungen im Projektfortschritt.
+
 
 ## Strukturvorgaben
 
