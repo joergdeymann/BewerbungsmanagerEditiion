@@ -70,3 +70,7 @@
 - Felder aus bestehenden Templates niemals entfernen, wenn keine passende Datenquelle existiert.
 - Stattdessen den Bereich mit leeren Daten bzw. dem Hinweis "Noch nicht implementiert" anzeigen.
 - Den offenen Punkt in `AI/workflow/todo.md` eintragen.
+
+## Todos
+- Anforderungen die noch nicht erledigt werden konnten, und übersprungen wurden un der der `AI/workflow/todo.md` eintragen.
+- Jeder Punkt der abgearbeiteten todo-Liste in `AI/workflow/todo-done-history.md` eintragen und aus der  `AI/workflow/todo.md` entfernen.
