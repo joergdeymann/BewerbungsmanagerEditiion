@@ -42,22 +42,22 @@
     ```
 
   - Verantwortlichkeiten:
-    - `Templates/` = HTML-Strukturen und `${}`-Platzhalter.
-    - `Views/` = Rendering und Verarbeitung der Templates.
-    - `Events/` = Benutzeraktionen und EventListener.
-    - `Controller/` = Ablaufsteuerung und Anwendungslogik.
-    - `Repository/` = Datenzugriff.
-    - `UI/` = Datenfluss zwischen Daten und Views.
+    - `templates/` = HTML-Strukturen und `${}`-Platzhalter.
+    - `views/` = Rendering und Verarbeitung der Templates.
+    - `events/` = Benutzeraktionen und EventListener.
+    - `controller/` = Ablaufsteuerung und Anwendungslogik.
+    - `store/` = Datenzugriff.
+    - `ui/` = Datenfluss zwischen Daten und Views.
 
   - Ablauf:
-    - Templates holen keine Daten und erzeugen keine EventListener.
-    - Templates erhalten fertige Werte und erzeugen daraus HTML.
-    - Views rendern die Templates.
-    - Events werden nach dem Rendern gebunden.
-    - Events rufen die zuständigen Controller-Aktionen auf.
-    - Controller koordinieren Datenzugriff, Verarbeitung und Aktualisierung der Views.
-    - Repository übernimmt ausschließlich den Datenzugriff.
-    - UI vermittelt ausschließlich den definierten Datenfluss.
+    - templates holen keine Daten und erzeugen keine EventListener.
+    - templates erhalten fertige Werte und erzeugen daraus HTML.
+    - views rendern die Templates.
+    - events werden nach dem Rendern gebunden.
+    - events rufen die zuständigen Controller-Aktionen auf.
+    - controller koordinieren Datenzugriff, Verarbeitung und Aktualisierung der Views.
+    - store übernimmt ausschließlich den Datenzugriff.
+    - ui vermittelt ausschließlich den definierten Datenfluss.
 
   - Prüfung:
     - Bestehende Dateien und Abhängigkeiten analysieren.
