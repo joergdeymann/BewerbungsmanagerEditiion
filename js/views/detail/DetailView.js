@@ -14,6 +14,7 @@ import { DetailNavigationController } from "./events/DetailNavigationController.
 import { CommunicationSectionController } from "./events/CommunicationSectionController.js";
 import { ContactSectionController } from "./events/ContactSectionController.js";
 import { SourcesSectionController } from "./events/SourcesSectionController.js";
+import { DocumentsSectionController } from "./events/DocumentsSectionController.js";
 
 
 export class DetailView {
@@ -48,6 +49,9 @@ export class DetailView {
 
         this.sourcesController =
             new SourcesSectionController();
+
+        this.documentsController =
+            new DocumentsSectionController(repository);
     }
 
 
@@ -150,6 +154,15 @@ export class DetailView {
 
         if (section === "sources") {
             this.sourcesController.bind(root);
+            return;
+        }
+
+        if (section === "application") {
+            this.documentsController.bind(
+                root,
+                application,
+                () => this.showSection(root, application, "application")
+            );
         }
     }
 }

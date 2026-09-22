@@ -1,5 +1,6 @@
 import { ApplicationStatusHistoryModel } from "./ApplicationStatusHistoryModel.js";
 import { ApplicationHistoryModel } from "./ApplicationHistoryModel.js";
+import { UploadFileModel } from "./UploadFileModel.js";
 
 export class ApplicationModel {
     constructor() {
@@ -7,9 +8,9 @@ export class ApplicationModel {
         this.appliedAt = "";
         // "portal", "email", "phone" oder "personal"
         this.channel = "";
-        this.coverLetter = "";
-        this.resume = "";
-        this.emailCoverLetter = "";
+        this.coverLetter = null;
+        this.resume = [];
+        this.emailCoverLetter = null;
         this.signature = "";
         this.statusHistory = [];
         this.history = [];
@@ -20,9 +21,9 @@ export class ApplicationModel {
             status: this.status,
             appliedAt: this.appliedAt,
             channel: this.channel,
-            coverLetter: this.coverLetter,
-            resume: this.resume,
-            emailCoverLetter: this.emailCoverLetter,
+            coverLetter: this.coverLetter ? this.coverLetter.data : null,
+            resume: this.resume.map(file => file.data),
+            emailCoverLetter: this.emailCoverLetter ? this.emailCoverLetter.data : null,
             signature: this.signature,
             statusHistory: this.statusHistory.map(entry => entry.data),
             history: this.history.map(entry => entry.data)
@@ -35,10 +36,26 @@ export class ApplicationModel {
         this.status = raw.status ?? this.status;
         this.appliedAt = raw.appliedAt ?? this.appliedAt;
         this.channel = raw.channel ?? this.channel;
-        this.coverLetter = raw.coverLetter ?? this.coverLetter;
-        this.resume = raw.resume ?? this.resume;
-        this.emailCoverLetter = raw.emailCoverLetter ?? this.emailCoverLetter;
         this.signature = raw.signature ?? this.signature;
+
+        if (raw.coverLetter) {
+            this.coverLetter = new UploadFileModel();
+            this.coverLetter.data = raw.coverLetter;
+        }
+
+        if (raw.emailCoverLetter) {
+            this.emailCoverLetter = new UploadFileModel();
+            this.emailCoverLetter.data = raw.emailCoverLetter;
+        }
+
+        if (raw.resume && Array.isArray(raw.resume)) {
+            this.resume = [];
+            for (const rawFile of raw.resume) {
+                const file = new UploadFileModel();
+                file.data = rawFile;
+                this.resume.push(file);
+            }
+        }
 
         if (raw.statusHistory && Array.isArray(raw.statusHistory)) {
             this.statusHistory = [];

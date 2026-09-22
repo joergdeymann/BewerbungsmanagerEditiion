@@ -7,6 +7,7 @@ import { ContactModel } from "../js/models/ContactModel.js";
 import { ReferenceModel } from "../js/models/ReferenceModel.js";
 import { ApplicationStatusHistoryModel } from "../js/models/ApplicationStatusHistoryModel.js";
 import { ApplicationHistoryModel } from "../js/models/ApplicationHistoryModel.js";
+import { UploadFileModel } from "../js/models/UploadFileModel.js";
 import { AppDB } from "../js/data/AppDB.js";
 import { LocalDB } from "../js/data/LocalDB.js";
 
@@ -133,9 +134,22 @@ function buildTestRecord(recordIndex) {
     // application
     app.application.appliedAt = "2026-09-01";
     app.application.channel = "portal";
-    app.application.coverLetter = `Anschreiben Text ${recordIndex}`;
-    app.application.resume = `Lebenslauf Text ${recordIndex}`;
-    app.application.emailCoverLetter = `Mailanschreiben Text ${recordIndex}`;
+    const coverLetter = new UploadFileModel();
+    coverLetter.originalName = `Anschreiben_Firma${recordIndex}.pdf`;
+    coverLetter.link = `/documents/anschreiben-${recordIndex}.pdf`;
+    app.application.coverLetter = coverLetter;
+
+    for (let i = 1; i <= 2; i++) {
+        const resume = new UploadFileModel();
+        resume.originalName = `Lebenslauf_v${i}.pdf`;
+        resume.link = `/documents/lebenslauf-${recordIndex}-${i}.pdf`;
+        app.application.resume.push(resume);
+    }
+
+    const emailCoverLetter = new UploadFileModel();
+    emailCoverLetter.originalName = `Mailanschreiben_Firma${recordIndex}.pdf`;
+    emailCoverLetter.link = `/documents/mailanschreiben-${recordIndex}.pdf`;
+    app.application.emailCoverLetter = emailCoverLetter;
     app.application.signature = `Unterschrift ${recordIndex}`;
 
     // statusHistory (3), Endstatus variiert je Datensatz für sichtbare Unterschiede in der Übersicht

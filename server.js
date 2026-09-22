@@ -2,6 +2,7 @@ import http from "node:http";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import crypto from "node:crypto";
 
 const PORT = 3000;
 
@@ -149,6 +150,69 @@ async function handleFetchUrl(req, res, url) {
 
 
 /**
+ * Datei-Upload: rohe Bytes im Body, Originalname im Header.
+ * Speichert unter /documents/<GUID>.<endung>, damit Namen nie kollidieren.
+ */
+async function handleUploadDocument(req, res) {
+    const originalNameHeader = req.headers["x-original-filename"] || "";
+    const originalName = decodeURIComponent(originalNameHeader);
+
+    if (!originalName) {
+        res.writeHead(400, { "Content-Type": "application/json; charset=utf-8" });
+        res.end(JSON.stringify({ error: "Kein Dateiname übergeben (X-Original-Filename)." }));
+        return;
+    }
+
+    const chunks = [];
+    for await (const chunk of req) {
+        chunks.push(chunk);
+    }
+    const buffer = Buffer.concat(chunks);
+
+    const extension = path.extname(originalName);
+    const storedName = crypto.randomUUID() + extension;
+    const documentsDir = path.join(__dirname, "documents");
+
+    await fs.mkdir(documentsDir, { recursive: true });
+    await fs.writeFile(path.join(documentsDir, storedName), buffer);
+
+    res.writeHead(200, { "Content-Type": "application/json; charset=utf-8" });
+    res.end(JSON.stringify({
+        link: `/documents/${storedName}`,
+        originalName
+    }));
+}
+
+
+/**
+ * Löscht eine zuvor hochgeladene Datei wieder aus /documents.
+ */
+async function handleDeleteDocument(req, res, url) {
+    const link = url.searchParams.get("link") || "";
+    const documentsDir = path.join(__dirname, "documents");
+    const filePath = path.resolve(documentsDir, link.replace(/^\/documents\//, ""));
+
+    // Sicherheit: darf nur innerhalb von /documents liegen
+    if (!filePath.startsWith(documentsDir)) {
+        res.writeHead(403);
+        res.end("403 - Zugriff verweigert");
+        return;
+    }
+
+    try {
+        await fs.unlink(filePath);
+    } catch (error) {
+        if (error.code !== "ENOENT") {
+            console.error(error);
+        }
+    }
+
+    res.writeHead(200, { "Content-Type": "application/json; charset=utf-8" });
+    res.end(JSON.stringify({ ok: true }));
+}
+
+
+/**
  * HTTP-Server
  */
 const server = http.createServer(async (req, res) => {
@@ -158,6 +222,16 @@ const server = http.createServer(async (req, res) => {
     // Proxy für externe Seiten (siehe ParseUrl.js)
     if (requestUrl.pathname === "/api/fetch-url") {
         await handleFetchUrl(req, res, requestUrl);
+        return;
+    }
+
+    if (requestUrl.pathname === "/api/upload-document" && req.method === "POST") {
+        await handleUploadDocument(req, res);
+        return;
+    }
+
+    if (requestUrl.pathname === "/api/delete-document" && req.method === "DELETE") {
+        await handleDeleteDocument(req, res, requestUrl);
         return;
     }
 

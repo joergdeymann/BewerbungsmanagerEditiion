@@ -91,18 +91,29 @@ export class ApplicationTemplate extends DetailBaseTemplate {
                 <div class="section-body">
                     <div class="field"> 
                         <label>Lebenslauf</label>
-                        <div class="field-with-button">
-                            ${this.documentButton("Lebenslauf", application.application?.resume)}
-                            <button class="success">+</button>
+                        <div id="resumeList" class="contact-list">
+                            ${this.uploadRows(application.application?.resume || [], "resume")}
                         </div>
+                        <input type="file" id="resumeUpload" data-upload-field="resume" style="display:none">
+                        <button type="button" class="success" data-upload-trigger="resumeUpload">+ Datei hinzufügen</button>
                     </div>          
 
                     <div class="field">
                         <label>Anschreiben</label>
-                        <div class="field-with-button">
-                            ${this.documentButton("Anschreiben", application.application?.coverLetter)}
-                            <button class="success">+</button>
+                        <div id="coverLetterList" class="contact-list">
+                            ${this.uploadRows(application.application?.coverLetter ? [application.application.coverLetter] : [], "coverLetter")}
                         </div>
+                        <input type="file" id="coverLetterUpload" data-upload-field="coverLetter" style="display:none">
+                        <button type="button" class="success" data-upload-trigger="coverLetterUpload" ${application.application?.coverLetter ? "disabled" : ""}>+ Datei hinzufügen</button>
+                    </div>
+
+                    <div class="field">
+                        <label>Email-Anschreiben</label>
+                        <div id="emailCoverLetterList" class="contact-list">
+                            ${this.uploadRows(application.application?.emailCoverLetter ? [application.application.emailCoverLetter] : [], "emailCoverLetter")}
+                        </div>
+                        <input type="file" id="emailCoverLetterUpload" data-upload-field="emailCoverLetter" style="display:none">
+                        <button type="button" class="success" data-upload-trigger="emailCoverLetterUpload" ${application.application?.emailCoverLetter ? "disabled" : ""}>+ Datei hinzufügen</button>
                     </div>
                 </div>
 
@@ -274,25 +285,16 @@ export class ApplicationTemplate extends DetailBaseTemplate {
         `;
     }
 
-    documentButton(label, url) {
-
-        if (!url) {
-            return `
-                <span class="muted">
-                    ${HtmlUtils.escape(label)}: nicht hinterlegt
-                </span>
-            `;
+    uploadRows(files, field) {
+        if (!files.length) {
+            return `<p class="muted">Keine Datei hinterlegt.</p>`;
         }
 
-        const safe = HtmlUtils.escape(url);
-
-        return `
-            <a class="output-action"
-               href="${safe}"
-               target="_blank"
-               rel="noopener">
-                📄 ${HtmlUtils.escape(label)} öffnen
-            </a>
-        `;
+        return files.map(file => `
+            <div class="field-with-button contact-row" data-url="${HtmlUtils.escape(file.link)}">
+                <span>${this.link(file.link, file.displayName)}</span>
+                <button type="button" class="danger" data-remove-upload="${HtmlUtils.escape(file.id)}" data-upload-field="${field}">-</button>
+            </div>
+        `).join("");
     }
 }
