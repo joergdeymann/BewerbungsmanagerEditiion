@@ -55,17 +55,17 @@
 - Die Notizen sollen beim Verlassen des Feldes gespeichert werden, 
 - Jede Änderungen solle nach bearbeitung gespeichert werden
 
-## Schritt 1.8 `Telefonate`
+## Schritt 1.9 `Telefonate`
 - Überschrift sollte Kontakt heißen
 - es soll dann mehrere Buttons geben anstatt nur Telefonat spiechern, auch Telefonat, Whatsapp, Mail, Persönlich, die könnten per Radiobutton ausgewählt werden, hier git es noch keine Passende Formatierung, die dann dem UI entspricht, mach dafür eine passendes CSS Klasse, Der Bttun soll sich flexibel anpassen, sobald man den Radiobutton auswählt, muss der Text vom AbsendenButtton auch verändert werden. Standart ist immer Telefonat
 - Das Nachfrangen zu löschen dem aktuellen Design anpassen erst Ja dann Nein Ja ist in diesem Fall rot und Nein Grün, den Hintergrund anpassen und kleiner Border mit Schatttierung
 - Beim Verlassen des Textfeldes müssen die eingegebenen Daten erhalten bleiben wenn man die Tasb wechselt. Wenn man wieder zurückkommt, soo der Text wieder da stehen und der Cursor an alter stelle bleiben das soll auch bei Notitzen in Bewebung und AUsgabe passieren 
 
 
-## Schritt 1.9 `Bewerbung löschen`
+## Schritt 1.10 `Bewerbung löschen`
 - hier auch ein Popup ausführen anstatt alert, eine Vorlage gibt es ja schon, nach dem Löschen die overveiw Daten anpassen die gelöschte wird derzeit noch immer angezeigt
 
-## Schritt 1.9 `Ansprechpartner hinzufügen`
+## Schritt 1.11 `Ansprechpartner hinzufügen`
 - das Popup soll auch dem Design angepasst werden. Die Felder wie die ansicht designen, nur mit etwas helleren hintergrund anzeigen
 
 

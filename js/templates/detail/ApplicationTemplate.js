@@ -292,8 +292,12 @@ export class ApplicationTemplate extends DetailBaseTemplate {
 
         return files.map(file => `
             <div class="field-with-button contact-row" data-url="${HtmlUtils.escape(file.link)}">
-                <span>${this.link(file.link, file.displayName)}</span>
-                <button type="button" class="danger" data-remove-upload="${HtmlUtils.escape(file.id)}" data-upload-field="${field}">-</button>
+                <span>${HtmlUtils.escape(file.displayName)}</span>
+                <span>
+                    <a class="secondary" href="${HtmlUtils.escape(file.link)}" target="_blank" rel="noopener">Anzeigen</a>
+                    <a class="secondary" href="${HtmlUtils.escape(file.link)}" download="${HtmlUtils.escape(file.originalName)}">Download</a>
+                    <button type="button" class="danger" data-remove-upload="${HtmlUtils.escape(file.id)}" data-upload-field="${field}">-</button>
+                </span>
             </div>
         `).join("");
     }
