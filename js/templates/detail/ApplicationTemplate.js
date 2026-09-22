@@ -95,7 +95,7 @@ export class ApplicationTemplate extends DetailBaseTemplate {
                             ${this.uploadRows(application.application?.resume || [], "resume")}
                         </div>
                         <input type="file" id="resumeUpload" data-upload-field="resume" style="display:none">
-                        <button type="button" class="success" data-upload-trigger="resumeUpload">+ Datei hinzufügen</button>
+                        <button type="button" data-upload-trigger="resumeUpload">+ Datei hinzufügen</button>
                     </div>          
 
                     <div class="field">
@@ -104,7 +104,7 @@ export class ApplicationTemplate extends DetailBaseTemplate {
                             ${this.uploadRows(application.application?.coverLetter ? [application.application.coverLetter] : [], "coverLetter")}
                         </div>
                         <input type="file" id="coverLetterUpload" data-upload-field="coverLetter" style="display:none">
-                        <button type="button" class="success" data-upload-trigger="coverLetterUpload" ${application.application?.coverLetter ? "disabled" : ""}>+ Datei hinzufügen</button>
+                        <button type="button" data-upload-trigger="coverLetterUpload" ${application.application?.coverLetter ? "disabled" : ""}>+ Datei hinzufügen</button>
                     </div>
 
                     <div class="field">
@@ -113,7 +113,7 @@ export class ApplicationTemplate extends DetailBaseTemplate {
                             ${this.uploadRows(application.application?.emailCoverLetter ? [application.application.emailCoverLetter] : [], "emailCoverLetter")}
                         </div>
                         <input type="file" id="emailCoverLetterUpload" data-upload-field="emailCoverLetter" style="display:none">
-                        <button type="button" class="success" data-upload-trigger="emailCoverLetterUpload" ${application.application?.emailCoverLetter ? "disabled" : ""}>+ Datei hinzufügen</button>
+                        <button type="button" data-upload-trigger="emailCoverLetterUpload" ${application.application?.emailCoverLetter ? "disabled" : ""}>+ Datei hinzufügen</button>
                     </div>
                 </div>
 
