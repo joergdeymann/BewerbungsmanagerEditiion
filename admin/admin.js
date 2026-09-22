@@ -1,6 +1,6 @@
-import { AppDB } from "../js/data/AppDB.js";
+import { AppDB } from "../js/store/AppDB.js";
 import { AppModel } from "../js/models/AppModel.js";
-import { LocalDB } from "../js/data/LocalDB.js";
+import { LocalDB } from "../js/store/LocalDB.js";
 
 async function clearAll() {
     const db = new AppDB();
@@ -17,7 +17,7 @@ async function clearAll() {
 export async function seed() {
     const removed = await clearAll();
 
-    const response = await fetch("/testdata/Jobsinput.json");
+    const response = await fetch("/teststore/Jobsinput.json");
     const data = await response.json();
 
     const db = new AppDB();

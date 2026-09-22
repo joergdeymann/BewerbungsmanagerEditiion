@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test:data": "node testdata/run-tests.mjs"
+    "test:data": "node teststore/run-tests.mjs"
   },
   "devDependencies": {
     "fake-indexeddb": "^6.2.5"

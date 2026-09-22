@@ -21,7 +21,7 @@
 - `js/analysis` - Auswertung des importierten Stellenanzeigentexts
 - `js/constants` - alle Konstanten des Projekts
 - `js/data` - lokaler Datenzugriff (Persistenz), keine externen Aufrufe
-- `js/io` - Zukunft: Daten-IO (lokale Datenbank, Dateisystem) jetzte noch `js/data/`
+- `js/io` - Zukunft: Daten-IO (lokale Datenbank, Dateisystem) jetzte noch `js/store/`
 - `js/models` - reine Datenmodelle ohne UI- oder DOM-Logik
 - `js/utils` - allgemeine Funktionen und Klassen, die wieder gebrauch werden
 - `js/templates/` enthält ausschließlich die **HTML-Strukturen** der Views.

@@ -1,4 +1,4 @@
-import { AppDB } from "../data/AppDB.js";
+import { AppDB } from "../store/AppDB.js";
 
 // IndexedDB ist asynchron, Overview greift aber synchron auf getAll()/getById() zu.
 // Deshalb: einmal beim Start laden, danach aus dem Speicher-Array bedienen.

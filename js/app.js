@@ -1,5 +1,5 @@
 import { Router } from "./core/Router.js";
-import { AppCache } from "./data/AppCache.js";
+import { AppCache } from "./store/AppCache.js";
 import { OverviewView } from "./views/overview/OverviewView.js";
 import { DetailView } from "./views/detail/DetailView.js";
 

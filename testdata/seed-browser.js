@@ -1,9 +1,9 @@
-import { AppDB } from "../js/data/AppDB.js";
+import { AppDB } from "../js/store/AppDB.js";
 import { AppModel } from "../js/models/AppModel.js";
-import { LocalDB } from "../js/data/LocalDB.js";
+import { LocalDB } from "../js/store/LocalDB.js";
 
 // Im Browser-Devtools-Konsole aufrufen:
-//   import("/testdata/seed-browser.js").then(m => m.seedFromTestdata());
+//   import("/teststore/seed-browser.js").then(m => m.seedFromTestdata());
 export async function seedFromTestdata() {
     const db = new AppDB();
     await db.ensureStore();

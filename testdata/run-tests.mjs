@@ -8,8 +8,8 @@ import { ReferenceModel } from "../js/models/ReferenceModel.js";
 import { ApplicationStatusHistoryModel } from "../js/models/ApplicationStatusHistoryModel.js";
 import { ApplicationHistoryModel } from "../js/models/ApplicationHistoryModel.js";
 import { UploadFileModel } from "../js/models/UploadFileModel.js";
-import { AppDB } from "../js/data/AppDB.js";
-import { LocalDB } from "../js/data/LocalDB.js";
+import { AppDB } from "../js/store/AppDB.js";
+import { LocalDB } from "../js/store/LocalDB.js";
 
 const CHANNELS = ["portal", "email", "phone"];
 
@@ -223,7 +223,7 @@ async function main() {
     // Testdatei in /testdata ablegen, BEVOR der Speicher geleert wird
     const outPath = new URL("./Jobsinput.json", import.meta.url);
     fs.writeFileSync(outPath, JSON.stringify({ app: expected }, null, 4), "utf8");
-    log(`[OK] Testdatei geschrieben: testdata/Jobsinput.json`);
+    log(`[OK] Testdatei geschrieben: teststore/Jobsinput.json`);
 
     // 3) Hauptspeicher leeren (LocalDB-Cache zurücksetzen, IndexedDB bleibt als "Platte" bestehen -
     //    wir simulieren "frisch geladen" durch Zurücksetzen von LocalDB.db/.storeName)
