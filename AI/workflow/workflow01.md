@@ -57,9 +57,9 @@
 
 ## Schritt 1.9 `Telefonate`
 - Überschrift sollte Kontakt heißen
-- es soll dann mehrere Buttons geben anstatt nur Telefonat spiechern, auch Telefonat, Whatsapp, Mail, Persönlich, die könnten per Radiobutton ausgewählt werden, hier git es noch keine Passende Formatierung, die dann dem UI entspricht, mach dafür eine passendes CSS Klasse, Der Bttun soll sich flexibel anpassen, sobald man den Radiobutton auswählt, muss der Text vom AbsendenButtton auch verändert werden. Standart ist immer Telefonat
+- es soll dann mehrere Buttons geben anstatt nur Telefonat speichern, auch Telefonat, Whatsapp, Mail, Persönlich, die könnten per Radiobutton ausgewählt werden, hier git es noch keine Passende Formatierung, die dann dem UI entspricht, mach dafür eine passendes CSS Klasse, Der Button soll sich flexibel anpassen, sobald man den Radiobutton auswählt, muss der Text vom AbsendenButtton auch verändert werden. Standart ist immer Telefonat
 - Das Nachfrangen zu löschen dem aktuellen Design anpassen erst Ja dann Nein Ja ist in diesem Fall rot und Nein Grün, den Hintergrund anpassen und kleiner Border mit Schatttierung
-- Beim Verlassen des Textfeldes müssen die eingegebenen Daten erhalten bleiben wenn man die Tasb wechselt. Wenn man wieder zurückkommt, soo der Text wieder da stehen und der Cursor an alter stelle bleiben das soll auch bei Notitzen in Bewebung und AUsgabe passieren 
+- Beim Verlassen des Textfeldes müssen die eingegebenen Daten erhalten bleiben wenn man die Tabs wechselt. Wenn man wieder zurückkommt, soo der Text wieder da stehen und der Cursor an alter stelle bleiben das soll auch bei Notitzen in Bewebung und Ausgabe passieren 
 
 
 ## Schritt 1.10 `Bewerbung löschen`
