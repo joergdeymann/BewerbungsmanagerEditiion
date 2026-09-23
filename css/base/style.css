@@ -62,6 +62,7 @@
    --button-add-bg: rgba(0, 255, 0, 0.4);
    --button-add-bg-hover: rgba(0, 255, 0, 0.6);
    --button-std-height: 2.5rem;
+   --button-std-half-height: 1.25rem;
 
    font-size: clamp(0.6vh, 1.5vh, 2rem);
 }
