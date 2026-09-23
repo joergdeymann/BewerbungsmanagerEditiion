@@ -3,7 +3,7 @@ import { AppCache } from "./store/AppCache.js";
 import { SkillCache } from "./store/SkillCache.js";
 import { OverviewView } from "./views/overview/OverviewView.js";
 import { DetailView } from "./views/detail/DetailView.js";
-
+import { SkillsView } from "./views/skills/SkillsView.js";
 // Editor existiert noch nicht (geplanter, späterer Schritt).
 // import { EditorView } from "./views/EditorView.js";
 
@@ -26,10 +26,11 @@ const appcache = new AppCache(skillCache);
 await appcache.load();
 
 const router = new Router(root, {
-  "/": () => new OverviewView(appcache),
-  // "/new": () => new EditorView(appcache),
-  // "/edit/:id": (params) => new EditorView(appcache, params.id),
-  "/detail/:id": (params) => new DetailView(appcache, params.id, skillCache)
+    "/": () => new OverviewView(appcache),
+    // "/new": () => new EditorView(appcache),
+    // "/edit/:id": (params) => new EditorView(appcache, params.id),
+    "/detail/:id": (params) => new DetailView(appcache, params.id, skillCache),
+    "/skills": () => new SkillsView(skillCache)
 });
 
 document.addEventListener("click", event => {
