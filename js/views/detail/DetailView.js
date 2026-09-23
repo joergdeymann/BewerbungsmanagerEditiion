@@ -11,9 +11,9 @@ import { DetailHeaderTemplate } from "../../templates/detail/DetailHeaderTemplat
 import { DetailNavigationTemplate } from "../../templates/detail/DetailNavigationTemplate.js";
 
 import { DetailNavigationEvent } from "../../events/detail/DetailNavigationEvent.js";
-import { CommunicationSectionEvent } from "../../events/detail/CommuniationSectionEvent.js";
+import { CommunicationSectionEvent } from "../../events/detail/CommunicationSectionEvent.js";
 import { ContactSectionEvent } from "../../events/detail/ContactSectionEvent.js";
-import { SourcesSectionEvent } from "../../events/detail/SourceSectionEvent.js";
+import { SourcesSectionEvent } from "../../events/detail/SourcesSectionEvent.js";
 import { DocumentsSectionEvent } from "../../events/detail/DocumentsSectionEvent.js";
 import { VerifyPrompt } from "../windows/VerifyPrompt.js";
 

@@ -59,7 +59,7 @@ export class ApplicationTemplate extends DetailBaseTemplate {
                 </div> 
  
                 <div class="field-grid"> 
-                    <div class="field"> 
+                    <div class="field field-ultra-wide"> 
                         <label>Portal</label> 
                         <p>${this.link(portalEntry?.entry?.website)}</p>  
                     </div> 

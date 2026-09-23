@@ -42,7 +42,7 @@ export class CompanyTemplate extends DetailBaseTemplate {
                             )}
                         </p>
                     </div>
-                    <div class="field">
+                    <div class="field field-ultra-wide">
                         <label>Webseite</label>
                         <p>${this.link(application.company?.website)}</p>
                     </div>
