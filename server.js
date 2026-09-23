@@ -19,33 +19,45 @@ const proxyHandler = new ProxyHandler();
 const documentHandler = new DocumentHandler(__dirname);
 
 const server = http.createServer(async (req, res) => {
-    const url = new URL(req.url, `http://localhost:${PORT}`);
-    const pathname = url.pathname;
-    const method = req.method.toUpperCase();
+    try {
+        const url = new URL(req.url, `http://localhost:${PORT}`);
+        const pathname = url.pathname;
+        const method = req.method.toUpperCase();
 
-    // 1. API-Routing
-    if (pathname === "/api/fetch-url" && method === "GET") {
-        await proxyHandler.handleFetchUrl(req, res, url);
-        return;
-    }
+        // 1. API-Routing
+        if (pathname === "/api/fetch-url" && method === "GET") {
+            await proxyHandler.handleFetchUrl(req, res, url);
+            return;
+        }
 
-    if (pathname === "/api/upload" && method === "POST") {
-        await documentHandler.handleUploadDocument(req, res);
-        return;
-    }
+        if (pathname === "/api/upload" && method === "POST") {
+            await documentHandler.handleUploadDocument(req, res);
+            return;
+        }
 
-    if (pathname === "/api/delete" && method === "DELETE") {
-        await documentHandler.handleDeleteDocument(req, res, url);
-        return;
-    }
+        if (pathname === "/api/delete" && method === "DELETE") {
+            await documentHandler.handleDeleteDocument(req, res, url);
+            return;
+        }
 
-    // 2. Fallback: Statische Dateien ausliefern
-    const handled = await staticFileHandler.serveStaticFile(req, res);
-    
-    // Falls die Datei nicht gefunden wurde und kein anderer Handler gegriffen hat
-    if (!handled) {
-        res.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" });
-        res.end("404 - Seite oder Datei nicht gefunden");
+        // 2. Fallback: Statische Dateien ausliefern
+        const handled = await staticFileHandler.serveStaticFile(req, res);
+        
+        // Falls die Datei nicht gefunden wurde und kein anderer Handler gegriffen hat
+        if (!handled) {
+            res.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" });
+            res.end("404 - Seite oder Datei nicht gefunden");
+        }
+
+    } catch(error)
+    {
+        console.error("Unbehandelter Fehler im Request-Handler:", error);
+        if (!res.headersSent) {
+            res.writeHead(500, { "Content-Type": "application/json; charset=utf-8" });
+            res.end(JSON.stringify({ error: "Interner Serverfehler." }));
+        } else {
+            res.end();
+        }        
     }
 });
 

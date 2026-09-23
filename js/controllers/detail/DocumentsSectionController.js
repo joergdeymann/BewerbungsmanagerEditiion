@@ -89,7 +89,7 @@ export class DocumentsSectionController {
     }
 
     async upload(file) {
-        const response = await fetch("/api/upload-document", {
+        const response = await fetch("/api/upload", {
             method: "POST",
             headers: {
                 "X-Original-Filename": encodeURIComponent(file.name)
@@ -115,9 +115,19 @@ export class DocumentsSectionController {
         const confirmed = await verifyPrompt.show(model.displayName, "Datei wirklich löschen?");
         if (!confirmed) return;
 
-        await fetch(`/api/delete-document?link=${encodeURIComponent(model.link)}`, {
+        await fetch(`/api/delete?link=${encodeURIComponent(model.link)}`, {
             method: "DELETE"
         });
+
+        // 404 zählt als ok: die Datei ist so oder so weg, kein Grund den Vorgang abzubrechen
+        if (!response.ok && response.status !== 404) {
+            const infoPrompt = new InfoPrompt();
+            await infoPrompt.show(
+                "Die Datei konnte auf dem Server nicht gelöscht werden.",
+                "Löschen fehlgeschlagen"
+            );
+            return;
+        }
 
         if (field === "resume") {
             application.application.resume = application.application.resume.filter(file => file.id !== id);
