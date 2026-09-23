@@ -11,3 +11,27 @@
    font-weight: 600;
    font-size: 13px;
 }
+
+.tag-badge.skill-none {
+   background: #e5e7eb;
+   color: #374151;
+   border-color: transparent;
+}
+
+.tag-badge.skill-basic {
+   background: #fef3c7;
+   color: #92400e;
+   border-color: transparent;
+}
+
+.tag-badge.skill-advanced {
+   background: #dbeafe;
+   color: #1d4ed8;
+   border-color: transparent;
+}
+
+.tag-badge.skill-expert {
+   background: #dcfce7;
+   color: #166534;
+   border-color: transparent;
+}

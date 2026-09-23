@@ -1,8 +1,10 @@
 import { DetailBaseTemplate } from "./DetailBaseTemplate.js";
+import { HtmlUtils } from "../../utils/HtmlUtils.js";
+import { SkillConstants } from "../../constants/SkillConstants.js";
 
 export class RequirementsTemplate extends DetailBaseTemplate {
 
-    render(application) {
+    render(application, skills = []) {
 
         return `
             <section class="subsection-display">
@@ -20,21 +22,37 @@ export class RequirementsTemplate extends DetailBaseTemplate {
                     <div class="field">
                         <label>Muss-Anforderungen</label>
                         ${this.list(application.qualifications?.required?.content)}
-                        <p>${this.badges(application.qualifications?.required?.tags)}</p>
+                        <p>${this.skillBadges(application.qualifications?.required?.tags, skills)}</p>
                     </div>
 
                     <div class="field">
                         <label>Persönliche Anforderungen</label>
                         ${this.list(application.qualifications?.personal?.content)}
-                        <p>${this.badges(application.qualifications?.personal?.tags)}</p>
+                        <p>${this.skillBadges(application.qualifications?.personal?.tags, skills)}</p>
                     </div>
                     <div class="field">
                         <label>Wünschenswerte Kenntnisse</label>
                         ${this.list(application.qualifications?.preferred?.content)}
-                        <p>${this.badges(application.qualifications?.preferred?.tags)}</p>
+                        <p>${this.skillBadges(application.qualifications?.preferred?.tags, skills)}</p>
                     </div>
                 </section>
             </section>    
         `;
+    }
+
+    skillBadges(items, skills) {
+
+        if (!items?.length) {
+            return "—";
+        }
+
+        return items
+            .map(item => {
+                const skill = skills.find(skill => skill.matches(item));
+                const levelClass = skill ? SkillConstants.getClass(skill.level) : "";
+
+                return `<span class="tag-badge ${levelClass}">${HtmlUtils.escape(item)}</span>`;
+            })
+            .join(" ");
     }
 }

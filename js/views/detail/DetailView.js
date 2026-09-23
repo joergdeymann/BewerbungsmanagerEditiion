@@ -20,10 +20,11 @@ import { VerifyPrompt } from "../windows/VerifyPrompt.js";
 
 export class DetailView {
 
-    constructor(repository, id) {
+    constructor(repository, id, skillCache) {
 
         this.repository = repository;
         this.id = id;
+        this.skillCache = skillCache;
 
         this.templates = {
             company: new CompanyTemplate(),
@@ -134,6 +135,10 @@ export class DetailView {
 
         const template =
             this.templates[section] || this.templates.company;
+
+        if (section === "requirements") {
+            return template.render(application, this.skillCache.getAll());
+        }            
 
         return template.render(application);
     }
