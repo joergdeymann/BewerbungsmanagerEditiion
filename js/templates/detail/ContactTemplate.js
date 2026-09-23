@@ -1,6 +1,6 @@
 import { DetailBaseTemplate } from "./DetailBaseTemplate.js";
 import { HtmlUtils } from "../../utils/HtmlUtils.js";
-import { UiContact } from "../../ui/UiContact.js";
+import { UiContact } from "../../ui/detail/UiContact.js";
 
 export class ContactTemplate extends DetailBaseTemplate {
 

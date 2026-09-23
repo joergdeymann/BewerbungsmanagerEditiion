@@ -10,11 +10,11 @@ import { CommunicationTemplate } from "../../templates/detail/CommunicationTempl
 import { DetailHeaderTemplate } from "../../templates/detail/DetailHeaderTemplate.js";
 import { DetailNavigationTemplate } from "../../templates/detail/DetailNavigationTemplate.js";
 
-import { DetailNavigationController } from "./events/DetailNavigationController.js";
-import { CommunicationSectionController } from "./events/CommunicationSectionController.js";
-import { ContactSectionController } from "./events/ContactSectionController.js";
-import { SourcesSectionController } from "./events/SourcesSectionController.js";
-import { DocumentsSectionController } from "./events/DocumentsSectionController.js";
+import { DetailNavigationEvent } from "../../events/detail/DetailNavigationEvent.js";
+import { CommunicationSectionEvent } from "../../events/detail/CommuniationSectionEvent.js";
+import { ContactSectionEvent } from "../../events/detail/ContactSectionEvent.js";
+import { SourcesSectionEvent } from "../../events/detail/SourceSectionEvent.js";
+import { DocumentsSectionEvent } from "../../events/detail/DocumentsSectionEvent.js";
 import { VerifyPrompt } from "../windows/VerifyPrompt.js";
 
 
@@ -42,17 +42,17 @@ export class DetailView {
         this.navigationTemplate =
             new DetailNavigationTemplate();
 
-        this.communicationController =
-            new CommunicationSectionController(repository);
+        this.communicationEvent =
+            new CommunicationSectionEvent(repository);
 
-        this.contactController =
-            new ContactSectionController(repository);
+        this.contactEvent =
+            new ContactSectionEvent(repository);
 
-        this.sourcesController =
-            new SourcesSectionController();
+        this.sourcesEvent =
+            new SourcesSectionEvent();
 
-        this.documentsController =
-            new DocumentsSectionController(repository);
+        this.documentsEvent =
+            new DocumentsSectionEvent(repository);
     }
 
 
@@ -66,7 +66,7 @@ export class DetailView {
             return;
         }
 
-        this.navigation = new DetailNavigationController(
+        this.navigation = new DetailNavigationEvent(
             section => this.showSection(root, application, section)
         );
 
@@ -142,7 +142,7 @@ export class DetailView {
     bindSectionEvents(root, application, section) {
 
         if (section === "communication") {
-            this.communicationController.bind(
+            this.communicationEvent.bind(
                 root,
                 application,
                 () => this.showSection(root, application, "communication")
@@ -151,7 +151,7 @@ export class DetailView {
         }
 
         if (section === "contact") {
-            this.contactController.bind(
+            this.contactEvent.bind(
                 root,
                 application,
                 () => this.showSection(root, application, "contact")
@@ -160,12 +160,12 @@ export class DetailView {
         }
 
         if (section === "sources") {
-            this.sourcesController.bind(root);
+            this.sourcesEvent.bind(root);
             return;
         }
 
         if (section === "application") {
-            this.documentsController.bind(
+            this.documentsEvent.bind(
                 root,
                 application,
                 () => this.showSection(root, application, "application")

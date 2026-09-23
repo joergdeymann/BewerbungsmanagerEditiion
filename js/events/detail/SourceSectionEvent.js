@@ -1,4 +1,4 @@
-export class SourcesSectionController {
+export class SourcesSectionEvent {
 
     constructor() {
         this.sortKey = "date";

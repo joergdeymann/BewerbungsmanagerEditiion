@@ -56,6 +56,10 @@ main .app-header {
    color: #fff;
 }
 
+.app-header button.active {
+   pointer-events: none;
+}
+
 .app-header :not(.header-detail-view) :not(.primary) button:hover {
    background-color: var(--header-button-hover-bg);
    color: var(--header-button-hover-text);

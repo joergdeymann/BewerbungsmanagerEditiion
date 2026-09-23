@@ -13,6 +13,22 @@ export class FormatUtils {
             });
     }
 
+    static toGermanDateTime(date) {
+        if (!date) return "";
+
+        const parsed = new Date(date);
+
+        return Number.isNaN(parsed.getTime())
+            ? date
+            : parsed.toLocaleDateString("de-DE", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit"
+            });
+    }
+
     static formatCurrency(number) {
         if (!number) return "";
         return number.toLocaleString("de-DE", {
