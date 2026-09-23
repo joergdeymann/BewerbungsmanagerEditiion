@@ -1,10 +1,35 @@
 import { UploadFileModel } from "../../models/UploadFileModel.js";
 import { VerifyPrompt } from "../../views/windows/VerifyPrompt.js";
+import { InfoPrompt } from "../../views/windows/InfoPrompt.js";
 
 export class DocumentsSectionController {
 
     constructor(repository) {
         this.repository = repository;
+    }
+
+    async viewFile(link) {
+        const available = await this.checkAvailability(link);
+
+        if (!available) {
+            const infoPrompt = new InfoPrompt();
+            await infoPrompt.show(
+                "Die Datei ist nicht verfügbar.",
+                "Datei nicht gefunden"
+            );
+            return;
+        }
+
+        window.open(link, "_blank", "noopener");
+    }
+
+    async checkAvailability(link) {
+        try {
+            const response = await fetch(link, { method: "HEAD" });
+            return response.ok;
+        } catch {
+            return false;
+        }
     }
 
     async uploadFile(application, field, file, onUpdate) {

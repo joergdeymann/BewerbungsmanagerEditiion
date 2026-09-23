@@ -9,7 +9,15 @@ export class DocumentsSectionEvent {
     bind(root, application, onUpdate) {
         this.bindUploadTrigger(root);
         this.bindUploadChange(root, application, onUpdate);
+        this.bindView(root);
         this.bindRemove(root, application, onUpdate);
+    }
+
+    bindView(root) {
+        root.querySelectorAll("[data-view-upload]").forEach(button => {
+            button.onclick = () =>
+                this.controller.viewFile(button.dataset.viewUpload);
+        });
     }
 
     bindUploadTrigger(root) {

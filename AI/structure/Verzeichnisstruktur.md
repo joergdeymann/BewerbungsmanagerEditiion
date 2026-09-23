@@ -19,7 +19,7 @@ AI/
     ├── log.md            # Aktuelles Workflow-Log (English Flags)
     ├── todo.md           # Offene Tasks & Status
     ├── workflow01.md     # Aktueller Sprint-Ablauf
-    └── NewFils/          # Sammelordner für neu generierte Module
+    └── NewFiles/         # Sammelordner für neu generierte Module
 ```
 
 ### 📂 Frontend-Ressourcen (Styles & Assets)
@@ -40,17 +40,28 @@ AI/
     ├── analysis/         # Parser & Data-Extractor (Regex, Text-Cleaning)
     ├── api/              # Netzwerk-Schnittstellen (UrlImporter.js)
     ├── constants/        # Systemweite Konstanten (Address-, Job-, WebConstants)
+    ├── controllers/      # Ablaufsteuerung: Repository-Zugriff, Verarbeitung, Speichern
+    │   ├── detail/       # Communication-, Contact-, DocumentsSectionController.js
+    │   └── overview/     # OverviewListController.js
     ├── core/             # App-Steuerung (Router.js)
+    ├── events/           # Reines EventListener-Binding, ruft die zugehörigen Controller
+    │   ├── detail/       # Navigation-, Sources-, Communication-, Contact-, DocumentsSectionEvent.js
+    │   └── overview/     # OverviewEvent.js, OverviewFilterEvent.js, OverviewListEvent.js
     ├── store/             # Caching und IndexedDB-Wrapper (AppDB, LocalDB)
     ├── io/               # Datei- und Seitenimporte (ImportJobPage.js)
     ├── models/           # Datenmodelle (Application-, Company-, ContactModel)
-    ├── templates/        # HTML/JS-Templates (EditorView, Detail, Overview)
-    ├── ui/               # UI-Direktzugriffe (UiCompany, UiContact, UiJob)
+    ├── templates/        # HTML-Strukturen der Views
+    │   ├── detail/       # Company-, Job-, Contact-, Communication-, SourcesTemplate.js
+    │   ├── overview/     # ApplicationCardTemplate.js, OverviewTemplate.js
+    │   └── windows/      # Contact-, Verify-, Url-, InputPromptTemplate.js
+    ├── ui/               # Datenfluss zwischen Models und Views
+    │   ├── detail/       # UiContact.js (UiCompany.js/UiJob.js: unbenutzte Beispiele)
+    │   └── overview/     # OverviewFilter.js
     ├── utils/            # Hilfsfunktionen (Format-, HTML-, GlobalUtils)
-    └── views/            # UI-Views & Event-Controller
-        ├── detail/       # DetailView.js & event-driven Sektions-Controller
-        ├── overview/     # OverviewView.js & Listen-Events
-        └── windows/      # Modale Prompts (Contact-, Url-, Toast-Prompts)
+    └── views/            # Orchestrierung: Template rendern, Events verdrahten
+        ├── detail/       # DetailView.js
+        ├── overview/     # OverviewView.js
+        └── windows/      # Contact-, Verify-, Url-, InputPrompt.js, Toast.js
 ```
 
 ### 📂 Daten, Dokumente & System (Ausgeblendet/Ignoriert)
