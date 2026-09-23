@@ -3,10 +3,9 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import crypto from "node:crypto";
 import { Logger } from "./Logger.js";
+import { FileConstants } from "../shared/FileConstants.js";
 
 export class DocumentHandler {
-    // 10 MB in Bytes (10 * 1024 * 1024)
-    static #MAX_FILE_SIZE = 10485760; 
 
     constructor(baseDir) {
         this.baseDir = baseDir;
@@ -26,23 +25,37 @@ export class DocumentHandler {
             return;
         }
 
+        const contentLength = Number(req.headers["content-length"]);
+        if (Number.isFinite(contentLength) && contentLength > FileConstants.MAX_UPLOAD_SIZE) {
+            res.writeHead(413, { "Content-Type": "application/json; charset=utf-8" });
+            res.end(JSON.stringify({ error: `Datei zu groß. Maximal zulässig sind ${FileConstants.MAX_UPLOAD_SIZE_MB} MB.` }));
+            return;
+        }
+
         try {
             const chunks = [];
             let currentSize = 0;
+            let tooLarge = false;
 
+            // Fallback, falls Content-Length fehlt (z.B. chunked encoding) oder gefälscht war
             for await (const chunk of req) {
                 currentSize += chunk.length;
-                
-                // Sofortiger Abbruch, wenn die Datei zu groß wird
-                if (currentSize > DocumentHandler.#MAX_FILE_SIZE) {
-                    res.writeHead(413, { "Content-Type": "application/json; charset=utf-8" });
-                    res.end(JSON.stringify({ error: "Datei zu groß. Maximal zulässig sind 10 MB." }));
-                    return;
+
+                if (currentSize > FileConstants.MAX_UPLOAD_SIZE) {
+                    tooLarge = true;
+                    continue;
                 }
+
                 chunks.push(chunk);
             }
-            const buffer = Buffer.concat(chunks);
 
+            if (tooLarge) {
+                res.writeHead(413, { "Content-Type": "application/json; charset=utf-8" });
+                res.end(JSON.stringify({ error: `Datei zu groß. Maximal zulässig sind ${FileConstants.MAX_UPLOAD_SIZE_MB} MB.` }));
+                return;
+            }
+
+            const buffer = Buffer.concat(chunks);
             const extension = path.extname(originalName);
             const storedName = crypto.randomUUID() + extension;
 
@@ -67,7 +80,6 @@ export class DocumentHandler {
             res.end(JSON.stringify({ error: message }));
         }
     }
-
     /**
      * Löscht eine zuvor hochgeladene Datei wieder aus /documents.
      */
