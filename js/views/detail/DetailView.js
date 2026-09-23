@@ -15,6 +15,7 @@ import { CommunicationSectionController } from "./events/CommunicationSectionCon
 import { ContactSectionController } from "./events/ContactSectionController.js";
 import { SourcesSectionController } from "./events/SourcesSectionController.js";
 import { DocumentsSectionController } from "./events/DocumentsSectionController.js";
+import { VerifyPrompt } from "../windows/VerifyPrompt.js";
 
 
 export class DetailView {
@@ -93,13 +94,19 @@ export class DetailView {
             return;
         }
 
-        button.onclick = () => {
+        button.onclick = async () => {
 
-            if (!confirm("Bewerbung wirklich löschen?")) {
+            const verifyPrompt = new VerifyPrompt();
+            const confirmed = await verifyPrompt.show(
+                `${application.company?.name || "Unbenannte Firma"} – ${application.job?.title || "Keine Stelle angegeben"}`,
+                "Bewerbung wirklich löschen?"
+            );
+
+            if (!confirmed) {
                 return;
             }
 
-            this.repository.delete(application.id);
+            await this.repository.delete(application.id);
             location.hash = "#/";
         };
     }
