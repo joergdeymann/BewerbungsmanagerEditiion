@@ -12,17 +12,25 @@ export class ContactPrompt {
                 <div class="input-prompt auto-height">
                     <label>${title}</label>
 
-                    <label for="contact-name">Name</label>
-                    <input id="contact-name" value="${this.escape(contact.name)}">
+                    <div class="field">
+                        <label for="contact-name">Name</label>
+                        <input id="contact-name" value="${this.escape(contact.name)}">
+                    </div>
 
-                    <label for="contact-role">Position</label>
-                    <input id="contact-role" value="${this.escape(contact.role)}">
+                    <div class="field">
+                        <label for="contact-role">Position</label>
+                        <input id="contact-role" value="${this.escape(contact.role)}">
+                    </div>
 
-                    <label for="contact-email">E-Mail</label>
-                    <input id="contact-email" type="email" value="${this.escape(contact.email)}">
+                    <div class="field">
+                        <label for="contact-email">E-Mail</label>
+                        <input id="contact-email" type="email" value="${this.escape(contact.email)}">
+                    </div>
 
-                    <label for="contact-phone">Telefon</label>
-                    <input id="contact-phone" value="${this.escape(contact.phone)}">
+                    <div class="field">
+                        <label for="contact-phone">Telefon</label>
+                        <input id="contact-phone" value="${this.escape(contact.phone)}">
+                    </div>
 
                     <div class="prompt-buttons">
                         <button id="cancelContact" class="danger">Abbrechen</button>
