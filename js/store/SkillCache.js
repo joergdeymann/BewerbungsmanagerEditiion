@@ -27,13 +27,19 @@ export class SkillCache {
 
     async addManual(name) {
         const resolvedName = SkillAliasConstants.resolve(name);
-        if (!resolvedName || this.list.findByName(resolvedName)) return;
+        if (!resolvedName) return { added: false, duplicate: false };
+
+        const existing = this.list.findByName(resolvedName);
+        if (existing) {
+            return { added: false, duplicate: true, existingName: existing.name };
+        }
 
         const skill = new SkillModel();
         skill.name = resolvedName;
         this.list.skills.push(skill);
 
         await this.db.save(this.list);
+        return { added: true, duplicate: false };
     }
 
     // Zwei Einträge, die dasselbe meinen, zusammenlegen. "keepId" bleibt

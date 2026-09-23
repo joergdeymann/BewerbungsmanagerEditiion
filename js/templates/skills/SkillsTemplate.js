@@ -3,9 +3,12 @@ import { SkillConstants } from "../../constants/SkillConstants.js";
 
 export class SkillsTemplate {
 
-    render(skills) {
+    render(skills, selectedId) {
+
+        const selectedSkill = skills.find(skill => skill.id === selectedId) || null;
+
         return `
-            <section class="subsection-display">
+            <section class="subsection-display content-frame">
                 <section class="section-header">
                     <div>
                         <span class="section-icon">🧠</span>
@@ -18,6 +21,11 @@ export class SkillsTemplate {
 
                 <section class="section-body">
                     <div class="field">
+                        <label>Erfasste Kenntnisse</label>
+                        <p>${this.badgeList(skills, selectedId)}</p>
+                    </div>
+
+                    <div class="field">
                         <label>Neue Kenntnis hinzufügen</label>
                         <div class="url-input-row">
                             <input id="newSkillName" placeholder="z.B. Projektmanagement">
@@ -26,24 +34,43 @@ export class SkillsTemplate {
                     </div>
 
                     <div class="field">
-                        <label>Alle Kenntnisse (${skills.length})</label>
-                        ${skills.length
-                            ? this.rows(skills)
-                            : `<p class="muted">Noch keine Kenntnisse vorhanden.</p>`}
+                        <label>Ausgewählte Kenntnis</label>
+                        ${selectedSkill
+                            ? this.detail(selectedSkill, skills)
+                            : `<p class="muted">Oben eine Kenntnis anklicken, um sie zu bearbeiten.</p>`}
                     </div>
                 </section>
             </section>
         `;
     }
 
-    rows(skills) {
-        return skills.map(skill => this.row(skill, skills)).join("");
+    badgeList(skills, selectedId) {
+
+        if (!skills.length) {
+            return `<p class="muted">Noch keine Kenntnisse vorhanden.</p>`;
+        }
+
+        const sorted = [...skills].sort((a, b) => a.name.localeCompare(b.name, "de"));
+
+        return sorted
+            .map(skill => {
+                const levelClass = SkillConstants.getClass(skill.level);
+                const selectedClass = skill.id === selectedId ? "skill-selected" : "";
+
+                return `
+                    <span class="tag-badge skill-selectable ${levelClass} ${selectedClass}"
+                          data-select-skill="${skill.id}">
+                        ${HtmlUtils.escape(skill.name)}
+                    </span>
+                `;
+            })
+            .join(" ");
     }
 
-    row(skill, allSkills) {
+    detail(skill, allSkills) {
         return `
-            <div class="field-with-button skill-row">
-                <div class="skill-info">
+            <div class="skill-detail">
+                <div class="skill-detail-header">
                     <strong>${HtmlUtils.escape(skill.name)}</strong>
                     ${skill.aliases.length
                         ? `<span class="muted"> (${skill.aliases.map(a => HtmlUtils.escape(a)).join(", ")})</span>`

@@ -8,6 +8,7 @@ export class SkillsEvent {
 
     bind(root, onUpdate) {
         this.bindAdd(root, onUpdate);
+        this.bindSelect(root, onUpdate);
         this.bindLevel(root, onUpdate);
         this.bindMerge(root, onUpdate);
     }
@@ -21,6 +22,12 @@ export class SkillsEvent {
             this.controller.addSkill(input.value, onUpdate);
             input.value = "";
         };
+    }
+
+    bindSelect(root, onUpdate) {
+        root.querySelectorAll("[data-select-skill]").forEach(badge => {
+            badge.onclick = () => onUpdate(badge.dataset.selectSkill);
+        });
     }
 
     bindLevel(root, onUpdate) {

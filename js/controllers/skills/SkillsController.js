@@ -1,3 +1,5 @@
+import { InfoPrompt } from "../../views/windows/InfoPrompt.js";
+
 export class SkillsController {
 
     constructor(skillCache) {
@@ -13,7 +15,16 @@ export class SkillsController {
         const trimmed = name.trim();
         if (!trimmed) return;
 
-        await this.skillCache.addManual(trimmed);
+        const result = await this.skillCache.addManual(trimmed);
+
+        if (result.duplicate) {
+            const infoPrompt = new InfoPrompt();
+            await infoPrompt.show(
+                `„${trimmed}" ist bereits als „${result.existingName}" vorhanden.`,
+                "Kenntnis bereits vorhanden"
+            );
+        }
+
         onUpdate();
     }
 
@@ -21,6 +32,6 @@ export class SkillsController {
         if (!targetId || sourceId === targetId) return;
 
         await this.skillCache.merge(targetId, sourceId);
-        onUpdate();
+        onUpdate(targetId);
     }
 }

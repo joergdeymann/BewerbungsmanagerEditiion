@@ -29,3 +29,21 @@
 .skill-merge select {
    flex: 1;
 }
+
+.tag-badge.skill-selected {
+   box-shadow: 0 0 0 2px var(--primary);
+   pointer-events: none;
+}
+
+.skill-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 8px;   
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: var(--radius-md);
+}
+
+.skill-detail-header {
+   font-size: 15px;
+}
