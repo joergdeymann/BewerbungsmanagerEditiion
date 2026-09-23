@@ -10,6 +10,7 @@ export class CommunicationSectionEvent {
         this.bindAdd(root, application, onUpdate);
         this.bindEdit(root, application, onUpdate);
         this.bindDelete(root, application, onUpdate);
+        this.bindDraft(root, application);
     }
 
     bindAdd(root, application, onUpdate) {
@@ -22,6 +23,7 @@ export class CommunicationSectionEvent {
             if (!text) return;
 
             this.controller.addEntry(application, text, onUpdate);
+            this.controller.clearDraft(application);
         };
     }
 
@@ -46,4 +48,35 @@ export class CommunicationSectionEvent {
                 );
         });
     }
+
+    bindDraft(root, application) {
+        const textarea = root.querySelector("#communicationText");
+        if (!textarea) return;
+
+        const draft = this.controller.loadDraft(application);
+        if (draft) {
+            textarea.value = draft.text;
+            textarea.setSelectionRange(draft.selectionStart, draft.selectionEnd);
+            if (draft.text) {
+                textarea.focus();
+            }
+        }
+
+        const persistDraft = () => {
+            if (!textarea.value) {
+                this.controller.clearDraft(application);
+                return;
+            }
+
+            this.controller.saveDraft(application, {
+                text: textarea.value,
+                selectionStart: textarea.selectionStart,
+                selectionEnd: textarea.selectionEnd
+            });
+        };
+
+        textarea.addEventListener("input", persistDraft);
+        textarea.addEventListener("keyup", persistDraft);
+        textarea.addEventListener("click", persistDraft);
+    }    
 }

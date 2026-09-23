@@ -11,21 +11,14 @@ export class ContactSectionEvent {
         this.bindSelect(root, application, onUpdate);
         this.bindEdit(root, application, onUpdate);
         this.bindRemove(root, application, onUpdate);
-        this.bindDraft(root);
     }
 
     bindAdd(root, application, onUpdate) {
-        const addButton = root.querySelector("#addCommunication");
-        if (!addButton) return;
+        const button = root.querySelector("[data-add-contact]");
+        if (!button) return;
 
-        addButton.onclick = () => {
-            const textarea = root.querySelector("#communicationText");
-            const text = textarea.value.trim();
-            if (!text) return;
-
-            this.controller.addEntry(application, text, onUpdate);
-            this.controller.clearDraft(application);
-        };
+        button.onclick = () =>
+            this.controller.addContact(application, onUpdate);
     }
 
     bindSelect(root, application, onUpdate) {
@@ -63,39 +56,4 @@ export class ContactSectionEvent {
                 );
         });
     }
-
-    bindDraft(root, application) {
-        const textarea = root.querySelector("#communicationText");
-        if (!textarea) return;
-
-        const draft = this.controller.loadDraft(application);
-        if (draft) {
-            textarea.value = draft.text;
-            textarea.setSelectionRange(draft.selectionStart, draft.selectionEnd);
-            if (draft.text) {
-                textarea.focus();
-            }
-        }
-
-        const persistDraft = () => {
-            if (!textarea.value) {
-                this.controller.clearDraft(application);
-                return;
-            }
-
-            this.controller.saveDraft(application, {
-                text: textarea.value,
-                selectionStart: textarea.selectionStart,
-                selectionEnd: textarea.selectionEnd
-            });
-        };
-
-        textarea.addEventListener("input", persistDraft);
-        textarea.addEventListener("keyup", persistDraft);
-        textarea.addEventListener("click", persistDraft);
-    }
-
-
-
-
 }
