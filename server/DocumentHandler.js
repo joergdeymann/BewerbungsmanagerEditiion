@@ -109,4 +109,30 @@ export class DocumentHandler {
             }
         }
     }
+
+    /**
+     * Prüft rein, ob eine Datei existiert (analog zu File.Exists) -
+     * antwortet immer mit 200, das Ergebnis steckt im Body, nicht im Status-Code.
+     */
+    async handleCheckDocument(req, res, url) {
+        const link = url.searchParams.get("link") || "";
+        const filePath = path.resolve(this.documentsDir, link.replace(/^\/documents\//, ""));
+
+        if (!filePath.startsWith(this.documentsDir)) {
+            res.writeHead(403, { "Content-Type": "application/json; charset=utf-8" });
+            res.end(JSON.stringify({ error: "403 - Zugriff verweigert" }));
+            return;
+        }
+
+        let exists = false;
+        try {
+            await fs.access(filePath);
+            exists = true;
+        } catch {
+            exists = false;
+        }
+
+        res.writeHead(200, { "Content-Type": "application/json; charset=utf-8" });
+        res.end(JSON.stringify({ exists }));
+    }    
 }

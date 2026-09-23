@@ -40,6 +40,12 @@ const server = http.createServer(async (req, res) => {
             return;
         }
 
+        if (pathname === "/api/document-exists" && method === "GET") {
+            await documentHandler.handleCheckDocument(req, res, url);
+            return;
+        }
+
+
         // 2. Fallback: Statische Dateien ausliefern
         const handled = await staticFileHandler.serveStaticFile(req, res);
         
