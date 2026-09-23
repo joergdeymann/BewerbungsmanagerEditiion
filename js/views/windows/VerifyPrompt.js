@@ -1,7 +1,9 @@
+import { VerifyPromptTemplate } from "../../templates/windows/VerifyPromptTemplate.js";
+
 export class VerifyPrompt {
-    constructor(repository, id) {
-        this.repository = repository;
-        this.id = id;
+
+    constructor() {
+        this.template = new VerifyPromptTemplate();
     }
 
     // Erwartet den Standardtext (Vorausfüllung beim Bearbeiten)
@@ -12,28 +14,16 @@ export class VerifyPrompt {
             cancel: { class: "primary", value: "Nein" },
             confirm: { class: "danger", value: "Ja" }
         }
-    ) {        return new Promise((resolve) => {
+    ) {
+        return new Promise((resolve) => {
             const overlay = document.createElement("div");
-            overlay.className = "modal-overlay"; 
-            
-            overlay.innerHTML = `
-            <div id="input-container" class="input-container">
-                <div class="input-prompt auto-height">
-                    <label for="input-text">${title}</label>
-                    <p>${textPreview}</p>
-                    <div class="prompt-buttons prompt-center">
-                        <button id="confirmDelete" class="${buttons.confirm.class}">${buttons.confirm.value}</button>
-                        <button id="cancelDelete" class="${buttons.cancel.class}">${buttons.cancel.value}</button>
-                    </div>
-                </div>
-            </div>
-            `;
+            overlay.className = "modal-overlay";
+            overlay.innerHTML = this.template.create(textPreview, title, buttons);
 
             document.body.appendChild(overlay);
             const inputContainer = overlay.querySelector("#input-container");
             const confirmBtn = overlay.querySelector("#confirmDelete");
             const cancelBtn = overlay.querySelector("#cancelDelete");
-
 
             confirmBtn.onclick = () => {
                 overlay.remove();
@@ -60,7 +50,6 @@ export class VerifyPrompt {
                     resolve(false);
                 }
             });
-
         });
     }
 }

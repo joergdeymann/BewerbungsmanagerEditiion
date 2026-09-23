@@ -1,31 +1,17 @@
+import { InputPromptTemplate } from "../../templates/windows/InputPromptTemplate.js";
+
 export class InputPrompt {
-    constructor(repository, id) {
-        this.repository = repository;
-        this.id = id;
+
+    constructor() {
+        this.template = new InputPromptTemplate();
     }
 
     // Erwartet den Standardtext (Vorausfüllung beim Bearbeiten)
     show(defaultValue = "") {
         return new Promise((resolve) => {
-            // Der alte Code-Block mit "repository" und "getById" wurde komplett entfernt.
-
             const overlay = document.createElement("div");
-            overlay.className = "modal-overlay"; 
-            
-            overlay.innerHTML = `
-            <div id="input-container" class="input-container">
-                <div class="input-prompt">
-                    <div class="field">
-                        <label for="input-text">Telefonat / Rückruf dokumentieren:</label>
-                        <textarea id="input-text" rows="4" placeholder="Informationen zum Telefonat eingeben ...">${defaultValue}</textarea>
-                    </div>
-                    <div class="prompt-buttons">
-                        <button id="cancelInput" class="danger">Abbrechen</button>
-                        <button id="submitInput" class="primary">Speichern</button>
-                    </div>
-                </div>
-            </div>
-            `;
+            overlay.className = "modal-overlay";
+            overlay.innerHTML = this.template.create(defaultValue);
 
             document.body.appendChild(overlay);
 
@@ -63,7 +49,6 @@ export class InputPrompt {
                     resolve(null);
                 }
             });
-
         });
     }
 }

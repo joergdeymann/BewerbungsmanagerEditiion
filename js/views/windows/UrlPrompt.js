@@ -1,4 +1,10 @@
+import { UrlPromptTemplate } from "../../templates/windows/UrlPromptTemplate.js";
+
 export class UrlPrompt {
+
+    constructor() {
+        this.template = new UrlPromptTemplate();
+    }
 
     // Zeigt ein kleines Eingabefenster für eine URL.
     // Löst mit der eingegebenen URL auf, oder mit null bei Abbruch.
@@ -6,26 +12,7 @@ export class UrlPrompt {
         return new Promise((resolve) => {
             const overlay = document.createElement("div");
             overlay.className = "modal-overlay";
-
-            overlay.innerHTML = `
-            <div id="url-container" class="input-container">
-                <div class="input-prompt auto-height">
-                    <label for="url-input">Webadresse der Stellenanzeige hier einfügen:</label>
-                    <div class="field">
-                        <label for="url-input">Webadresse der Stellenanzeige hier einfügen:</label>
-                        <div class="url-input-row">
-                            <button type="button" id="pasteUrl" class="secondary" title="Aus Zwischenablage einfügen">📋 Einfügen</button>
-                            <input id="url-input" type="url" placeholder="https://...">
-                        </div>
-                    </div>
-                    <p class="prompt-hint" id="url-hint"></p>
-                    <div class="prompt-buttons">
-                        <button id="cancelUrl" class="danger">Abbrechen</button>
-                        <button id="submitUrl" class="primary">Importieren</button>
-                    </div>
-                </div>
-            </div>
-            `;
+            overlay.innerHTML = this.template.create();
 
             document.body.appendChild(overlay);
 

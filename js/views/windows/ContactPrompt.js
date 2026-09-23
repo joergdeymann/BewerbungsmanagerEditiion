@@ -1,4 +1,10 @@
+import { ContactPromptTemplate } from "../../templates/windows/ContactPromptTemplate.js";
+
 export class ContactPrompt {
+
+    constructor() {
+        this.template = new ContactPromptTemplate();
+    }
 
     // Erwartet optional Startwerte {name, role, email, phone}.
     // Löst mit dem ausgefüllten Objekt auf, oder mit null bei Abbruch.
@@ -6,39 +12,7 @@ export class ContactPrompt {
         return new Promise((resolve) => {
             const overlay = document.createElement("div");
             overlay.className = "modal-overlay";
-
-            overlay.innerHTML = `
-            <div id="contact-container" class="input-container">
-                <div class="input-prompt auto-height">
-                    <label>${title}</label>
-
-                    <div class="field">
-                        <label for="contact-name">Name</label>
-                        <input id="contact-name" value="${this.escape(contact.name)}">
-                    </div>
-
-                    <div class="field">
-                        <label for="contact-role">Position</label>
-                        <input id="contact-role" value="${this.escape(contact.role)}">
-                    </div>
-
-                    <div class="field">
-                        <label for="contact-email">E-Mail</label>
-                        <input id="contact-email" type="email" value="${this.escape(contact.email)}">
-                    </div>
-
-                    <div class="field">
-                        <label for="contact-phone">Telefon</label>
-                        <input id="contact-phone" value="${this.escape(contact.phone)}">
-                    </div>
-
-                    <div class="prompt-buttons">
-                        <button id="cancelContact" class="danger">Abbrechen</button>
-                        <button id="submitContact" class="primary">Speichern</button>
-                    </div>
-                </div>
-            </div>
-            `;
+            overlay.innerHTML = this.template.create(contact, title);
 
             document.body.appendChild(overlay);
 
@@ -80,9 +54,5 @@ export class ContactPrompt {
                 }
             });
         });
-    }
-
-    escape(value) {
-        return String(value ?? "").replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
 }
