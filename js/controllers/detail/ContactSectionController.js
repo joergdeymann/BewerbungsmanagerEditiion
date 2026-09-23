@@ -67,4 +67,35 @@ export class ContactSectionController {
         await this.repository.save(application);
         onUpdate();
     }
+
+    draftKey(application) {
+        return `communicationDraft:${application.id}`;
+    }
+
+    loadDraft(application) {
+        try {
+            const raw = sessionStorage.getItem(this.draftKey(application));
+            return raw ? JSON.parse(raw) : null;
+        } catch {
+            return null;
+        }
+    }
+
+    saveDraft(application, draft) {
+        try {
+            sessionStorage.setItem(this.draftKey(application), JSON.stringify(draft));
+        } catch {
+            // sessionStorage evtl. nicht verfügbar (z.B. privater Modus) - Entwurf geht dann verloren
+        }
+    }
+
+    clearDraft(application) {
+        try {
+            sessionStorage.removeItem(this.draftKey(application));
+        } catch {
+            // ignore
+        }
+    }
+
+
 }
