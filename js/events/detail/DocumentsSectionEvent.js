@@ -10,7 +10,16 @@ export class DocumentsSectionEvent {
         this.bindUploadTrigger(root);
         this.bindUploadChange(root, application, onUpdate);
         this.bindView(root);
+        this.bindDownload(root);
         this.bindRemove(root, application, onUpdate);
+        this.controller.refreshAvailability(root);
+    }
+
+    bindDownload(root) {
+        root.querySelectorAll("[data-download-upload]").forEach(button => {
+            button.onclick = () =>
+                this.controller.downloadFile(button.dataset.downloadUpload, button.dataset.downloadName);
+        });
     }
 
     bindView(root) {

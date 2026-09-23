@@ -285,20 +285,20 @@ export class ApplicationTemplate extends DetailBaseTemplate {
         `; 
     } 
  
-    uploadRows(files, field) { 
-        if (!files.length) { 
-            return `<p class="muted">Keine Datei hinterlegt.</p>`; 
-        } 
- 
-        return files.map(file => ` 
-            <div class="field-with-button contact-row" data-url="${HtmlUtils.escape(file.link)}"> 
-                <span>${HtmlUtils.escape(file.displayName)}</span> 
-                <span> 
-                    <button type="button" class="secondary" data-view-upload="${HtmlUtils.escape(file.link)}">Anzeigen</button> 
-                    <a class="secondary" href="${HtmlUtils.escape(file.link)}" download="${HtmlUtils.escape(file.originalName)}">Download</a> 
-                    <button type="button" class="danger" data-remove-upload="${HtmlUtils.escape(file.id)}" data-upload-field="${field}">-</button> 
-                </span> 
-            </div> 
-        `).join(""); 
-    } 
+    uploadRows(files, field) {
+        if (!files.length) {
+            return `<p class="muted">Keine Datei hinterlegt.</p>`;
+        }
+
+        return files.map(file => `
+            <div class="field-with-button contact-row" data-url="${HtmlUtils.escape(file.link)}">
+                <span>${HtmlUtils.escape(file.displayName)}</span>
+                <span>
+                    <button type="button" class="secondary" data-view-upload="${HtmlUtils.escape(file.link)}">Anzeigen</button>
+                    <button type="button" class="secondary" data-download-upload="${HtmlUtils.escape(file.link)}" data-download-name="${HtmlUtils.escape(file.originalName)}">Download</button>
+                    <button type="button" class="danger" data-remove-upload="${HtmlUtils.escape(file.id)}" data-upload-field="${field}">-</button>
+                </span>
+            </div>
+        `).join("");
+    }
 }

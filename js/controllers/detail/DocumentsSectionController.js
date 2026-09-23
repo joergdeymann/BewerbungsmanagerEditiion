@@ -23,6 +23,42 @@ export class DocumentsSectionController {
         window.open(link, "_blank", "noopener");
     }
 
+    async downloadFile(link, displayName) {
+        const available = await this.checkAvailability(link);
+
+        if (!available) {
+            const infoPrompt = new InfoPrompt();
+            await infoPrompt.show(
+                "Die Datei ist nicht verfügbar.",
+                "Datei nicht gefunden"
+            );
+            return;
+        }
+
+        const a = document.createElement("a");
+        a.href = link;
+        a.download = displayName || "";
+        a.rel = "noopener";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+    }
+
+    // Prüft beim Rendern alle Anzeigen-/Download-Buttons und deaktiviert sie,
+    // falls die Datei nicht (mehr) existiert. Die Prüfung beim Klick bleibt
+    // trotzdem bestehen, da sich der Zustand zwischen Rendern und Klick ändern kann.
+    async refreshAvailability(root) {
+        const buttons = root.querySelectorAll("[data-view-upload], [data-download-upload]");
+
+        await Promise.all(Array.from(buttons).map(async button => {
+            const link = button.dataset.viewUpload || button.dataset.downloadUpload;
+            if (!link) return;
+
+            const available = await this.checkAvailability(link);
+            button.disabled = !available;
+        }));
+    }
+
     async checkAvailability(link) {
         try {
             const response = await fetch(link, { method: "HEAD" });
