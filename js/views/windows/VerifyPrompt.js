@@ -5,10 +5,14 @@ export class VerifyPrompt {
     }
 
     // Erwartet den Standardtext (Vorausfüllung beim Bearbeiten)
-    show(textPreview = "", title = "Eintrag wirklich löschen?") {
-        return new Promise((resolve) => {
-            // Der alte Code-Block mit "repository" und "getById" wurde komplett entfernt.
-
+    show(
+        textPreview = "",
+        title = "Eintrag wirklich löschen?",
+        buttons = {
+            cancel: { class: "primary", value: "Nein" },
+            confirm: { class: "danger", value: "Ja" }
+        }
+    ) {        return new Promise((resolve) => {
             const overlay = document.createElement("div");
             overlay.className = "modal-overlay"; 
             
@@ -18,8 +22,8 @@ export class VerifyPrompt {
                     <label for="input-text">${title}</label>
                     <p>${textPreview}</p>
                     <div class="prompt-buttons prompt-center">
-                        <button id="cancelDelete" class="danger">Nein</button>
-                        <button id="confirmDelete">Ja</button>
+                        <button id="confirmDelete" class="${buttons.confirm.class}">${buttons.confirm.value}</button>
+                        <button id="cancelDelete" class="${buttons.cancel.class}">${buttons.cancel.value}</button>
                     </div>
                 </div>
             </div>
