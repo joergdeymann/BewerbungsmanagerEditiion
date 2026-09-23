@@ -2,9 +2,9 @@ import { JobConstants } from "../../constants/JobConstants.js";
 import { OverviewTemplate } from "../../templates/overview/OverviewTemplate.js";
 import { ApplicationCardTemplate } from "../../templates/overview/ApplicationCardTemplate.js";
 import { OverviewFilter } from "../../ui/overview/OverviewFilter.js";
-import { OverviewEvent } from "./events/OverviewEvent.js";
-import { OverviewFilterEvent } from "./events/OverviewFilterEvent.js";
-import { OverviewListEvent } from "./events/OverviewListEvent.js";
+import { OverviewEvent } from "../../events/overview/OverviewEvent.js";
+import { OverviewFilterEvent } from "../../events/overview/OverviewFilterEvent.js";
+import { OverviewListEvent } from "../../events/overview/OverviewListEvent.js";
 
 export class OverviewView {
 
