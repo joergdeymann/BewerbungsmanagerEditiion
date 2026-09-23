@@ -49,21 +49,34 @@ export class DocumentsSectionController {
     // falls die Datei nicht (mehr) existiert. Die Prüfung beim Klick bleibt
     // trotzdem bestehen, da sich der Zustand zwischen Rendern und Klick ändern kann.
     async refreshAvailability(root) {
-        const buttons = root.querySelectorAll("[data-view-upload], [data-download-upload]");
+        const buttons = Array.from(root.querySelectorAll("[data-view-upload], [data-download-upload]"));
 
-        await Promise.all(Array.from(buttons).map(async button => {
+        const links = [...new Set(
+            buttons
+                .map(button => button.dataset.viewUpload || button.dataset.downloadUpload)
+                .filter(Boolean)
+        )];
+
+        const availability = new Map();
+        await Promise.all(links.map(async link => {
+            availability.set(link, await this.checkAvailability(link));
+        }));
+
+        buttons.forEach(button => {
             const link = button.dataset.viewUpload || button.dataset.downloadUpload;
             if (!link) return;
-
-            const available = await this.checkAvailability(link);
-            button.disabled = !available;
-        }));
+            button.disabled = !availability.get(link);
+        });
     }
+
 
     async checkAvailability(link) {
         try {
-            const response = await fetch(link, { method: "HEAD" });
-            return response.ok;
+            const response = await fetch(`/api/document-exists?link=${encodeURIComponent(link)}`);
+            if (!response.ok) return false;
+
+            const data = await response.json();
+            return data.exists;
         } catch {
             return false;
         }
