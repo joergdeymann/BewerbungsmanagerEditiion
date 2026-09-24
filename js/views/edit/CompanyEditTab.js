@@ -18,6 +18,8 @@ export class CompanyEditTab extends BaseEditTab {
         this.set("companySize", company?.size);
         this.set("founded", company?.founded);
         this.set("website", company?.website);
+        this.set("companyEmail", company?.email);
+        this.set("companyPhone", company?.phone);
         this.set("street", company?.address?.street?.name);
         this.set("houseNumber", company?.address?.street?.houseNumber);
         this.set("zipCountry", company?.address?.city?.zipCountry);
@@ -45,6 +47,8 @@ export class CompanyEditTab extends BaseEditTab {
         application.company.size = this.get("companySize");
         application.company.founded = this.get("founded");
         application.company.website = this.get("website");
+        application.company.email = this.get("companyEmail");
+        application.company.phone = this.get("companyPhone");
         application.company.verifiedAt = this.get("verifiedAt");
         application.company.description = this.get("companyDescription");
         application.company.specialties = this.list("specialties");

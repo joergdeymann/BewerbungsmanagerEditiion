@@ -20,6 +20,8 @@ export class CompanyEditTemplate {
                     <div class="field"><label>Größe</label><input id="companySize"></div>
                     <div class="field"><label>Gegründet</label><input id="founded"></div>
                     <div class="field field-wide"><label>Website</label><input id="website"></div>
+                    <div class="field"><label>Allgemeine E-Mail</label><input id="companyEmail"></div>
+                    <div class="field"><label>Allgemeine Telefonnummer</label><input id="companyPhone"></div>
                     <div class="field"><label>Straße</label><input id="street"></div>
                     <div class="field"><label>Hausnummer</label><input id="houseNumber"></div>
                     <div class="field"><label>Länderkürzel (PLZ-Vorsatz)</label><input id="zipCountry" placeholder="z.B. DE"></div>

@@ -16,20 +16,11 @@ export class ContactEditTab extends BaseEditTab {
 
     init(application) {
         this.application = application;
-        this.set("companyEmail", application.company?.email);
-        this.set("companyPhone", application.company?.phone);
-
         this.renderContactSection();
     }
 
     renderContactSection() {
         const container = this.root.querySelector("#contactSection");
-        const isNew = !this.application.id;
-
-        if (isNew) {
-            container.innerHTML = `<p class="muted">Ansprechpartner können hinzugefügt werden, sobald die Bewerbung einmal gespeichert wurde.</p>`;
-            return;
-        }
 
         container.innerHTML = new ContactTemplate().render(this.application);
 
@@ -41,8 +32,9 @@ export class ContactEditTab extends BaseEditTab {
         // Wird beim Import-Thema ergänzt.
     }
 
-    save(application) {
-        application.company.email = this.get("companyEmail");
-        application.company.phone = this.get("companyPhone");
+    save() {
+        // Firmenfelder werden jetzt im Firma-Tab gespeichert;
+        // die Ansprechpartner-Liste speichert sich über die
+        // wiederverwendete Detail-Logik selbst (s. Punkt 3).
     }
 }

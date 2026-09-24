@@ -17,6 +17,22 @@ export class JobConstants {
         "Teilzeit"
     ];
 
+    static WORK_MODEL = [
+        "Vor Ort",
+        "Hybrid",
+        "Remote",
+        "Homeoffice"
+    ];
+
+    static EMPLOYMENT_TYPE = [
+        "Vollzeit",
+        "Teilzeit",
+        "Werkstudent",
+        "Praktikum",
+        "Ausbildung",
+        "Freelance / Honorarbasis"
+    ];
+
     static STATUS_CLASS = {
         ENTWURF: "status-draft",
         BEWORBEN: "status-applied",

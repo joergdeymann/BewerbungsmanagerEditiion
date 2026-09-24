@@ -9,6 +9,12 @@ export class ContactSectionController {
         this.prompt = new ContactPrompt();
     }
 
+    async persist(application) {
+        if (application.id) {
+            await this.repository.save(application);
+        }
+    }
+
     async addContact(application, onUpdate) {
         const values = await this.prompt.show({}, "Ansprechpartner hinzufügen");
         if (!values) return;
@@ -20,7 +26,7 @@ export class ContactSectionController {
         contact.phone = values.phone;
 
         application.contacts.push(contact);
-        await this.repository.save(application);
+        await this.persist(application);
         onUpdate();
     }
 
@@ -31,7 +37,7 @@ export class ContactSectionController {
         const [selected] = application.contacts.splice(index, 1);
         application.contacts.unshift(selected);
 
-        await this.repository.save(application);
+        await this.persist(application);
         onUpdate();
     }
 
@@ -47,7 +53,7 @@ export class ContactSectionController {
         contact.email = values.email;
         contact.phone = values.phone;
 
-        await this.repository.save(application);
+        await this.persist(application);
         onUpdate();
     }
 
@@ -64,7 +70,7 @@ export class ContactSectionController {
 
         application.contacts = application.contacts.filter(item => item.id !== id);
 
-        await this.repository.save(application);
+        await this.persist(application);
         onUpdate();
     }
 }

@@ -8,11 +8,17 @@ export class JobEditTemplate {
                 <div class="section-header"><div><span class="section-icon">💼</span><h2>Stellendetails</h2></div></div>
                 <div class="field-grid">
                     <div class="field"><label>Jobtitel</label><input id="jobTitle"></div>
-                    <div class="field"><label>Beschäftigungsart</label><input id="employmentType"></div>
+                    <div class="field">
+                        <label>Beschäftigungsart</label>
+                        <select id="employmentType">
+                            <option value="">– bitte wählen –</option>
+                            ${JobConstants.EMPLOYMENT_TYPE.map(type => `<option value="${type}">${type}</option>`).join("")}
+                        </select>
+                    </div>
                     <div class="field field-ultra-wide">
                         <label>Arbeitsmodell</label>
                         <div class="checkbox-list">
-                            ${JobConstants.ART_OPTIONS.map(option => `
+                            ${JobConstants.WORK_MODEL.map(option => `
                                 <label class="checkbox-item">
                                     <input type="checkbox" class="work-model-option" value="${option}">
                                     ${option}
