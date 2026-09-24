@@ -16,6 +16,7 @@ import { ContactSectionEvent } from "../../events/detail/ContactSectionEvent.js"
 import { SourcesSectionEvent } from "../../events/detail/SourcesSectionEvent.js";
 import { DocumentsSectionEvent } from "../../events/detail/DocumentsSectionEvent.js";
 import { VerifyPrompt } from "../windows/VerifyPrompt.js";
+import { NavigationState } from "../../core/NavigationState.js";
 
 
 export class DetailView {
@@ -66,6 +67,11 @@ export class DetailView {
             location.hash = "#/";
             return;
         }
+
+        NavigationState.setLastDetail(
+            application.id,
+            application.company?.name || "Bewerbung"
+        );
 
         this.navigation = new DetailNavigationEvent(
             section => this.showSection(root, application, section)

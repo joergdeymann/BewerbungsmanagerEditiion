@@ -1,4 +1,5 @@
 import { Router } from "./core/Router.js";
+import { NavigationState } from "./core/NavigationState.js";
 import { AppCache } from "./store/AppCache.js";
 import { SkillCache } from "./store/SkillCache.js";
 import { OverviewView } from "./views/overview/OverviewView.js";
@@ -39,4 +40,21 @@ document.addEventListener("click", event => {
     location.hash = button.dataset.route;
 });
 
+function updateSkillsNavButton() {
+    const button = document.querySelector("#skillsNavButton");
+    if (!button) return;
+
+    const onSkillsPage = location.hash.startsWith("#/skills");
+
+    if (onSkillsPage && NavigationState.lastDetail) {
+        button.textContent = `← ${NavigationState.lastDetail.companyName}`;
+        button.dataset.route = `#/detail/${encodeURIComponent(NavigationState.lastDetail.id)}`;
+    } else {
+        button.textContent = "Kenntnisse";
+        button.dataset.route = "#/skills";
+    }
+}
+
 router.start();
+window.addEventListener("hashchange", updateSkillsNavButton);
+updateSkillsNavButton();
