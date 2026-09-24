@@ -68,11 +68,6 @@ export class DetailView {
             return;
         }
 
-        NavigationState.setLastDetail(
-            application.id,
-            application.company?.name || "Bewerbung"
-        );
-
         this.navigation = new DetailNavigationEvent(
             section => this.showSection(root, application, section)
         );
@@ -84,10 +79,15 @@ export class DetailView {
         this.bindDelete(root, application);
         this.navigation.bind(root);
 
+        const initialSection =
+            NavigationState.lastDetail?.id === application.id
+                ? NavigationState.lastDetail.section
+                : "company";
+
         this.showSection(
             root,
             application,
-            "company"
+            initialSection
         );
     }
 
@@ -134,6 +134,12 @@ export class DetailView {
         );
 
         this.navigation.setActiveSection(root, section);
+
+        NavigationState.setLastDetail(
+            application.id,
+            application.company?.name || "Bewerbung",
+            section
+        );
     }
 
 
