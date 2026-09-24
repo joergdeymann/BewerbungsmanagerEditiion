@@ -4,9 +4,8 @@ import { AppCache } from "./store/AppCache.js";
 import { SkillCache } from "./store/SkillCache.js";
 import { OverviewView } from "./views/overview/OverviewView.js";
 import { DetailView } from "./views/detail/DetailView.js";
+import { EditView } from "./views/edit/EditView.js";
 import { SkillsView } from "./views/skills/SkillsView.js";
-// Editor existiert noch nicht (geplanter, späterer Schritt).
-// import { EditorView } from "./views/EditorView.js";
 
 // Kommt der Aufruf vom Bookmarklet (siehe ImportTab.js) mit einer
 // mitgegebenen URL, merken wir sie kurz vor und springen direkt in
@@ -28,8 +27,8 @@ await appcache.load();
 
 const router = new Router(root, {
     "/": () => new OverviewView(appcache),
-    // "/new": () => new EditorView(appcache),
-    // "/edit/:id": (params) => new EditorView(appcache, params.id),
+    "/new": () => new EditView(appcache, null),
+    "/edit/:id": (params) => new EditView(appcache, params.id),
     "/detail/:id": (params) => new DetailView(appcache, params.id, skillCache),
     "/skills": () => new SkillsView(skillCache)
 });

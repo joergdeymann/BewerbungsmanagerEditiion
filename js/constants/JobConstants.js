@@ -13,6 +13,7 @@ export class JobConstants {
         "Hybrid",
         "Remote",
         "Vor Ort",
+        "Homeoffice",
         "Teilzeit"
     ];
 

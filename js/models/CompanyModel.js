@@ -17,6 +17,7 @@ export class CompanyModel {
         this.description = "";
         this.specialties = [];
         this.images = [];
+        this.mainImageIndex = 0;
     }
 
     get data() {
@@ -35,7 +36,8 @@ export class CompanyModel {
             founded: this.founded,
             description: this.description,
             specialties: this.specialties,
-            images: this.images
+            images: this.images,
+            mainImageIndex: this.mainImageIndex
         };
     }
 
@@ -55,6 +57,7 @@ export class CompanyModel {
         this.description = raw.description ?? this.description;
         this.specialties = raw.specialties ?? this.specialties;
         this.images = raw.images ?? this.images;
+        this.mainImageIndex = raw.mainImageIndex ?? this.mainImageIndex;
         this.address.data = raw.address;
     }
 
