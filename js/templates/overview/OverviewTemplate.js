@@ -11,7 +11,8 @@ export class OverviewTemplate {
 
     createHeader() {
         const statusOptions = this.createStatusOptions();
-        const artOptions = this.createArtOptions();
+        const workModelOptions = this.createWorkModelOptions();
+        const employmentTypeOptions = this.createEmploymentTypeOptions();
 
         return `
             <div class="app-header">
@@ -23,9 +24,14 @@ export class OverviewTemplate {
                     ${statusOptions}
                 </select>
 
-                <select id="artFilter">
-                    <option value="">Alle Arten</option>
-                    ${artOptions}
+                <select id="workModelFilter">
+                    <option value="">Alle Arbeitsmodelle</option>
+                    ${workModelOptions}
+                </select>
+
+                <select id="employmentTypeFilter">
+                    <option value="">Alle Beschäftigungsarten</option>
+                    ${employmentTypeOptions}
                 </select>
 
                 <select id="sort">
@@ -52,13 +58,15 @@ export class OverviewTemplate {
             .join("");
     }
 
-    createArtOptions() {
-        return JobConstants.ART_OPTIONS
-            .map(art => `
-                <option value="${art}">
-                    ${art}
-                </option>
-            `)
+    createWorkModelOptions() {
+        return JobConstants.WORK_MODEL
+            .map(option => `<option value="${option}">${option}</option>`)
+            .join("");
+    }
+
+    createEmploymentTypeOptions() {
+        return JobConstants.EMPLOYMENT_TYPE
+            .map(option => `<option value="${option}">${option}</option>`)
             .join("");
     }
 

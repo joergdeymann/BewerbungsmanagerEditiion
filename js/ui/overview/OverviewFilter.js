@@ -28,9 +28,13 @@ export class OverviewFilter {
             application,
             filters.status
         )
-        && this.matchesArt(
+        && this.matchesWorkModel(
             application,
-            filters.art
+            filters.workModel
+        )
+        && this.matchesEmploymentType(
+            application,
+            filters.employmentType
         );
     }
 
@@ -54,17 +58,16 @@ export class OverviewFilter {
         return this.getStatus(application) === status;
     }
 
-    matchesArt(application, art) {
-        if (!art) return true;
+    matchesWorkModel(application, workModel) {
+        if (!workModel) return true;
 
-        const text = [
-            application.job?.workModel,
-            application.job?.employmentType
-        ]
-            .join(" ")
-            .toLowerCase();
+       return (application.job?.workModel || []).includes(workModel);
+    }
 
-        return text.includes(art.toLowerCase());
+    matchesEmploymentType(application, employmentType) {
+        if (!employmentType) return true;
+
+        return application.job?.employmentType === employmentType;
     }
 
     sort(applications, sort) {

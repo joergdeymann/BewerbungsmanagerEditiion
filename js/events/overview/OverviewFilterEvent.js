@@ -11,7 +11,10 @@ export class OverviewFilterEvent {
         root.querySelector("#statusFilter").onchange =
             () => this.change(root);
 
-        root.querySelector("#artFilter").onchange =
+        root.querySelector("#workModelFilter").onchange =
+            () => this.change(root);
+
+        root.querySelector("#employmentTypeFilter").onchange =
             () => this.change(root);
 
         root.querySelector("#sort").onchange =

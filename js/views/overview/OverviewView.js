@@ -64,7 +64,9 @@ export class OverviewView {
 
             status: root.querySelector("#statusFilter").value,
 
-            art: root.querySelector("#artFilter").value,
+            workModel: root.querySelector("#workModelFilter").value,
+
+            employmentType: root.querySelector("#employmentTypeFilter").value,
 
             sort: root.querySelector("#sort").value
         };

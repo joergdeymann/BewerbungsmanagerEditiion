@@ -9,14 +9,6 @@ export class JobConstants {
         ABGELEHNT: "ABGELEHNT"
     };
 
-    static ART_OPTIONS = [
-        "Hybrid",
-        "Remote",
-        "Vor Ort",
-        "Homeoffice",
-        "Teilzeit"
-    ];
-
     static WORK_MODEL = [
         "Vor Ort",
         "Hybrid",
