@@ -24,15 +24,18 @@ export class CompanyImageList {
 
     render() {
         this.container.innerHTML = `
+            <p class="muted">Bild anklicken, um es zum Hauptbild zu machen.</p>
             <div class="image-url-list">
                 ${this.images.map((url, index) => this.row(url, index)).join("")}
             </div>
             <button type="button" class="secondary add-company-image">+ Bild hinzufügen</button>
         `;
 
-        this.container.querySelectorAll("[data-main-index]").forEach(radio => {
-            radio.onchange = () => {
-                this.mainImageIndex = Number(radio.dataset.mainIndex);
+        this.container.querySelectorAll("[data-select-main]").forEach(row => {
+            row.onclick = event => {
+                if (event.target.closest("input, button")) return;
+                this.mainImageIndex = Number(row.dataset.selectMain);
+                this.render();
             };
         });
 
@@ -58,13 +61,12 @@ export class CompanyImageList {
     }
 
     row(url, index) {
+        const isMain = index === this.mainImageIndex;
+
         return `
-            <div class="field-with-button image-url-row">
-                <label class="image-main-select">
-                    <input type="radio" name="companyMainImage" data-main-index="${index}" ${index === this.mainImageIndex ? "checked" : ""}>
-                    Hauptbild
-                </label>
-                <input type="url" class="image-url-input" data-image-url="${index}" value="${HtmlUtils.escape(url)}" placeholder="https://...">
+            <div class="field-with-button image-url-row${isMain ? " image-url-row-main" : ""}" data-select-main="${index}">
+                ${isMain ? `<span class="tag-badge skill-expert">★ Hauptbild</span>` : ""}
+                <div class="field"><input type="url" data-image-url="${index}" value="${HtmlUtils.escape(url)}" placeholder="https://..."></div>
                 <button type="button" class="icon-button" data-remove-image="${index}">×</button>
             </div>
         `;

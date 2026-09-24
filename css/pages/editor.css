@@ -27,3 +27,13 @@
 .tab-section textarea {
    height: 260px;
 }
+
+.image-url-row .field {
+   flex: 1;
+   min-width: 0;
+}
+
+.image-url-row-main {
+   background: var(--bg-card);
+   border-color: var(--primary);
+}
