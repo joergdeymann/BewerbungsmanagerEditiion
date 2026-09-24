@@ -3,11 +3,11 @@ import { EditHeaderTemplate } from "../../templates/edit/EditHeaderTemplate.js";
 import { EditNavigationTemplate } from "../../templates/edit/EditNavigationTemplate.js";
 import { EditNavigationEvent } from "../../events/edit/EditNavigationEvent.js";
 import { EditController } from "../../controllers/edit/EditController.js";
-import { CompanyEditTab } from "./tabs/CompanyEditTab.js";
-import { ContactEditTab } from "./tabs/ContactEditTab.js";
-import { JobEditTab } from "./tabs/JobEditTab.js";
-import { RequirementsEditTab } from "./tabs/RequirementsEditTab.js";
-import { BenefitsEditTab } from "./tabs/BenefitsEditTab.js";
+import { CompanyEditTab } from "./CompanyEditTab.js";
+import { ContactEditTab } from "./ContactEditTab.js";
+import { JobEditTab } from "./JobEditTab.js";
+import { RequirementsEditTab } from "./RequirementsEditTab.js";
+import { BenefitsEditTab } from "./BenefitsEditTab.js";
 
 export class EditView {
 
