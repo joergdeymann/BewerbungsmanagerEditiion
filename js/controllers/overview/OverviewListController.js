@@ -1,11 +1,11 @@
 import { JobConstants } from "../../constants/JobConstants.js";
-import { ApplicationHistoryModel } from "../../models/ApplicationHistoryModel.js";
-import { InputPrompt } from "../../views/windows/InputPrompt.js";
+import { CommunicationController } from "../CommunicationController.js";
 
 export class OverviewListController {
 
     constructor(repository) {
         this.repository = repository;
+        this.communication = new CommunicationController(repository);
     }
 
     async executeAction(id, redraw) {
@@ -15,7 +15,7 @@ export class OverviewListController {
         const status = this.getStatus(application);
 
         if (status === JobConstants.STATUS.RUECKRUF) {
-            await this.createCommunication(application, redraw);
+            await this.communication.logCall(application, redraw);
             return;
         }
 
@@ -36,31 +36,6 @@ export class OverviewListController {
             application.application.appliedAt =
                 new Date().toISOString().slice(0, 10);
         }
-
-        this.repository.save(application);
-        redraw();
-    }
-
-    async createCommunication(application, redraw) {
-        const inputPrompt = new InputPrompt();
-        const note = await inputPrompt.show();
-
-        if (!note?.trim()) {
-            redraw();
-            return;
-        }
-
-        const entry = new ApplicationHistoryModel();
-        entry.data = {
-            channel: "phone",
-            entry: {
-                date: new Date().toISOString(),
-                phoneTo: "",
-                phoneFrom: "",
-                content: note.trim()
-            }
-        };
-        application.application.history.push(entry);
 
         this.repository.save(application);
         redraw();

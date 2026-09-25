@@ -1,8 +1,10 @@
+import { NameModel } from "./NameModel.js";
+
 export class ContactModel {
     constructor() {
         this.id = crypto.randomUUID();
         this.role = "";
-        this.name = "";
+        this.name = new NameModel();
         this.img = "";
         this.email = "";
         this.phone = "";
@@ -12,7 +14,7 @@ export class ContactModel {
         return {
             id: this.id,
             role: this.role,
-            name: this.name,
+            name: this.name.data,
             img: this.img,
             email: this.email,
             phone: this.phone
@@ -23,7 +25,7 @@ export class ContactModel {
         if (!raw) return;
         this.id = raw.id || this.id;
         this.role = raw.role ?? this.role;
-        this.name = raw.name ?? this.name;
+        this.name.data = raw.name;
         this.img = raw.img ?? this.img;
         this.email = raw.email ?? this.email;
         this.phone = raw.phone ?? this.phone;

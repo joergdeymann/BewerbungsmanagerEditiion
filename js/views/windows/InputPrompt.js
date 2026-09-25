@@ -6,12 +6,13 @@ export class InputPrompt {
         this.template = new InputPromptTemplate();
     }
 
-    // Erwartet den Standardtext (Vorausfüllung beim Bearbeiten)
-    show(defaultValue = "") {
+    // Erwartet den Standardtext (Vorausfüllung beim Bearbeiten) sowie
+    // optional den Ansprechpartner {name, email, phone} für die Kontaktzeile.
+    show(defaultValue = "", contact = null) {
         return new Promise((resolve) => {
             const overlay = document.createElement("div");
             overlay.className = "modal-overlay";
-            overlay.innerHTML = this.template.create(defaultValue);
+            overlay.innerHTML = this.template.create(defaultValue, contact);
 
             document.body.appendChild(overlay);
 

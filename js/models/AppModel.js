@@ -115,7 +115,10 @@ export class AppModel {
         }
 
         const newContact = new ContactModel();
-        newContact.name = contactOrName;
+        newContact.name.data =
+            typeof contactOrName === "string"
+                ? { lastname: contactOrName }
+                : contactOrName;
         newContact.email = email;
         newContact.phone = phone;
         

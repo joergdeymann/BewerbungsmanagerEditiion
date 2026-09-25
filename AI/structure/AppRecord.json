@@ -47,7 +47,12 @@
             {
                 "id": 0,
                 "role": "",
-                "name": "",
+                "name": {
+                    "salutation": "",
+                    "title": "",
+                    "firstname": "",
+                    "lastname": ""
+                },
                 "img": "",
                 "email": "",
                 "phone": ""

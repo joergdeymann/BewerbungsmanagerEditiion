@@ -33,7 +33,7 @@ export class AddressModel {
         const lines = [];
 
         if (company && company.name) lines.push(company.name);
-        if (contact && contact.name) lines.push(contact.name);
+        if (contact && contact.name?.full) lines.push(contact.name.full);
 
         const street = this.postBox ? `Postfach ${this.postBox}` : this.street.text;
         if (street) lines.push(street);

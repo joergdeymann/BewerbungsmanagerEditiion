@@ -218,7 +218,7 @@ export class ApplicationTemplate extends DetailBaseTemplate {
  
     channelEntries(application) { 
         const history = application.application?.history || []; 
-        const contactName = application.contacts?.[0]?.name || ""; 
+        const contactName = application.contacts?.[0]?.name?.full || ""; 
  
         return history.map(item => { 
             const entry = item.entry || {}; 
@@ -240,7 +240,7 @@ export class ApplicationTemplate extends DetailBaseTemplate {
                 case "phone": 
                     return { 
                         date: entry.date, 
-                        action: "Rückruf erhalten", 
+                        action: entry.subject || "Rückruf erhalten", 
                         info: entry.content || "" 
                     }; 
                 case "personal": 

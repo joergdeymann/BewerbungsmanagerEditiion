@@ -6,7 +6,8 @@ export class ContactPrompt {
         this.template = new ContactPromptTemplate();
     }
 
-    // Erwartet optional Startwerte {name, role, email, phone}.
+    // Erwartet optional einen Startkontakt (ContactModel-artig, mit
+    // contact.name als {salutation, title, firstname, lastname}).
     // Löst mit dem ausgefüllten Objekt auf, oder mit null bei Abbruch.
     show(contact = {}, title = "Ansprechpartner") {
         return new Promise((resolve) => {
@@ -20,12 +21,17 @@ export class ContactPrompt {
             const submitBtn = overlay.querySelector("#submitContact");
             const cancelBtn = overlay.querySelector("#cancelContact");
 
-            overlay.querySelector("#contact-name").focus();
+            overlay.querySelector("#contact-firstname").focus();
 
             const submit = () => {
                 overlay.remove();
                 resolve({
-                    name: overlay.querySelector("#contact-name").value.trim(),
+                    name: {
+                        salutation: overlay.querySelector("#contact-salutation").value,
+                        title: overlay.querySelector("#contact-title").value.trim(),
+                        firstname: overlay.querySelector("#contact-firstname").value.trim(),
+                        lastname: overlay.querySelector("#contact-lastname").value.trim()
+                    },
                     role: overlay.querySelector("#contact-role").value.trim(),
                     email: overlay.querySelector("#contact-email").value.trim(),
                     phone: overlay.querySelector("#contact-phone").value.trim()

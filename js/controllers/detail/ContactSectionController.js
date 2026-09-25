@@ -1,12 +1,14 @@
 import { ContactPrompt } from "../../views/windows/ContactPrompt.js";
 import { VerifyPrompt } from "../../views/windows/VerifyPrompt.js";
 import { ContactModel } from "../../models/ContactModel.js";
+import { CommunicationController } from "../CommunicationController.js";
 
 export class ContactSectionController {
 
     constructor(repository) {
         this.repository = repository;
         this.prompt = new ContactPrompt();
+        this.communication = new CommunicationController(repository);
     }
 
     async persist(application) {
@@ -20,7 +22,7 @@ export class ContactSectionController {
         if (!values) return;
 
         const contact = new ContactModel();
-        contact.name = values.name;
+        contact.name.data = values.name;
         contact.role = values.role;
         contact.email = values.email;
         contact.phone = values.phone;
@@ -48,7 +50,7 @@ export class ContactSectionController {
         const values = await this.prompt.show(contact, "Ansprechpartner ändern");
         if (!values) return;
 
-        contact.name = values.name;
+        contact.name.data = values.name;
         contact.role = values.role;
         contact.email = values.email;
         contact.phone = values.phone;
@@ -57,13 +59,19 @@ export class ContactSectionController {
         onUpdate();
     }
 
+    // Nutzt dasselbe Anrufen-Fenster wie die Übersicht (InputPrompt),
+    // ergänzt um die Kontaktzeile des aktuellen Ansprechpartners.
+    async callContact(application, onUpdate) {
+        await this.communication.logCall(application, onUpdate);
+    }
+
     async removeContact(application, id, onUpdate) {
         const contact = application.contacts.find(item => item.id === id);
         if (!contact) return;
 
         const verifyPrompt = new VerifyPrompt();
         const confirmed = await verifyPrompt.show(
-            contact.name || "Ansprechpartner",
+            contact.name?.full || "Ansprechpartner",
             "Ansprechpartner wirklich entfernen?"
         );
         if (!confirmed) return;

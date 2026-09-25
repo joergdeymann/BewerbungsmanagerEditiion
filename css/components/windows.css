@@ -42,6 +42,10 @@
    /* margin-bottom: 10px; */
 }
 
+.input-prompt .call-contact-line {
+   margin: 0;
+}
+
 .input-prompt textarea {
    flex: 1;
    min-height: 110px;

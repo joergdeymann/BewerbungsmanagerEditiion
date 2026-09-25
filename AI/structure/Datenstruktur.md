@@ -20,7 +20,12 @@ Alle Models stellen ihre Daten über `get data` / `set data` bereit. Die flache 
   `images`. `relationship` unterscheidet Hauptsitz, Filiale und Arbeitsort. Aktuell hält
   `AppModel` genau eine `CompanyModel`-Instanz (keine Liste); eine Filialliste ist
   zurückgestellt.
-- `ContactModel` – Ansprechpartner: `id`, `role`, `name`, `img`, `email`, `phone`.
+- `ContactModel` – Ansprechpartner: `id`, `role`, `name` (`NameModel`), `img`, `email`, `phone`.
+- `NameModel` – Personenname: `salutation` (Anrede, z. B. Herr/Frau), `title`
+  (akademischer Titel), `firstname`, `lastname`. `full` liefert die
+  zusammengesetzte Anzeige inkl. Anrede und Titel (z. B. "Herr Dr. Max
+  Mustermann"). Aktuell von `ContactModel` genutzt, für weitere Personen
+  (z. B. Bewerber) vorgesehen.
 - `AddressModel` – Anschrift aus `StreetModel`, `CityModel` und `postBox`.
   `lines(company, contact)` setzt die vollständige Postanschrift zusammen und holt
   Firmenname und Ansprechpartner aus den übergebenen Models.
@@ -55,7 +60,7 @@ AppModel
  ├─ JobModel
  ├─ CompanyModel ─ AddressModel ─ StreetModel
  │                              └ CityModel
- ├─ ContactModel (Liste)
+ ├─ ContactModel (Liste) ─ NameModel
  ├─ QualificationModel
  ├─ BenefitsModel
  ├─ ReferenceModel (Liste)

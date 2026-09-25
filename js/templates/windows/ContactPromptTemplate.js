@@ -3,14 +3,35 @@ import { HtmlUtils } from "../../utils/HtmlUtils.js";
 export class ContactPromptTemplate {
 
     create(contact = {}, title = "Ansprechpartner") {
+        const name = contact.name || {};
+
         return `
         <div id="contact-container" class="input-container">
             <div class="input-prompt auto-height">
                 <label>${title}</label>
 
                 <div class="field">
-                    <label for="contact-name">Name</label>
-                    <input id="contact-name" value="${HtmlUtils.escape(contact.name)}">
+                    <label for="contact-salutation">Anrede</label>
+                    <select id="contact-salutation">
+                        <option value="">—</option>
+                        <option value="Herr" ${name.salutation === "Herr" ? "selected" : ""}>Herr</option>
+                        <option value="Frau" ${name.salutation === "Frau" ? "selected" : ""}>Frau</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="contact-title">Titel</label>
+                    <input id="contact-title" value="${HtmlUtils.escape(name.title)}">
+                </div>
+
+                <div class="field">
+                    <label for="contact-firstname">Vorname</label>
+                    <input id="contact-firstname" value="${HtmlUtils.escape(name.firstname)}">
+                </div>
+
+                <div class="field">
+                    <label for="contact-lastname">Nachname</label>
+                    <input id="contact-lastname" value="${HtmlUtils.escape(name.lastname)}">
                 </div>
 
                 <div class="field">

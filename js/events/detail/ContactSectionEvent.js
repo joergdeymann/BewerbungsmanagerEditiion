@@ -11,6 +11,15 @@ export class ContactSectionEvent {
         this.bindSelect(root, application, onUpdate);
         this.bindEdit(root, application, onUpdate);
         this.bindRemove(root, application, onUpdate);
+        this.bindCall(root, application, onUpdate);
+    }
+
+    bindCall(root, application, onUpdate) {
+        const button = root.querySelector("[data-call-contact]");
+        if (!button) return;
+
+        button.onclick = () =>
+            this.controller.callContact(application, onUpdate);
     }
 
     bindAdd(root, application, onUpdate) {

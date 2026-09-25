@@ -33,7 +33,10 @@ export class ContactTemplate extends DetailBaseTemplate {
                     </div>
                     <div class="field">
                         <label>Telefon:</label>
-                        <p>${HtmlUtils.escape(uiContact.phone || "—")}</p>
+                        <div class="field-value-row">
+                            <p>${HtmlUtils.escape(uiContact.phone || "—")}</p>
+                            <button type="button" class="primary" data-call-contact>Anrufen</button>
+                        </div>
                     </div>
                     <div class="field">
                         <label>E-Mail:</label>
@@ -63,7 +66,7 @@ export class ContactTemplate extends DetailBaseTemplate {
 
         return contacts.map((contact, index) => `
             <div class="field-with-button contact-row${index === 0 ? " active" : ""}" data-select-contact="${HtmlUtils.escape(contact.id)}">
-                <span>${HtmlUtils.escape(contact.name || "—")}${contact.role ? " – " + HtmlUtils.escape(contact.role) : ""}</span>
+                <span>${HtmlUtils.escape(contact.name?.full || "—")}${contact.role ? " – " + HtmlUtils.escape(contact.role) : ""}</span>
                 <span>
                     <button type="button" class="success" data-edit-contact="${HtmlUtils.escape(contact.id)}">Ändern</button>
                     <button type="button" class="danger" data-remove-contact="${HtmlUtils.escape(contact.id)}">Entfernen</button>

@@ -5,7 +5,7 @@ export class UiContact {
     }
 
     get name() {
-        return this.contact?.name || this.company?.name || "";
+        return this.contact?.name?.full || this.company?.name || "";
     }
 
     get role() {
