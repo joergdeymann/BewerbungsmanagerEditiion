@@ -19,6 +19,11 @@ export class OverviewTemplate {
                 <input id="search"
                        placeholder="Firma, Stelle oder Ort suchen">
 
+                <button class="primary width8em" id="compact">
+                    Compact
+                </button>
+
+                <div style="flex-basis: 100%;height:0;"></div>
                 <select id="statusFilter">
                     <option value="">Alle Status</option>
                     ${statusOptions}
@@ -41,9 +46,6 @@ export class OverviewTemplate {
                     <option value="old">Älteste zuerst</option>
                 </select>
 
-                <button class="primary width8em" id="compact">
-                    Compact
-                </button>
             </div>
         `;
     }

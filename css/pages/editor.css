@@ -7,19 +7,6 @@
    (resize: vertical, siehe components/input.css) vergrößern.
 ============================================================ */
 
-.editor-tab-container {
-   display: flex;
-   flex-direction: column;
-   flex: 1;
-   min-height: 0;
-}
-
-#editorTabContent {
-   flex: 1 1 auto;
-   min-height: 0;
-   overflow-y: auto; /* nur falls ein Tab ausnahmsweise mehr Platz braucht */
-}
-
 #editorTabContent > .tab-content {
    flex: 0 0 auto;
 }

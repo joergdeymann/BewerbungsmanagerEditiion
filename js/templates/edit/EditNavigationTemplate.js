@@ -12,7 +12,7 @@ export class EditNavigationTemplate {
                 </nav>
             </header>
 
-            <main id="editorTabContent" class="content-frame editor-tab-container"></main>
+            <main id="editorTabContent" class="content-frame"></main>
         `;
     }
 }

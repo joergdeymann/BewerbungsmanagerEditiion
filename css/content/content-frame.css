@@ -5,10 +5,6 @@
    aneinander, und der Rahmen schließt nahtlos darunter an.
    Keine eigene max-width/margin: die Seitenbreite wird bereits
    von "body > main" (siehe layout/body.css) vorgegeben. */
-#editorTabContent {
-   flex: 1 1 auto;   /* ID-Selektor > Klassen-Selektor, überschreibt .content-frame */
-}
-
 .content-frame {
    padding: 8px;
    flex: 0 0 auto;
