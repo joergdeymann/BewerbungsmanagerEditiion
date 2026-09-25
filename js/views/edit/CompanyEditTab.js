@@ -35,8 +35,20 @@ export class CompanyEditTab extends BaseEditTab {
         this.imageList.setImages(company?.images || [], company?.mainImageIndex || 0);
     }
 
-    applyAnalysis() {
-        // Wird beim Import-Thema ergänzt.
+    applyAnalysis(result) {
+        const company = result.company;
+        if (!company) return;
+
+        if (company.name) this.set("companyName", company.name);
+        if (company.email) this.set("companyEmail", company.email);
+        if (company.phone) this.set("companyPhone", company.phone);
+        if (company.website) this.set("website", company.website);
+        if (company.street?.name) this.set("street", company.street.name);
+        if (company.street?.houseNumber) this.set("houseNumber", company.street.houseNumber);
+        if (company.location?.zip) this.set("zip", company.location.zip);
+        if (company.location?.city) this.set("city", company.location.city);
+        if (company.location?.country) this.set("country", company.location.country);
+        if (company.postBox) this.set("postBox", company.postBox);
     }
 
     save(application) {

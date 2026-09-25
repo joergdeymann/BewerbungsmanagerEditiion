@@ -64,6 +64,11 @@
    line-height: 1.5;
 }
 
+.import-history-missing {
+   color: var(--warning);
+   font-style: italic;
+}
+
 .import-history-actions {
    display: flex;
    justify-content: flex-end;

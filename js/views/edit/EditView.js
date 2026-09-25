@@ -3,6 +3,7 @@ import { EditHeaderTemplate } from "../../templates/edit/EditHeaderTemplate.js";
 import { EditNavigationTemplate } from "../../templates/edit/EditNavigationTemplate.js";
 import { EditNavigationEvent } from "../../events/edit/EditNavigationEvent.js";
 import { EditController } from "../../controllers/edit/EditController.js";
+import { ImportEditTab } from "./ImportEditTab.js";
 import { CompanyEditTab } from "./CompanyEditTab.js";
 import { ContactEditTab } from "./ContactEditTab.js";
 import { JobEditTab } from "./JobEditTab.js";
@@ -39,6 +40,7 @@ export class EditView {
         const content = root.querySelector("#editorTabContent");
 
         this.tabs = [
+            new ImportEditTab(content),
             new CompanyEditTab(content),
             new ContactEditTab(content, this.repository),
             new JobEditTab(content),
@@ -47,10 +49,20 @@ export class EditView {
         ];
 
         content.innerHTML = this.tabs.map(tab => tab.render()).join("");
-        this.tabs.forEach(tab => tab.init(application));
+        this.tabs.forEach(tab => {
+            if (tab instanceof ImportEditTab) {
+                tab.init(application, result => this.applyAnalysisToAllTabs(result));
+            } else {
+                tab.init(application);
+            }
+        });
 
         this.navigationEvent.bind(root);
         this.bindActions(root);
+    }
+
+    applyAnalysisToAllTabs(result) {
+        this.tabs.forEach(tab => tab.applyAnalysis(result));
     }
 
     bindActions(root) {

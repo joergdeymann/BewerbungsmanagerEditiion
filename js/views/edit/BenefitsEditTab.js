@@ -12,8 +12,12 @@ export class BenefitsEditTab extends BaseEditTab {
         this.set("benefitsTags", (application.benefits?.tags || []).join("\n"));
     }
 
-    applyAnalysis() {
-        // Wird beim Import-Thema ergänzt.
+    applyAnalysis(result) {
+        const benefits = result.benefits;
+        if (!benefits) return;
+
+        this.set("benefitsContent", (benefits.content || []).join("\n"));
+        this.set("benefitsTags", (benefits.tags || []).join("\n"));
     }
 
     save(application) {

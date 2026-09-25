@@ -4,6 +4,7 @@ export class EditNavigationTemplate {
         return `
             <header class="app-header">
                 <nav class="detail-navigation">
+                    <button type="button" data-section="import">Import</button>
                     <button type="button" data-section="company">Firma</button>
                     <button type="button" data-section="contact">Kontakt</button>
                     <button type="button" data-section="job">Stelle</button>
