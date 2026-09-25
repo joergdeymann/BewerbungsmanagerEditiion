@@ -1,0 +1,77 @@
+/* ---------- Checkbox-Liste (z.B. Arbeitsmodell im Editor) ---------- */
+
+.checkbox-list {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 10px 20px;
+   margin: 2px 0px;
+}
+
+.checkbox-item {
+   display: flex;
+   align-items: center;
+   gap: 8px;
+   font-size: 14px;
+   color: var(--text-main);
+   cursor: pointer;
+   white-space: nowrap;
+}
+
+.checkbox-item input[type="checkbox"] {
+   appearance: none;
+   box-sizing: border-box;
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   flex: 0 0 auto;
+   width: 2.5em;
+   height: 2.5em;
+   min-width: 2.5em;
+   min-height: 2.5em;
+   max-width: 2.5em;
+   max-height: 2.5em;
+   margin: 0;
+   border: 1px solid var(--border-color);
+   border-radius: var(--radius-sm);
+   background: var(--bg-card);
+   box-shadow: var(--shadow-sm);
+   cursor: pointer;
+   overflow: hidden;
+}
+
+.checkbox-item input[type="checkbox"]::after {
+   content: "";
+   /* border: solid transparent; */
+   /* border-width: 0 2px 2px 0; */
+   /* transform: rotate(45deg) translateY(-1px); */
+}
+
+.checkbox-item input[type="checkbox"]:checked {
+   background: var(--primary);
+   border-color: var(--primary);
+   color: var(--color-ok);
+}
+
+.checkbox-item input[type="checkbox"]:checked::after {
+   border-color: #fff;
+   content: "✔";
+}
+
+.checkbox-item input[type="checkbox"]:checked:hover {
+   filter: brightness(1.15);
+}
+
+.checkbox-item input[type="checkbox"]:not(:checked):hover {
+   background: rgba(79, 70, 229, 0.08);
+   border-color: var(--primary);
+}
+
+.checkbox-item input[type="checkbox"]:not(:checked):hover::after {
+   border-color: rgba(79, 70, 229, 0.4);
+}
+
+.checkbox-item input[type="checkbox"]:focus {
+   outline: none;
+   box-shadow: 0 0 0 4px rgba(129, 140, 248, 0.15);
+}
+

@@ -24,7 +24,7 @@ export class CompanyImageList {
 
     render() {
         this.container.innerHTML = `
-            <p class="muted">Bild anklicken, um es zum Hauptbild zu machen.</p>
+            <p class="muted">Stern anklicken, um das Bild zum Hauptbild zu machen.</p>
             <div class="image-url-list">
                 ${this.images.map((url, index) => this.row(url, index)).join("")}
             </div>
@@ -65,7 +65,9 @@ export class CompanyImageList {
 
         return `
             <div class="field-with-button image-url-row${isMain ? " image-url-row-main" : ""}" data-select-main="${index}">
-                ${isMain ? `<span class="tag-badge skill-expert">★ Hauptbild</span>` : ""}
+                ${isMain
+                    ? `<span class="tag-badge skill-expert">★ Hauptbild</span>`
+                    : `<span class="image-main-hint" title="Klicken, um zum Hauptbild zu machen">☆</span>`}
                 <div class="field"><input type="url" data-image-url="${index}" value="${HtmlUtils.escape(url)}" placeholder="https://..."></div>
                 <button type="button" class="icon-button" data-remove-image="${index}">×</button>
             </div>

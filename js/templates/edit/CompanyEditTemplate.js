@@ -21,9 +21,10 @@ export class CompanyEditTemplate {
                     <div class="field"><label>Mitarbeiter</label><input id="companySize" placeholder="z.B. 50-200"></div>
                     <div class="field"><label>Gegründet</label><input id="founded" placeholder="z.B. 1998"></div>
 
-                    <div class="field"><label>Website</label><input id="website" placeholder="https://..."></div>
-                    <div class="field"><label>Allgemeine E-Mail</label><input id="companyEmail" placeholder="info@firma.de"></div>
+                    <div class="field field-wide"><label>Website</label><input id="website" placeholder="https://..."></div>
                     <div class="field"><label>Allgemeine Telefonnummer</label><input id="companyPhone" placeholder="+49 ..."></div>
+
+                    <div class="field field-wide"><label>Allgemeine E-Mail</label><input id="companyEmail" placeholder="info@firma.de"></div>
 
                     <div class="field field-wide"><label>Straße</label><input id="street" placeholder="Musterstraße"></div>
                     <div class="field"><label>Hausnr.</label><input id="houseNumber" placeholder="12"></div>

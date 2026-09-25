@@ -28,12 +28,29 @@
    height: 260px;
 }
 
+.image-url-list {
+   display: flex;
+   flex-direction: column;
+   gap: 2px;
+} 
+
 .image-url-row .field {
    flex: 1;
    min-width: 0;
 }
 
 .image-url-row-main {
-   background: var(--bg-card);
-   border-color: var(--primary);
+   background: rgba(0,0,0,0.1);
+   /* border-color: var(--primary); */
+}
+
+.image-main-hint {
+   flex: 0 0 auto;
+   font-size: 18px;
+   color: var(--text-muted);
+   cursor: pointer;
+}
+
+.image-url-row:hover .image-main-hint {
+   color: var(--primary);
 }

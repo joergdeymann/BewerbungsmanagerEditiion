@@ -30,6 +30,8 @@
 
    --danger: #ef4444;
    --danger-light: #fee2e2;
+   --warning: #f59e0b;
+   --warning-light: #fffbeb;
 
    --border-color: #e2e8f0;
    --border-focus: #818cf8;
@@ -63,6 +65,7 @@
    --button-add-bg-hover: rgba(0, 255, 0, 0.6);
    --button-std-height: 2.5rem;
    --button-std-half-height: 1.25rem;
+   --color-ok: lime;
 
    font-size: clamp(0.6vh, 1.5vh, 2rem);
 }
