@@ -17,7 +17,7 @@ async function clearAll() {
 export async function seed() {
     const removed = await clearAll();
 
-    const response = await fetch("/teststore/Jobsinput.json");
+    const response = await fetch("/testdata/Jobsinput.json");
     const data = await response.json();
 
     const db = new AppDB();

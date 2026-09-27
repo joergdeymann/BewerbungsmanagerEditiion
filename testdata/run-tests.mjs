@@ -8,10 +8,11 @@ import { ReferenceModel } from "../js/models/ReferenceModel.js";
 import { ApplicationStatusHistoryModel } from "../js/models/ApplicationStatusHistoryModel.js";
 import { ApplicationHistoryModel } from "../js/models/ApplicationHistoryModel.js";
 import { UploadFileModel } from "../js/models/UploadFileModel.js";
+import { ImportedTextModel } from "../js/models/ImportedTextModel.js";
 import { AppDB } from "../js/store/AppDB.js";
 import { LocalDB } from "../js/store/LocalDB.js";
 
-const CHANNELS = ["portal", "email", "phone"];
+const CHANNELS = ["portal", "email", "phone", "personal"];
 
 function buildHistoryEntry(channel, i) {
     switch (channel) {
@@ -48,9 +49,19 @@ function buildHistoryEntry(channel, i) {
                 channel,
                 entry: {
                     date: `2026-09-0${i}`,
+                    subject: `Telefonat vom 0${i}.09.2026`,
                     phoneTo: `+49 30 000${i}`,
                     phoneFrom: `+49 170 000${i}`,
                     content: `Telefonat Inhalt ${i}`
+                }
+            };
+        case "personal":
+            return {
+                channel,
+                entry: {
+                    date: `2026-09-0${i}`,
+                    address: `Firmensitz Testfirma ${i}`,
+                    content: `Persönliches Gespräch ${i}`
                 }
             };
     }
@@ -98,6 +109,7 @@ function buildTestRecord(recordIndex) {
     app.company.description = `Beschreibung Firma ${recordIndex}`;
     app.company.specialties = [1, 2, 3].map(n => `Spezialgebiet${n}-${recordIndex}`);
     app.company.images = [1, 2, 3].map(n => `bild${n}-${recordIndex}.png`);
+    app.company.mainImageIndex = 0;
     app.company.address.data = {
         street: `Musterweg ${recordIndex}`,
         houseNumber: `${recordIndex}`,
@@ -112,7 +124,12 @@ function buildTestRecord(recordIndex) {
     for (let i = 1; i <= 3; i++) {
         const contact = new ContactModel();
         contact.role = i === 1 ? "HR" : "Fachbereich";
-        contact.name = `Kontakt ${i} (${recordIndex})`;
+        contact.name.data = {
+            salutation: i % 2 === 1 ? "Herr" : "Frau",
+            title: "",
+            firstname: `Vorname${i}-${recordIndex}`,
+            lastname: `Nachname${i}-${recordIndex}`
+        };
         contact.img = `kontakt${i}-${recordIndex}.png`;
         contact.email = `kontakt${i}@firma${recordIndex}.example.com`;
         contact.phone = `+49 30 111${recordIndex}${i}`;
@@ -171,8 +188,8 @@ function buildTestRecord(recordIndex) {
     }
     app.application.status = finalStatus;
 
-    // history (3), zyklisch durch die drei Kanaltypen
-    for (let i = 1; i <= 3; i++) {
+    // history (4), einmal je Kanaltyp (portal/email/phone/personal)
+    for (let i = 1; i <= CHANNELS.length; i++) {
         const raw = buildHistoryEntry(CHANNELS[(i - 1) % CHANNELS.length], i);
         const entry = new ApplicationHistoryModel();
         entry.data = raw;
@@ -182,7 +199,6 @@ function buildTestRecord(recordIndex) {
     // references (3)
     for (let i = 1; i <= 3; i++) {
         const ref = new ReferenceModel();
-        ref.id = i;
         ref.name = `Quelle ${i} (${recordIndex})`;
         ref.url = `https://quelle${i}-${recordIndex}.example.com`;
         ref.capturedAt = "2026-09-01";
@@ -190,9 +206,17 @@ function buildTestRecord(recordIndex) {
         app.references.push(ref);
     }
 
-    // actionHistory / importedRawData (3 einfache Einträge)
+    // actionHistory: einfaches Array, kein eigenes Model dafür vorgesehen
     app.actionHistory = [1, 2, 3].map(n => `Aktion ${n} (${recordIndex})`);
-    app.importedRawData = [1, 2, 3].map(n => `Rohdatenzeile ${n} (${recordIndex})`);
+
+    // importedRawData (3) - ImportedTextModel (id/url/capturedAt/content)
+    for (let i = 1; i <= 3; i++) {
+        const raw = new ImportedTextModel();
+        raw.url = `https://quelle${i}-${recordIndex}.example.com/stellenanzeige`;
+        raw.capturedAt = `2026-09-0${i}`;
+        raw.content = `Rohdatenzeile ${i} (${recordIndex})`;
+        app.importedRawData.push(raw);
+    }
 
     return app;
 }
@@ -223,7 +247,7 @@ async function main() {
     // Testdatei in /testdata ablegen, BEVOR der Speicher geleert wird
     const outPath = new URL("./Jobsinput.json", import.meta.url);
     fs.writeFileSync(outPath, JSON.stringify({ app: expected }, null, 4), "utf8");
-    log(`[OK] Testdatei geschrieben: teststore/Jobsinput.json`);
+    log(`[OK] Testdatei geschrieben: testdata/Jobsinput.json`);
 
     // 3) Hauptspeicher leeren (LocalDB-Cache zurücksetzen, IndexedDB bleibt als "Platte" bestehen -
     //    wir simulieren "frisch geladen" durch Zurücksetzen von LocalDB.db/.storeName)

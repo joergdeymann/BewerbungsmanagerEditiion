@@ -8,12 +8,20 @@
             "companyId": 0,
             "contactId": 0,
             "title": "",
-            "workLocation": "",
+            "workLocation": {
+                "street": "",
+                "houseNumber": "",
+                "zipCountry": "",
+                "zip": "",
+                "city": "",
+                "country": "",
+                "postBox": ""
+            },
             "employmentType": "",
-            "workModel": "",
-            "salary": "",
-            "vacationPay": "",
-            "christmasPay": "",
+            "workModel": [],
+            "salary": 0,
+            "vacationPay": 0,
+            "christmasPay": 0,
             "referenceNumber": "",
             "tasks": [],
             "tags": []
@@ -41,7 +49,8 @@
             "specialties": [],
             "images": [],
             "email": "",
-            "phone": ""
+            "phone": "",
+            "mainImageIndex": 0
         },
         "contacts": [
             {
@@ -80,9 +89,23 @@
             "status": "",
             "appliedAt": "",
             "channel": "portal",
-            "coverLetter": "",
-            "resume": "",
-            "emailCoverLetter": "",
+            "coverLetter": {
+                "id": "",
+                "originalName": "",
+                "link": ""
+            },
+            "resume": [
+                {
+                    "id": "",
+                    "originalName": "",
+                    "link": ""
+                }
+            ],
+            "emailCoverLetter": {
+                "id": "",
+                "originalName": "",
+                "link": ""
+            },
             "signature": "",
             "statusHistory": [
                 {
@@ -93,7 +116,8 @@
             ],
             "history": [
                 {
-                    "channel": "portal",
+                    "id": "",
+                    "channel": "",
                     "entry": {
                         "date": "",
                         "portalName": "",
