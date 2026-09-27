@@ -1,5 +1,6 @@
 import { BaseEditTab } from "./BaseEditTab.js";
 import { ImportEditTemplate } from "../../templates/edit/ImportEditTemplate.js";
+import { ImportedTextModel } from "../../models/ImportedTextModel.js";
 import { Toast } from "../windows/Toast.js";
 import { UrlPrompt } from "../windows/UrlPrompt.js";
 import { UrlImporter } from "../../api/UrlImporter.js";
@@ -12,20 +13,20 @@ export class ImportEditTab extends BaseEditTab {
     }
 
     init(application, applyAnalysisToAllTabs) {
+        this.application = application;
         this.applyAnalysisToAllTabs = applyAnalysisToAllTabs;
         this.analyzer = new Analyzer();
         this.urlPrompt = new UrlPrompt();
         this.urlImporter = new UrlImporter();
 
-        this.history = (application.importedRawData || []).map(entry => ({ ...entry }));
-        this.selectedEntryId = null;
+        this.selectedId = null;
         this.lastCommittedText = "";
 
         const input = this.root.querySelector("#originalText");
 
         this.root.querySelector("#clearOriginalText").onclick = () => {
             this.set("originalText", "");
-            this.selectedEntryId = null;
+            this.selectedId = null;
             this.lastCommittedText = "";
             this.renderHistory();
         };
@@ -40,14 +41,10 @@ export class ImportEditTab extends BaseEditTab {
         const text = this.get("originalText").trim();
         if (!text || text === this.lastCommittedText) return;
 
-        const source = this.analyzer.detectSource(text);
+        if (this.selectedId) {
+            const entry = this.application.importedRawData.find(item => item.id === this.selectedId);
+            if (entry) entry.content = text;
 
-        if (this.selectedEntryId) {
-            const entry = this.history.find(item => item.id === this.selectedEntryId);
-            if (entry) {
-                entry.text = text;
-                entry.source = source;
-            }
             this.lastCommittedText = text;
             this.renderHistory();
             this.runCombinedAnalysis();
@@ -55,11 +52,11 @@ export class ImportEditTab extends BaseEditTab {
             return;
         }
 
-        this.addHistoryEntry({ text, source, link: null });
+        this.addHistoryEntry(text);
         this.set("originalText", "");
         this.lastCommittedText = "";
 
-        Toast.show(`Text automatisch übernommen (${this.history.length} Einträge insgesamt).`, "success");
+        Toast.show(`Text automatisch übernommen (${this.application.importedRawData.length} Einträge insgesamt).`, "success");
     }
 
     async fetchFromUrl() {
@@ -72,7 +69,7 @@ export class ImportEditTab extends BaseEditTab {
 
         try {
             const { text } = await this.urlImporter.fetch(url);
-            this.addHistoryEntry({ text, source: url, link: url });
+            this.addHistoryEntry(text, url);
             Toast.show("Seite abgerufen und übernommen.", "success");
         } catch (error) {
             console.error(error);
@@ -83,23 +80,22 @@ export class ImportEditTab extends BaseEditTab {
         }
     }
 
-    addHistoryEntry({ text, source, link }) {
-        this.history.push({
-            id: crypto.randomUUID(),
-            text,
-            source,
-            link,
-            importedAt: new Date().toISOString()
-        });
+    addHistoryEntry(content, url = "") {
+        const entry = new ImportedTextModel();
+        entry.content = content;
+        entry.url = url;
+        entry.capturedAt = new Date().toISOString();
 
+        this.application.importedRawData.push(entry);
         this.renderHistory();
         this.runCombinedAnalysis();
     }
 
     runCombinedAnalysis() {
-        if (!this.history.length) return;
+        const entries = this.application.importedRawData;
+        if (!entries.length) return;
 
-        const combinedText = this.history.map(entry => entry.text).join("\n\n----\n\n");
+        const combinedText = entries.map(entry => entry.content).join("\n\n----\n\n");
 
         let result;
         try {
@@ -113,20 +109,21 @@ export class ImportEditTab extends BaseEditTab {
     }
 
     editEntry(id) {
-        const entry = this.history.find(item => item.id === id);
-        if (!entry) return;
+        const entry = this.application.importedRawData.find(item => item.id === id);
+        if (!entry || typeof entry.content !== "string") return;
 
-        this.selectedEntryId = id;
-        this.lastCommittedText = entry.text;
-        this.set("originalText", entry.text);
+        this.selectedId = id;
+        this.lastCommittedText = entry.content;
+        this.set("originalText", entry.content);
         this.renderHistory();
         this.root.querySelector("#originalText").focus();
     }
 
     removeEntry(id) {
-        this.history = this.history.filter(entry => entry.id !== id);
-        if (this.selectedEntryId === id) {
-            this.selectedEntryId = null;
+        this.application.importedRawData = this.application.importedRawData.filter(item => item.id !== id);
+
+        if (this.selectedId === id) {
+            this.selectedId = null;
             this.set("originalText", "");
             this.lastCommittedText = "";
         }
@@ -139,24 +136,25 @@ export class ImportEditTab extends BaseEditTab {
         const empty = this.root.querySelector("#importHistoryEmpty");
         if (!list) return;
 
-        empty.style.display = this.history.length ? "none" : "";
+        const entries = this.application.importedRawData;
+
+        empty.style.display = entries.length ? "none" : "";
         list.innerHTML = "";
 
-        this.history.forEach(entry => {
-                        const preview = this.preview(entry.text);
+        entries.forEach(entry => {
+            const preview = this.preview(entry.content);
             const row = document.createElement("div");
-            row.className = "import-history-row" + (entry.id === this.selectedEntryId ? " selected" : "");
+            row.className = "import-history-row" + (entry.id === this.selectedId ? " selected" : "");
             row.innerHTML = `
               <div class="import-history-meta">
-                                <strong>${this.escapeAttribute(entry.source || "Unbekannt")}</strong>
-                <small>${this.formatDate(entry.importedAt)}</small>
-                ${entry.link ? `<a href="${this.escapeAttribute(entry.link)}" target="_blank" rel="noopener">Quelle öffnen ↗</a>` : ""}
+                <strong>${this.formatDate(entry.capturedAt)}</strong>
+                ${entry.url ? `<a href="${this.escapeAttribute(entry.url)}" target="_blank" rel="noopener">Quelle öffnen ↗</a>` : ""}
               </div>
-                            ${preview !== null
-                                ? `<p class="import-history-preview">${this.escapeAttribute(preview)}</p>`
-                                : `<p class="import-history-preview import-history-missing">⚠ Kein Text vorhanden – dieser Eintrag ist unvollständig.</p>`}
+              ${preview !== null
+                ? `<p class="import-history-preview">${this.escapeAttribute(preview)}</p>`
+                : `<p class="import-history-preview import-history-missing">⚠ Kein Text vorhanden – dieser Eintrag ist unvollständig.</p>`}
               <div class="import-history-actions">
-                                <button type="button" class="secondary switch-entry" ${preview === null ? "disabled" : ""}>${entry.id === this.selectedEntryId ? "Wird bearbeitet" : "Bearbeiten"}</button>
+                <button type="button" class="secondary switch-entry" ${preview === null ? "disabled" : ""}>${entry.id === this.selectedId ? "Wird bearbeitet" : "Bearbeiten"}</button>
                 <button type="button" class="icon-button remove-entry">×</button>
               </div>
             `;
@@ -167,10 +165,6 @@ export class ImportEditTab extends BaseEditTab {
     }
 
     preview(text) {
-        if (text == null) {
-            console.log("ImportEditTab.js: preview text null");
-            return null;
-        }
         if (typeof text !== "string" || !text.trim()) return null;
 
         const flat = text.replace(/\s+/g, " ").trim();
@@ -178,8 +172,11 @@ export class ImportEditTab extends BaseEditTab {
     }
 
     formatDate(value) {
+        if (!value) return "–";
+
         const parsed = new Date(value);
-        if (Number.isNaN(parsed.getTime())) return "";
+        if (Number.isNaN(parsed.getTime())) return "–";
+
         return parsed.toLocaleString("de-DE", {
             day: "2-digit", month: "2-digit", year: "numeric",
             hour: "2-digit", minute: "2-digit"
@@ -190,7 +187,8 @@ export class ImportEditTab extends BaseEditTab {
         // Der Import-Verlauf selbst wird durch spätere Analysen nicht verändert.
     }
 
-    save(application) {
-        application.importedRawData = this.history;
+    save() {
+        // importedRawData wird direkt am Application-Objekt verändert (s.o.),
+        // hier daher nichts weiter zu tun.
     }
 }

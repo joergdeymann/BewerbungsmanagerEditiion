@@ -5,7 +5,7 @@ export class SourcesTemplate extends DetailBaseTemplate {
 
     render(application) {
 
-        const references = application.references || [];
+        const combinedSources = this.combineSources(application);
 
         return `
             <section class="subsection-display">
@@ -48,7 +48,7 @@ export class SourcesTemplate extends DetailBaseTemplate {
                                 <span data-sort="date">Datum <span class="sort-arrow" data-sort-arrow="date"></span></span>
                                 <span data-sort="name">Name <span class="sort-arrow" data-sort-arrow="name"></span></span>
                             </div>
-                            ${this.sourceRows(references)}
+                            ${this.sourceRows(combinedSources)}
                         </div>
                     </div>
                 </section>
@@ -68,5 +68,19 @@ export class SourcesTemplate extends DetailBaseTemplate {
                 <span>${this.link(reference.url, reference.name)}</span>
             </div>
         `).join("");
+    }
+
+    // Fasst die Quellen-Liste und den (nur lesend genutzten) Import-Verlauf des
+    // Editors für die Anzeige zusammen. Es fließt nichts in umgekehrter
+    // Richtung zurück - "references" bleibt von "importedRawData" unabhängig.
+    combineSources(application) {
+        const references = application.references || [];
+        const imported = (application.importedRawData || []).map(entry => ({
+            url: entry.url,
+            capturedAt: entry.capturedAt,
+            name: entry.url ? "Import (URL)" : "Import (manuell)"
+        }));
+
+        return [...references, ...imported];
     }
 }

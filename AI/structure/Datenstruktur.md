@@ -33,8 +33,17 @@ Alle Models stellen ihre Daten über `get data` / `set data` bereit. Die flache 
 - `CityModel` – `zipCountry`, `zip`, `city`, `country`.
 - `QualificationModel` – drei Bereiche `required`, `preferred`, `personal`,
   jeweils mit `tags` und `content`.
-- `ReferenceModel` – Quelle einer Erfassung: `id`, `name`, `url`, `capturedAt`, `content`.
-  Wird als Liste (`references`) direkt von `AppModel` geführt.
+- `CapturedContentModel` – Basisklasse für erfassten Text mit Quelle: `id`, `url`,
+  `capturedAt`, `content`. Wird von `ReferenceModel` und `ImportedTextModel` geerbt,
+  damit beide unabhängig voneinander eigene Zusatzfelder bekommen können.
+- `ReferenceModel` (erbt `CapturedContentModel`) – Quelle einer Erfassung: `id`, `url`,
+  `capturedAt`, `content`, zusätzlich `name`. Wird als Liste (`references`) direkt von
+  `AppModel` geführt; erscheint in der Detail-Ansicht unter "Quellen".
+- `ImportedTextModel` (erbt `CapturedContentModel`) – ein roher, importierter Textblock
+  für die Analyse-Pipeline im Editor: `id`, `url`, `capturedAt`, `content`. Wird als Liste
+  (`importedRawData`) direkt von `AppModel` geführt. Erscheint einseitig zusätzlich in der
+  Detail-"Quellen"-Liste (Anzeige-Ebene only), nie umgekehrt - `references` bleibt von
+  `importedRawData` komplett unabhängig.
 - `BenefitsModel` – Benefits als `tags` + `content`, gleiches Format wie ein Bereich
   von `QualificationModel`.
 - `ApplicationModel` – die eigentliche Bewerbung: `status`, `appliedAt`, `channel`
@@ -63,7 +72,8 @@ AppModel
  ├─ ContactModel (Liste) ─ NameModel
  ├─ QualificationModel
  ├─ BenefitsModel
- ├─ ReferenceModel (Liste)
+ ├─ ReferenceModel (Liste) ─ erbt CapturedContentModel
+ ├─ ImportedTextModel (Liste, importedRawData) ─ erbt CapturedContentModel
  └─ ApplicationModel
      ├─ ApplicationStatusHistoryModel (Liste)
      └─ ApplicationHistoryModel (Liste)

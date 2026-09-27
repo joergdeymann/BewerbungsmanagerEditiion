@@ -115,6 +115,13 @@
             }
         ],
         "actionHistory": [],
-        "importedRawData": []
+        "importedRawData": [
+            {
+                "id": 0,
+                "url": "",
+                "capturedAt": "",
+                "content": ""
+            }
+        ]
     }
 }

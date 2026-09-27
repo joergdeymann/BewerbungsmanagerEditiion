@@ -5,6 +5,7 @@ import { ApplicationModel } from './ApplicationModel.js';
 import { ReferenceModel } from './ReferenceModel.js';
 import { JobModel } from './JobModel.js';
 import { QualificationModel } from './QualificationModel.js';
+import { ImportedTextModel } from './ImportedTextModel.js';
 
 export class AppModel {
     constructor() {
@@ -14,14 +15,14 @@ export class AppModel {
         this.updatedAt = "";
         this.job = new JobModel();
         this.company = new CompanyModel();
-        
+
         // Jetzt als leere Listen (Arrays) initialisiert
-        this.contacts = []; 
+        this.contacts = [];
         this.qualifications = new QualificationModel();
-        this.benefits = new BenefitsModel(); 
+        this.benefits = new BenefitsModel();
         this.application = new ApplicationModel();
         this.references = [];
-        
+
         this.actionHistory = [];
         this.importedRawData = [];
     }
@@ -34,13 +35,13 @@ export class AppModel {
             updatedAt: this.updatedAt,
             job: this.job.data,
             company: this.company.data,
-            contacts: this.contacts.map(contact => contact.data), 
+            contacts: this.contacts.map(contact => contact.data),
             qualifications: this.qualifications.data,
             benefits: this.benefits.data,
             application: this.application.data,
             references: this.references.map(reference => reference.data),
             actionHistory: this.actionHistory,
-            importedRawData: this.importedRawData
+            importedRawData: this.importedRawData.map(entry => entry.data)
         };
     }
 
@@ -52,7 +53,6 @@ export class AppModel {
         this.status = raw.status ?? this.status;
         this.updatedAt = raw.updatedAt ?? this.updatedAt;
         this.actionHistory = raw.actionHistory ?? this.actionHistory;
-        this.importedRawData = raw.importedRawData ?? this.importedRawData;
 
         if (raw.job) {
             this.job.data = raw.job;
@@ -77,8 +77,8 @@ export class AppModel {
         // DIE ARRAYS IM SETTER ANPASSEN:
         if (raw.contacts && Array.isArray(raw.contacts)) {
             // Wir leeren das aktuelle Array, um Duplikate beim erneuten Laden zu verhindern
-            this.contacts = []; 
-            
+            this.contacts = [];
+
             // Jeden rohen Kontakteintrag in ein echtes Modell umwandeln
             for (const rawContact of raw.contacts) {
                 const contactInstance = new ContactModel();
@@ -95,6 +95,17 @@ export class AppModel {
                 referenceInstance.data = rawReference;
                 this.references.push(referenceInstance);
             }
+        }
+
+        if (raw.importedRawData && Array.isArray(raw.importedRawData)) {
+            this.importedRawData = raw.importedRawData.map(rawEntry => {
+                const entry = new ImportedTextModel();
+                // Abwärtskompatibel: alte Testdaten waren reine Strings.
+                entry.data = typeof rawEntry === "string"
+                    ? { content: rawEntry }
+                    : rawEntry;
+                return entry;
+            });
         }
     }
 

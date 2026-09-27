@@ -1,28 +1,22 @@
-export class ReferenceModel {
+import { CapturedContentModel } from "./CapturedContentModel.js";
+
+export class ReferenceModel extends CapturedContentModel {
+
     constructor() {
-        this.id = 0;
+        super();
         this.name = "";
-        this.url = "";
-        this.capturedAt = "";
-        this.content = "";
     }
 
     get data() {
         return {
-            id: this.id,
-            name: this.name,
-            url: this.url,
-            capturedAt: this.capturedAt,
-            content: this.content
+            ...super.data,
+            name: this.name
         };
     }
 
     set data(raw) {
+        super.data = raw;
         if (!raw) return;
-        this.id = raw.id ?? this.id;
         this.name = raw.name ?? this.name;
-        this.url = raw.url ?? this.url;
-        this.capturedAt = raw.capturedAt ?? this.capturedAt;
-        this.content = raw.content ?? raw.sourceCode ?? this.content;
     }
 }
