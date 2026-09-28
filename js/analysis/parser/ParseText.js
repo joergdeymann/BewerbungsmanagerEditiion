@@ -26,8 +26,8 @@ export class ParseText {
 
         const companyContent = sections["companyInformation"]?.lines??[];
         const contactContent = sections["contact"]?.lines??[];
-        const closingContent = sections["signature"]?.lines??[];
-        const addressContent = [...contactContent, ...companyContent];
+        const teamContent = sections["team"]?.lines??[];
+        const addressContent = [...contactContent, ...companyContent,...teamContent];
 
         return {
             sections: sections,

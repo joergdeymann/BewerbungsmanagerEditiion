@@ -27,7 +27,11 @@ export class ParserConstants {
         /[\u0000-\u0009\u000B-\u000C\u000E-\u001F\u007F-\u009F\p{Cf}]/gu;
 
     static BULLET_PREFIX_REGEX =
-        /^[•●✓✔\-–—]\s*/;
+        /^[•●•✓✔\-–—]\s*/;
+
+    static IGNORE_DOUBLE_LINE_MARKERS = {
+        allOf: ["&","weitere kontakte","folgen"]
+    }
 
 
     static IGNORE_LINE_MARKERS = {
@@ -67,12 +71,28 @@ export class ParserConstants {
             // Quelle
             "linkedin",
             "verwaltete antworten",
-            "mit ki ihre eignunge ermitteln"
+            "mit ki ihre eignunge ermitteln",
+            "follower",
+            "auf linkedin",
+            "folgen dieser Seite",
         ],
 
         allOf: [
             ["mehr als", "personen haben"]
+        ],
+
+        line: [
+            "bewerben",
+            "speichern",
+            "nachricht",
+            "Info",
+            "start",
+            "beiträge",
+            "jobs",
+            "personen",
+            "übersicht",
         ]
+
     };
 
 
@@ -125,6 +145,7 @@ export class ParserConstants {
             name: "benefits",
 
             titles: [
+                "im focus",
                 "deine vorteile bei uns",
                 "wir bieten",
                 "das bieten wir",
@@ -159,7 +180,8 @@ export class ParserConstants {
                 "über das unternehmen",
                 "wer wir sind",
                 "wir sind",
-                "stellenbeschreibung"
+                "stellenbeschreibung",
+                "unternehmensversprechen"
             ]
         },
 
@@ -181,11 +203,16 @@ export class ParserConstants {
         },
 
         {
-            name: "signature",
+            name: "team",
 
             titles: [
                 "unser team",
                 "bewirb dich"
+            ]
+        },
+        { 
+            name:"closing",
+            titles: [
             ]
         }
     ];
