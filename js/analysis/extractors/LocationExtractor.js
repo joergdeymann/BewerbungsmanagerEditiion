@@ -14,14 +14,19 @@ export class LocationExtractor {
 
         for (const line of this.lines) {
             regex.lastIndex = 0;
-            const match = regex.exec(line);
-            if (match) {
+            let match;
+            while ((match = regex.exec(line)) !== null) {
+                // Zahlenspannen wie "5001-10000 Mitarbeiter:innen" sind keine Adresse -
+                // die zweite Zahl sieht sonst wie eine PLZ aus.
+                const prefix = line.slice(0, match.index);
+                if (/\d+\s*-\s*$/.test(prefix)) continue;
+
                 const rawCountry = match[1];
                 const country = rawCountry && LocationConstants.COUNTRY_CODES.has(rawCountry)
                     ? rawCountry
                     : LocationConstants.DEFAULT_COUNTRY;
 
-                return { country:country, zip: match[2], city: match[3].trim() };
+                return { country: country, zip: match[2], city: match[3].trim() };
             }
         }
         return null;
