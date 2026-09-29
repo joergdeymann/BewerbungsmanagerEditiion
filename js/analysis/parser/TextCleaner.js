@@ -5,28 +5,57 @@ Am sichersten rufst du sie pro Block auf, etwa this.splitBlocks(lines).map(b => 
 
 import { ParserConstants } from "../../constants/ParserConstants.js";
 export class TextCleaner {
-    constructor(text) {
+constructor(text) {
         this.text = text;
-        let lines  = this
+
+        let lines = this
             .removeInvisibleCharacters()
             .split(/\r?\n/)
-            .map(line => this.stripBulletPrefix(line))
+            .map(line => this.stripBulletPrefix(line));
 
-        lines = this.uniqueBlocks(lines, { merge: false });
+        // Zuerst exakte Dubletten zusammenführen (letztes Vorkommen bleibt)
+        // und dabei das "?"-Präfix entfernen
         lines = this.removeLineAfterMarker(lines);
+        lines = this.mergeDuplicates(lines);
+        lines = this.uniqueBlocks(lines, { merge: false });
         lines = lines.filter(Boolean);
         lines = this.removeSimilar(lines);
 
-        this.lines = this.removeDoubleLines(lines)    
+        this.lines = this.removeDoubleLines(lines)
             .filter(e => {
                 const line = e.toLowerCase();
                 return !(
                     ParserConstants.IGNORE_LINE_MARKERS.anyOf.some(marker => line.includes(marker)) ||
-                    ParserConstants.IGNORE_LINE_MARKERS.allOf.some(markers => markers.every(marker => line.includes(marker)))    ||
+                    ParserConstants.IGNORE_LINE_MARKERS.allOf.some(markers => markers.every(marker => line.includes(marker))) ||
                     ParserConstants.IGNORE_LINE_MARKERS.line.some(marker => line == marker)
-                )
+                );
             });
-        this.lines = this.lines.map(line=> this.stripBulletPrefix(line)).filter(Boolean);
+
+        this.lines = this.lines
+            .map(line => this.stripBulletPrefix(line))
+            .filter(Boolean); // Jetzt sind wirklich alle Sonderzeichen weg
+    }
+
+    mergeDuplicates(values) {
+        const stripMarker = value => value.replace(/^\s*\?\s*/, '').trim();
+        const toKey = value => stripMarker(value).toLowerCase().replace(/\s+/g, ' ');
+
+        // Pro Schlüssel den Index des letzten Vorkommens merken (leere Zeilen ignorieren)
+        const lastIndex = new Map();
+        values.forEach((value, index) => {
+            const key = toKey(value);
+            if (key) {
+                lastIndex.set(key, index);
+            }
+        });
+
+        return values
+            .filter((value, index) => {
+                const key = toKey(value);
+                // Leere Zeilen bleiben unverändert (könnten Blocktrenner sein)
+                return !key || lastIndex.get(key) === index;
+            })
+            .map(stripMarker);
     }
 
     removeInvisibleCharacters() {
@@ -79,16 +108,53 @@ export class TextCleaner {
         return lines;    
     }
 
+    // Linkedin Marker für nicht gematched forderung
+    removeUnmet(values) {
+        const isMarked = value => /^\s*\?/.test(value);
+        const stripMarker = value => value.replace(/^\s*\?\s*/, '').trim();
+        const normalize = value => value.trim().toLowerCase();
 
-    removeSimilar(values) {
-        const normalize = value => value.toLowerCase();
+        // Alle Zeilen ohne "?" als Referenz
+        const existing = new Set(
+            values.filter(value => !isMarked(value)).map(normalize)
+        );
 
+        const result = [];
+
+        for (const value of values) {
+            if (!isMarked(value)) {
+                result.push(value);
+                continue;
+            }
+
+            const cleaned = stripMarker(value);
+            const key = normalize(cleaned);
+
+            // Gleiche Zeile ohne "?" existiert schon -> verwerfen
+            if (existing.has(key)) {
+                continue;
+            }
+
+            // Sonst nur "?" entfernen und behalten
+            result.push(cleaned);
+            existing.add(key); // verhindert Dubletten bei mehreren "?"-Zeilen
+        }
+
+        return result;
+    }
+
+    removeSimilar(values, minCoverage = 0.8) {
         const getWords = value =>
-            normalize(value)
+            value
+                .toLowerCase()
                 .split(/\s+/)
-                .filter(Boolean);
+                // Tokens ohne Buchstaben/Ziffern ("?", "•", "·") verwerfen
+                .filter(word => /[\p{L}\p{N}]/u.test(word))
+                // Satzzeichen am Rand entfernen ("Qualifikation," -> "qualifikation")
+                .map(word => word.replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu, ''));
 
-        const wordLists = values.map(value => getWords(value));
+        const wordLists = values.map(getWords);
+        const keys = wordLists.map(words => words.join(' '));
         const remove = new Set();
 
         for (let i = 0; i < values.length; i++) {
@@ -106,8 +172,22 @@ export class TextCleaner {
 
                 const longWords = wordLists[j];
 
+                // Exakte Dublette (nach Normalisierung): nur die spätere entfernen
+                if (keys[i] === keys[j]) {
+                    if (i > j) {
+                        remove.add(i);
+                        break;
+                    }
+                    continue;
+                }
+
                 // Nur kürzere Zeilen entfernen
                 if (shortWords.length >= longWords.length) {
+                    continue;
+                }
+
+                // Kurze Zeile muss einen großen Teil der langen ausmachen
+                if (shortWords.length / longWords.length < minCoverage) {
                     continue;
                 }
 
