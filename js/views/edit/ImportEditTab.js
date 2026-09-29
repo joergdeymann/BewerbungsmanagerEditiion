@@ -48,7 +48,7 @@ export class ImportEditTab extends BaseEditTab {
             this.lastCommittedText = text;
             this.renderHistory();
             this.runCombinedAnalysis();
-            Toast.show("Änderung automatisch übernommen.", "success");
+            Toast.show('Änderung automatisch übernommen (siehe "Übernommene Texte" unten).', "success");
             return;
         }
 
@@ -56,7 +56,10 @@ export class ImportEditTab extends BaseEditTab {
         this.set("originalText", "");
         this.lastCommittedText = "";
 
-        Toast.show(`Text automatisch übernommen (${this.application.importedRawData.length} Einträge insgesamt).`, "success");
+        Toast.show(
+            `Text automatisch übernommen (${this.entryCountLabel()} insgesamt im Bereich "Übernommene Texte" unten).`,
+            "success"
+        );
     }
 
     async fetchFromUrl() {
@@ -70,7 +73,7 @@ export class ImportEditTab extends BaseEditTab {
         try {
             const { text } = await this.urlImporter.fetch(url);
             this.addHistoryEntry(text, url);
-            Toast.show("Seite abgerufen und übernommen.", "success");
+            Toast.show('Seite abgerufen und übernommen (siehe "Übernommene Texte" unten).', "success");
         } catch (error) {
             console.error(error);
             Toast.show(`Fehler beim Abrufen der URL: ${error.message}`, "error");
@@ -181,6 +184,11 @@ export class ImportEditTab extends BaseEditTab {
             day: "2-digit", month: "2-digit", year: "numeric",
             hour: "2-digit", minute: "2-digit"
         });
+    }
+
+    entryCountLabel() {
+        const count = this.application.importedRawData.length;
+        return count === 1 ? "1 Eintrag" : `${count} Einträge`;
     }
 
     applyAnalysis() {
