@@ -90,6 +90,8 @@ button.width8em {
    background-color: var(--secondary);
    color: var(--text-muted);
    font-size: 16px;
+   min-width: var(--button-std-height);
+   min-height: var(--button-std-height);   
 }
 
 .icon-button:hover {

@@ -158,7 +158,7 @@ export class ImportEditTab extends BaseEditTab {
                 : `<p class="import-history-preview import-history-missing">⚠ Kein Text vorhanden – dieser Eintrag ist unvollständig.</p>`}
               <div class="import-history-actions">
                 <button type="button" class="secondary switch-entry" ${preview === null ? "disabled" : ""}>${entry.id === this.selectedId ? "Wird bearbeitet" : "Bearbeiten"}</button>
-                <button type="button" class="icon-button remove-entry">×</button>
+                <button type="button" class="icon-button danger remove-entry">×</button>
               </div>
             `;
             row.querySelector(".switch-entry").onclick = () => this.editEntry(entry.id);

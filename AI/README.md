@@ -24,3 +24,13 @@
 
 ## 4. Workflow
 - `AI/workflow/WORKFLOW.md` einmalig lesen und im Kontext halten; nur bei Dateiänderung erneut lesen.
+
+**## 5. Grundsätze**
+* **Effizienz:** So wenig Tokens, Tool-Aufrufe und Analyse wie möglich. Nur Aktionen, die direkt zur aktuellen Aufgabe beitragen.
+* **Fokus:** Keine ungefragten Refactorings, Verbesserungen oder Nebenaufgaben.
+* **Fortschritt:** Jede Session muss ein verwertbares Ergebnis liefern: Codeänderung, Testergebnis, Fehlerursache oder Zwischenstand. Reine Analyse/Recherche zählt nicht als Ergebnis.
+* **Max. 3 Sessions:** Spätestens nach 3 Sessions muss die Aufgabe abgeschlossen **oder ein verwertbarer Zwischenstand** ausgegeben werden. Keine weitere Session ohne diesen Zwischenstand.
+* **Blockade:** Wird derselbe Lösungsansatz wiederholt ohne Fortschritt verfolgt, Analyse abbrechen und Zwischenstand liefern.
+* **Zwischenstand:** Enthält kurz: **geändert | getestet | funktioniert | offen | nächster Schritt**.
+* **Session-Ende:** Keine Session darf ohne Ergebnis oder Zwischenstand enden.
+* **Klare Anweisung:** Pfadangaben nicht zuerst Interpetieren, es sei denn es sind offensichtliche Fehler enthalten
