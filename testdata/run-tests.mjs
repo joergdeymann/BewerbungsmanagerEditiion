@@ -89,9 +89,14 @@ function buildTestRecord(recordIndex) {
     };
     app.job.employmentType = "Vollzeit";
     app.job.workModel = ["Vor Ort", "Hybrid"];
-    app.job.salary = 40000 + recordIndex * 1000;
-    app.job.vacationPay = 1000 + recordIndex * 100;
-    app.job.christmasPay = 1500 + recordIndex * 100;
+    app.job.wage.data = {
+        yearly: { min: 40000 + recordIndex * 1000, max: 45000 + recordIndex * 1000 },
+        monthly: null,
+        gross: true,
+        currency: "EUR",
+        holiday: 1000 + recordIndex * 100,
+        christmas: 1500 + recordIndex * 100
+    };
     app.job.referenceNumber = `REF-${recordIndex}`;
     app.job.tasks = [1, 2, 3].map(n => `Aufgabe ${n} (Job ${recordIndex})`);
     app.job.tags = [1, 2, 3].map(n => `Tag${n}-${recordIndex}`);

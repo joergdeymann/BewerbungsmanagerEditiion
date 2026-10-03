@@ -146,6 +146,7 @@ export class ParserConstants {
 
             titles: [
                 "im focus",
+                "im fokus",
                 "deine vorteile bei uns",
                 "wir bieten",
                 "das bieten wir",
@@ -728,15 +729,15 @@ export class ParserConstants {
     static MONEY = {
         "Weihnachtsgeld": [
             "(13. Monatsgehalt)",
-            "weihnachtsgeld.{0,20}(\\d{1,6}(?:[.,]\\d{1,2})?)"
+            "weihnachtsgeld.{0,20}?(\\d{1,6}(?:[.,]\\d{1,2})?)"
         ],
 
         "Urlaubsgeld": [
-            "urlaubsgeld.{0,20}(\\d{1,6}(?:[.,]\\d{1,2})?)"
+            "urlaubsgeld.{0,20}?(\\d{1,6}(?:[.,]\\d{1,2})?)"
         ],
 
         "Gehalt": [
-            "gehalt.{0,20}(\\d{1,6}(?:[.,]\\d{1,2})?)"
+            "gehalt.{0,20}?(\\d{1,6}(?:[.,]\\d{1,2})?)"
         ]
     };
 

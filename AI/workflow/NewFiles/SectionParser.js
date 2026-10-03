@@ -9,10 +9,8 @@ export class SectionParser {
 
     constructor(sectionHeaders) {
         this.linecount = 0;
-        this.currentSectionName = "general";
-        this.sections = {
-            general: new SectionPart("general")
-        };
+        this.currentSectionName = "rubbish";
+        this.sections = {};
 
         this.sectionDefinitions = sectionHeaders.map(section => ({
             name: section.name,
@@ -53,6 +51,10 @@ export class SectionParser {
     }
 
     addContentLine(line) {
+        if (this.currentSectionName === "rubbish") {
+            return;
+        }
+
         const section = this.sections[this.currentSectionName];
         const parser = new LineParser(line);
 

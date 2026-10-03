@@ -21,10 +21,7 @@ export class LocationExtractor {
                 const prefix = line.slice(0, match.index);
                 if (/\d+\s*-\s*$/.test(prefix)) continue;
 
-                const rawCountry = match[1];
-                const country = rawCountry && LocationConstants.COUNTRY_CODES.has(rawCountry)
-                    ? rawCountry
-                    : LocationConstants.DEFAULT_COUNTRY;
+                const country = LocationConstants.countryName(match[1]);
 
                 return { country: country, zip: match[2], city: match[3].trim() };
             }

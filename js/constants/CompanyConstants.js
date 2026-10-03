@@ -22,4 +22,65 @@ export class CompanyConstants {
         'mehr', 'oder', 'aber', 'werden', 'werde', 'kannst', 'kann', 'hast',
         'haben', 'verfügst', 'vertraut', 'inklusive', 'sowie', 'innen'
     ]);
+
+    // Labelzeilen der Firmeninfo (zweizeilig: Label -> Wert in der Folgezeile).
+    static COMPANY_INFO_LABELS = {
+        website: ['website', 'webseite', 'web-adresse'],
+        verifiedAt: ['verifizierte seite', 'verifiziert am', 'verifiziert'],
+        industry: ['branche', 'branchen'],
+        size: ['größe', 'groesse', 'unternehmensgröße', 'beschäftigte', 'mitarbeiter', 'mitarbeitende'],
+        founded: ['gegründet', 'gegruendet', 'gründungsjahr', 'gruendungsjahr', 'gründung'],
+        specialties: ['spezialgebiete', 'spezialgebiet', 'spezialisierungen', 'spezialisierung'],
+        legalForm: ['rechtsform']
+    };
+
+    static ALL_INFO_LABELS = Object.values(CompanyConstants.COMPANY_INFO_LABELS).flat();
+
+    // Zeilen, die in der Firmenbeschreibung keinen Fließtext darstellen.
+    static COMPANY_INFO_IGNORE = new Set([
+        'start', 'info', 'beiträge', 'jobs', 'was wir machen',
+        'personen', 'übersicht', 'commitment'
+    ]);
+
+    // Rechtsform-Suffix -> Schlüssel aus LegalFormConstants.FORM (Reihenfolge = Priorität).
+    static LEGAL_FORM_PATTERNS = [
+        { pattern: /\bgmbh\s*&\s*co\.?\s*kg\b/i, form: 'GMBH_CO_KG' },
+        { pattern: /\bgmbh\b/i, form: 'GMBH' },
+        { pattern: /\bpartg\b/i, form: 'PARTG' },
+        { pattern: /\bkgaa\b/i, form: 'KGAA' },
+        { pattern: /\bohg\b/i, form: 'OHG' },
+        { pattern: /\bgbr\b/i, form: 'GBR' },
+        { pattern: /\bkg\b/i, form: 'KG' },
+        { pattern: /\bug\b/i, form: 'UG' },
+        { pattern: /\bag\b/i, form: 'AG' },
+        { pattern: /\bse\b/i, form: 'SE' },
+        { pattern: /\beg\b/i, form: 'EG' }
+    ];
+
+    // Erkennt eine Labelzeile und liefert einen ggf. inline enthaltenen Wert ("Branche: IT").
+    static matchInfoLabel(line, labels) {
+        const text = (line ?? '').trim();
+        const lower = text.toLowerCase();
+
+        for (const label of labels) {
+            if (lower === label) return { value: '' };
+            if (lower.startsWith(`${label}:`)) return { value: text.slice(label.length + 1).trim() };
+        }
+
+        return null;
+    }
+
+    static isInfoLabelLine(line) {
+        return CompanyConstants.matchInfoLabel(line, CompanyConstants.ALL_INFO_LABELS) !== null;
+    }
+
+    static matchLegalForm(text) {
+        if (!text) return '';
+
+        for (const entry of CompanyConstants.LEGAL_FORM_PATTERNS) {
+            if (entry.pattern.test(text)) return entry.form;
+        }
+
+        return '';
+    }
 }

@@ -52,3 +52,14 @@ bearbeitet werden.
   Quellen manuell in `references[]` stehen, damit sie hier angezeigt werden.
 - `SourcesTemplate.js` zeigt bewusst nur, was in `references[]` gespeichert
   ist - keine Live-Ableitung aus Firmenwebsite/Bildern mehr.
+
+## Firmenbeschreibung / companyInformation
+- Die Firmenbeschreibung stammt aus dem Fließtext der `companyInformation`-Sektion.
+  "Details zum Jobangebot" mappt bewusst auf `companyInformation` (firmenspezifische
+  Angaben, nicht die Stelle selbst).
+- Stellenbezeichnungen ("... (m/w/d)") werden bereits herausgefiltert. Die
+  LinkedIn-Kopfzeile "5001-10000 Mitarbeiter:innen" bleibt derzeit in der Beschreibung
+  und könnte ebenfalls herausgefiltert werden.
+- `CompanyEditTemplate` bietet eine Auswahl "Rechtsform" (Schlüssel aus
+  `LegalFormConstants.FORM`), ältere Testdaten enthalten dort aber gemischte Werte
+  ("GmbH" statt "GMBH"), die nicht zur Optionsliste passen.

@@ -1,4 +1,5 @@
 import { AddressModel } from "./AddressModel.js";
+import { WageModel } from "./WageModel.js";
 
 export class JobModel {
     constructor() {
@@ -8,9 +9,7 @@ export class JobModel {
         this.workLocation = new AddressModel();
         this.employmentType = "";
         this.workModel = [];
-        this.salary = "";
-        this.vacationPay = "";
-        this.christmasPay = "";
+        this.wage = new WageModel();
         this.referenceNumber = "";
         this.tasks = [];
         this.tags = [];
@@ -24,9 +23,7 @@ export class JobModel {
             workLocation: this.workLocation.data,
             employmentType: this.employmentType,
             workModel: this.workModel,
-            salary: this.salary,
-            vacationPay: this.vacationPay,
-            christmasPay: this.christmasPay,
+            wage: this.wage.data,
             referenceNumber: this.referenceNumber,
             tasks: this.tasks,
             tags: this.tags
@@ -41,9 +38,7 @@ export class JobModel {
         if (raw.workLocation) this.workLocation.data = raw.workLocation;
         this.employmentType = raw.employmentType ?? this.employmentType;
         this.workModel = raw.workModel ?? this.workModel;
-        this.salary = raw.salary ?? this.salary;
-        this.vacationPay = raw.vacationPay ?? this.vacationPay;
-        this.christmasPay = raw.christmasPay ?? this.christmasPay;
+        if (raw.wage) this.wage.data = raw.wage;
         this.referenceNumber = raw.referenceNumber ?? this.referenceNumber;
         this.tasks = raw.tasks ?? this.tasks;
         this.tags = raw.tags ?? this.tags;

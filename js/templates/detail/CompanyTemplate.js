@@ -1,6 +1,7 @@
 import { DetailBaseTemplate } from "./DetailBaseTemplate.js";
 import { HtmlUtils } from "../../utils/HtmlUtils.js";
 import { FormatUtils } from "../../utils/FormatUtils.js";
+import { LegalFormConstants } from "../../constants/LegalFormConstants.js";
 
 export class CompanyTemplate extends DetailBaseTemplate {
 
@@ -22,6 +23,11 @@ export class CompanyTemplate extends DetailBaseTemplate {
                     <div class="field">
                         <label>Firmenname</label>
                         <p>${HtmlUtils.escape(application.company?.name || "—")}</p>
+                    </div>
+
+                    <div class="field">
+                        <label>Rechtsform</label>
+                        <p>${HtmlUtils.escape(LegalFormConstants.shortLabel(application.company?.legalForm) || "—")}</p>
                     </div>
  
                     <div class="field">

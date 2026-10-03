@@ -35,15 +35,15 @@ export class JobTemplate extends DetailBaseTemplate {
                     </div>
                     <div class="field">
                         <label>Gehalt</label>
-                        <p>${HtmlUtils.escape(FormatUtils.formatCurrency(application.job?.salary) || "—")}</p>
+                        <p>${this.wageRangeText(application.job?.wage?.yearly, application.job?.wage)}</p>
                     </div>
                     <div class="field">
                         <label>Urlaubsgeld</label>
-                        <p>${HtmlUtils.escape(FormatUtils.formatCurrency(application.job?.vacationPay) || "—")}</p>
+                        <p>${HtmlUtils.escape(FormatUtils.formatCurrency(application.job?.wage?.holiday) || "—")}</p>
                     </div>
                     <div class="field">
                         <label>Weihnachtsgeld</label>
-                        <p>${HtmlUtils.escape(FormatUtils.formatCurrency(application.job?.christmasPay) || "—")}</p>
+                        <p>${HtmlUtils.escape(FormatUtils.formatCurrency(application.job?.wage?.christmas) || "—")}</p>
                     </div>
                     <div class="field">
                         <label>Kennziffer</label>
@@ -67,6 +67,15 @@ export class JobTemplate extends DetailBaseTemplate {
     }
 
     // Adresse der Arbeitsstelle - fehlen Angaben, wird die Firmenadresse verwendet.
+    wageRangeText(range, wage) {
+        if (!range) return "—";
+        const currency = wage?.currency || "";
+        const min = FormatUtils.formatCurrency(range.min) || range.min;
+        if (range.min === range.max) return HtmlUtils.escape(`${min} ${currency}`.trim());
+        const max = FormatUtils.formatCurrency(range.max) || range.max;
+        return HtmlUtils.escape(`${min} - ${max} ${currency}`.trim());
+    }
+
     workLocationText(application) {
         const own = application.job?.workLocation;
         const ownData = own?.data;

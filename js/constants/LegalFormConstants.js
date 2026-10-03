@@ -42,6 +42,32 @@ export class LegalFormConstants {
         SONSTIGE: "Sonstige"
     };
 
+    static SHORT = {
+        EINZELUNTERNEHMEN: "Einzelunternehmen",
+        EINGETRAGENER_KAUFMANN: "e.K.",
+        FREIBERUFLER: "Freiberufler",
+        GBR: "GbR",
+        OHG: "OHG",
+        KG: "KG",
+        PARTG: "PartG",
+        GMBH_CO_KG: "GmbH & Co. KG",
+        GMBH: "GmbH",
+        UG: "UG",
+        AG: "AG",
+        KGAA: "KGaA",
+        SE: "SE",
+        EG: "eG",
+        EV: "e.V.",
+        STIFTUNG: "Stiftung",
+        KOERPERSCHAFT: "K.d.ö.R.",
+        SONSTIGE: "Sonstige"
+    };
+
+    // Kurzlabel für die Anzeige; toleriert auch bereits ausgeschriebene Werte.
+    static shortLabel(form) {
+        return this.SHORT[form] ?? this.LABEL[form] ?? form ?? "";
+    }
+
     static list() {
         return Object.values(this.FORM);
     }

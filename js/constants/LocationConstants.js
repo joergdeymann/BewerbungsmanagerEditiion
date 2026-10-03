@@ -17,6 +17,46 @@ export class LocationConstants {
     // optionales Länderkürzel + Bindestrich, dann PLZ (4-5 Ziffern, je nach Land), dann Ort
     static ZIP_CITY_REGEX = /\b(?:([A-Z]{1,3})-)?(\d{4,5})[\s,]+([\p{Lu}][\p{L}ß]*(?:[\s-][\p{Lu}][\p{L}]*)*)/gu;
     
-    static DEFAULT_COUNTRY = 'D';
+    static DEFAULT_COUNTRY = 'Deutschland';
+
+    // Länderkürzel (Kfz-Kennzeichen-Format) -> ausgeschriebener Ländername
+    static COUNTRY_NAMES = {
+        D: 'Deutschland',
+        A: 'Österreich',
+        CH: 'Schweiz',
+        F: 'Frankreich',
+        I: 'Italien',
+        NL: 'Niederlande',
+        B: 'Belgien',
+        L: 'Luxemburg',
+        E: 'Spanien',
+        P: 'Portugal',
+        PL: 'Polen',
+        CZ: 'Tschechien',
+        HU: 'Ungarn',
+        DK: 'Dänemark',
+        S: 'Schweden',
+        N: 'Norwegen',
+        FIN: 'Finnland',
+        GB: 'Vereinigtes Königreich',
+        IRL: 'Irland',
+        GR: 'Griechenland',
+        RO: 'Rumänien',
+        BG: 'Bulgarien',
+        HR: 'Kroatien',
+        SK: 'Slowakei',
+        SI: 'Slowenien',
+        LT: 'Litauen',
+        LV: 'Lettland',
+        EST: 'Estland'
+    };
+
+    // Liefert zu einem Länderkürzel den ausgeschriebenen Namen (Fallback: Default).
+    static countryName(code) {
+        if (!code) return LocationConstants.DEFAULT_COUNTRY;
+
+        return LocationConstants.COUNTRY_NAMES[code.toUpperCase()]
+            ?? LocationConstants.DEFAULT_COUNTRY;
+    }
 
 }

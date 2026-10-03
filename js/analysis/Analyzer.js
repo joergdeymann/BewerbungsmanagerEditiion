@@ -12,15 +12,20 @@ export class Analyzer {
                 name: company.name,
                 email: company.email,
                 phone: company.phone,
-                website: company.domain,
+                website: company.website || this.domainToUrl(company.domain),
                 street: company.street,
                 location: company.location,
-                postBox: company.postbox
+                postBox: company.postbox,
+                legalForm: company.legalForm,
+                industry: company.industry,
+                size: company.size,
+                founded: company.founded,
+                verifiedAt: company.verifiedAt,
+                description: company.description,
+                specialties: company.specialties
             },
             job: {
-                salary: parsed.job.salary,
-                vacationPay: parsed.job.vacationPay,
-                christmasPay: parsed.job.christmasPay,
+                wage: parsed.job.wage,
                 tasks: new TaskExtractor().extract(
                     (parsed.sections["tasks"]?.lines || []).join("\n")
                 )
@@ -33,5 +38,14 @@ export class Analyzer {
     // Grobe erste Version - wird bei Bedarf verfeinert.
     detectSource() {
         return "Manuell eingefügt";
+    }
+
+    /**
+     * Baut aus dem erkannten Domain-Objekt eine nutzbare URL.
+     * @param {{name?: string}} domain Ergebnis des DomainExtractor.
+     * @returns {string} URL oder "".
+     */
+    domainToUrl(domain) {
+        return domain?.name ? `https://${domain.name}` : "";
     }
 }

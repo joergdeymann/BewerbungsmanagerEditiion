@@ -7,11 +7,8 @@ export class JobExtractor {
 
     // JobExtractor.js
     extractJob() {
-        const money = new MoneyExtractor(this.lines).extractMoney();
         return {
-            salary: money.salary,
-            vacationPay: money.vacationPay,
-            christmasPay: money.christmasPay,
+            wage: new MoneyExtractor(this.lines).extractMoney(),
             workModel: "",
             tasks: [],
             tags: [],

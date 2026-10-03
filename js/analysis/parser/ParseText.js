@@ -31,8 +31,8 @@ export class ParseText {
 
         return {
             sections: sections,
-            company: new CompanyExtractor(addressContent).extractCompany(),
-            job: new JobExtractor(addressContent).extractJob(),
+            company: new CompanyExtractor(addressContent, companyContent).extractCompany(),
+            job: new JobExtractor(sections["general"]?.lines??[]).extractJob(),
             qualifications: new QualificationExtractor(sections["qualifications"]?.lines??[]).extractQualifications(),
             benefits: new BenefitExtractor(sections["benefits"]?.lines??[]).extractBenefits(),
         };
