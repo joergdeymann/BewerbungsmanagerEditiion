@@ -63,3 +63,14 @@ bearbeitet werden.
 - `CompanyEditTemplate` bietet eine Auswahl "Rechtsform" (Schlüssel aus
   `LegalFormConstants.FORM`), ältere Testdaten enthalten dort aber gemischte Werte
   ("GmbH" statt "GMBH"), die nicht zur Optionsliste passen.
+
+## Ansprechpartner-Extraktion (ContactExtractor)
+- Ansprechpartner werden nur über eine Anrede ("Herr/Frau <Vorname> <Nachname>")
+  erkannt. Namen ohne Anrede (z. B. reine Namenszeile oder "Ihr Ansprechpartner: …")
+  werden nicht gefunden.
+- Es werden maximal Vor- und Nachname übernommen; akademische Titel
+  ("Herr Dr. Max Mustermann") landen nicht im Feld `title`.
+- E-Mail und Telefon des Ansprechpartners werden nicht aus dem Text gezogen - der
+  Kontakt-Reiter nutzt dafür den `UiContact`-Fallback auf die Firmendaten.
+- Die Positionszeile wird nur erkannt, wenn der Name zusätzlich als alleinstehende
+  Zeile im Text vorkommt (nächste Zeile = Position).

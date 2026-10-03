@@ -3,6 +3,9 @@ import { Analyzer } from "../js/analysis/Analyzer.js";
 import { ParseText } from "../js/analysis/parser/ParseText.js";
 import { FormatUtils } from "../js/utils/FormatUtils.js";
 import { CompanyTemplate } from "../js/templates/detail/CompanyTemplate.js";
+import { ContactTemplate } from "../js/templates/detail/ContactTemplate.js";
+import { ContactEditTab } from "../js/views/edit/ContactEditTab.js";
+import { UiContact } from "../js/ui/detail/UiContact.js";
 import { AppModel } from "../js/models/AppModel.js";
 
 // Verifiziert die Sprint-Punkte aus AI/workflow/WORKFLOW.md am Ferchau-Beispieltext.
@@ -70,6 +73,38 @@ const renderChecks = [
 ];
 
 for (const [label, ok] of renderChecks) {
+    console.log(`${ok ? "OK    " : "FEHLER"} | ${label}`);
+    if (!ok) failed++;
+}
+
+// Kontakt-Test: Analyseergebnis in das Model und in den Editor-Kontakt-Reiter übernehmen.
+const container = { innerHTML: "" };
+const fakeRoot = {
+    querySelector: selector => selector === "#contactSection" ? container : null,
+    querySelectorAll: () => []
+};
+
+const editTab = new ContactEditTab(fakeRoot, { save: async () => {} });
+editTab.init(app);
+editTab.applyAnalysis(result);
+editTab.applyAnalysis(result); // erneuter Lauf darf nicht duplizieren
+
+const contactHtml = new ContactTemplate().render(app);
+const emptyApp = new AppModel();
+emptyApp.company.name = "Muster GmbH";
+
+const contactChecks = [
+    ["Kontakt extrahiert (Anzahl)", result.contacts?.length === 1],
+    ["Kontakt-Salutation 'Herr'", result.contacts?.[0]?.name?.salutation === "Herr"],
+    ["Kontaktname 'Luca Derjung'", result.contacts?.[0]?.name?.firstname === "Luca" && result.contacts?.[0]?.name?.lastname === "Derjung"],
+    ["Kontakt-Rolle 'Talent Acquisition Specialist'", result.contacts?.[0]?.role === "Talent Acquisition Specialist"],
+    ["Editor-Transfer: Kontakt im Model", app.contacts.length === 1],
+    ["Editor-Transfer: kein Duplikat bei erneutem Lauf", app.contacts.length === 1],
+    ["Kontaktliste zeigt den Ansprechpartner", contactHtml.includes("Luca Derjung") && contactHtml.includes("contact-row")],
+    ["UiContact nutzt Firmendaten ohne Ansprechpartner", new UiContact(emptyApp).name === "Muster GmbH"]
+];
+
+for (const [label, ok] of contactChecks) {
     console.log(`${ok ? "OK    " : "FEHLER"} | ${label}`);
     if (!ok) failed++;
 }

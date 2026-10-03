@@ -2,6 +2,7 @@ import { ParserConstants } from "../../constants/ParserConstants.js"
 import { SectionParser } from "./SectionParser.js"
 import { TextCleaner } from "./TextCleaner.js"
 import { CompanyExtractor } from "../extractors/CompanyExtractor.js"
+import { ContactExtractor } from "../extractors/ContactExtractor.js"
 import { JobExtractor } from "../extractors/JobExtractor.js"
 import { QualificationExtractor } from "../extractors/QualificationExtractor.js"
 import { BenefitExtractor } from "../extractors/BenefitExtractor.js"
@@ -32,6 +33,7 @@ export class ParseText {
         return {
             sections: sections,
             company: new CompanyExtractor(addressContent, companyContent).extractCompany(),
+            contacts: new ContactExtractor(this.lines).extractContacts(),
             job: new JobExtractor(sections["general"]?.lines??[]).extractJob(),
             qualifications: new QualificationExtractor(sections["qualifications"]?.lines??[]).extractQualifications(),
             benefits: new BenefitExtractor(sections["benefits"]?.lines??[]).extractBenefits(),

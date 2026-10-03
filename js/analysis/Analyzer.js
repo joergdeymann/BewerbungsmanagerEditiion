@@ -30,6 +30,7 @@ export class Analyzer {
                     (parsed.sections["tasks"]?.lines || []).join("\n")
                 )
             },
+            contacts: parsed.contacts,
             qualifications: parsed.qualifications,
             benefits: parsed.benefits
         };

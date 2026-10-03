@@ -19,4 +19,8 @@
 2026-10-03 12:56 | [NEW] | testdata/run-analysis-test.mjs (npm run test:analysis) verifiziert die Sprint-Punkte aus AI/workflow/WORKFLOW.md am Ferchau-Beispiel inkl. Render-Smoke-Test.
 2026-10-03 16:21 | [FIX] | Stellenbezeichnungen ("... (m/w/d)") werden aus der Firmenbeschreibung gefiltert (CompanyExtractor.isJobTitleLine); "Full-Stack-Entwickler (m/w/d)" taucht nicht mehr in company.description auf.
 2026-10-03 16:21 | [FIX] | "Im Fokus" wird als Benefits-Titel erkannt (ParserConstants.SECTION_HEADLINES um "im fokus" ergänzt); die Weiterbildungs-Absätze gehören damit zur benefits-Sektion statt zur Firmenbeschreibung.
-2026-10-03 16:21 | [UPDATE] | Abgearbeitete Sprint-Punkte aus AI/workflow/WORKFLOW.md entfernt; offene Punkte in AI/workflow/todo.md nachgezogen.
+2026-10-03 18:34 | [NEW] | ContactExtractor + ContactConstants ergänzt: Ansprechpartner werden im Anzeigentext über die Anrede ("Herr/Frau <Name>") erkannt, inkl. Positionszeile (Ferchau: "Herr Luca Derjung" / "Talent Acquisition Specialist").
+2026-10-03 18:34 | [UPDATE] | ParseText und Analyzer liefern jetzt contacts[]; ContactEditTab.applyAnalysis() übernimmt die Ansprechpartner in application.contacts (dedupliziert nach Name) und aktualisiert den Kontakt-Reiter (Liste = alle möglichen Ansprechpartner).
+2026-10-03 18:34 | [INFO] | UiContact bleibt der bestehende Fallback im Kontakt-Reiter: ohne Ansprechpartner werden Firmenname, Firmen-E-Mail und Firmen-Telefon angezeigt.
+2026-10-03 18:34 | [UPDATE] | testdata/run-analysis-test.mjs um 8 Kontakt-Prüfungen erweitert (Extraktion, Editor-Transfer, Dedupe, Listenanzeige, UiContact-Fallback).
+2026-10-03 18:34 | [UPDATE] | Abgearbeitete Sprint-Punkte aus AI/workflow/WORKFLOW.md entfernt.
