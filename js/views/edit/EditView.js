@@ -57,12 +57,39 @@ export class EditView {
             }
         });
 
-        this.navigationEvent.bind(root);
+        this.navigationEvent.bind(root, section => this.onSectionChange(section));
         this.bindActions(root);
     }
 
+    /**
+     * Rendert den Kontakt-Reiter beim Reiterwechsel neu. Die Anzeige liest
+     * ausschließlich aus dem Model; ein Firmenreiter schreibt nicht ins Model.
+     * @param {string} section Aktiver Reiter.
+     */
+    onSectionChange(section) {
+        if (section !== "contact") return;
+
+        this.tabs.find(tab => tab instanceof ContactEditTab)?.renderContactSection();
+    }
+
+    /**
+     * Übernimmt das Analyseergebnis in das Model und lädt danach alle Reiter neu
+     * aus dem Model. Die Reiter selbst schreiben nichts ins Model.
+     * @param {object} result Ergebnis der Textanalyse.
+     */
     applyAnalysisToAllTabs(result) {
-        this.tabs.forEach(tab => tab.applyAnalysis(result));
+        this.controller.analysisController.apply(this.application, result);
+        this.reloadTabs();
+    }
+
+    /**
+     * Liest die Model-Werte erneut in die Reiter-Felder ein.
+     */
+    reloadTabs() {
+        this.tabs.forEach(tab => {
+            if (tab instanceof ImportEditTab) return;
+            tab.init(this.application);
+        });
     }
 
     bindActions(root) {

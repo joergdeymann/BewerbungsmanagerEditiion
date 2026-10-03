@@ -49,6 +49,12 @@ export class ContactPromptTemplate {
                     <input id="contact-phone" value="${HtmlUtils.escape(contact.phone)}">
                 </div>
 
+                <div class="field">
+                    <label for="contact-img">Bild (URL)</label>
+                    <input id="contact-img" type="url" value="${HtmlUtils.escape(contact.img ?? "")}"
+                           placeholder="https://...">
+                </div>
+
                 <div class="prompt-buttons">
                     <button id="cancelContact" class="danger">Abbrechen</button>
                     <button id="submitContact" class="primary">Speichern</button>

@@ -12,14 +12,6 @@ export class BenefitsEditTab extends BaseEditTab {
         this.set("benefitsTags", (application.benefits?.tags || []).join("\n"));
     }
 
-    applyAnalysis(result) {
-        const benefits = result.benefits;
-        if (!benefits) return;
-
-        this.set("benefitsContent", (benefits.content || []).join("\n"));
-        this.set("benefitsTags", (benefits.tags || []).join("\n"));
-    }
-
     save(application) {
         application.benefits.content = this.list("benefitsContent");
         application.benefits.tags = this.list("benefitsTags");

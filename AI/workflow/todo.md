@@ -68,9 +68,16 @@ bearbeitet werden.
 - Ansprechpartner werden nur über eine Anrede ("Herr/Frau <Vorname> <Nachname>")
   erkannt. Namen ohne Anrede (z. B. reine Namenszeile oder "Ihr Ansprechpartner: …")
   werden nicht gefunden.
-- Es werden maximal Vor- und Nachname übernommen; akademische Titel
-  ("Herr Dr. Max Mustermann") landen nicht im Feld `title`.
-- E-Mail und Telefon des Ansprechpartners werden nicht aus dem Text gezogen - der
-  Kontakt-Reiter nutzt dafür den `UiContact`-Fallback auf die Firmendaten.
-- Die Positionszeile wird nur erkannt, wenn der Name zusätzlich als alleinstehende
-  Zeile im Text vorkommt (nächste Zeile = Position).
+- Akademische Titel ("Dr.", "Prof. Dr.", "Dipl.-Ing." …) werden seit Sprint
+  WORKFLOW.md erkannt und landen im Feld `name.title`; `NameModel.full` zeigt sie mit an.
+- E-Mail und Telefon werden aus dem Kontaktblock gelesen (Namenszeile plus
+  `ContactConstants.CONTACT_BLOCK_SIZE` Folgezeilen, Abbruch bei der nächsten Person).
+  Liegt keine Kontaktzeile vor, bleiben die Felder leer und `UiContact` greift auf die
+  Firmendaten zurück.
+- Findet die Analyse keinen Ansprechpartner, legt `ContactEditTab.applyAnalysis()`
+  einen Ersatzkontakt aus den Firmendaten an (Name = Firmenname, E-Mail, Telefon,
+  Position = `job.title`).
+- Offen: `JobExtractor.extractJob()` liefert `title: ""`. Die Stellenbezeichnung
+  wird noch nicht extrahiert, daher bleibt `role` beim Ersatzkontakt meist leer.
+- Offen: Die Positionszeile wird nur erkannt, wenn der Name als alleinstehende
+  Zeile oder am Zeilenende vorkommt (nächste Zeile = Position).

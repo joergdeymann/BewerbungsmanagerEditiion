@@ -6,6 +6,7 @@ export class Analyzer {
     analyze(text) {
         const parsed = new ParseText(text).parse();
         const company = parsed.company;
+        console.log(parsed.contacts);
 
         return {
             company: {

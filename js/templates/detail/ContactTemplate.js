@@ -6,6 +6,8 @@ export class ContactTemplate extends DetailBaseTemplate {
 
     render(application) {
 
+        this.application = application;
+
         const uiContact = new UiContact(application);
         const contacts = application.contacts || [];
 
@@ -13,7 +15,7 @@ export class ContactTemplate extends DetailBaseTemplate {
             <section class="subsection-display">
                 <section class="section-header">
                     <div>
-                        <span class="section-icon">👤</span>
+                        ${this.sectionIcon(uiContact)}
                         <div>
                             <h2>Ansprechpartner</h2>
                             <p>Hier können die Daten des / der Ansprechpartner eingesehen werden</p>
@@ -59,13 +61,31 @@ export class ContactTemplate extends DetailBaseTemplate {
 
     }
 
+    /**
+     * Liefert das Abschnitts-Icon: das Bild aus dem Model, sobald der
+     * Primärkontakt eines gesetzt hat, sonst das Standard-Emoji.
+     * @param {UiContact} uiContact Kontakt-Ansicht aus dem Model.
+     * @returns {string} HTML des Icons.
+     */
+    sectionIcon(uiContact) {
+        const image = (uiContact.contact?.img ?? "").trim();
+
+        if (!image) return `<span class="section-icon">👤</span>`;
+
+        const alt = uiContact.contact?.name?.full || "Ansprechpartner";
+
+        return `<img class="section-icon section-icon--image" src="${HtmlUtils.escape(image)}" alt="${HtmlUtils.escape(alt)}">`;
+    }
+
     contactListRows(contacts) {
         if (!contacts.length) {
             return `<p class="muted">Keine Ansprechpartner hinterlegt.</p>`;
         }
 
-        return contacts.map((contact, index) => `
-            <div class="field-with-button contact-row${index === 0 ? " active" : ""}" data-select-contact="${HtmlUtils.escape(contact.id)}">
+        const primaryId = this.application.primaryContact?.id ?? "";
+
+        return contacts.map(contact => `
+            <div class="field-with-button contact-row${contact.id === primaryId ? " active" : ""}" data-select-contact="${HtmlUtils.escape(contact.id)}">
                 <span>${HtmlUtils.escape(contact.name?.full || "—")}${contact.role ? " – " + HtmlUtils.escape(contact.role) : ""}</span>
                 <span>
                     <button type="button" class="success" data-edit-contact="${HtmlUtils.escape(contact.id)}">Ändern</button>

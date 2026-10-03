@@ -34,7 +34,8 @@ export class ContactPrompt {
                     },
                     role: overlay.querySelector("#contact-role").value.trim(),
                     email: overlay.querySelector("#contact-email").value.trim(),
-                    phone: overlay.querySelector("#contact-phone").value.trim()
+                    phone: overlay.querySelector("#contact-phone").value.trim(),
+                    img: overlay.querySelector("#contact-img").value.trim()
                 });
             };
 

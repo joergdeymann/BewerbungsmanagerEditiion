@@ -1,6 +1,6 @@
 export class UiContact {
     constructor(application) {
-        this.contact = application.contacts?.[0] || null;
+        this.contact = application.primaryContact ?? null;
         this.company = application.company;
     }
 

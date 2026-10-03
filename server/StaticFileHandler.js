@@ -31,7 +31,12 @@ export class StaticFileHandler {
             const file = await fs.readFile(resolvedPath);
             const contentType = MimeTypes.getContentType(resolvedPath);
 
-            res.writeHead(200, { "Content-Type": contentType });
+            // Entwicklungsserver: keine Browser-Caches, damit ES-Module nach
+            // Codeaenderungen nicht veraltet ausgeliefert werden.
+            res.writeHead(200, {
+                "Content-Type": contentType,
+                "Cache-Control": "no-store, must-revalidate"
+            });
             res.end(file);
             return true;
 

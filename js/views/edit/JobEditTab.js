@@ -30,10 +30,6 @@ export class JobEditTab extends BaseEditTab {
         });
     }
 
-    applyAnalysis() {
-        // Wird beim Import-Thema ergänzt.
-    }
-
     save(application) {
         application.job.title = this.get("jobTitle");
         application.job.employmentType = this.get("employmentType");

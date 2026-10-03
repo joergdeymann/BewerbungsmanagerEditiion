@@ -26,8 +26,11 @@ export class ContactSectionController {
         contact.role = values.role;
         contact.email = values.email;
         contact.phone = values.phone;
+        contact.img = values.img;
 
         application.contacts.push(contact);
+        application.setPrimaryContact(application.contacts[0]);
+
         await this.persist(application);
         onUpdate();
     }
@@ -38,6 +41,7 @@ export class ContactSectionController {
 
         const [selected] = application.contacts.splice(index, 1);
         application.contacts.unshift(selected);
+        application.setPrimaryContact(selected);
 
         await this.persist(application);
         onUpdate();
@@ -54,6 +58,7 @@ export class ContactSectionController {
         contact.role = values.role;
         contact.email = values.email;
         contact.phone = values.phone;
+        contact.img = values.img;
 
         await this.persist(application);
         onUpdate();
@@ -77,6 +82,7 @@ export class ContactSectionController {
         if (!confirmed) return;
 
         application.contacts = application.contacts.filter(item => item.id !== id);
+        application.releasePrimaryContact();
 
         await this.persist(application);
         onUpdate();

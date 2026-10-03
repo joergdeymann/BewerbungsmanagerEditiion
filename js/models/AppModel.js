@@ -118,6 +118,34 @@ export class AppModel {
         return model;
     }
 	
+    /**
+     * Liefert den Primaerkontakt der Bewerbung. Anzeige, Listen-Markierung und
+     * Aendern-Popup verwenden diesen Kontakt, damit alle denselben Ursprung haben.
+     * @returns {ContactModel|null} Primaerkontakt oder null.
+     */
+    get primaryContact() {
+        return this.contacts.find(contact => contact.id === this.job?.contactId)
+            ?? this.contacts[0]
+            ?? null;
+    }
+
+    /**
+     * Setzt den Primaerkontakt (job.contactId).
+     * @param {ContactModel|null} contact Kontakt oder null.
+     */
+    setPrimaryContact(contact) {
+        this.job.contactId = contact?.id ?? "";
+    }
+
+    /**
+     * Prueft, ob der gesetzte Primaerkontakt noch existiert, und setzt ihn
+     * andernfalls auf den ersten Eintrag der Liste.
+     */
+    releasePrimaryContact() {
+        const exists = this.contacts.some(contact => contact.id === this.job?.contactId);
+        if (!exists) this.setPrimaryContact(this.contacts[0] ?? null);
+    }
+
 	// HILFSMETHODE: Erstellt und pusht einen neuen Kontakt direkt als Modell
 	addContact(contactOrName, email = "", phone = "") {
         if (contactOrName instanceof ContactModel) {

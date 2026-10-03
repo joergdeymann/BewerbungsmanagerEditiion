@@ -18,10 +18,6 @@ export class RequirementsEditTab extends BaseEditTab {
         this.set("personalTags", (qualifications?.personal?.tags || []).join("\n"));
     }
 
-    applyAnalysis() {
-        // Wird beim Import-Thema ergänzt.
-    }
-
     save(application) {
         application.qualifications.required = {
             content: this.list("requiredContent"),

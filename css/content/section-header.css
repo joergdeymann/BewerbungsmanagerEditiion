@@ -19,6 +19,17 @@
    color: var(--primary);
 }
 
+/* Ansprechpartner-Bild: übernimmt die Höhe des Icons (28px) */
+.section-icon--image {
+   width: 40px;
+   height: 40px;
+   object-fit: cover;
+   border-radius: 50%;
+   display: block;
+   flex: 0 0 auto;
+   background: var(--surface-muted, #eee);
+}
+
 /* Optischer Ausgleich für Icons mit viel Eigen-Weißraum (z.B. 📥/📤) */
 .section-icon.import-adjust {
    transform: translateY(-6px);

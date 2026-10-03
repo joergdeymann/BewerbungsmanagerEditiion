@@ -35,29 +35,6 @@ export class CompanyEditTab extends BaseEditTab {
         this.imageList.setImages(company?.images || [], company?.mainImageIndex || 0);
     }
 
-    applyAnalysis(result) {
-        const company = result.company;
-        if (!company) return;
-
-        if (company.name) this.set("companyName", company.name);
-        if (company.email) this.set("companyEmail", company.email);
-        if (company.phone) this.set("companyPhone", company.phone);
-        if (company.website) this.set("website", company.website);
-        if (company.legalForm) this.set("legalForm", company.legalForm);
-        if (company.industry) this.set("industry", company.industry);
-        if (company.size) this.set("companySize", company.size);
-        if (company.founded) this.set("founded", company.founded);
-        if (company.verifiedAt) this.set("verifiedAt", company.verifiedAt);
-        if (company.description) this.set("companyDescription", company.description);
-        if (company.specialties?.length) this.set("specialties", company.specialties.join("\n"));
-        if (company.street?.name) this.set("street", company.street.name);
-        if (company.street?.houseNumber) this.set("houseNumber", company.street.houseNumber);
-        if (company.location?.zip) this.set("zip", company.location.zip);
-        if (company.location?.city) this.set("city", company.location.city);
-        if (company.location?.country) this.set("country", company.location.country);
-        if (company.postBox) this.set("postBox", company.postBox);
-    }
-
     save(application) {
         application.company.name = this.get("companyName");
         application.company.legalForm = this.get("legalForm");

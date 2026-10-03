@@ -191,10 +191,6 @@ export class ImportEditTab extends BaseEditTab {
         return count === 1 ? "1 Eintrag" : `${count} Einträge`;
     }
 
-    applyAnalysis() {
-        // Der Import-Verlauf selbst wird durch spätere Analysen nicht verändert.
-    }
-
     save() {
         // importedRawData wird direkt am Application-Objekt verändert (s.o.),
         // hier daher nichts weiter zu tun.
