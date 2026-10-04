@@ -53,7 +53,7 @@ AI/
     │   │                 #   Phone-, PostBox-, Qualification-, Street-, TaskExtractor
     │   └── parser/       # LineParser, ParseText, SectionParser, SectionPart, TextCleaner
     ├── api/              # Netzwerk-Schnittstellen (UrlImporter.js)
-    ├── constants/        # Systemweite Konstanten (Address, Company, Contact, Job, LegalForm,
+    ├── constants/        # Systemweite Konstanten (Address, Benefit, Company, Contact, Job,
     │                     #   Location, Parser, PostBox, Skill, SkillAlias, Web)
     ├── controllers/      # Ablaufsteuerung: Repository-Zugriff, Verarbeitung, Speichern
     │   ├── CommunicationController.js

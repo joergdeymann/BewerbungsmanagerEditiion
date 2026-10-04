@@ -12,9 +12,28 @@ Alle Models stellen ihre Daten über `get data` / `set data` bereit. Die flache 
   `contacts`, `qualifications`, `benefits`, `application`, `references`,
   `actionHistory`, `importedRawData`.
 - `JobModel` – Stellendaten (vormals `JobDetailModel`, entspricht JSON-Schlüssel
-  `job`): `companyId`, `contactId`, `title`, `workLocation`,
-  `employmentType`, `workModel`, `salary`, `vacationPay`, `christmasPay`,
-  `referenceNumber`, `tasks`, `tags`.
+  `job`): `companyId`, `contactId`, `title`, `workLocation` (`AddressModel`),
+  `employmentType`, `workModel` (Liste), `wage` (`WageModel`), `referenceNumber`,
+  `tasks`, `tags`. `contactId` verweist auf den Primärkontakt der Liste
+  `app.contacts` (siehe `AppModel.primaryContact`).
+- `WageModel` – Gehaltsangaben: `yearly` (`{ min, max }` in Jahr, `null` wenn keine
+  Angabe), `monthly`, `gross` (`true` = brutto, `false` = netto; **Vorgabe ist
+  brutto**, weil Stellenanzeigen ohne Angabe in der Regel Bruttobeträge nennen),
+  `currency` (z. B. `EUR`), `holiday` (Urlaubsgeld) und `christmas`
+  (Weihnachtsgeld) als Zahl oder `null`. Nennt die Anzeige keinen Betrag, sondern
+  einen Anteil („mit einem halben Gehalt Urlaubsgeld im Gepäck“), wird das
+  Urlaubsgeld aus dem Monatsgehalt bzw. dem Mindest-Jahresbetrag / 12 berechnet
+  (`ParserConstants.MONEY_FRACTIONS`, `MONEY_FRACTION_VALUES`). `holidayText` hält
+  den Originaltext der Anzeige („mit einem halben Gehalt Urlaubsgeld im Gepäck“),
+  `holidayFraction` den erkannten Anteil (`0.5`, `1/3`, `2/3` oder `null`).
+  `holidayIsFraction` und `holidayNote` sind abgeleitete Getter: `holidayNote`
+  liefert den Hinweistext für die Anzeige, z. B. „Das Urlaubsgeld ist ein halber
+  Monatsgehalt. Der angezeigte Betrag ist das Minimum auf Basis des Minimum der
+  Gehaltsspanne.“ Die Editor-Felder
+  „Gehalt (von/bis)“, „Währung“, „Gehaltsart“, „Urlaubsgeld“, „Urlaub (Originaltext
+  der Anzeige)“ und „Weihnachtsgeld“ werden in `JobEditTab.init()` / `save()`
+  genau auf diese Felder abgebildet. Die
+  früheren Felder `salary`, `vacationPay` und `christmasPay` sind ersetzt.
 - `CompanyModel` – Firmendaten: `id`, `name`, `legalForm`, `relationship`, `industry`,
   `size`, `founded`, `website`, `email`, `phone`, `address`, `verifiedAt`, `description`, `specialties`,
   `images`. `relationship` unterscheidet Hauptsitz, Filiale und Arbeitsort. Aktuell hält

@@ -40,6 +40,7 @@ export class JobTemplate extends DetailBaseTemplate {
                     <div class="field">
                         <label>Urlaubsgeld</label>
                         <p>${HtmlUtils.escape(FormatUtils.formatCurrency(application.job?.wage?.holiday) || "—")}</p>
+                        ${this.holidayNote(application)}
                     </div>
                     <div class="field">
                         <label>Weihnachtsgeld</label>
@@ -64,6 +65,25 @@ export class JobTemplate extends DetailBaseTemplate {
             </section>
         `;
 
+    }
+
+    /**
+     * Zeigt unter dem Urlaubsgeld den Originaltext der Anzeige und den Hinweis,
+     * dass der Betrag aus einem Gehaltsanteil berechnet wurde (WageModel).
+     * @param {object} application Application-Model.
+     * @returns {string} HTML oder "".
+     */
+    holidayNote(application) {
+        const wage = application.job?.wage;
+        if (!wage) return "";
+
+        const note = wage.holidayNote ?? "";
+        if (!note && !wage.holidayText) return "";
+
+        return `
+            <p class="muted">${HtmlUtils.escape(wage.holidayText || "")}</p>
+            ${note ? `<p class="muted">${HtmlUtils.escape(note)}</p>` : ""}
+        `;
     }
 
     // Adresse der Arbeitsstelle - fehlen Angaben, wird die Firmenadresse verwendet.

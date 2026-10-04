@@ -19,9 +19,16 @@
             },
             "employmentType": "",
             "workModel": [],
-            "salary": 0,
-            "vacationPay": 0,
-            "christmasPay": 0,
+            "wage": {
+                "yearly": null,
+                "monthly": null,
+                "gross": true,
+                "currency": "",
+                "holiday": null,
+                "christmas": null,
+                "holidayText": "",
+                "holidayFraction": null
+            },
             "referenceNumber": "",
             "tasks": [],
             "tags": []

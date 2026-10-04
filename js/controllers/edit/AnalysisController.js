@@ -85,9 +85,33 @@ export class AnalysisController {
     applyJob(application, job) {
         if (!job) return;
 
-        if (job.wage) application.job.wage.data = job.wage;
-        if (job.tasks?.length) application.job.tasks = job.tasks;
         if (job.title) application.job.title = job.title;
+        if (job.referenceNumber) application.job.referenceNumber = job.referenceNumber;
+        if (job.employmentType) application.job.employmentType = job.employmentType;
+        if (job.workModel?.length) application.job.workModel = job.workModel;
+        if (job.tags?.length) application.job.tags = job.tags;
+        if (job.tasks?.length) application.job.tasks = job.tasks;
+        if (job.wage) application.job.wage.data = job.wage;
+
+        this.applyWorkLocation(application, job);
+    }
+
+    /**
+     * Übernimmt die Adresse des Arbeitsplatzes. Findet die Analyse keine Adresse,
+     * wird nach dem Parsen die Firmenadresse übernommen.
+     * @param {object} application Ziel-Model.
+     * @param {{workLocation?: object}} job Analysierte Stellendaten.
+     */
+    applyWorkLocation(application, job) {
+        const target = application.job.workLocation;
+        target.data = { ...target.data, ...(job.workLocation ?? {}) };
+
+        const own = target.data;
+        const company = application.company.address.data;
+
+        if (own.street || own.zip || own.city || own.country) return;
+
+        target.data = company;
     }
 
     /**

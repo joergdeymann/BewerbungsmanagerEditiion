@@ -6,6 +6,10 @@ import { CompanyTemplate } from "../js/templates/detail/CompanyTemplate.js";
 import { ContactTemplate } from "../js/templates/detail/ContactTemplate.js";
 import { ContactEditTab } from "../js/views/edit/ContactEditTab.js";
 import { CompanyEditTab } from "../js/views/edit/CompanyEditTab.js";
+import { JobEditTab } from "../js/views/edit/JobEditTab.js";
+import { JobTemplate } from "../js/templates/detail/JobTemplate.js";
+import { BenefitsTemplate } from "../js/templates/detail/BenefitsTemplate.js";
+import { BenefitConstants } from "../js/constants/BenefitConstants.js";
 import { AnalysisController } from "../js/controllers/edit/AnalysisController.js";
 import { ContactPromptTemplate } from "../js/templates/windows/ContactPromptTemplate.js";
 import { UiContact } from "../js/ui/detail/UiContact.js";
@@ -390,6 +394,88 @@ const imageChecks = [
 ];
 
 for (const [label, ok] of imageChecks) {
+    console.log(`${ok ? "OK    " : "FEHLER"} | ${label}`);
+    if (!ok) failed++;
+}
+
+// TAB Stelle: Parser -> Model -> Eingabefelder (Sprint aus AI/workflow/WORKFLOW.md).
+const jobApp = new AppModel();
+analysisController.apply(jobApp, result);
+
+const jobFields = {};
+const jobCheckboxes = [];
+const jobRoot = {
+    querySelector: selector => {
+        if (!jobFields[selector]) jobFields[selector] = { value: "" };
+        return jobFields[selector];
+    },
+    querySelectorAll: selector => selector === ".work-model-option" ? jobCheckboxes : []
+};
+
+new JobEditTab(jobRoot).init(jobApp);
+
+const jobChecks = [
+    ["Jobtitel im Model", jobApp.job.title === "Full-Stack-Entwickler (m/w/d)"],
+    ["Jobtitel im Eingabefeld", jobFields["#jobTitle"].value === "Full-Stack-Entwickler (m/w/d)"],
+    ["Kennziffer im Model", jobApp.job.referenceNumber === "LI50-20192-K"],
+    ["Kennziffer im Eingabefeld", jobFields["#referenceNumber"].value === "LI50-20192-K"],
+    ["Beschäftigungsart im Model", jobApp.job.employmentType === "Vollzeit"],
+    ["Arbeitsmodell im Model", jobApp.job.workModel?.[0] === "Hybrid"],
+    ["Arbeitsmodell nicht doppelt als Badge", !(jobApp.job.tags ?? []).includes("Hybrid")],
+    ["Gehaltsspanne von im Model", jobApp.job.wage.yearly?.min === 50000],
+    ["Gehaltsspanne bis im Model", jobApp.job.wage.yearly?.max === 65000],
+    ["Gehalt von im Eingabefeld", String(jobFields["#salaryFrom"].value) === "50000"],
+    ["Gehalt bis im Eingabefeld", String(jobFields["#salaryTo"].value) === "65000"],
+    ["Währung im Model", jobApp.job.wage.currency === "EUR"],
+    ["Währung im Eingabefeld", jobFields["#salaryCurrency"].value === "EUR"],
+    ["Gehaltsart ist Brutto, wenn nichts genannt ist", jobApp.job.wage.gross === true],
+    ["Gehaltsart brutto im Eingabefeld", jobFields["#salaryGross"].value === "brutto"],
+    ["Urlaubsgeld aus 'halbem Gehalt' berechnet (50000/12*0,5)", jobApp.job.wage.holiday === 2083],
+    ["Urlaubsgeld im Eingabefeld", String(jobFields["#vacationPay"].value) === "2083"],
+    ["Urlaubs-Originaltext im Model",
+        jobApp.job.wage.holidayText === "Die nächste Reise kann kommen - mit einem halben Gehalt Urlaubsgeld im Gepäck"],
+    ["Urlaubs-Originaltext im Eingabefeld",
+        jobFields["#holidayText"].value === "Die nächste Reise kann kommen - mit einem halben Gehalt Urlaubsgeld im Gepäck"],
+    ["Urlaubs-Anteil als Faktor gespeichert", jobApp.job.wage.holidayFraction === 0.5],
+    ["Hinweistext nennt den Mindestwert", jobApp.job.wage.holidayNote.includes("Minimum auf Basis des Mindestwerts der Gehaltsspanne")],
+    ["Detailanzeige zeigt Originaltext und Hinweis", (() => {
+        const html = new JobTemplate().render(jobApp);
+        return html.includes("mit einem halben Gehalt Urlaubsgeld im Gepäck")
+            && html.includes("Der angezeigte Betrag ist das Minimum");
+    })()],
+    ["Arbeitsort PLZ im Model", jobApp.job.workLocation.city.zip === "50829"],
+    ["Arbeitsort Stadt im Model", jobApp.job.workLocation.city.city === "Köln"],
+    ["Arbeitsort Straße im Model", jobApp.job.workLocation.street.name === "Am Coloneum"],
+    ["Arbeitsort PLZ im Eingabefeld", jobFields["#jobZip"].value === "50829"],
+    ["Aufgaben im Model", jobApp.job.tasks.length === 8]
+];
+
+for (const [label, ok] of jobChecks) {
+    console.log(`${ok ? "OK    " : "FEHLER"} | ${label}`);
+    if (!ok) failed++;
+}
+
+// Benefits: Rubriken, Tags und Farben (Sprint aus AI/workflow/WORKFLOW.md).
+const benefitTags = new Analyzer().analyze(text).benefits.tags;
+const benefitsApp = new AppModel();
+benefitsApp.benefits.tags = benefitTags;
+const benefitsHtml = new BenefitsTemplate().render(benefitsApp);
+
+const benefitChecks = [
+    ["Benefit-Tags im Model gespeichert", benefitsApp.benefits.tags.length > 0],
+    ["Tags behalten ihre Schreibweise", benefitTags.includes("Urlaubsgeld") && benefitTags.includes("Weiterbildung")],
+    ["Tag 'Fitness First' korrekt geschrieben", benefitTags.includes("Fitness First")],
+    ["Rubrik Vergütung -> gold", BenefitConstants.colorFor("Urlaubsgeld") === "gold"],
+    ["Rubrik Gesundheit & Sport -> red", BenefitConstants.colorFor("Fitness First") === "red"],
+    ["Rubrik Weiterbildung -> cyan", BenefitConstants.colorFor("Weiterbildung") === "cyan"],
+    ["Rubrik Familie & Kinder -> pink", BenefitConstants.colorFor("Kinderbetreuung") === "pink"],
+    ["Unbekannter Tag -> Standardfarbe", BenefitConstants.colorFor("Unbekannt") === "neutral"],
+    ["Detailanzeige nutzt die Rubrik-Farbe", benefitsHtml.includes("tag-badge--gold") && benefitsHtml.includes("tag-badge--cyan")],
+    ["Alle Rubriken haben Label und Farbe",
+        BenefitConstants.BENEFIT_TAGS.every(rubric => rubric.label && rubric.color && rubric.tags.length)]
+];
+
+for (const [label, ok] of benefitChecks) {
     console.log(`${ok ? "OK    " : "FEHLER"} | ${label}`);
     if (!ok) failed++;
 }

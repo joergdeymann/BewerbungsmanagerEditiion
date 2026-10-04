@@ -335,283 +335,9 @@ export class ParserConstants {
         }
     ];
 
-    static BENEFIT_KEYWORDS = [
-        'jobrad',
-        '13. gehalt',
-        'weihnachtsgeld',
-        'urlaubsgeld',
-        'sportmitgliedschaft',
-        'fitnessstudio',
-        'essensgeldzuschuss',
-        'essenszuschuss',
-        'homeoffice',
-        'home office',
-        'betriebliche altersvorsorge',
-        'vermögenswirksame leistungen',
-        'weiterbildung',
-        'fortbildung',
-        'betriebsarzt',
-        'firmenwagen',
-        'flexible arbeitszeit',
-        'kitazuschuss',
-        'kinderbetreuungszuschuss'
-    ];
-
-    static POSSIBLE_BENEFIT_KEYWORDS = [
-        // Vergütung
-        '13. gehalt',
-        'weihnachtsgeld',
-        'urlaubsgeld',
-        'sonderzahlung',
-        'erfolgsbeteiligung',
-        'bonus',
-        'leistungsprämie',
-        'provision',
-        'vermögenswirksame leistungen',
-
-        // Mobilität
-        'jobrad',
-        'fahrradleasing',
-        'bikeleasing',
-        'dienstrad',
-        'firmenwagen',
-        'dienstwagen',
-        'fahrkostenzuschuss',
-        'fahrtkostenzuschuss',
-        'tankgutschein',
-        'deutschlandticket',
-        'jobticket',
-        'zuschuss zum deutschlandticket',
-
-        // Arbeitszeit & Arbeitsort
-        'flexible arbeitszeit',
-        'gleitzeit',
-        'teilzeit',
-        'homeoffice',
-        'home office',
-        'mobiles arbeiten',
-        'mobile arbeit',
-        'hybrides arbeiten',
-        'hybride arbeit',
-        'remote work',
-        'remote',
-        'workation',
-        '4-tage-woche',
-        'vier-tage-woche',
-
-        // Urlaub & Freizeit
-        '30 tage urlaub',
-        '30 urlaubstage',
-        'zusätzlicher urlaub',
-        'sonderurlaub',
-        'bezahlte freistellung',
-        'urlaubskonto',
-
-        // Altersvorsorge & Versicherungen
-        'betriebliche altersvorsorge',
-        'betriebliche krankenversicherung',
-        'betriebliche zusatzversicherung',
-        'betriebliche unfallversicherung',
-        'unfallversicherung',
-        'krankenversicherung',
-        'altersvorsorge',
-        'rentenversicherung',
-
-        // Gesundheit & Sport
-        'gesundheitsförderung',
-        'gesundheitsprogramm',
-        'gesundheitsmanagement',
-        'betriebsarzt',
-        'betriebliche gesundheitsförderung',
-        'fitnessstudio',
-        'sportmitgliedschaft',
-        'sportangebote',
-        'fitnessangebote',
-        'fitnesszuschuss',
-        'gesundheitsbonus',
-        'wellpass',
-        'hansefit',
-
-        // Familie & Kinder
-        'kitazuschuss',
-        'kinderbetreuungszuschuss',
-        'kindergarten-zuschuss',
-        'kinderbetreuung',
-        'familienfreundlich',
-        'elternzeit',
-        'zusätzliche elternzeit',
-
-        // Essen & Verpflegung
-        'essensgeldzuschuss',
-        'essenszuschuss',
-        'mittagessen',
-        'kantine',
-        'betriebskantine',
-        'restaurantgutscheine',
-        'essensgutscheine',
-        'getränke kostenlos',
-        'kostenlose getränke',
-        'obstkorb',
-        'kostenloses obst',
-
-        // Weiterbildung & Entwicklung
-        'weiterbildung',
-        'fortbildung',
-        'weiterbildungsbudget',
-        'bildungsurlaub',
-        'schulungen',
-        'seminare',
-        'zertifizierungen',
-        'entwicklungsmöglichkeiten',
-        'persönliche entwicklung',
-        'berufliche entwicklung',
-        'karrierechancen',
-
-        // Arbeitsplatz & Ausstattung
-        'diensthandy',
-        'firmenhandy',
-        'dienstlaptop',
-        'firmenlaptop',
-        'homeoffice-ausstattung',
-        'arbeitsplatzausstattung',
-        'moderne arbeitsplätze',
-        'moderner arbeitsplatz',
-
-        // Weitere häufige Benefits
-        'mitarbeiterrabatt',
-        'personalrabatt',
-        'rabatte',
-        'corporate benefits',
-        'mitarbeiterangebote',
-        'mitarbeitervergünstigungen',
-        'prämie',
-        'willkommensbonus',
-        'mitarbeiter werben mitarbeiter',
-        'betriebliche sozialleistungen',
-        'kostenlose parkplätze',
-        'parkplatz',
-        'parkplätze',
-        'gute verkehrsanbindung',
-        'öffentliche verkehrsmittel',
-        'teamevents',
-        'firmenevents',
-        'sommerfest',
-        'weihnachtsfeier',
-        'flache hierarchien',
-        'du-kultur'
-    ];
-
-    /*
-     * Bekannte Benefit-Stichworte: werden zusätzlich zu den echten
-     * Aufzählungspunkten (aus "Das bieten wir" o.ä.) gesucht und als
-     * eigene Stichpunkte ergänzt, auch wenn sie nur beiläufig in einem
-     * Satz erwähnt werden (z.B. "...mit einem halben Gehalt Urlaubsgeld
-     * im Gepäck" -> Stichpunkt "Urlaubsgeld"). term = wonach gesucht
-     * wird (lowercase), label = wie der Stichpunkt angezeigt wird.
-     */
-    static BENEFIT_TAGS = [
-        {
-            term: "jobrad",
-            label: "JobRad"
-        },
-
-        {
-            term: "13. gehalt",
-            label: "13. Gehalt"
-        },
-
-        {
-            term: "weihnachtsgeld",
-            label: "Weihnachtsgeld"
-        },
-
-        {
-            term: "urlaubsgeld",
-            label: "Urlaubsgeld"
-        },
-
-        {
-            term: "sportmitgliedschaft",
-            label: "Kostenlose Sportmitgliedschaft"
-        },
-
-        {
-            term: "fitnessstudio",
-            label: "Kostenlose Sportmitgliedschaft"
-        },
-
-        {
-            term: "essensgeldzuschuss",
-            label: "Essensgeldzuschuss"
-        },
-
-        {
-            term: "essenszuschuss",
-            label: "Essenszuschuss"
-        },
-
-        {
-            term: "homeoffice",
-            label: "Homeoffice"
-        },
-
-        {
-            term: "home office",
-            label: "Homeoffice"
-        },
-
-        {
-            term: "betriebliche altersvorsorge",
-            label: "Betriebliche Altersvorsorge"
-        },
-
-        {
-            term: "vermögenswirksame leistungen",
-            label: "Vermögenswirksame Leistungen"
-        },
-
-        {
-            term: "weiterbildung",
-            label: "Fortbildung"
-        },
-
-        {
-            term: "fortbildung",
-            label: "Fortbildung"
-        },
-
-        {
-            term: "betriebsarzt",
-            label: "Betriebsarzt"
-        },
-
-        {
-            term: "firmenwagen",
-            label: "Firmenwagen"
-        },
-
-        {
-            term: "flexible arbeitszeit",
-            label: "Flexible Arbeitszeiten"
-        },
-
-        {
-            term: "kitazuschuss",
-            label: "Kinderbetreuungszuschuss"
-        },
-
-        {
-            term: "kinderbetreuung",
-            label: "Kinderbetreuungszuschuss"
-        }
-    ];
-
-
     /*
      * Kurze "Badges" auf Stellenanzeigen (Arbeitsmodell/Anstellungsart),
-     * die mehrfach und nebeneinander auftreten können (z.B. "Remote" UND
-     * "Vollzeit" als zwei getrennte Buttons) - werden ALLE gesammelt,
-     * nicht nur der erste Treffer.
+     * die mehrfach und nebeneinander auftreten koennen.
      */
     static JOB_TAG_WHERE = [
         {
@@ -742,6 +468,28 @@ export class ParserConstants {
     };
 
 
+    // Anteile eines Gehalts, wenn die Anzeige keinen Betrag, sondern einen
+    // Bruchteil nennt ("mit einem halben Gehalt Urlaubsgeld im Gepäck").
+    static MONEY_FRACTIONS = {
+        "Urlaubsgeld": [
+            /halben?\s+gehalt/iu,
+            /0[.,]5\s*(?:monats?)?\s*gehalt/iu,
+            /1\s*\/\s*2\s*(?:monats?)?\s*gehalt/iu,
+            /50\s*%\s*(?:des\s+)?(?:monats?)?\s*gehalts?/iu,
+            /drittel\s+gehalt/iu,
+            /1\s*\/\s*3\s*(?:monats?)?\s*gehalt/iu,
+            /zwei\s+drittel\s+gehalt/iu
+        ]
+    };
+
+    // Zuordnung des erkannten Textes zum anteiligen Gehaltsbetrag.
+    static MONEY_FRACTION_VALUES = [
+        { pattern: /drittel|1\s*\/\s*3|33\s*%/iu, factor: 1 / 3 },
+        { pattern: /zwei\s+drittel|2\s*\/\s*3|66\s*%/iu, factor: 2 / 3 },
+        { pattern: /halben?|1\s*\/\s*2|0[.,]5|50\s*%/iu, factor: 0.5 }
+    ];
+
+
     static TAGS = {
         "Developer": [
             "Frontend Developer",
@@ -809,8 +557,22 @@ export class ParserConstants {
             "Yahoo Mail",
             "Protonmail",
             "C#",
-            "C-Sharp"
+            "C-Sharp",
+            "C++",
+            "Java",
+            "PHP",
+            "SQL",
+            "NoSQL",
+            "Confluence",
+            "Frontend",
+            "Backend",
+            "Fullstack",
+            "Node.js", 
+            "Gulp", 
+            "Angular",
+            "Linux"
         ],
+        
 
         "IT": [
             "product owner",
@@ -838,6 +600,65 @@ export class ParserConstants {
 
     //TEMPORÄR 
      // ... bestehende Konstanten
+
+    // Begriffe, unter denen Anzeigen Adresse/Kontaktblock des Ansprechpartners
+    // platzieren. Reihenfolge = Priorität für die Adresssuche.
+    static ADDRESS_HINTS = [
+        "zu erreichen",
+        "schreib uns an",
+        "schreiben sie an",
+        "ansprechpartner vor ort",
+        "anschrift",
+        "adresse",
+        "kontakt",
+        "standort",
+        "arbeitsort",
+        "dienstsitz"
+    ];
+
+    // Zeilen, die eine Stellenanzeige eindeutig als Header kennzeichnen: diese
+    // Begriffe stehen nie in einer Stellenbezeichnung.
+    static TITLE_BLOCK_HINTS = [
+        "about the job",
+        "dein aufgabengebiet",
+        "deine aufgaben",
+        "aufgaben",
+        "anforderungen",
+        "qualifikationen",
+        "vorteile",
+        "benefits",
+        "über uns",
+        "kontakt",
+        "ansprechpartner",
+        "apply",
+        "bewerben",
+        "hybrid",
+        "vollzeit",
+        "teilzeit"
+    ];
+
+    // Muster fuer eine Stellenbezeichnung (Jobtitel).
+    static JOB_TITLE_HINTS = [
+        /\(\s*m\s*\/\s*w\s*\/\s*[dx]\s*\)/iu,
+        /\(m\/?w\/?[dx]\)/iu,
+        /[-–/]\s*:innen\b/iu,
+        /\b(?:entwickler|entwicklerin|engineer|ingenieur|ingenieurin|spezialist|spezialistin|manager|berater|beraterin|analyst|designer|architekt|architektin|techniker|sachbearbeiter|teamleiter|referent|referentin|geschäftsführer|geschäftsführerin)\b/iu,
+        /\b(?:praktikum|ausbildung|werkstudent|werkstudentin|trainee|referendariat)\b/iu
+    ];
+
+    // Muster fuer eine Kennziffer / Referenznummer des Arbeitgebers.
+    static REFERENCE_HINTS = [
+        /kennziffer/iu,
+        /kennzeichen/iu,
+        /referenz(?:nummer|n)/iu,
+        /job-?id/iu,
+        /anzeigen-?nummer/iu,
+        /job-?nummer/iu,
+        /req(?:uisition)?-?(?:id|no|nummer)/iu
+    ];
+
+    // Muster fuer eine konkrete Kennziffer wie "LI50-20192-K" oder "JR-123456".
+    static REFERENCE_VALUE_REGEX = /\b([A-Z]{1,4}[0-9][A-Z0-9]{1,4}(?:-[A-Z0-9]{1,8}){1,3})\b/u;
 
     // typische "Badge"-Begriffe in Stellenanzeigen: Arbeitsmodell,
     // Anstellungsart und Befristung - werden oft als mehrere separate

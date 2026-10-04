@@ -7,13 +7,17 @@ export class MoneyExtractor {
     }
 
     extractMoney() {
+        const holiday = this.extractHoliday();
+
         return {
             yearly: this.extractYearlyRange() || this.extractMonthlyAsYearly(),
             monthly: this.extractMonthlyRange(),
             gross: this.extractGross(),
             currency: this.extractCurrency(),
-            holiday: this.extractKeywordAmount("Urlaubsgeld"),
-            christmas: this.extractChristmas()
+            holiday: holiday.amount,
+            christmas: this.extractChristmas(),
+            holidayText: holiday.text,
+            holidayFraction: holiday.fraction
         };
     }
 
@@ -24,9 +28,84 @@ export class MoneyExtractor {
     }
 
     extractGross() {
-        if (/\bbrutto\b/i.test(this.text)) return true;
         if (/\bnetto\b/i.test(this.text)) return false;
-        return null;
+
+        // Ohne Angabe gilt in Stellenanzeigen die Brutto-Angabe.
+        return true;
+    }
+
+    /**
+     * Urlaubsgeld: erst ein genannter Betrag, sonst ein Anteil des Gehalts
+     * ("mit einem halben Gehalt Urlaubsgeld im Gepäck"). Liefert Betrag, den
+     * Originaltext und den erkannten Anteil.
+     * @returns {{amount: number|null, text: string, fraction: number|null}} Ergebnis.
+     */
+    extractHoliday() {
+        const amount = this.extractKeywordAmount("Urlaubsgeld");
+        if (amount !== null) {
+            return { amount, text: this.findHolidayLine(), fraction: null };
+        }
+
+        const fraction = this.extractFractionFactor();
+        const matched = this.matchedFractionLine();
+        if (!matched) return { amount: null, text: "", fraction: null };
+
+        const base = this.monthlyBase();
+
+        return {
+            amount: base ? Math.round(base * fraction) : null,
+            text: matched.trim(),
+            fraction
+        };
+    }
+
+    /**
+     * Liefert die Zeile, in der das Urlaubsgeld genannt wird.
+     * @returns {string} Originaltext oder "".
+     */
+    findHolidayLine() {
+        const line = this.lines.find(entry => /urlaubsgeld/iu.test(entry));
+
+        return line ? line.trim() : "";
+    }
+
+    /**
+     * Liefert die Zeile, die einen Gehaltsanteil nennt.
+     * @returns {string} Zeile oder "".
+     */
+    matchedFractionLine() {
+        const patterns = ParserConstants.MONEY_FRACTIONS["Urlaubsgeld"] ?? [];
+
+        return this.lines.find(line =>
+            patterns.some(pattern => new RegExp(pattern, "iu").test(line))
+        ) ?? "";
+    }
+
+    /**
+     * Ermittelt den Anteil aus dem erkannten Text (halbes, drittel Gehalt ...).
+     * @returns {number} Anteil als Zahl (0.5, 1/3, 2/3).
+     */
+    extractFractionFactor() {
+        for (const entry of ParserConstants.MONEY_FRACTION_VALUES) {
+            if (new RegExp(entry.pattern.source, entry.pattern.flags).test(this.text)) {
+                return entry.factor;
+            }
+        }
+
+        return 0.5;
+    }
+
+    /**
+     * Liefert das Monatsgehalt; ohne Monatsangabe den Mindest-Jahresbetrag / 12.
+     * @returns {number} Basisbetrag in Euro oder 0.
+     */
+    monthlyBase() {
+        const monthly = this.extractMonthlyRange();
+        if (monthly) return monthly.min;
+
+        const yearly = this.extractYearlyRange();
+
+        return yearly ? yearly.min / 12 : 0;
     }
 
     toNumber(value) {

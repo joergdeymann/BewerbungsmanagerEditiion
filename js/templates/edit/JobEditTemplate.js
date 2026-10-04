@@ -28,9 +28,19 @@ export class JobEditTemplate {
                             `).join("")}
                         </div>
                     </div>
-                    <div class="field"><label>Gehalt</label><input id="salary"></div>
-                    <div class="field"><label>Urlaubsgeld</label><input id="vacationPay"></div>
-                    <div class="field"><label>Weihnachtsgeld</label><input id="christmasPay"></div>
+                    <div class="field"><label>Gehalt (von)</label><input id="salaryFrom" type="number" min="0" step="100"></div>
+                    <div class="field"><label>Gehalt (bis)</label><input id="salaryTo" type="number" min="0" step="100"></div>
+                    <div class="field"><label>Währung</label><input id="salaryCurrency" placeholder="EUR"></div>
+                    <div class="field"><label>Gehaltsart</label>
+                        <select id="salaryGross">
+                            <option value="">– keine Angabe –</option>
+                            <option value="brutto">Brutto</option>
+                            <option value="netto">Netto</option>
+                        </select>
+                    </div>
+                    <div class="field"><label>Urlaubsgeld</label><input id="vacationPay" type="number" min="0" step="100"></div>
+                    <div class="field"><label>Weihnachtsgeld</label><input id="christmasPay" type="number" min="0" step="100"></div>
+                    <div class="field field-ultra-wide"><label>Urlaub (Originaltext der Anzeige)</label><input id="holidayText" placeholder="z. B. mit einem halben Gehalt Urlaubsgeld im Gepäck"></div>
 
                     <div class="field field-wide"><label>Straße (Arbeitsort)</label><input id="jobStreet" placeholder="Musterstraße"></div>
                     <div class="field"><label>Hausnr.</label><input id="jobHouseNumber" placeholder="12"></div>

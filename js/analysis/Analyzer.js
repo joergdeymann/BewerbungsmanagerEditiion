@@ -1,5 +1,4 @@
 import { ParseText } from "./parser/ParseText.js";
-import { TaskExtractor } from "./extractors/TaskExtractor.js";
 
 export class Analyzer {
 
@@ -25,12 +24,7 @@ export class Analyzer {
                 description: company.description,
                 specialties: company.specialties
             },
-            job: {
-                wage: parsed.job.wage,
-                tasks: new TaskExtractor().extract(
-                    (parsed.sections["tasks"]?.lines || []).join("\n")
-                )
-            },
+            job: parsed.job,
             contacts: parsed.contacts,
             qualifications: parsed.qualifications,
             benefits: parsed.benefits
