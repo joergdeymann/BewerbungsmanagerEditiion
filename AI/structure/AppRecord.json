@@ -37,6 +37,7 @@
             "id": 0,
             "name": "",
             "legalForm": "",
+            "ownership": "",
             "relationship": "Hauptsitz",
             "address": {
                 "street": "",
@@ -54,6 +55,10 @@
             "founded": "",
             "description": "",
             "specialties": [],
+            "branches": {
+                "locations": [],
+                "count": 0
+            },
             "images": [],
             "email": "",
             "phone": "",

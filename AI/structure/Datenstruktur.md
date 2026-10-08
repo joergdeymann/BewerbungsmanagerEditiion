@@ -34,11 +34,17 @@ Alle Models stellen ihre Daten über `get data` / `set data` bereit. Die flache 
   der Anzeige)“ und „Weihnachtsgeld“ werden in `JobEditTab.init()` / `save()`
   genau auf diese Felder abgebildet. Die
   früheren Felder `salary`, `vacationPay` und `christmasPay` sind ersetzt.
-- `CompanyModel` – Firmendaten: `id`, `name`, `legalForm`, `relationship`, `industry`,
+- `CompanyModel` – Firmendaten: `id`, `name`, `legalForm`, `ownership`, `relationship`, `industry`,
   `size`, `founded`, `website`, `email`, `phone`, `address`, `verifiedAt`, `description`, `specialties`,
-  `images`. `relationship` unterscheidet Hauptsitz, Filiale und Arbeitsort. Aktuell hält
-  `AppModel` genau eine `CompanyModel`-Instanz (keine Liste); eine Filialliste ist
-  zurückgestellt.
+  `images`, `branches` (`BranchModel`). `ownership` ist die Eigentumsform ("Privatunternehmen",
+  "Öffentliches Unternehmen", LinkedIn: "Typ") und bleibt getrennt von `legalForm` (GmbH, AG).
+  `relationship` unterscheidet Hauptsitz, Filiale und Arbeitsort. Aktuell hält `AppModel` genau eine `CompanyModel`-Instanz (keine Liste).
+  `industry` ist der Branchentext der Anzeige; die Zuordnung zu Branchen und Stichwörtern
+  steht in `IndustryConstants`. `size` ist der Bereich ("51-200") oder eine Zahl mit "+" ("40+").
+- `BranchModel` – Standorte des Unternehmens: `locations` (Liste von Texten, z. B.
+  "Kohake Center – Berenbosteler Str. 76 B, Garbsen, Deutschland 30823") und `count`
+  (Anzahl der Standorte; mindestens die Länge der Liste, größer wenn die Anzeige mehr
+  Standorte nennt als Adressen angegeben sind, z. B. "an drei Standorten").
 - `ContactModel` – Ansprechpartner: `id`, `role`, `name` (`NameModel`), `img`, `email`, `phone`.
 - `NameModel` – Personenname: `salutation` (Anrede, z. B. Herr/Frau), `title`
   (akademischer Titel), `firstname`, `lastname`. `full` liefert die
@@ -87,7 +93,8 @@ Alle Models stellen ihre Daten über `get data` / `set data` bereit. Die flache 
 AppModel
  ├─ JobModel
  ├─ CompanyModel ─ AddressModel ─ StreetModel
- │                              └ CityModel
+ │              │              └ CityModel
+ │              └ BranchModel
  ├─ ContactModel (Liste) ─ NameModel
  ├─ QualificationModel
  ├─ BenefitsModel

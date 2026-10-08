@@ -170,9 +170,24 @@ export class JobExtractor {
      * @returns {string[]} erkannte Arbeitsmodelle.
      */
     findWorkModel() {
-        const found = this.findInConstants(this.sections.general?.lines, JobConstants.WORK_MODEL);
+        const found = this.findInConstants(this.sections.general?.lines, JobConstants.WORK_MODEL)
+            || this.findLabeledWorkModel();
 
         return found ? [found] : [];
+    }
+
+    /**
+     * Sucht eine Zeile "Arbeitsmodell: <Wert>" im gesamten Text.
+     * @returns {string} Wert aus JobConstants.WORK_MODEL oder "".
+     */
+    findLabeledWorkModel() {
+        for (const line of this.allLines) {
+            const value = line.trim().match(JobConstants.WORK_MODEL_LABEL_REGEX)?.[1];
+            const found = value ? this.findInConstants([value], JobConstants.WORK_MODEL) : "";
+            if (found) return found;
+        }
+
+        return "";
     }
 
     /**
@@ -219,7 +234,8 @@ export class JobExtractor {
      * Sucht die Adresse des Arbeitsplatzes in drei Stufen:
      *   1. ab einem Adress-Begriff ("zu erreichen", "Schreib uns an", ...),
      *   2. ohne Begriff in den Kontakt- und Teamabschnitten,
-     *   3. sonst leer - dann uebernimmt AnalysisController die Firmenadresse.
+     *   3. Kopfzeile der Anzeige ("Ort, Bundesland, Land"),
+     *   4. sonst leer - dann uebernimmt AnalysisController die Firmenadresse.
      * @returns {object} Adressdaten passend zum AddressModel.
      */
     findWorkLocation() {
@@ -235,7 +251,11 @@ export class JobExtractor {
             if (found.zip || found.city || found.street) return found;
         }
 
-        return {};
+        // Kopfzeile der Anzeige: "Ort, Bundesland, Land" (Arbeitsort der Stelle).
+        const header = (this.sections.general?.lines ?? []).slice(0, ParserConstants.HEADER_LINES);
+        const city = new LocationExtractor(header).extractByHeaderLine();
+
+        return city ? { ...city, street: "", houseNumber: "" } : {};
     }
 
     /**

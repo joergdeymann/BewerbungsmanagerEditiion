@@ -1,10 +1,12 @@
 import { AddressModel } from "./AddressModel.js";
+import { BranchModel } from "./BranchModel.js";
 
 export class CompanyModel {
     constructor() {
         this.id = 0;
         this.name = "";
         this.legalForm = "";
+        this.ownership = "";
         this.relationship = "Hauptsitz";
         this.industry = "";
         this.size = "";
@@ -13,6 +15,7 @@ export class CompanyModel {
         this.email = "";
         this.phone = "";
         this.address = new AddressModel();
+        this.branches = new BranchModel();
         this.verifiedAt = "";
         this.description = "";
         this.specialties = [];
@@ -25,8 +28,10 @@ export class CompanyModel {
             id: this.id,
             name: this.name,
             legalForm: this.legalForm,
+            ownership: this.ownership,
             relationship: this.relationship,
             address: this.address.data,
+            branches: this.branches.data,
             website: this.website,
             email: this.email,
             phone: this.phone,
@@ -46,6 +51,7 @@ export class CompanyModel {
         this.id = raw.id ?? this.id;
         this.name = raw.name ?? this.name;
         this.legalForm = raw.legalForm ?? this.legalForm;
+        this.ownership = raw.ownership ?? this.ownership;
         this.relationship = raw.relationship ?? this.relationship;
         this.website = raw.website ?? this.website;
         this.email = raw.email ?? this.email;
@@ -59,6 +65,7 @@ export class CompanyModel {
         this.images = raw.images ?? this.images;
         this.mainImageIndex = raw.mainImageIndex ?? this.mainImageIndex;
         this.address.data = raw.address;
+        this.branches.data = raw.branches;
     }
 
     get verified() {

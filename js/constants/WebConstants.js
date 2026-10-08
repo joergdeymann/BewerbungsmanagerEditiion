@@ -1,4 +1,6 @@
 export class WebConstants {
+    // Zahlen mit Punkten ("750.000") sehen aus wie eine Domain, sind aber keine.
+    static NUMERIC_DOMAIN_REGEX = /^[\d.,]+$/;
     static TLDS = ["de", "com", "org", "net", "eu", "io", "co", "info", "biz", "at"];
 
  

@@ -59,6 +59,8 @@ export class StreetExtractor {
                 // match[1] = Suffix-Variante ("Bahnhofstraße"), match[2] = Präpositions-Variante ("Am Bahnhof")
                 const street = match[1] ?? match[2];
                 const houseNumber = match[3];
+                if (AddressConstants.YEAR_LIKE_REGEX.test(houseNumber)) continue;
+
                 return {name: street, houseNumber: houseNumber};
             }
         }

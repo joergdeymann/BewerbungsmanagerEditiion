@@ -1,0 +1,79 @@
+Bestimmen Sie Ihre geeignete:n Kandidat:innen und wie Sie sich abheben können
+Nutzen Sie mit Premium KI-gestützte Empfehlungen für diesen Job und weitere exklusive Funktionen.
+Jetzt Premium für 0 € aktivieren
+Details zur Eignung anzeigen
+Erfahren Sie, wie Sie im Vergleich zu 20 anderen Mitgliedern, die auf „Bewerben“ geklickt haben, abschneiden.
+Erhalten Sie exklusive Einblicke für Bewerber:innen, sehen Sie die Stellen, bei denen Sie die höchste Chance auf eine Antwort haben, und vieles mehr.
+Jetzt Premium für 0 € aktivieren
+Details zum Jobangebot
+Was wir tun
+Als IoT Pioniere entwickeln wir mit mittlerweile über 40 Kollegen*innen an drei Standorten IoT-Komplettlösungen für unsere Kunden.
+Aktuell sind weltweit über 750.000 Geräte und Anlagen mit unseren Lösungen für Machine-to-Machine-Kommunikation ausgestattet.
+Unsere Kompetenz liegt in der Entwicklung kundenspezifischer IoT-Lösungen, basierend auf unserer Erfahrung, unseren erprobten Software-Bausteinen und einer Vielzahl von bereits realisierten Projekten.
+Unser Team
+Seit der Firmengründung im Jahr 2004 sind wir stetig gewachsen und haben uns in diesem Markt über die Jahre als starker Partner etabliert.
+Damit das auch so bleibt, erweitern wir kontinuierlich unser Team mit talentierten und qualifizierten Entwickler*innen.
+Durch vielseitige Weiterbildungsmöglichkeiten, Teilnahme an Konferenzen und Workshops sowie eine ausgeprägte Feedback-Kultur heben wir unser Team auf die nächste Stufe.
+Zur Verstärkung unseres Frontend-Teams suchen wir zum nächstmöglichen Zeitpunkt eine(n) Frontend Developer (M/W/D) an den Standorten
+GARBSEN
+(bei Hannover) und
+BISSENDORF
+(bei Osnabrück).
+Deine Aufgaben als Frontend Engineer
+Du planst und entwirfst Anwendungen für unsere Kunden im M2M / IoT-Umfeld
+Du evaluierst neue Technologien, um unsere eigenen Produkte kontinuierlich zu verbessern.
+Du entwickelst Software im Team mit Tools wie Node, Docker, GitLab, JIRA, Confluence u.a.
+Du entwickelst Frontend-Applikationen in Angular
+Du programmierst hochwertige und gut getestete Software.
+Du wirkst bei der erfolgreichen Inbetriebnahme der entwickelten Software beim Kunden mit.
+Du betreust und unterstützt unsere Kunden bei laufenden Projekten.
+Du verfügst über ein abgeschlossenes Studium oder eine abgeschlossene Berufsausbildung in den Bereichen Informatik, Interface Design, Medien Design, Grafikdesign oder einem vergleichbaren Bereich.
+Erfahrung in folgenden Gebieten:
+ausgeprägte Kenntnisse in HTML, CSS
+ausgeprägte Kenntnisse in Angular
+E2E Testing mit Cypress oder Playwright
+gute Kenntnisse in TypeScript
+Reaktives Statemanagement
+App Entwicklung mit Ionic
+Git
+Docker
+Grafikdesign, Adobe XD
+Du arbeitest eigenverantwortlich, ziel- und lösungsorientiert.
+Teamfähigkeit und Qualitätsbewusstsein zeichnen Dich aus.
+Du verfügst über fließende Deutsch- und Englischkenntnisse.
+Schnellere Jobsuche mit Premium
+Auf Unternehmenseinblicke wie strategische Prioritäten, Entwicklung des Personalbestands und vieles mehr zugreifen
+Millionen Mitglieder nutzen Premium
+Jetzt Premium für 0 € aktivieren
+1-monatige kostenlose Probeversion. Einfach kündbar. Sie erhalten 7 Tage vor Ablauf der Probeversion eine entsprechende Erinnerung.
+Über dieses Unternehmen
+INSIDE M2M GmbH
+952 Follower:innen
+Folgen
+IT-Dienstleistungen und IT-Beratung
+51-200 Mitarbeiter:innen
+30 auf LinkedIn
+INSIDE M2M ist Ihr Partner für sichere & flexible IoT-Lösungen. Seit 2004 vernetzen wir Geräte, Maschinen und Systeme branchenübergreifend und weltweit.
+Wir beraten Sie Use Case-spezifisch und erarbeiten gemeinsam mit Ihnen Ihre IoT-Strategie. Warum? Damit Sie genau die Lösung und die Mehrwerte bekommen, die Sie brauchen: Aufbauend auf bewährte Modulen, je nach Anwendungsfall ergänzt durch Individualentwicklung. Wir beraten Sie auch zum Thema Sicherheit – unabhängig davon, ob Sie bereits connected sind oder Ihre IoT-Strategie gerade starten.
+Unsere Lösungen setzen auf Herstellerunabhängigkeit: Sie haben bereits eigene Hardware? Perfekt – wir integrieren sie. Sie brauchen Empfehlungen? Wir greifen auf ein breites Partnernetzwerk zurück, darunter langjährige Partner wie MC Technologies. So erhalten Sie echte IoT-Komplettlösungen: Von Hardware-Auswahl über die Anbindung bis zur intelligenten Datenverarbeitung auf unserer M2MGate-Plattform. Alles perfekt aufeinander abgestimmt und langfristig betreut.
+Was Sie bekommen:
+Individuelle IoT-Beratung zu Entwicklung & Security
+Von Strategie bis zur schlüsselfertigen Implementierung, alles auf Ihren Use Case abgestimmt
+Bedarfsabhängig: Beratung zur IoT-Hardware
+Nahtlose Integration in Ihre bestehenden Business-Systeme
+M2MGate IoT-Plattform
+Intelligentes Gerätemanagement & sichere Fernwartung
+Nahtlose Datenintegration auch für Legacy-Systeme
+Echtzeit-Analysen & automatisierte Steuerung
+Flexibles Hosting: On-Premises, Hosted by IM2M oder SaaS Cloud
+CRA-Konform & umfassender Schutz Ihrer IoT-Infrastruktur gegen moderne Cyberbedrohungen
+Warum INSIDE M2M?
+✓ 20+ Jahre IoT-Erfahrung
+✓ 750.000+ vernetzte Geräte weltweit
+✓ Made in Germany
+✓ Cloud-unabhängig & hochskalierbar
+✓ Starke Referenzen: Melitta, Liebherr, WMF
+📍Garbsen, Bissendorf, Berlin
+Lassen Sie uns gemeinsam Ihre IoT-Vision Wirklichkeit werden lassen.
+https://www.inside-m2m.de/impressum
+https://www.inside-m2m.de/datenschutzerklaerung

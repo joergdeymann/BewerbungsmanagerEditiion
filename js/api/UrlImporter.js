@@ -1,17 +1,49 @@
+import { ImportJobPage } from "../io/ImportJobPage.js";
+import { BrowserConstants } from "../../shared/BrowserConstants.js";
+
 export class UrlImporter {
 
-    async fetch(url) {
-        const html = await this.getHtml(url);
-        return { html, text: this.htmlToText(html) };
+    constructor() {
+        this.page = new ImportJobPage();
     }
 
-    async getHtml(url) {
+    /**
+     * Ruft die Seite über den lokalen Server ab und extrahiert die Anzeige. Adressen, die eine
+     * Anmeldung verlangen (LinkedIn), lädt der Server in einem echten Chrome (BrowserSession),
+     * alle anderen per einfachem Abruf.
+     */
+    async fetch(url) {
+        const html = UrlImporter.usesBrowser(url)
+            ? await this.getHtml(url, BrowserConstants.API_PATH)
+            : await this.getHtml(url);
+        return this.fromHtml(html, url);
+    }
+
+    /**
+     * @param {string} url Adresse der Seite.
+     * @returns {boolean} true, wenn die Seite über den Browser des Servers geladen wird.
+     */
+    static usesBrowser(url) {
+        try {
+            return BrowserConstants.HOST_REGEX.test(new URL(url).hostname);
+        } catch {
+            return false;
+        }
+    }
+
+    /** Extrahiert die Anzeige aus bereits vorliegendem HTML (z. B. vom Bookmarklet). */
+    fromHtml(html, url) {
+        return { html, ...this.page.extract(html, url) };
+    }
+
+    async getHtml(url, endpoint = "/api/fetch-url") {
         let response;
         try {
-            response = await fetch(`/api/fetch-url?url=${encodeURIComponent(url)}`);
-        } catch {
+            response = await fetch(`${endpoint}?url=${encodeURIComponent(url)}`);
+        } catch (error) {
+            console.error(`Abruf fehlgeschlagen (${endpoint}):`, error);
             throw new Error(
-                "Der lokale Server ist nicht erreichbar. Läuft \"node server.js\"?"
+                `Der lokale Server ist nicht erreichbar (${error.message}). Läuft "node server.js"?`
             );
         }
 
@@ -25,25 +57,5 @@ export class UrlImporter {
         }
 
         return await response.text();
-    }
-
-    htmlToText(html) {
-        const withoutScripts = html
-            .replace(/<script[\s\S]*?<\/script>/gi, "")
-            .replace(/<style[\s\S]*?<\/style>/gi, "");
-
-        const withBreaks = withoutScripts
-            .replace(/<br\s*\/?>/gi, "\n")
-            .replace(/<\/(p|div|li|h[1-6]|tr)>/gi, "\n");
-
-        const doc = new DOMParser().parseFromString(withBreaks, "text/html");
-        const rawText = doc.body ? doc.body.textContent : "";
-
-        return rawText
-            .replace(/\u00a0/g, " ")
-            .split(/\r?\n/)
-            .map(line => line.replace(/[ \t]+/g, " ").trim())
-            .filter(Boolean)
-            .join("\n");
     }
 }

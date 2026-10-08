@@ -15,6 +15,7 @@ export class CompanyEditTemplate {
                             ${LegalFormConstants.list().map(form => `<option value="${form}">${LegalFormConstants.LABEL[form]}</option>`).join("")}
                         </select>
                     </div>
+                    <div class="field"><label>Eigentumsform</label><input id="ownership" placeholder="z.B. Privatunternehmen"></div>
                     <div class="field"><label>Beziehung</label><input id="relationship" placeholder="z.B. Hauptsitz"></div>
 
                     <div class="field"><label>Branche</label><input id="industry" placeholder="z.B. IT-Dienstleistungen"></div>
@@ -38,6 +39,8 @@ export class CompanyEditTemplate {
 
                     <div class="field"><label>Verifiziert am</label><input type="date" id="verifiedAt"></div>
                     <div class="field field-ultra-wide"><label>Firmenbeschreibung</label><textarea id="companyDescription" rows="4"></textarea></div>
+                    <div class="field"><label>Anzahl Standorte</label><input type="number" min="0" id="branchCount" placeholder="z.B. 3"></div>
+                    <div class="field field-ultra-wide"><label>Standorte (Zeilengetrennt)</label><textarea id="branchLocations" rows="4" placeholder="Name – Straße, Ort, PLZ"></textarea></div>
                     <div class="field field-ultra-wide"><label>Spezialgebiete (Zeilengetrennt)</label><textarea id="specialties" rows="4"></textarea></div>
                 </div>
 

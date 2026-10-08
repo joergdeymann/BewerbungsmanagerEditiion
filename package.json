@@ -4,7 +4,9 @@
   "type": "module",
   "scripts": {
     "test:data": "node testdata/run-tests.mjs",
-    "test:analysis": "node testdata/run-analysis-test.mjs"
+    "test:analysis": "node testdata/run-analysis-test.mjs",
+    "test:inside": "node testdata/run-inside-m2m-test.mjs",
+    "browser:check": "node server/BrowserCheck.js"
   },
   "devDependencies": {
     "fake-indexeddb": "^6.2.5"

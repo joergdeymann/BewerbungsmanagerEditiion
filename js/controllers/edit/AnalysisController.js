@@ -37,6 +37,7 @@ export class AnalysisController {
         target.phone = company.phone || target.phone;
         target.website = company.website || target.website;
         target.legalForm = company.legalForm || target.legalForm;
+        target.ownership = company.ownership || target.ownership;
         target.industry = company.industry || target.industry;
         target.size = company.size || target.size;
         target.founded = company.founded || target.founded;
@@ -44,8 +45,23 @@ export class AnalysisController {
         target.description = company.description || target.description;
 
         if (company.specialties?.length) target.specialties = company.specialties;
+        this.applyBranches(target, company.branches);
 
         this.applyAddress(target, company);
+    }
+
+    /**
+     * Uebernimmt Standortliste und -anzahl (leere Analyse ueberschreibt nichts).
+     * @param {object} target Company-Model.
+     * @param {{locations: string[], count: number}} [branches] Analysierte Standorte.
+     */
+    applyBranches(target, branches) {
+        if (!branches?.locations?.length && !branches?.count) return;
+
+        target.branches.data = {
+            locations: branches.locations?.length ? branches.locations : target.branches.locations,
+            count: branches.count || target.branches.count
+        };
     }
 
     /**

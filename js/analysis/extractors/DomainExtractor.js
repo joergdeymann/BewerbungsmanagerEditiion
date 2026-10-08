@@ -46,6 +46,7 @@ export class DomainExtractor {
             let match;
             while ((match = regex.exec(line)) !== null) {
                 const domain = match[1].toLowerCase();
+                if (WebConstants.NUMERIC_DOMAIN_REGEX.test(domain)) continue;
                 if (applyIgnoreList && WebConstants.DOMAIN_IGNORE_LIST.has(domain)) continue;
 
                 counts.set(domain, (counts.get(domain) ?? 0) + 1);

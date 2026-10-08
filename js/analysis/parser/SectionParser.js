@@ -1,5 +1,6 @@
 import { LineParser } from "./LineParser.js";
 import { SectionPart } from "./SectionPart.js";
+import { CompanyConstants } from "../../constants/CompanyConstants.js";
 
 export class SectionParser {
 
@@ -62,6 +63,10 @@ export class SectionParser {
 
     findSection(line) {
         const lowerLine = line.toLowerCase();
+
+        // Label der Firmeninfo ("Unternehmensgröße", "Branche: ...") ist kein Abschnittsanfang,
+        // auch wenn es mit einem Titel beginnt ("unternehmen").
+        if (CompanyConstants.isInfoLabelLine(line)) return null;
 
         for (const sectionDefinition of this.sectionDefinitions) {
             if (

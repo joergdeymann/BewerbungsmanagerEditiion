@@ -17,12 +17,14 @@ export class Analyzer {
                 location: company.location,
                 postBox: company.postbox,
                 legalForm: company.legalForm,
+                ownership: company.ownership,
                 industry: company.industry,
                 size: company.size,
                 founded: company.founded,
                 verifiedAt: company.verifiedAt,
                 description: company.description,
-                specialties: company.specialties
+                specialties: company.specialties,
+                branches: company.branches
             },
             job: parsed.job,
             contacts: parsed.contacts,

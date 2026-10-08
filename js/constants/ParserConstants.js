@@ -23,6 +23,9 @@
  */
 export class ParserConstants {
 
+    // Kopfzeilen am Seitenanfang (Firma, Titel, Ort), die vor der ersten Ueberschrift stehen.
+    static HEADER_LINES = 12;
+
     static INVISIBLE_CHARS_REGEX =
         /[\u0000-\u0009\u000B-\u000C\u000E-\u001F\u007F-\u009F\p{Cf}]/gu;
 
@@ -314,7 +317,12 @@ export class ParserConstants {
                 "du begeisterst",
                 "werde teil",
                 "gestaltest du",
-                "deine expertise"
+                "deine expertise",
+                "eigenverantwortlich",
+                "lösungsorientiert",
+                "qualitätsbewusst",
+                "zeichnen dich aus",
+                "zeichnen sie aus"
             ]
         },
 
@@ -334,6 +342,24 @@ export class ParserConstants {
             ]
         }
     ];
+
+    /*
+     * Zeilen, die eine Anforderung (und keine Aufgabe) sind. Alle Begriffe einer Gruppe muessen
+     * in der Zeile vorkommen (Kleinschreibung). Steht eine solche Zeile im Aufgabenabschnitt,
+     * gehoert sie und alles danach zu den Anforderungen (RequirementSplitter).
+     */
+    static REQUIREMENT_MARKERS = [
+        ["abgeschlossen", "studium"],
+        ["abgeschlossen", "berufsausbildung"],
+        ["erfahrung in"],
+        ["verfügst"],
+        ["fließende", "kenntnisse"],
+        ["fliessende", "kenntnisse"]
+    ];
+
+    // Kurze Zeilen ohne Satzende unter einer Zeile mit ":" ("Erfahrung in folgenden Gebieten:")
+    // gelten als deren Unterpunkte; hoechstens so viele Woerter.
+    static SUBLIST_MAX_WORDS = 8;
 
     /*
      * Kurze "Badges" auf Stellenanzeigen (Arbeitsmodell/Anstellungsart),

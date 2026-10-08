@@ -78,3 +78,11 @@ coverage/
 .cache/
 .parcel-cache/
 .eslintcache
+
+# ==========================================
+# Chrome-Profil des Browser-Abrufs (enthält die LinkedIn-Anmeldung)
+# ==========================================
+
+.chrome-profile/
+browser-check.html
+browser-check.txt

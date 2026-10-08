@@ -31,6 +31,11 @@ export class CompanyTemplate extends DetailBaseTemplate {
                     </div>
  
                     <div class="field">
+                        <label>Eigentumsform</label>
+                        <p>${HtmlUtils.escape(application.company?.ownership || "—")}</p>
+                    </div>
+
+                    <div class="field">
                         <label>Adresse</label>
                         <p>
                             ${HtmlUtils.escape(application.company?.address?.data?.street || "")}
@@ -65,12 +70,20 @@ export class CompanyTemplate extends DetailBaseTemplate {
                         <p>${HtmlUtils.escape(application.company?.founded || "—")}</p>
                     </div>
                     <div class="field">
+                        <label>Standorte</label>
+                        <p>${HtmlUtils.escape(String(application.company?.branches?.count || "—"))}</p>
+                    </div>
+                    <div class="field">
                         <label>Verifiziert am</label>
                         <p>${HtmlUtils.escape(FormatUtils.toGermanDate(application.company?.verifiedAt || "—"))}</p>
                     </div>
                 </section>
 
                 <section class="section-body">
+                    <div class="field">
+                        <label>Standorte (Liste)</label>
+                        ${this.list(application.company?.branches?.locations)}
+                    </div>
                     <div class="field">
                         <label>Spezialisierungen</label>
                         ${this.list(application.company?.specialties)}

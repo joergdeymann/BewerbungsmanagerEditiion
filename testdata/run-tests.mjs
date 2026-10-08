@@ -105,6 +105,7 @@ function buildTestRecord(recordIndex) {
     app.company.id = recordIndex;
     app.company.name = `Testfirma ${recordIndex} GmbH`;
     app.company.legalForm = "GmbH";
+    app.company.ownership = "Privatunternehmen";
     app.company.relationship = "Hauptsitz";
     app.company.industry = "IT";
     app.company.size = "50-200";
@@ -113,6 +114,10 @@ function buildTestRecord(recordIndex) {
     app.company.verifiedAt = "2026-09-01";
     app.company.description = `Beschreibung Firma ${recordIndex}`;
     app.company.specialties = [1, 2, 3].map(n => `Spezialgebiet${n}-${recordIndex}`);
+    app.company.branches.data = {
+        locations: [1, 2].map(n => `Standort ${n} – Musterweg ${n}, Quakenbrück, Deutschland 4961${n}`),
+        count: 3
+    };
     app.company.images = [1, 2, 3].map(n => `bild${n}-${recordIndex}.png`);
     app.company.mainImageIndex = 0;
     app.company.address.data = {

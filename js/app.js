@@ -6,16 +6,22 @@ import { OverviewView } from "./views/overview/OverviewView.js";
 import { DetailView } from "./views/detail/DetailView.js";
 import { EditView } from "./views/edit/EditView.js";
 import { SkillsView } from "./views/skills/SkillsView.js";
+import { ImportInbox } from "./io/ImportInbox.js";
+import { ImportConstants } from "./constants/ImportConstants.js";
 
-// Kommt der Aufruf vom Bookmarklet (siehe ImportTab.js) mit einer
-// mitgegebenen URL, merken wir sie kurz vor und springen direkt in
-// einen neuen, leeren Editor - dort holt sich ImportTab die URL ab
-// und startet den Abruf automatisch.
+// Das Bookmarklet (siehe BookmarkletBuilder.js) schickt das HTML der Stellenanzeige per
+// postMessage. Das App-Fenster trägt einen festen Namen, damit das Bookmarklet bei jedem
+// Import dasselbe Fenster nutzt; ImportInbox schreibt die Seite in den offenen Editor.
+// Wird die App neu vom Bookmarklet geöffnet (?importUrl=...) und kommt nichts an,
+// wird die URL über den Server abgerufen.
+window.name = ImportConstants.WINDOW_NAME;
+ImportInbox.listen();
+
 const importUrlParam = new URLSearchParams(location.search).get("importUrl");
 if (importUrlParam) {
-    sessionStorage.setItem("pendingImportUrl", importUrlParam);
     history.replaceState(null, "", location.pathname);
     location.hash = "#/new";
+    ImportInbox.expectBookmarklet(importUrlParam);
 }
 
 const root = document.querySelector("#app");

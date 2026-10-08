@@ -17,6 +17,14 @@ export class LocationConstants {
     // optionales Länderkürzel + Bindestrich, dann PLZ (4-5 Ziffern, je nach Land), dann Ort
     static ZIP_CITY_REGEX = /\b(?:([A-Z]{1,3})-)?(\d{4,5})[\s,]+([\p{Lu}][\p{L}ß]*(?:[\s-][\p{Lu}][\p{L}]*)*)/gu;
     
+    // Kopfzeile von Jobbörsen: "Ort, [Bundesland,] Land · ..." (ohne PLZ)
+    static HEADER_LOCATION_REGEX = /^([\p{Lu}][\p{L}ß]*(?:[\s-][\p{Lu}][\p{L}ß]*)*)(?:\s*\([^)]*\))?,\s*(?:[\p{Lu}][\p{L}ß]*(?:[\s-][\p{Lu}][\p{L}ß]*)*,\s*)?(Deutschland|Österreich|Schweiz|Germany|Austria|Switzerland)\b/u;
+
+    // Zeile besteht nur aus einer solchen Ortsangabe.
+    static HEADER_LOCATION_ONLY_REGEX = new RegExp(LocationConstants.HEADER_LOCATION_REGEX.source + '\\s*$', 'u');
+
+    static HEADER_COUNTRY_NAMES = { germany: 'Deutschland', austria: 'Österreich', switzerland: 'Schweiz' };
+
     static DEFAULT_COUNTRY = 'Deutschland';
 
     // Länderkürzel (Kfz-Kennzeichen-Format) -> ausgeschriebener Ländername

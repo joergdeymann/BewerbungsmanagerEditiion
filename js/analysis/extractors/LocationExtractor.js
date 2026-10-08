@@ -29,6 +29,19 @@ export class LocationExtractor {
         return null;
     }
 
+    // Nur fuer Kopfzeilen von Jobboersen ("Osnabrück, Niedersachsen, Deutschland · Vor 2 Monaten").
+    // Wird nicht in extractLocation() verwendet, sondern gezielt vom Aufrufer.
+    extractByHeaderLine() {
+        for (const line of this.lines) {
+            const match = line.trim().match(LocationConstants.HEADER_LOCATION_REGEX);
+            if (!match) continue;
+
+            const country = LocationConstants.HEADER_COUNTRY_NAMES[match[2].toLowerCase()] ?? match[2];
+            return { country, zip: null, city: match[1] };
+        }
+        return null;
+    }
+
     // Stufe 2: Fallback über Signalwörter, ohne PLZ
     extractByKeyword() {
         for (const line of this.lines) {

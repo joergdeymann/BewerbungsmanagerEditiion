@@ -16,6 +16,9 @@ export class AddressConstants {
         'hinter dem', 'zum', 'zur', 'beim'
     ];
 
+    // Beginnt eine "Hausnummer" mit vier Ziffern, ist es eine Jahreszahl ("im Jahr 2004"), keine Hausnummer.
+    static YEAR_LIKE_REGEX = /^\d{4}/;
+
     // Hausnummer-Formate laut DIN 5008:
     // 5 | 5a | 5 a | 10-20 | 10 - 20 | 16/18 | 12 // 3 (Wohnungsnr.) | 5a III (Etage, optional)
     static HOUSE_NUMBER_REGEX_SRC =

@@ -13,6 +13,7 @@ export class CompanyEditTab extends BaseEditTab {
 
         this.set("companyName", company?.name);
         this.set("legalForm", company?.legalForm);
+        this.set("ownership", company?.ownership);
         this.set("relationship", company?.relationship);
         this.set("industry", company?.industry);
         this.set("companySize", company?.size);
@@ -30,6 +31,8 @@ export class CompanyEditTab extends BaseEditTab {
         this.set("verifiedAt", company?.verifiedAt);
         this.set("companyDescription", company?.description);
         this.set("specialties", (company?.specialties || []).join("\n"));
+        this.set("branchCount", company?.branches?.count || "");
+        this.set("branchLocations", (company?.branches?.locations || []).join("\n"));
 
         this.imageList = new CompanyImageList(this.root.querySelector("#companyImages"));
         this.imageList.setImages(company?.images || [], company?.mainImageIndex || 0);
@@ -38,6 +41,7 @@ export class CompanyEditTab extends BaseEditTab {
     save(application) {
         application.company.name = this.get("companyName");
         application.company.legalForm = this.get("legalForm");
+        application.company.ownership = this.get("ownership");
         application.company.relationship = this.get("relationship");
         application.company.industry = this.get("industry");
         application.company.size = this.get("companySize");
@@ -48,6 +52,10 @@ export class CompanyEditTab extends BaseEditTab {
         application.company.verifiedAt = this.get("verifiedAt");
         application.company.description = this.get("companyDescription");
         application.company.specialties = this.list("specialties");
+        application.company.branches.data = {
+            locations: this.list("branchLocations"),
+            count: this.get("branchCount")
+        };
         application.company.images = this.imageList.getImages();
         application.company.mainImageIndex = this.imageList.getMainImageIndex();
 

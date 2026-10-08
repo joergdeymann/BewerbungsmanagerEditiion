@@ -2,8 +2,8 @@
 
 ## 1. Projekt-Übersicht (Hauptverzeichnis)
 - **Wurzelverzeichnis:** Enthält Core-Konfigurationen (`package.json`, `server.js`, `index.html`), die Projekt-README (`README.md`, `README.html`), die KI-Kontextdatei `CLAUDE.md` sowie Automatisierungs-Skripte (`push.psl`).
-- **Serverseitig:** `server/` enthält die Node-Module des `server.js` (`StaticFileHandler.js`, `DocumentHandler.js`, `ProxyHandler.js`, `MimeTypes.js`, `Logger.js`).
-- **Geteilte Konstanten:** `shared/FileConstants.js` wird von Server und Client genutzt.
+- **Serverseitig:** `server/` enthält die Node-Module des `server.js` (`StaticFileHandler.js`, `DocumentHandler.js`, `ProxyHandler.js`, `MimeTypes.js`, `Logger.js`). Seiten mit Anmeldung (LinkedIn) lädt der Server in einem echten Chrome: `BrowserHandler.js` (Route `/api/browser-fetch`), `BrowserSession.js` (startet Chrome mit Fernsteuerung und Profil `.chrome-profile`, lädt die Seite, schließt den Tab), `CdpClient.js` (DevTools-Protokoll).
+- **Geteilte Konstanten:** `shared/FileConstants.js` und `shared/BrowserConstants.js` (Route, erlaubte Hosts, Wartezeiten, Beschriftungen für Cookie-Zustimmung und "mehr") werden von Server und Client genutzt.
 - **Testdaten & Tests:** `testdata/` (siehe unten).
 - **Wichtige Alt-Dateien:** Bereinigte oder veraltete Skripte im Root nicht für neue Workflows nutzen (`old-server.js`, `js.zip`).
 
@@ -49,12 +49,12 @@ AI/
     ├── app.js            # Haupteinstiegspunkt (Frontend)
     ├── analysis/         # Parser & Data-Extractor (Regex, Text-Cleaning)
     │   ├── Analyzer.js   # Orchestrierung der Extraktoren
-    │   ├── extractors/   # Benefit-, Company-, Contact-, Email-, Job-, Location-, Money-,
-    │   │                 #   Phone-, PostBox-, Qualification-, Street-, TaskExtractor
-    │   └── parser/       # LineParser, ParseText, SectionParser, SectionPart, TextCleaner
+    │   ├── extractors/   # Benefit-, Branch-, Company-, Contact-, Email-, Industry-, Job-, Location-,
+    │   │                 #   Money-, Phone-, PostBox-, Qualification-, Street-, TaskExtractor
+    │   └── parser/       # LineParser, ParseText, RequirementSplitter, SectionParser, SectionPart, TextCleaner
     ├── api/              # Netzwerk-Schnittstellen (UrlImporter.js)
-    ├── constants/        # Systemweite Konstanten (Address, Benefit, Company, Contact, Job,
-    │                     #   Location, Parser, PostBox, Skill, SkillAlias, Web)
+    ├── constants/        # Systemweite Konstanten (Address, Benefit, Branch, Company, Contact, Industry, Job,
+    │                     #   Import, Location, Parser, PostBox, Skill, SkillAlias, Web)
     ├── controllers/      # Ablaufsteuerung: Repository-Zugriff, Verarbeitung, Speichern
     │   ├── CommunicationController.js
     │   ├── detail/       # Communication-, Contact-, DocumentsSectionController.js
@@ -68,8 +68,8 @@ AI/
     │   ├── overview/     # OverviewEvent.js, OverviewFilterEvent.js, OverviewListEvent.js
     │   └── skills/       # SkillsEvent.js
     ├── store/             # Caching und IndexedDB-Wrapper (AppDB, AppCache, LocalDB, SkillDB, SkillCache)
-    ├── io/               # Datei- und Seitenimporte (ImportJobPage.js)
-    ├── models/           # Datenmodelle (Application-, App-, Company-, Contact-, Skill-, WageModel …)
+    ├── io/               # Seitenimport: ImportJobPage.js (Anzeigenbereich, Rohzeilen, Links), ImportInbox.js (Übergabe Bookmarklet -> Import-Reiter), BookmarkletBuilder.js (Lesezeichen-Link)
+    ├── models/           # Datenmodelle (Application-, App-, Branch-, Company-, Contact-, Skill-, WageModel …)
     ├── templates/        # HTML-Strukturen der Views
     │   ├── EditorView.html
     │   ├── detail/       # Application-, Benefits-, Communication-, Company-, Contact-, Job-,

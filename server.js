@@ -7,6 +7,9 @@ import { fileURLToPath } from "node:url";
 import { StaticFileHandler } from "./server/StaticFileHandler.js";
 import { ProxyHandler } from "./server/ProxyHandler.js";
 import { DocumentHandler } from "./server/DocumentHandler.js";
+import { BrowserSession } from "./server/BrowserSession.js";
+import { BrowserHandler } from "./server/BrowserHandler.js";
+import { BrowserConstants } from "./shared/BrowserConstants.js";
 
 const PORT = 3000;
 
@@ -17,6 +20,8 @@ const __dirname = path.dirname(__filename);
 const staticFileHandler = new StaticFileHandler(__dirname, PORT);
 const proxyHandler = new ProxyHandler();
 const documentHandler = new DocumentHandler(__dirname);
+const browserSession = new BrowserSession(__dirname, { log: message => console.log(`[Browser] ${message}`) });
+const browserHandler = new BrowserHandler(browserSession);
 
 const server = http.createServer(async (req, res) => {
     try {
@@ -27,6 +32,16 @@ const server = http.createServer(async (req, res) => {
         // 1. API-Routing
         if (pathname === "/api/fetch-url" && method === "GET") {
             await proxyHandler.handleFetchUrl(req, res, url);
+            return;
+        }
+
+        if (pathname === BrowserConstants.API_PATH && method === "GET") {
+            await browserHandler.handleBrowserFetch(req, res, url);
+            return;
+        }
+
+        if (pathname === BrowserConstants.STATUS_PATH && method === "GET") {
+            await browserHandler.handleBrowserStatus(req, res);
             return;
         }
 
@@ -69,4 +84,15 @@ const server = http.createServer(async (req, res) => {
 
 server.listen(PORT, () => {
     console.log(`Server läuft erfolgreich auf http://localhost:${PORT}`);
+
+    browserSession.status().then(status => {
+        console.log(status.executable
+            ? `[Browser] Chrome/Edge gefunden: ${status.executable} (Node ${status.node}, WebSocket: ${status.webSocket ? "ja" : "NEIN"})`
+            : `[Browser] ACHTUNG: ${status.executableError}`);
+    });
 });
+
+// Einen vom Server gestarteten Chrome beim Beenden des Servers mit schliessen.
+process.on("exit", () => browserSession.killNow());
+process.on("SIGINT", () => process.exit(0));
+process.on("SIGTERM", () => process.exit(0));

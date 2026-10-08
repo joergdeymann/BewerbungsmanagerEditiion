@@ -27,20 +27,59 @@ export class CompanyConstants {
     static COMPANY_INFO_LABELS = {
         website: ['website', 'webseite', 'web-adresse'],
         verifiedAt: ['verifizierte seite', 'verifiziert am', 'verifiziert'],
-        industry: ['branche', 'branchen'],
-        size: ['größe', 'groesse', 'unternehmensgröße', 'beschäftigte', 'mitarbeiter', 'mitarbeitende'],
-        founded: ['gegründet', 'gegruendet', 'gründungsjahr', 'gruendungsjahr', 'gründung'],
-        specialties: ['spezialgebiete', 'spezialgebiet', 'spezialisierungen', 'spezialisierung'],
-        legalForm: ['rechtsform']
+        industry: ['branche', 'branchen', 'industry'],
+        size: ['größe', 'groesse', 'unternehmensgröße', 'beschäftigte', 'mitarbeiter', 'mitarbeitende', 'company size'],
+        founded: ['gegründet', 'gegruendet', 'gründungsjahr', 'gruendungsjahr', 'gründung', 'founded'],
+        specialties: ['spezialgebiete', 'spezialgebiet', 'spezialisierungen', 'spezialisierung', 'specialties'],
+        legalForm: ['rechtsform'],
+        phone: ['telefon'],
+        headquarters: ['hauptsitz', 'headquarters'],
+        companyType: ['typ', 'unternehmenstyp', 'company type', 'type'],
+        workModel: ['arbeitsmodell'],
+        presence: ['übliche anwesenheit vor ort'],
+        locations: ['orte']
     };
+
+    // Eigentumsform (LinkedIn: "Typ"): Zeile, die nur aus einem dieser Werte besteht (Kleinschreibung).
+    static OWNERSHIP_TYPES = [
+        'privatunternehmen', 'öffentliches unternehmen', 'börsennotiert', 'börsennotiertes unternehmen',
+        'gemeinnützig', 'gemeinnützige organisation', 'selbstständig', 'selbständig', 'personengesellschaft',
+        'staatliche einrichtung', 'behörde', 'bildungseinrichtung', 'genossenschaft',
+        'privately held', 'public company', 'nonprofit', 'self-employed', 'partnership',
+        'government agency', 'educational institution'
+    ];
+
+    // Gruendungsjahr im Fliesstext: "Firmengründung im Jahr 2004", "gegründet 2004", "seit der Gründung in 1998".
+    static FOUNDED_PATTERNS = [
+        /gründung\s+(?:im\s+jahr\s+|im\s+jahre\s+|in\s+|anno\s+)?(\d{4})\b/i,
+        /gegründet\s+(?:im\s+jahr\s+|im\s+jahre\s+|in\s+|anno\s+)?(\d{4})\b/i,
+        /gegruendet\s+(?:im\s+jahr\s+|in\s+)?(\d{4})\b/i,
+        /founded\s+(?:in\s+)?(\d{4})\b/i
+    ];
+
+    static MIN_FOUNDED_YEAR = 1700;
+
+    // Eigene Zeile mit Mitarbeiterzahl: "51-200 Mitarbeiter:innen", "51–200 Beschäftigte", "10.001+ Mitarbeitende".
+    static SIZE_LINE_REGEX = /^(\d[\d.]*\s*[-–]\s*\d[\d.]*|\d[\d.]*\+)\s*(?:mitarbeiter\S*|beschäftigte\S*|mitarbeitende\S*|employees)\s*$/i;
+
+    // Bereich am Anfang eines Wertes ("51–200 Beschäftigte" -> "51-200").
+    static SIZE_RANGE_REGEX = /^(\d[\d.]*\s*[-–]\s*\d[\d.]*|\d[\d.]*\+)(?:\s|$)/;
+
+    // Anzahl im Fliesstext: "über 40 Kollegen*innen", "rund 120 Mitarbeitende".
+    static SIZE_COUNT_REGEX = /\b(über|mehr als|rund|ca\.?|knapp)?\s*(\d{1,6})\s+(?:kolleg|mitarbeiter)[\w*:]*/i;
 
     static ALL_INFO_LABELS = Object.values(CompanyConstants.COMPANY_INFO_LABELS).flat();
 
     // Zeilen, die in der Firmenbeschreibung keinen Fließtext darstellen.
     static COMPANY_INFO_IGNORE = new Set([
         'start', 'info', 'beiträge', 'jobs', 'was wir machen',
-        'personen', 'übersicht', 'commitment'
+        'personen', 'übersicht', 'commitment', 'was wir tun',
+        'folgen', 'nachricht', 'produkte'
     ]);
+
+    // Trenner und Reste der Seitenkopfzeile, die nicht zur Beschreibung gehoeren.
+    static SEPARATOR_LINE_REGEX = /^[-–—·•|]+$/;
+    static FOLLOWER_LINE_REGEX = /\bfollower|verknüpfte mitglieder|auf linkedin\s*$/i;
 
     // Rechtsform-Suffix -> Schlüssel aus LegalFormConstants.FORM (Reihenfolge = Priorität).
     static LEGAL_FORM_PATTERNS = [
@@ -72,6 +111,19 @@ export class CompanyConstants {
 
     static isInfoLabelLine(line) {
         return CompanyConstants.matchInfoLabel(line, CompanyConstants.ALL_INFO_LABELS) !== null;
+    }
+
+    /**
+     * Reduziert eine Groessenangabe auf den Bereich ("51–200 Beschäftigte" -> "51-200").
+     * Angaben ohne Bereich bleiben unveraendert.
+     * @param {string} text Rohwert.
+     * @returns {string} Bereinigter Wert.
+     */
+    static normalizeSize(text) {
+        const value = (text ?? '').trim();
+        const match = value.match(CompanyConstants.SIZE_RANGE_REGEX);
+
+        return match ? match[1].replace(/\s+/g, '').replace('–', '-') : value;
     }
 
     static matchLegalForm(text) {

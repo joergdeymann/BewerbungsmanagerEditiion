@@ -1,3 +1,5 @@
+import { BookmarkletBuilder } from "../../io/BookmarkletBuilder.js";
+
 export class ImportEditTemplate {
 
     render() {
@@ -13,7 +15,7 @@ export class ImportEditTemplate {
 
                 <p class="muted bookmarklet-hint">
                     Tipp: Ziehe diesen Link in deine Lesezeichen-Leiste – auf der Stellenanzeige
-                    angeklickt, springt er direkt hierher und ruft die Seite automatisch ab:
+                    angeklickt, schickt er die geöffnete Seite direkt hierher:
                     <a href="${this.bookmarkletHref()}" class="bookmarklet-link" onclick="return false;">📌 Stelle importieren</a>
                 </p>
                 <textarea id="originalText" rows="10" placeholder="Füge hier den Ausschreibungstext oder Notizen ein... (wird beim Verlassen des Feldes automatisch übernommen)"></textarea>
@@ -28,8 +30,6 @@ export class ImportEditTemplate {
     }
 
     bookmarkletHref() {
-        const appOrigin = location.origin + location.pathname;
-        const code = `(function(){window.open(${JSON.stringify(appOrigin)}+"?importUrl="+encodeURIComponent(window.location.href),"_blank");})();`;
-        return "javascript:" + encodeURIComponent(code);
+        return new BookmarkletBuilder().href();
     }
 }

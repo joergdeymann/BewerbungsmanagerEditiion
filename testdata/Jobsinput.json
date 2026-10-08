@@ -52,6 +52,7 @@
                 "id": 1,
                 "name": "Testfirma 1 GmbH",
                 "legalForm": "GmbH",
+                "ownership": "Privatunternehmen",
                 "relationship": "Hauptsitz",
                 "address": {
                     "street": "Musterweg 1",
@@ -75,6 +76,13 @@
                     "Spezialgebiet2-1",
                     "Spezialgebiet3-1"
                 ],
+                "branches": {
+                    "locations": [
+                        "Standort 1 – Musterweg 1, Quakenbrück, Deutschland 49611",
+                        "Standort 2 – Musterweg 2, Quakenbrück, Deutschland 49612"
+                    ],
+                    "count": 3
+                },
                 "images": [
                     "bild1-1.png",
                     "bild2-1.png",
@@ -369,6 +377,7 @@
                 "id": 2,
                 "name": "Testfirma 2 GmbH",
                 "legalForm": "GmbH",
+                "ownership": "Privatunternehmen",
                 "relationship": "Hauptsitz",
                 "address": {
                     "street": "Musterweg 2",
@@ -392,6 +401,13 @@
                     "Spezialgebiet2-2",
                     "Spezialgebiet3-2"
                 ],
+                "branches": {
+                    "locations": [
+                        "Standort 1 – Musterweg 1, Quakenbrück, Deutschland 49611",
+                        "Standort 2 – Musterweg 2, Quakenbrück, Deutschland 49612"
+                    ],
+                    "count": 3
+                },
                 "images": [
                     "bild1-2.png",
                     "bild2-2.png",
@@ -686,6 +702,7 @@
                 "id": 3,
                 "name": "Testfirma 3 GmbH",
                 "legalForm": "GmbH",
+                "ownership": "Privatunternehmen",
                 "relationship": "Hauptsitz",
                 "address": {
                     "street": "Musterweg 3",
@@ -709,6 +726,13 @@
                     "Spezialgebiet2-3",
                     "Spezialgebiet3-3"
                 ],
+                "branches": {
+                    "locations": [
+                        "Standort 1 – Musterweg 1, Quakenbrück, Deutschland 49611",
+                        "Standort 2 – Musterweg 2, Quakenbrück, Deutschland 49612"
+                    ],
+                    "count": 3
+                },
                 "images": [
                     "bild1-3.png",
                     "bild2-3.png",
@@ -1003,6 +1027,7 @@
                 "id": 4,
                 "name": "Testfirma 4 GmbH",
                 "legalForm": "GmbH",
+                "ownership": "Privatunternehmen",
                 "relationship": "Hauptsitz",
                 "address": {
                     "street": "Musterweg 4",
@@ -1026,6 +1051,13 @@
                     "Spezialgebiet2-4",
                     "Spezialgebiet3-4"
                 ],
+                "branches": {
+                    "locations": [
+                        "Standort 1 – Musterweg 1, Quakenbrück, Deutschland 49611",
+                        "Standort 2 – Musterweg 2, Quakenbrück, Deutschland 49612"
+                    ],
+                    "count": 3
+                },
                 "images": [
                     "bild1-4.png",
                     "bild2-4.png",
@@ -1320,6 +1352,7 @@
                 "id": 5,
                 "name": "Testfirma 5 GmbH",
                 "legalForm": "GmbH",
+                "ownership": "Privatunternehmen",
                 "relationship": "Hauptsitz",
                 "address": {
                     "street": "Musterweg 5",
@@ -1343,6 +1376,13 @@
                     "Spezialgebiet2-5",
                     "Spezialgebiet3-5"
                 ],
+                "branches": {
+                    "locations": [
+                        "Standort 1 – Musterweg 1, Quakenbrück, Deutschland 49611",
+                        "Standort 2 – Musterweg 2, Quakenbrück, Deutschland 49612"
+                    ],
+                    "count": 3
+                },
                 "images": [
                     "bild1-5.png",
                     "bild2-5.png",
