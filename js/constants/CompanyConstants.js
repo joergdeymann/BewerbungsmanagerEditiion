@@ -60,10 +60,10 @@ export class CompanyConstants {
     static MIN_FOUNDED_YEAR = 1700;
 
     // Eigene Zeile mit Mitarbeiterzahl: "51-200 Mitarbeiter:innen", "51–200 Beschäftigte", "10.001+ Mitarbeitende".
-    static SIZE_LINE_REGEX = /^(\d[\d.]*\s*[-–]\s*\d[\d.]*|\d[\d.]*\+)\s*(?:mitarbeiter\S*|beschäftigte\S*|mitarbeitende\S*|employees)\s*$/i;
+    static SIZE_LINE_REGEX = /^(\d[\d.]*\s*(?:[-–]|bis|to)\s*\d[\d.]*|\d[\d.]*\+)\s*(?:mitarbeiter\S*|beschäftigte\S*|mitarbeitende\S*|employees)\s*$/i;
 
     // Bereich am Anfang eines Wertes ("51–200 Beschäftigte" -> "51-200").
-    static SIZE_RANGE_REGEX = /^(\d[\d.]*\s*[-–]\s*\d[\d.]*|\d[\d.]*\+)(?:\s|$)/;
+    static SIZE_RANGE_REGEX = /^(\d[\d.]*\s*(?:[-–]|bis|to)\s*\d[\d.]*|\d[\d.]*\+)(?:\s|$)/i;
 
     // Anzahl im Fliesstext: "über 40 Kollegen*innen", "rund 120 Mitarbeitende".
     static SIZE_COUNT_REGEX = /\b(über|mehr als|rund|ca\.?|knapp)?\s*(\d{1,6})\s+(?:kolleg|mitarbeiter)[\w*:]*/i;
@@ -79,6 +79,9 @@ export class CompanyConstants {
 
     // Trenner und Reste der Seitenkopfzeile, die nicht zur Beschreibung gehoeren.
     static SEPARATOR_LINE_REGEX = /^[-–—·•|]+$/;
+    // Texte der Seite, die keine Firmenbeschreibung sind (Karte, Legende, Zähler, Kennungen).
+    static PAGE_NOISE_REGEX = /assoziierte mitglieder|linkedin mitglieder, die|über die karte|^chart$|map of world|end of interactive chart|^vergrößern$|^verkleinern$|^arbeitsplatzregelung$|die beschäftigten arbeiten|die genaue arbeitsplatzregelung|^(vor ort|hybrid|remote)$|^lesedauer|^telefonnummer\s*:|^standorte\s*\(\d+\)$|^insgesamt \d+ mitteilungen$/i;
+
     static FOLLOWER_LINE_REGEX = /\bfollower|verknüpfte mitglieder|auf linkedin\s*$/i;
 
     // Rechtsform-Suffix -> Schlüssel aus LegalFormConstants.FORM (Reihenfolge = Priorität).
@@ -123,7 +126,7 @@ export class CompanyConstants {
         const value = (text ?? '').trim();
         const match = value.match(CompanyConstants.SIZE_RANGE_REGEX);
 
-        return match ? match[1].replace(/\s+/g, '').replace('–', '-') : value;
+        return match ? match[1].replace(/\s*(?:bis|to)\s*/i, '-').replace(/\s+/g, '').replace('–', '-') : value;
     }
 
     static matchLegalForm(text) {

@@ -4,7 +4,8 @@ import { existsSync } from "node:fs";
 import path from "node:path";
 import { CdpClient } from "./CdpClient.js";
 import { BrowserConstants } from "../shared/BrowserConstants.js";
-import { stateScript, clickScript, readScript } from "./BrowserScripts.js";
+import { stateScript, clickScript } from "./BrowserScripts.js";
+import { snapshotPage } from "../shared/PageSnapshot.js";
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -298,7 +299,9 @@ export class BrowserSession {
                 throw new BrowserError("BLOCKED", "Die Seite blockiert den Zugriff (ungewöhnliche Aktivität erkannt).", 403);
             }
 
-            const page = await this.evaluate(cdp, call(readScript));
+            // Firmenseiten (linkedin.com/company/...): Navigation und Seitenleisten weglassen.
+            const options = { structure: /\/company\//i.test(url) };
+            const page = await this.evaluate(cdp, `(${snapshotPage})(document, ${JSON.stringify(options)})`);
             this.log(`Gelesen: ${page.text.length} Zeichen sichtbarer Text, ${page.html.length} Zeichen HTML.`);
             return page;
         } catch (error) {

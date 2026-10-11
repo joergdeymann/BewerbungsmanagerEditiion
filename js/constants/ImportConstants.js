@@ -7,6 +7,24 @@ export class ImportConstants {
     /** Nachrichtentyp: Bookmarklet -> App (enthält url und html). */
     static MESSAGE_TYPE = "bewerbungsmanager-import";
 
+    /** Nachrichtentypen zum Finden eines schon offenen App-Fensters: Bookmarklet fragt (ping), die App antwortet (pong). */
+    static MESSAGE_PING = "bewerbungsmanager-ping";
+    static MESSAGE_PONG = "bewerbungsmanager-pong";
+
+    /** Wartezeit auf die Antwort des Fensters, das die Seite geöffnet hat (window.opener). */
+    static PING_WAIT_MS = 600;
+
+    /**
+     * Version des Lesezeichens. Ältere Lesezeichen (die gespeicherte Kopie in der Lesezeichen-Leiste
+     * bleibt beim Aktualisieren der App unverändert) öffnen bei jedem Klick einen neuen Tab;
+     * die App weist dann darauf hin, den Link neu zu ziehen.
+     */
+    static BOOKMARKLET_VERSION = 3;
+
+    /** LinkedIn aus der App heraus öffnen: ein benannter Tab, der mit der App verbunden bleibt. */
+    static LINKEDIN_URL = "https://www.linkedin.com/jobs/";
+    static LINKEDIN_WINDOW_NAME = "bewerbungsmanager-linkedin";
+
     /** Nachrichtentyp: App -> Bookmarklet ("bereit für die Seite"). */
     static MESSAGE_READY = "bewerbungsmanager-import-ready";
 
@@ -81,6 +99,12 @@ export class ImportConstants {
 
     /** Mindestlänge des Zeilenanfangs, mit dem eine gekürzte Zeile im Volltext gesucht wird. */
     static MIN_STEM = 25;
+
+    /** Versteckte Elemente (LinkedIn legt seine Daten in <code style="display: none"> ab). Ohne Layout erkennbar. */
+    static HIDDEN_SELECTOR = "[hidden], [style*='display:none'], [style*='display: none'], code[id^='bpr-guid'], code[id^='datalet']";
+
+    /** Zeilen, die keine Anzeige sind: Daten (JSON) und interne Kennungen. */
+    static JUNK_LINE_REGEX = /^\s*[{[]\s*"|^urn:li:|^bpr-guid/i;
 
     /** Elemente, die nie Teil der Anzeige sind. */
     static REMOVE_TAGS = ["script", "style", "noscript", "template", "svg", "iframe", "canvas"];

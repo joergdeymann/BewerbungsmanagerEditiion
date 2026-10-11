@@ -1,5 +1,5 @@
 // server/BrowserScripts.js
-// Skripte, die im Browser (Chrome) laufen. Jede Funktion wird als Text an den Browser geschickt
+// Skripte, die im Browser (Chrome) laufen (Seite lesen: shared/PageSnapshot.js). Jede Funktion wird als Text an den Browser geschickt
 // und darf deshalb nichts aus diesem Modul verwenden. Die Kommentare am Anfang sind Marker.
 
 /**
@@ -48,58 +48,4 @@ export function clickScript(labels) {
         if (labels.includes(text)) { element.click(); clicked++; }
     });
     return clicked;
-}
-
-/**
- * Liest die sichtbare Seite als schlankes HTML. LinkedIn liefert mehrere MB Code und Daten mit
- * (versteckte Elemente, <code>-Daten, Skripte); die sichtbare Seite hat nur wenige KB.
- * Uebernommen werden Elemente und Text, Links (href) und JSON-LD-Daten. Nicht uebernommen werden
- * Skripte, Daten, unsichtbare und nur fuer Screenreader gedachte Elemente (doppelter Text) sowie
- * Navigation und Seitenleisten. Hat die Seite ein <main> mit dem Grossteil des Textes, gilt nur dieses.
- * @returns {{html: string, text: string, url: string, title: string}}
- */
-export function readScript() {
-    /*read*/
-    const SKIP_TAGS = ["SCRIPT", "STYLE", "NOSCRIPT", "TEMPLATE", "SVG", "IFRAME", "CANVAS", "CODE", "LINK", "META", "HEAD", "PICTURE", "IMG", "VIDEO", "AUDIO"];
-    const SKIP_SELECTOR = "aside, nav, footer, #global-nav, .global-nav, [role=\"navigation\"], [role=\"complementary\"], [role=\"dialog\"], [aria-modal=\"true\"]";
-    const SCREEN_READER_ONLY = /(^|\s)(visually-hidden|sr-only|a11y-text|screen-reader-text)(\s|$)/i;
-
-    const textOf = element => element.innerText || element.textContent || "";
-    const escapeText = value => value.replace(/&/g, "&amp;").replace(/</g, "&lt;");
-    const escapeAttribute = value => escapeText(value).replace(/"/g, "&quot;");
-
-    const hidden = element => {
-        if (element.hasAttribute("hidden")) return true;
-        const style = getComputedStyle(element);
-        return style.display === "none" || style.visibility === "hidden";
-    };
-
-    const walk = node => {
-        if (node.nodeType === 3) return escapeText(node.textContent);
-        if (node.nodeType !== 1) return "";
-
-        const tag = node.tagName.toUpperCase();
-        if (SKIP_TAGS.includes(tag) || node.matches(SKIP_SELECTOR)) return "";
-        if (SCREEN_READER_ONLY.test(node.getAttribute("class") || "") || hidden(node)) return "";
-        if (tag === "BR") return "<br>";
-
-        let inner = "";
-        node.childNodes.forEach(child => { inner += walk(child); });
-
-        const name = tag.toLowerCase();
-        const href = tag === "A" ? (node.href || node.getAttribute("href")) : "";
-        return `<${name}${href ? ` href="${escapeAttribute(href)}"` : ""}>${inner}</${name}>`;
-    };
-
-    const main = document.querySelector("main");
-    const bodyLength = textOf(document.body).length;
-    const mainLength = main ? textOf(main).length : 0;
-    const root = main && mainLength >= 500 && mainLength >= bodyLength * 0.5 ? main : document.body;
-
-    const jsonLd = Array.from(document.querySelectorAll("script[type=\"application/ld+json\"]"))
-        .map(script => `<script type="application/ld+json">${script.textContent.replace(/<\//g, "<\\/")}</script>`)
-        .join("");
-
-    const html = `<html><head><title>${escapeText(document.title)}</title>${jsonLd}</head><body>${walk(root)}</body></html>`;
-    return { html, text: textOf(root), url: location.href, title: document.title };
 }

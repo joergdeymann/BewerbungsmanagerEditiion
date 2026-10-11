@@ -29,14 +29,14 @@ export class ImportJobPage {
         const doc = new DOMParser().parseFromString(html, "text/html");
         const fullLines = this.jobPostingLines(doc);
         const slug = this.companySlug(doc, pageUrl);
-        doc.querySelectorAll(ImportConstants.REMOVE_TAGS.join(",")).forEach(node => node.remove());
+        doc.querySelectorAll(`${ImportConstants.REMOVE_TAGS.join(",")},${ImportConstants.HIDDEN_SELECTOR}`).forEach(node => node.remove());
 
         // Banner zuerst entfernen: Sonst kann eine Überschrift im Banner den Bereich bestimmen.
         this.removeBanners(doc.body);
 
         const { container, source } = this.findContainer(doc, pageUrl);
 
-        const lines = this.cutIgnored(this.repairTruncated(this.toLines(container), fullLines));
+        const lines = this.cutIgnored(this.repairTruncated(this.dropJunk(this.toLines(container)), fullLines));
         const links = this.collectLinks(container, pageUrl);
         return {
             url: pageUrl, source, lines, text: lines.join("\n"), links,
@@ -44,6 +44,11 @@ export class ImportJobPage {
             companyUrl: slug ? ImportConstants.COMPANY_URL_BASE + slug + ImportConstants.COMPANY_HOME_SUFFIX : "",
             blocked: this.isWall(lines)
         };
+    }
+
+    /** Entfernt Datenzeilen (JSON) und interne Kennungen, die eine Seite versteckt mitliefert. */
+    dropJunk(lines) {
+        return lines.filter(line => !ImportConstants.JUNK_LINE_REGEX.test(line));
     }
 
     /**

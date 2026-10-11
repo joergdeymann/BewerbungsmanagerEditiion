@@ -248,6 +248,7 @@ export class CompanyExtractor {
         return CompanyConstants.SEPARATOR_LINE_REGEX.test(line)
             || CompanyConstants.FOLLOWER_LINE_REGEX.test(line)
             || CompanyConstants.SIZE_LINE_REGEX.test(line)
+            || CompanyConstants.PAGE_NOISE_REGEX.test(line)
             || LocationConstants.HEADER_LOCATION_ONLY_REGEX.test(line)
             || (industry !== "" && line === industry)
             || (line.split(/\s+/).length <= 5 && CompanyConstants.matchLegalForm(line) !== "");

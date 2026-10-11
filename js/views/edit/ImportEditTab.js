@@ -10,6 +10,8 @@ import { ImportConstants } from "../../constants/ImportConstants.js";
 import { BrowserConstants } from "../../../shared/BrowserConstants.js";
 
 export class ImportEditTab extends BaseEditTab {
+    static outdatedShown = false;
+
 
     render() {
         return new ImportEditTemplate().render();
@@ -37,6 +39,7 @@ export class ImportEditTab extends BaseEditTab {
 
         input.onblur = () => this.commitIfChanged();
         this.root.querySelector("#fetchUrl").onclick = () => this.fetchFromUrl();
+        this.root.querySelector("#openLinkedIn").onclick = () => this.openLinkedIn();
 
         this.renderHistory();
         ImportInbox.subscribe(payload => this.importFromPayload(payload), () => this.root.isConnected);
@@ -82,9 +85,17 @@ export class ImportEditTab extends BaseEditTab {
      *        aboutExpected = das Bookmarklet liefert die Info-Seite, ein Abruf über den Server entfällt;
      *        source = bookmarklet oder fallback (automatischer Abruf, weil nichts vom Lesezeichen ankam).
      */
-    async importFromPayload({ url, html, optional = false, aboutExpected = false, source = "bookmarklet" }) {
+    async importFromPayload({ url, html, optional = false, aboutExpected = false, source = "bookmarklet", outdated = false }) {
         console.info(`[Import] ${ImportConstants.SOURCE_LABELS[source] ?? source}: ${url}${html ? " (mit HTML)" : " (Abruf über den Server)"}`);
         document.querySelector('[data-section="import"]')?.click();
+
+        if (outdated && !ImportEditTab.outdatedShown) {
+            ImportEditTab.outdatedShown = true;
+            Toast.show(
+                'Das Lesezeichen "Stelle importieren" ist veraltet. Ziehe den Link aus diesem Reiter neu in die Lesezeichen-Leiste und lösche das alte: Das neue nutzt immer denselben Tab.',
+                "info", BrowserConstants.HINT_DURATION_MS
+            );
+        }
 
         // Eine schon übernommene Seite wird nie ein zweites Mal abgerufen.
         if (!optional && this.hasEntry(url)) {
@@ -102,6 +113,28 @@ export class ImportEditTab extends BaseEditTab {
             ? async () => this.urlImporter.fromHtml(html, url)
             : () => this.urlImporter.fetch(url);
         await this.importPage(url, load, false, !aboutExpected, source);
+    }
+
+    /**
+     * Öffnet LinkedIn in einem benannten Tab, der mit der App verbunden bleibt. Das Lesezeichen
+     * findet dadurch die App wieder, auch wenn sie von Hand geöffnet wurde. Ist dieser Tab schon
+     * offen, wird er nur nach vorn geholt (die Seite bleibt, wie sie ist).
+     */
+    openLinkedIn() {
+        const tab = window.open("", ImportConstants.LINKEDIN_WINDOW_NAME);
+        if (!tab) {
+            Toast.show("Der Browser hat das neue Fenster blockiert. Erlaube Pop-ups für diese Seite.", "error");
+            return;
+        }
+
+        let existing = true;
+        try { existing = tab.location.href !== "about:blank"; } catch { existing = true; }
+
+        if (existing) {
+            try { tab.focus(); } catch { /* der Browser darf den Fokus verweigern */ }
+            return;
+        }
+        tab.location.href = ImportConstants.LINKEDIN_URL;
     }
 
     /** @returns {boolean} true, wenn schon ein Eintrag mit dieser Adresse vorhanden ist. */

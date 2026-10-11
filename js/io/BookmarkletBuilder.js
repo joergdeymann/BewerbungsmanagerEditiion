@@ -1,4 +1,5 @@
 import { ImportConstants } from "../constants/ImportConstants.js";
+import { snapshotPage } from "../../shared/PageSnapshot.js";
 
 /**
  * Läuft als Bookmarklet im Tab der Stellenanzeige (darf keine Imports oder Klassen der App verwenden).
@@ -7,7 +8,7 @@ import { ImportConstants } from "../constants/ImportConstants.js";
  * Wird als Quelltext in den Lesezeichen-Link eingebettet.
  * @param {{app: string, origin: string, type: string, ready: string, accept: string[]}} cfg
  */
-function bookmarkletMain(cfg) {
+async function bookmarkletMain(cfg, snapshot) {
     const clickLabels = (root, labels) => {
         root.querySelectorAll("button, a, summary, [role='button'], span[tabindex]").forEach(el => {
             const href = el.tagName === "A" ? (el.getAttribute("href") || "") : "";
@@ -44,7 +45,7 @@ function bookmarkletMain(cfg) {
                 clickLabels(doc, cfg.accept);
                 clickLabels(doc, cfg.expand);
                 setTimeout(() => {
-                    try { done(doc.documentElement.outerHTML); } catch (e) { done(null); }
+                    try { done(snapshot(doc, { structure: true }).html); } catch (e) { done(null); }
                 }, cfg.wait);
             } catch (e) { done(null); }
         }, cfg.frameWait);
@@ -53,26 +54,56 @@ function bookmarkletMain(cfg) {
         document.body.appendChild(frame);
     });
 
-    // Vorhandenes App-Fenster weiterverwenden: window.open("", name) liefert es zurück, ohne es
-    // neu zu laden. Ein neu angelegtes Fenster ist leer (about:blank, lesbar); ein vorhandenes
-    // App-Fenster gehört einer anderen Domain, der Zugriff darauf löst einen Fehler aus.
-    const target = window.open("", cfg.windowName);
-    if (!target) return;
+    // Die App finden, damit alles in einem Tab bleibt. Reihenfolge:
+    // 1. Das Fenster, das diese Seite geöffnet hat (window.opener), falls es die App ist (ping/pong).
+    //    So bleibt es auch bei einem von Hand geöffneten App-Tab im selben Tab, wenn LinkedIn
+    //    aus der App heraus geöffnet wurde.
+    // 2. Ein Fenster mit dem festen Namen: window.open("", name) liefert ein vorhandenes Fenster
+    //    zurück, ohne es neu zu laden. Ein neu angelegtes Fenster ist leer (about:blank, lesbar),
+    //    ein vorhandenes App-Fenster gehört einer anderen Domain (Zugriff löst einen Fehler aus).
+    // 3. Sonst öffnet sich ein neuer Tab mit der App.
+    const ping = candidate => new Promise(resolve => {
+        if (!candidate || candidate.closed) { resolve(false); return; }
 
+        const onPong = event => {
+            if (event.source !== candidate || event.origin !== cfg.origin) return;
+            if (!event.data || event.data.type !== cfg.pong) return;
+            finish(true);
+        };
+        const finish = answered => {
+            clearTimeout(timer);
+            window.removeEventListener("message", onPong);
+            resolve(answered);
+        };
+        const timer = setTimeout(() => finish(false), cfg.pingWait);
+
+        window.addEventListener("message", onPong);
+        try { candidate.postMessage({ type: cfg.ping }, cfg.origin); } catch (e) { finish(false); }
+    });
+
+    let target = null;
     let existing = true;
-    try { existing = target.location.href !== "about:blank"; } catch (e) { existing = true; }
+
+    if (window.opener && await ping(window.opener)) {
+        target = window.opener;
+    } else {
+        target = window.open("", cfg.windowName);
+        if (!target) return;
+
+        try { existing = target.location.href !== "about:blank"; } catch (e) { existing = true; }
+    }
 
     const post = () => {
         clickLabels(document, cfg.expand);
         setTimeout(() => {
             target.postMessage(
-                { type: cfg.type, url: location.href, html: document.documentElement.outerHTML, aboutExpected: wantAbout },
+                { type: cfg.type, version: cfg.version, url: location.href, html: snapshot(document, { structure: false }).html, aboutExpected: wantAbout },
                 cfg.origin
             );
 
             // html null = Rahmen nicht lesbar: Die App holt die Seite dann über den Server.
             if (wantAbout) {
-                readFrame().then(html => target.postMessage({ type: cfg.type, url: entryUrl, html, optional: true }, cfg.origin));
+                readFrame().then(html => target.postMessage({ type: cfg.type, version: cfg.version, url: entryUrl, html, optional: true }, cfg.origin));
             }
         }, cfg.wait);
     };
@@ -104,6 +135,10 @@ export class BookmarkletBuilder {
             origin: location.origin,
             type: ImportConstants.MESSAGE_TYPE,
             ready: ImportConstants.MESSAGE_READY,
+            ping: ImportConstants.MESSAGE_PING,
+            pong: ImportConstants.MESSAGE_PONG,
+            pingWait: ImportConstants.PING_WAIT_MS,
+            version: ImportConstants.BOOKMARKLET_VERSION,
             accept: ImportConstants.COOKIE_ACCEPT_LABELS,
             expand: ImportConstants.EXPAND_LABELS,
             wait: ImportConstants.EXPAND_WAIT_MS,
@@ -114,7 +149,8 @@ export class BookmarkletBuilder {
             frameWait: ImportConstants.FRAME_WAIT_MS,
             frameTimeout: ImportConstants.FRAME_TIMEOUT_MS
         };
-        const code = `(${bookmarkletMain.toString()})(${JSON.stringify(config)});`;
+        // Die Seite wird vor dem Senden gesäubert (ohne versteckte Daten, Skripte, Navigation), siehe shared/PageSnapshot.js.
+        const code = `(${bookmarkletMain.toString()})(${JSON.stringify(config)},${snapshotPage.toString()});void 0;`;
         return "javascript:" + encodeURIComponent(code);
     }
 }

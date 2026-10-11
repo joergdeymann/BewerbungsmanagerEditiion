@@ -19,6 +19,14 @@ export class ImportInbox {
 
         window.addEventListener("message", event => {
             const data = event.data;
+
+            // Das Lesezeichen fragt, ob dies die App ist (so bleibt der Import im selben Tab).
+            if (data?.type === ImportConstants.MESSAGE_PING) {
+                const origin = event.origin && event.origin !== "null" ? event.origin : "*";
+                event.source?.postMessage({ type: ImportConstants.MESSAGE_PONG }, origin);
+                return;
+            }
+
             if (data?.type !== ImportConstants.MESSAGE_TYPE) return;
             if (!event.source || event.source === window) return;
 
@@ -32,7 +40,8 @@ export class ImportInbox {
                 html: data.html,
                 optional,
                 aboutExpected: data.aboutExpected === true,
-                source: "bookmarklet"
+                source: "bookmarklet",
+                outdated: (Number(data.version) || 0) < ImportConstants.BOOKMARKLET_VERSION
             });
         });
     }

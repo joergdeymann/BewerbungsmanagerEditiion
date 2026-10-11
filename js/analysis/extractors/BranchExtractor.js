@@ -96,6 +96,9 @@ export class BranchExtractor {
     /** Anzahl aus Angaben wie "an drei Standorten" (0, wenn keine genannt wird). */
     readStatedCount() {
         for (const line of this.lines) {
+            const inParens = line.match(BranchConstants.COUNT_IN_PARENS_REGEX);
+            if (inParens) return Number(inParens[1]);
+
             const match = line.match(BranchConstants.STATED_COUNT_REGEX);
             if (!match) continue;
 

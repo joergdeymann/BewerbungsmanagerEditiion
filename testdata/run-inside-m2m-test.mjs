@@ -19,6 +19,9 @@ const quiet = fn => {
     try { return fn(); } finally { console.log = original; }
 };
 
+const pageText = read("Beispiel_LinkedIn_InsideM2M_Info_Seite.txt");
+const live = quiet(() => new Analyzer().analyze(`${jobText}\n\n----\n\n${pageText}`)).company;
+
 const jobOnly = quiet(() => new Analyzer().analyze(jobText));
 const both = quiet(() => new Analyzer().analyze(`${jobText}\n\n----\n\n${infoText}`));
 
@@ -63,6 +66,14 @@ const checks = [
     ["Info-Seite: Arbeitsmodell Hybrid", both.job.workModel.includes("Hybrid")],
     ["Beschreibung ohne doppelte Zeilen", new Set(both.company.description.split("\n")).size === both.company.description.split("\n").length],
     ["Beschreibung ohne Kopfzeilen-Reste", !/verknüpfte Mitglieder|Follower|51-200/.test(both.company.description)],
+
+    // Echte Info-Seite (sichtbarer Text wie vom Browser gelesen, mit Standortdaten als "Orte")
+    ["Info-Seite live: Größe '51 bis 200 Beschäftigte' -> 51-200", live.size === "51-200"],
+    ["Info-Seite live: 'Standorte (3)' und Adressen -> 3 Standorte", live.branches.count === 3 && live.branches.locations.length === 3],
+    ["Info-Seite live: Standort mit Name und Adresse", live.branches.locations.some(x => x.startsWith("Kohake Center") && x.endsWith("30823"))],
+    ["Info-Seite live: Hauptsitz aus 'Primär' (Straße, PLZ, Ort)", live.street?.name === "Berenbosteler Str." && live.street?.houseNumber === "76 B" && live.location?.zip === "30823"],
+    ["Info-Seite live: Branche, Gegründet, Telefon, Website", live.industry === "IT-Dienstleistungen und IT-Beratung" && live.founded === "2004" && live.phone === "0049 5137 90950-11" && live.website === "https://www.inside-m2m.de"],
+    ["Info-Seite live: keine Karten-/Zählertexte in der Beschreibung", !/assoziierte|Vergrößern|Chart|Map of World|Arbeitsplatzregelung|Telefonnummer|Standorte \(3\)/.test(live.description)],
 
     // Eigentumsform (ownership) getrennt von der Rechtsform
     ["Info-Seite: Typ 'Privatunternehmen' als ownership", both.company.ownership === "Privatunternehmen"],

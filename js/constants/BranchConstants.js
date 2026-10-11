@@ -11,6 +11,9 @@ export class BranchConstants {
     // "drei Standorten", "5 Niederlassungen", "zwei weitere Filialen"
     static STATED_COUNT_REGEX = /\b(\d{1,3}|zwei|drei|vier|fünf|sechs|sieben|acht|neun|zehn|elf|zwölf)\s+(?:weiteren\s+|deutschen\s+|internationalen\s+)?(?:standort|niederlassung|filiale)\w*/i;
 
+    // "Standorte (3)" (Info-Seite der Firma, Karte)
+    static COUNT_IN_PARENS_REGEX = /\b(?:standorte|locations)\s*\((\d{1,3})\)/i;
+
     // Zeilen, nach denen eine Standortliste mit Adressen beginnt (LinkedIn-Info-Seite).
     static BLOCK_LABELS = ["orte", "standorte", "locations"];
 
