@@ -25,7 +25,7 @@
 ## 4. Workflow
 - `AI/workflow/WORKFLOW.md` einmalig lesen und im Kontext halten, ausführen; nur bei Dateiänderung erneut lesen.
 
-**## 5. Grundsätze**
+## 5. Grundsätze
 * **Klare Anweisung:** Pfadangaben nicht Interpetieren, es sei denn es sind offensichtliche Fehler enthalten
 * **Effizienz:** Minimale Tokens und Tool-Aufrufe; nur aufgabenrelevante Aktionen.
 * **Fokus:** Keine ungefragten Nebenaufgaben oder Refactorings.

@@ -596,7 +596,13 @@ export class ParserConstants {
             "Node.js", 
             "Gulp", 
             "Angular",
-            "Linux"
+            "Linux",
+            "Cypress",
+            "Playwright",
+            "Adobe",
+            "TypeScript",
+            "E2E Testing",
+            "Ionic"
         ],
         
 
