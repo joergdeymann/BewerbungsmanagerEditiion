@@ -243,7 +243,8 @@ export class JobExtractor {
         const hint = this.findAddressHintIndex(lines);
 
         if (hint >= 0) {
-            return this.extractAddress(lines.slice(hint, hint + JobConstants.ADDRESS_MAX_LINES));
+            const found = this.extractAddress(lines.slice(hint, hint + JobConstants.ADDRESS_MAX_LINES));
+            if (found.zip || found.city || found.street) return found;
         }
 
         for (const name of JobConstants.CONTACT_ADDRESS_SECTIONS) {

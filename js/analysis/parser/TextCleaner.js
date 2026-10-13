@@ -20,6 +20,7 @@ constructor(text) {
         lines = this.uniqueBlocks(lines, { merge: false });
         lines = lines.filter(Boolean);
         lines = this.removeSimilar(lines);
+        lines = this.removeAggregates(lines);
 
         this.lines = this.removeDoubleLines(lines)
             .filter(e => {
@@ -143,15 +144,48 @@ constructor(text) {
         return result;
     }
 
+    // Wörter einer Zeile für Textvergleiche: klein geschrieben, ohne Sonderzeichen-Tokens und Satzzeichen am Rand.
+    toWords(value) {
+        return value
+            .toLowerCase()
+            .split(/\s+/)
+            // Tokens ohne Buchstaben/Ziffern ("?", "•", "·") verwerfen
+            .filter(word => /[\p{L}\p{N}]/u.test(word))
+            // Satzzeichen am Rand entfernen ("Qualifikation," -> "qualifikation")
+            .map(word => word.replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu, ''));
+    }
+
+    // Entfernt eine lange Zeile, die fast vollständig aus anderen, kürzeren Zeilen besteht (siehe ParserConstants.AGGREGATE_LINE).
+    // Die einzelnen Zeilen bleiben, denn sie sind besser lesbar und trennbar (Absätze, Aufzählungspunkte).
+    removeAggregates(values) {
+        const { minWords, minPieces, minCoverage } = ParserConstants.AGGREGATE_LINE;
+        const wordLists = values.map(value => this.toWords(value));
+        const keys = wordLists.map(words => words.join(' '));
+        const remove = new Set();
+
+        for (let i = 0; i < values.length; i++) {
+            if (wordLists[i].length < minWords) continue;
+
+            const padded = ` ${keys[i]} `;
+            const counted = new Set();
+            let covered = 0;
+
+            for (let j = 0; j < values.length; j++) {
+                const isPiece = i !== j && wordLists[j].length >= 2 && wordLists[j].length < wordLists[i].length;
+                if (!isPiece || counted.has(keys[j]) || !padded.includes(` ${keys[j]} `)) continue;
+
+                counted.add(keys[j]);
+                covered += wordLists[j].length;
+            }
+
+            if (counted.size >= minPieces && covered / wordLists[i].length >= minCoverage) remove.add(i);
+        }
+
+        return values.filter((_, index) => !remove.has(index));
+    }
+
     removeSimilar(values, minCoverage = 0.8) {
-        const getWords = value =>
-            value
-                .toLowerCase()
-                .split(/\s+/)
-                // Tokens ohne Buchstaben/Ziffern ("?", "•", "·") verwerfen
-                .filter(word => /[\p{L}\p{N}]/u.test(word))
-                // Satzzeichen am Rand entfernen ("Qualifikation," -> "qualifikation")
-                .map(word => word.replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu, ''));
+        const getWords = value => this.toWords(value);
 
         const wordLists = values.map(getWords);
         const keys = wordLists.map(words => words.join(' '));

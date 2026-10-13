@@ -33,3 +33,4 @@
 * **Fortschritt:** Statusbericht, Planung, Dateisuche, Recherche und reine Analyse **zählen nicht als Ergebnis**.
 * **Max. 3 Sessions:** Spätestens nach 3 Sessions muss ein Ergebnis oder verwertbarer Zwischenstand vorliegen; keine weitere Session ohne diesen.
 * **Blockade:** Wiederholte Aktionen ohne Fortschritt → abbrechen und Zwischenstand liefern.
+* **Keine Doppelten Struckturen**: Verwende nach Möglichkeit vorhandene Strukturen, anstatt neue zu erstellen. Dies gilt für alle Bereiche.

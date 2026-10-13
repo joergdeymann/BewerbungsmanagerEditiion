@@ -79,6 +79,22 @@ export class ImportConstants {
      */
     static GROWTH_LIMIT = 4;
 
+    /**
+     * Kopfbereich der Anzeige (Titel, Firma, Ort, Arbeitsmodell, Beschäftigungsart): Liegt er außerhalb des
+     * erkannten Bereichs, wird er anhand des Titels aus den Zeilen vor dem Bereich nachgeholt.
+     * HEADER_SCAN = Zeilen am Anfang des Bereichs, in denen ein Titel schon vorhanden sein darf,
+     * HEADER_LOOKBACK = so viele Zeilen vor dem Bereich wird der Titel gesucht, HEADER_MAX_LINES = längster Kopfbereich.
+     */
+    static HEADER_SCAN = 12;
+    static HEADER_LOOKBACK = 40;
+    static HEADER_MAX_LINES = 14;
+
+    /** Eine Titelzeile ist kurz. */
+    static TITLE_LINE_MAX_CHARS = 100;
+
+    /** Trennt im Seitentitel (<title>) den Stellentitel von Firma und Jobbörse: "Titel | Firma | LinkedIn". */
+    static TITLE_SEPARATOR_REGEX = /\s[|–—-]\s/;
+
     /** Weiterleitungs-Links (z. B. LinkedIn "Bewerben"): der echte Link steckt im Parameter "url". */
     static REDIRECT_PATH_REGEX = /\/(?:safety\/go|redir\/redirect|away)\/?$/i;
 

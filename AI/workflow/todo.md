@@ -138,3 +138,21 @@ bearbeitet werden.
 - Mögliche Erweiterung: "Aktuelle LinkedIn-Stelle importieren" per Knopf in der App. Der Server liest dann den geöffneten LinkedIn-Tab im vom Server gesteuerten Chrome (Tabs lassen sich dort per Titel/Adresse suchen) und braucht kein Lesezeichen; funktioniert auch von Handy-Apps aus.
 - Lesezeichen aktualisieren: Die gespeicherte Kopie in der Lesezeichen-Leiste ändert sich nicht mit der App. Nach dieser Änderung den Link "Stelle importieren" neu ziehen (BOOKMARKLET_VERSION erhöhen, wenn sich das Lesezeichen wieder ändert; die App weist bei älteren darauf hin).
 - Seiten-Säuberung (shared/PageSnapshot.js): Fehlt auf einer Seite Inhalt, der in einem aside/nav/footer steckt, gilt nur für Firmenseiten (structure) das Weglassen; für Stellenseiten bleibt er erhalten. Die LinkedIn-Daten (<code>) sind interne Strukturen und können sich ändern; nur die Standorte (groupedLocations) werden daraus gelesen, alles andere kommt aus dem sichtbaren Text.
+
+## Kopfbereich der Anzeige, Arbeitsort, Länderkürzel (Sprint aus WORKFLOW.md)
+- Offen (nicht an der echten LinkedIn-Seite geprüft): Der Kopfbereich (Titel, Firma, Ort, Hybrid, Vollzeit) wird jetzt in
+  ImportJobPage.headerLines() anhand der Zeilen vor dem erkannten Bereich nachgeholt. Vermutete Ursache des Fehlens: Der Satz
+  "...eine(n) Frontend Developer (M/W/D)..." im Anzeigentext gilt als nächster Titel, liegt aber schon im Bereich, daher wird
+  nie bis zum echten Titel erweitert (und das Wachstumslimit blockiert zusätzlich bei langen Seiten). Nur mit nachgebauten
+  Seiten bestätigt. Fehlt der Kopfbereich weiter: Rohdaten der Konsole (Protokoll "Import") prüfen, ob Titel, h1 oder Seitentitel vorkommen.
+- Bewusst nicht geändert: Die Containersuche (findContainer) nimmt weiter den nächsten Titel inklusive der Titel im Bereich. Ein Titel
+  außerhalb als Ziel würde bei der geteilten Ansicht von LinkedIn die Karten der Trefferliste in den Bereich ziehen.
+- Länderkürzel/Land (AnalysisController.completeCountry): fehlt beides, gilt die Browsersprache (de-AT -> A, de-CH -> CH), sonst D/Deutschland;
+  nur für Firmenadresse und Arbeitsort, und nur wenn die Adresse etwas enthält. Weitere Länder in LocationConstants.REGION_CODES ergänzen.
+- Arbeitsort (WorkLocationResolver): "Osnabrück" aus der Kopfzeile wird zu dem Standort, der im Text oder in der Liste "bei/near Osnabrück"
+  genannt wird (Bissendorf, mit Adresse aus der Liste "Orte"). Ohne solchen Hinweis bleibt die Kopfzeile.
+- Quellen: "Import (linkedin.com)" statt "Import (URL)". Ich habe "TLD" als Domain der Adresse verstanden; falls nur ".com" gemeint war, in SourcesTemplate.importName() anpassen.
+- Die Felder "Stellenanzeige" und "Quelle" in SourcesTemplate zeigen weiter "Noch nicht implementiert".
+- Kontakt-Position: Ein Name allein in einer Zeile nimmt weiter die naechste Zeile als Position (ContactExtractor.findRole). Stellenbezeichnungen sind ausgenommen; andere Fremdzeilen (z. B. Firmenname) koennten aehnlich als Position landen, wenn Seiten hintereinander eingefuegt werden.
+- Doppelte Texte: removeAggregates erkennt nur zusammengesetzte Zeilen, deren Teile als eigene Zeilen vorliegen (>= 90 %). Wird derselbe Text einmal als langer Absatz und einmal nur zur Haelfte als Einzelzeilen importiert, bleiben beide. Schwelle in ParserConstants.AGGREGATE_LINE.
+

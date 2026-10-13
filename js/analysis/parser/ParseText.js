@@ -9,6 +9,7 @@ import { ContactExtractor } from "../extractors/ContactExtractor.js"
 import { JobExtractor } from "../extractors/JobExtractor.js"
 import { QualificationExtractor } from "../extractors/QualificationExtractor.js"
 import { BenefitExtractor } from "../extractors/BenefitExtractor.js"
+import { WorkLocationResolver } from "../extractors/WorkLocationResolver.js"
 
 export class ParseText {
     constructor(text) {
@@ -40,14 +41,30 @@ export class ParseText {
         const company = new CompanyExtractor(addressContent, companyContent).extractCompany();
         this.fillCompanyFromHeader(company, sections["general"]?.lines ?? []);
 
+        const job = new JobExtractor(sections, contactContent, this.lines).extractJob();
+        job.workLocation = new WorkLocationResolver(this.lines).resolve(job.workLocation, company.branches?.locations);
+        const contacts = this.dropJobTitleRoles(new ContactExtractor(this.lines).extractContacts(), job.title);
+
         return {
             sections: sections,
             company,
-            contacts: new ContactExtractor(this.lines).extractContacts(),
-            job: new JobExtractor(sections, contactContent, this.lines).extractJob(),
+            contacts,
+            job,
             qualifications: new QualificationExtractor(qualificationLines).extractQualifications(),
             benefits: new BenefitExtractor(sections["benefits"]?.lines??[]).extractBenefits(),
         };
+    }
+
+    /**
+     * Die Position eines Ansprechpartners ist nie die Stellenbezeichnung der Anzeige (steht der Name allein in
+     * einer Zeile direkt vor dem Kopfbereich der nächsten Seite, wäre sonst der Jobtitel seine "Position").
+     * @param {object[]} contacts Gefundene Ansprechpartner.
+     * @param {string} title Erkannte Stellenbezeichnung.
+     * @returns {object[]} Ansprechpartner ohne Stellenbezeichnung als Position.
+     */
+    dropJobTitleRoles(contacts, title) {
+        const same = value => (value ?? "").trim().toLowerCase() === (title ?? "").trim().toLowerCase();
+        return contacts.map(contact => (title && same(contact.role) ? { ...contact, role: "" } : contact));
     }
 
     /**

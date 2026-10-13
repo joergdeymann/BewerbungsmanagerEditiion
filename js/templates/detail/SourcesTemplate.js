@@ -78,9 +78,20 @@ export class SourcesTemplate extends DetailBaseTemplate {
         const imported = (application.importedRawData || []).map(entry => ({
             url: entry.url,
             capturedAt: entry.capturedAt,
-            name: entry.url ? "Import (URL)" : "Import (manuell)"
+            name: this.importName(entry.url)
         }));
 
         return [...references, ...imported];
+    }
+
+    // "Import (linkedin.com)" statt "Import (URL)", wenn die Adresse eine Domain hat.
+    importName(url) {
+        if (!url) return "Import (manuell)";
+
+        try {
+            return `Import (${new URL(url).hostname.replace(/^www\./, "")})`;
+        } catch {
+            return "Import (URL)";
+        }
     }
 }

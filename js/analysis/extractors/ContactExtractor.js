@@ -1,5 +1,6 @@
 import { ContactConstants } from "../../constants/ContactConstants.js";
 import { CompanyConstants } from "../../constants/CompanyConstants.js";
+import { ImportConstants } from "../../constants/ImportConstants.js";
 
 /**
  * Findet Ansprechpartner in einem Anzeigentext über die Anrede
@@ -240,6 +241,7 @@ export class ContactExtractor {
         if (/https?:|www\./i.test(line)) return false;
         if (ContactConstants.LEGAL_FORM_HINT.test(line)) return false;
 
-        return true;
+        // Eine Stellenbezeichnung ("... (m/w/d)") ist keine Position der Person.
+        return !ImportConstants.ANCHOR_GENDER_REGEX.test(line);
     }
 }

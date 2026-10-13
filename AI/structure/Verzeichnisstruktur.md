@@ -50,7 +50,7 @@ AI/
     ├── analysis/         # Parser & Data-Extractor (Regex, Text-Cleaning)
     │   ├── Analyzer.js   # Orchestrierung der Extraktoren
     │   ├── extractors/   # Benefit-, Branch-, Company-, Contact-, Email-, Industry-, Job-, Location-,
-    │   │                 #   Money-, Phone-, PostBox-, Qualification-, Street-, TaskExtractor
+    │   │                 #   Money-, Phone-, PostBox-, Qualification-, Street-, TaskExtractor, WorkLocationResolver
     │   └── parser/       # LineParser, ParseText, RequirementSplitter, SectionParser, SectionPart, TextCleaner
     ├── api/              # Netzwerk-Schnittstellen (UrlImporter.js)
     ├── constants/        # Systemweite Konstanten (Address, Benefit, Branch, Company, Contact, Industry, Job,
@@ -85,7 +85,7 @@ AI/
     │   ├── overview/     # OverviewFilter.js
     │   ├── windows/      # reserviert (leer)
     │   └── work/         # reserviert (nur README.md)
-    ├── utils/            # Hilfsfunktionen (FormatUtils, GlobalUtils, HtmlUtils)
+    ├── utils/            # Hilfsfunktionen (FormatUtils, GlobalUtils, HtmlUtils, TextBlockFormatter)
     └── views/            # Orchestrierung: Template rendern, Events verdrahten
         ├── detail/       # DetailView.js
         ├── edit/         # EditView.js + BaseEditTab und die *EditTab.js (Benefits, Company,
@@ -100,7 +100,8 @@ AI/
 ### 📂 Daten, Tests, Dokumente & System (Ausgeblendet/Ignoriert)
 - `admin/` — Lokale Administrations-Oberfläche (`admin/index.html`, `admin/admin.js`).
 - `testdata/` — Testdaten und Testläufe: `Jobsinput.json` (Eingabedatensätze),
-  `run-analysis-test.mjs` (`npm run test:analysis`), `run-tests.mjs`, `seed-browser.js`,
+  `run-analysis-test.mjs` (`npm run test:analysis`), `run-workflow-test.mjs` (`npm run test:workflow`;
+  Import-Teil nur mit `npm install --no-save jsdom`), `run-tests.mjs`, `seed-browser.js`,
   `readme.md`.
 - `documents/` — Hochgeladene Nutzerdateien (PDFs, JPGs).
 - `dok/` — Unstrukturierte Textnotizen, Entwürfe und Git-Hilfen (kein Code).

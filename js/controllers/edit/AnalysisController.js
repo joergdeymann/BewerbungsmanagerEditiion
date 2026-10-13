@@ -1,4 +1,5 @@
 import { ContactModel } from "../../models/ContactModel.js";
+import { LocationConstants } from "../../constants/LocationConstants.js";
 
 /**
  * Zentrale Schreibstelle der Textanalyse: Das Ergebnis des Parsers wird
@@ -91,6 +92,29 @@ export class AnalysisController {
             country: next.country ?? current.country,
             postBox: next.postBox ?? current.postBox
         };
+        target.address.data = this.completeCountry(target.address.data);
+    }
+
+    /**
+     * Ergänzt fehlendes Länderkürzel und Land einer Adresse (nur wenn die Adresse etwas enthält):
+     * aus dem jeweils anderen Wert, sonst nach den Browsereinstellungen, sonst D / Deutschland.
+     * @param {object} data Adressdaten (flach, siehe AddressModel.data).
+     * @returns {object} Adressdaten mit Länderkürzel und Land.
+     */
+    completeCountry(data) {
+        if (!data.street && !data.zip && !data.city) return data;
+
+        const known = LocationConstants.COUNTRY_NAMES;
+        let zipCountry = data.zipCountry;
+        let country = data.country;
+
+        if (!zipCountry) {
+            zipCountry = LocationConstants.codeForCountry(country)
+                || (country ? "" : LocationConstants.defaultCountryCode());
+        }
+        if (!country) country = known[zipCountry.toUpperCase()] ?? "";
+
+        return { ...data, zipCountry, country };
     }
 
     /**
@@ -125,9 +149,8 @@ export class AnalysisController {
         const own = target.data;
         const company = application.company.address.data;
 
-        if (own.street || own.zip || own.city || own.country) return;
-
-        target.data = company;
+        if (!own.street && !own.zip && !own.city && !own.country) target.data = company;
+        target.data = this.completeCountry(target.data);
     }
 
     /**

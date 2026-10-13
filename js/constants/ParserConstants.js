@@ -669,6 +669,11 @@ export class ParserConstants {
         "teilzeit"
     ];
 
+    // Zusammengesetzte Zeile: Eine lange Zeile (z. B. die Firmenbeschreibung der LinkedIn-Info-Seite als ein Absatz),
+    // die zu mindestens minCoverage aus anderen, kuerzeren Zeilen besteht (z. B. dieselben Saetze und Punkte aus der
+    // Stellenanzeige), ist doppelt und entfaellt. minWords = kuerzeste Zeile, minPieces = Mindestanzahl Teilzeilen.
+    static AGGREGATE_LINE = { minWords: 4, minPieces: 2, minCoverage: 0.9 };
+
     // Muster fuer eine Stellenbezeichnung (Jobtitel).
     static JOB_TITLE_HINTS = [
         /\(\s*m\s*\/\s*w\s*\/\s*[dx]\s*\)/iu,

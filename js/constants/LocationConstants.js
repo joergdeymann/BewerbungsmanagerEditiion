@@ -59,6 +59,29 @@ export class LocationConstants {
         EST: 'Estland'
     };
 
+    // Region der Browsersprache (z. B. "de-AT" -> "AT") -> Länderkürzel; nur die unterstützten Länder.
+    static REGION_CODES = { DE: 'D', AT: 'A', CH: 'CH' };
+
+    // Länderkürzel zu einem ausgeschriebenen Ländernamen ("Deutschland" -> "D"), "" wenn unbekannt.
+    static codeForCountry(name) {
+        const wanted = (name ?? '').trim().toLowerCase();
+        const entry = Object.entries(LocationConstants.COUNTRY_NAMES)
+            .find(([, countryName]) => countryName.toLowerCase() === wanted);
+
+        return entry ? entry[0] : '';
+    }
+
+    // Länderkürzel nach den Browsereinstellungen (navigator.languages), sonst "D" (Deutschland).
+    static defaultCountryCode(nav = globalThis.navigator) {
+        const tags = [...(nav?.languages ?? []), nav?.language].filter(Boolean);
+
+        for (const tag of tags) {
+            const code = LocationConstants.REGION_CODES[(tag.split('-')[1] ?? '').toUpperCase()];
+            if (code) return code;
+        }
+        return LocationConstants.REGION_CODES.DE;
+    }
+
     // Liefert zu einem Länderkürzel den ausgeschriebenen Namen (Fallback: Default).
     static countryName(code) {
         if (!code) return LocationConstants.DEFAULT_COUNTRY;

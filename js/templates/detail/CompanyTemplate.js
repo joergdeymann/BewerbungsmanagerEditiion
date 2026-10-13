@@ -1,11 +1,13 @@
 import { DetailBaseTemplate } from "./DetailBaseTemplate.js";
 import { HtmlUtils } from "../../utils/HtmlUtils.js";
 import { FormatUtils } from "../../utils/FormatUtils.js";
+import { TextBlockFormatter } from "../../utils/TextBlockFormatter.js";
 import { LegalFormConstants } from "../../constants/LegalFormConstants.js";
 
 export class CompanyTemplate extends DetailBaseTemplate {
 
     render(application) {
+        const description = application.company?.description;
 
         return `
             <section class="subsection-display">
@@ -90,7 +92,7 @@ export class CompanyTemplate extends DetailBaseTemplate {
                     </div>
                     <div class="field">
                         <label>Selbstbeschreibung</label>
-                        <p>${HtmlUtils.escape(application.company?.description || "—")}</p>
+                        <p class="text-content">${description ? new TextBlockFormatter().toHtml(description) : "—"}</p>
                     </div>
                 </section>
             </section>

@@ -36,7 +36,8 @@ export class ImportJobPage {
 
         const { container, source } = this.findContainer(doc, pageUrl);
 
-        const lines = this.cutIgnored(this.repairTruncated(this.dropJunk(this.toLines(container)), fullLines));
+        const rawLines = this.dropJunk(this.toLines(container));
+        const lines = this.cutIgnored([...this.headerLines(doc, rawLines), ...this.repairTruncated(rawLines, fullLines)]);
         const links = this.collectLinks(container, pageUrl);
         return {
             url: pageUrl, source, lines, text: lines.join("\n"), links,
@@ -173,6 +174,58 @@ export class ImportJobPage {
 
         const start = phrase ? "Details zum Jobangebot" : (titles[0] ? "Titel" : "Überschrift");
         return { container, source: `${start} + ${added} Erweiterung(en)` };
+    }
+
+    /**
+     * Holt den Kopfbereich der Anzeige (Titel, Firma, Ort, Arbeitsmodell, Beschäftigungsart), wenn er nicht
+     * im erkannten Bereich liegt: ab der letzten Titelzeile vor dem Bereich bis zu dessen Anfang.
+     * @param {Document} doc
+     * @param {string[]} rawLines Zeilen des erkannten Bereichs.
+     * @returns {string[]} Zeilen des Kopfbereichs (leer, wenn der Titel schon im Bereich steht).
+     */
+    headerLines(doc, rawLines) {
+        if (rawLines.length < 2) return [];
+
+        const hints = this.titleHints(doc);
+        if (rawLines.slice(0, ImportConstants.HEADER_SCAN).some(line => this.isTitleLine(line, hints))) return [];
+
+        const all = this.dropJunk(this.toLines(doc.body));
+        const start = all.findIndex((line, i) => line === rawLines[0] && all[i + 1] === rawLines[1]);
+        if (start <= 0) return this.titleFromDocument(hints);
+
+        // Erst sichere Treffer (h1, Seitentitel), dann "(m/w/d)": Karten anderer Stellen in einer Trefferliste haben meist nur Letzteres.
+        for (const strict of [true, false]) {
+            for (let i = start - 1; i >= Math.max(0, start - ImportConstants.HEADER_LOOKBACK); i--) {
+                if (this.isTitleLine(all[i], hints, strict)) return all.slice(i, start).slice(0, ImportConstants.HEADER_MAX_LINES);
+            }
+        }
+        return this.titleFromDocument(hints);
+    }
+
+    /** Titel-Hinweise der Seite: Text aller h1 und erster Teil des Seitentitels ("Titel | Firma | LinkedIn"). */
+    titleHints(doc) {
+        const h1 = new Set([...doc.body.querySelectorAll("h1")].map(element => element.textContent.replace(/\s+/g, " ").trim()));
+        const segment = (doc.title ?? "").split(ImportConstants.TITLE_SEPARATOR_REGEX)[0].replace(/^\(\d+\)\s*/, "").trim();
+        return { h1, segment };
+    }
+
+    /**
+     * Eine Titelzeile ist kurz und ein h1, der Seitentitel oder (nicht strikt) hat eine Geschlechtsangabe (m/w/d).
+     * @param {string} line
+     * @param {{h1: Set<string>, segment: string}} hints
+     * @param {boolean} [strict] Nur h1 und Seitentitel gelten.
+     */
+    isTitleLine(line, hints, strict = false) {
+        const value = (line ?? "").trim();
+        if (!value || value.length > ImportConstants.TITLE_LINE_MAX_CHARS) return false;
+
+        const sure = hints.h1.has(value) || (!!hints.segment && value.toLowerCase() === hints.segment.toLowerCase());
+        return sure || (!strict && ImportConstants.ANCHOR_GENDER_REGEX.test(value));
+    }
+
+    /** Letzter Ausweg: ein eindeutiger Stellentitel (mit m/w/d) aus dem Seitentitel. */
+    titleFromDocument(hints) {
+        return ImportConstants.ANCHOR_GENDER_REGEX.test(hints.segment) ? [hints.segment] : [];
     }
 
     /** Stellentitel: Texte mit "(m/w/d)" und alle h1, außerhalb von Navigation und Fußbereich. */
