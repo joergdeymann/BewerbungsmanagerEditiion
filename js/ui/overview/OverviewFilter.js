@@ -58,16 +58,32 @@ export class OverviewFilter {
         return this.getStatus(application) === status;
     }
 
+    /**
+     * Arbeitstage-Typ (Vor Ort, Hybrid, Homeoffice, Remote) der Stelle.
+     * Ältere Datensätze führen job.workModel noch als Liste von Namen.
+     */
     matchesWorkModel(application, workModel) {
         if (!workModel) return true;
 
-       return (application.job?.workModel || []).includes(workModel);
+        const work = application.job?.workModel;
+        const types = Array.isArray(work)
+            ? work
+            : (work?.workDays || []).map(day => day.type);
+
+        return types.includes(workModel);
     }
 
+    /**
+     * Art der Anstellung (workModel.type). Ältere Datensätze führen sie noch
+     * als job.employmentType.
+     */
     matchesEmploymentType(application, employmentType) {
         if (!employmentType) return true;
 
-        return application.job?.employmentType === employmentType;
+        const job = application.job;
+        const types = [...(job?.workModel?.type || []), job?.employmentType].filter(Boolean);
+
+        return types.includes(employmentType);
     }
 
     sort(applications, sort) {

@@ -1,7 +1,4 @@
 export class JobConstants {
-    // Zeile "Arbeitsmodell: Hybrid" (z. B. LinkedIn-Info-Seite des Unternehmens).
-    static WORK_MODEL_LABEL_REGEX = /^arbeitsmodell\s*:\s*(.+)$/i;
-
     // Sektionen, in denen die Stellenbezeichnung stehen kann (Reihenfolge = Prioritaet).
     static TITLE_SECTIONS = ["companyInformation", "general", "team", "contact"];
 
@@ -27,22 +24,6 @@ export class JobConstants {
         ANGENOMMEN: "ANGENOMMEN",
         ABGELEHNT: "ABGELEHNT"
     };
-
-    static WORK_MODEL = [
-        "Vor Ort",
-        "Hybrid",
-        "Remote",
-        "Homeoffice"
-    ];
-
-    static EMPLOYMENT_TYPE = [
-        "Vollzeit",
-        "Teilzeit",
-        "Werkstudent",
-        "Praktikum",
-        "Ausbildung",
-        "Freelance / Honorarbasis"
-    ];
 
     static STATUS_CLASS = {
         ENTWURF: "status-draft",

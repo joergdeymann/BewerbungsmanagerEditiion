@@ -127,13 +127,31 @@ export class AnalysisController {
 
         if (job.title) application.job.title = job.title;
         if (job.referenceNumber) application.job.referenceNumber = job.referenceNumber;
-        if (job.employmentType) application.job.employmentType = job.employmentType;
-        if (job.workModel?.length) application.job.workModel = job.workModel;
+        this.applyWorkModel(application.job.workModel, job.workModel);
         if (job.tags?.length) application.job.tags = job.tags;
         if (job.tasks?.length) application.job.tasks = job.tasks;
         if (job.wage) application.job.wage.data = job.wage;
 
         this.applyWorkLocation(application, job);
+    }
+
+    /**
+     * Übernimmt das erkannte Arbeitsmodell. Nur gefundene Teile überschreiben das Model;
+     * leere Ergebnisse lassen bereits erfasste Werte unverändert.
+     * @param {WorkModel} target Ziel-Model (application.job.workModel).
+     * @param {{type?: string[], workTime?: string[], workDays?: object[], notes?: string[]}} [found]
+     *        Analysierte Daten passend zu WorkModel.data.
+     */
+    applyWorkModel(target, found) {
+        if (!found) return;
+
+        const next = target.data;
+        if (found.type?.length) next.type = found.type;
+        if (found.workTime?.length) next.workTime = found.workTime;
+        if (found.workDays?.length) next.workDays = found.workDays;
+        if (found.notes?.length) next.notes = found.notes;
+
+        target.data = next;
     }
 
     /**

@@ -27,11 +27,16 @@ export class JobTemplate extends DetailBaseTemplate {
                     </div>
                     <div class="field">
                         <label>Beschäftigungsart</label>
-                        <p>${HtmlUtils.escape(application.job?.employmentType || "—")}</p>
+                        <p>${HtmlUtils.escape((application.job?.workModel?.type || []).join(", ") || "—")}</p>
+                    </div>
+                    <div class="field">
+                        <label>Arbeitszeit</label>
+                        <p>${HtmlUtils.escape((application.job?.workModel?.workTime || []).join(", ") || "—")}</p>
                     </div>
                     <div class="field">
                         <label>Arbeitsmodell</label>
-                        <p>${HtmlUtils.escape((application.job?.workModel || []).join(", ") || "—")}</p>
+                        <p>${HtmlUtils.escape((application.job?.workModel?.workDays || []).map(day => day.label).join(", ") || "—")}</p>
+                        ${this.workNotes(application)}
                     </div>
                     <div class="field">
                         <label>Gehalt</label>
@@ -84,6 +89,19 @@ export class JobTemplate extends DetailBaseTemplate {
             <p class="muted">${HtmlUtils.escape(wage.holidayText || "")}</p>
             ${note ? `<p class="muted">${HtmlUtils.escape(note)}</p>` : ""}
         `;
+    }
+
+    /**
+     * Hinweise zum Arbeitsmodell (Originalwortlaut), je Hinweis eine Zeile.
+     * @param {object} application Application-Model.
+     * @returns {string} HTML oder "".
+     */
+    workNotes(application) {
+        const notes = application.job?.workModel?.notes ?? [];
+
+        return notes
+            .map(note => `<p class="muted">${HtmlUtils.escape(note)}</p>`)
+            .join("");
     }
 
     // Adresse der Arbeitsstelle - fehlen Angaben, wird die Firmenadresse verwendet.

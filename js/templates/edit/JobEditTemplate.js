@@ -1,4 +1,4 @@
-import { JobConstants } from "../../constants/JobConstants.js";
+import { WorkModelConstants } from "../../constants/WorkModelConstants.js";
 
 export class JobEditTemplate {
 
@@ -11,22 +11,23 @@ export class JobEditTemplate {
                     <div class="field"><label>Kennziffer</label><input id="referenceNumber"></div>
                     <div class="field"></div>
 
-                    <div class="field"><label>Beschäftigungsart</label>
-                        <select id="employmentType">
-                            <option value="">– bitte wählen –</option>
-                            ${JobConstants.EMPLOYMENT_TYPE.map(type => `<option value="${type}">${type}</option>`).join("")}
-                        </select>
+                    <div class="field field-ultra-wide">
+                        <label>Beschäftigungsart</label>
+                        ${this.checkboxList("work-type-option", WorkModelConstants.TYPE)}
                     </div>
-                    <div class="field field-wide">
-                        <label>Arbeitsmodell</label>
-                        <div class="checkbox-list">
-                            ${JobConstants.WORK_MODEL.map(option => `
-                                <label class="checkbox-item">
-                                    <input type="checkbox" class="work-model-option" value="${option}">
-                                    ${option}
-                                </label>
-                            `).join("")}
+                    <div class="field field-ultra-wide">
+                        <label>Arbeitszeit</label>
+                        ${this.checkboxList("work-time-option", WorkModelConstants.WORK_TIME)}
+                    </div>
+                    <div class="field field-ultra-wide">
+                        <label>Arbeitsmodell (Arbeitstage pro Woche)</label>
+                        <div class="work-days">
+                            ${WorkModelConstants.WORK_DAY_TYPES.map(type => this.workDayRow(type)).join("")}
                         </div>
+                    </div>
+                    <div class="field field-ultra-wide">
+                        <label>Hinweise zum Arbeitsmodell (Zeilengetrennt, kurz)</label>
+                        <textarea id="workNotes" rows="3"></textarea>
                     </div>
                     <div class="field"><label>Gehalt (von)</label><input id="salaryFrom" type="number" min="0" step="100"></div>
                     <div class="field"><label>Gehalt (bis)</label><input id="salaryTo" type="number" min="0" step="100"></div>
@@ -52,6 +53,51 @@ export class JobEditTemplate {
                     <div class="field field-ultra-wide"><label>Aufgaben (Zeilengetrennt)</label><textarea id="tasks" rows="6"></textarea></div>
                 </div>
             </section>
+        `;
+    }
+
+    /**
+     * Liste von Checkboxen (Mehrfachauswahl).
+     * @param {string} cssClass Klasse der Checkboxen.
+     * @param {string[]} options Auswahlwerte.
+     * @returns {string} HTML.
+     */
+    checkboxList(cssClass, options) {
+        return `
+            <div class="checkbox-list">
+                ${options.map(option => `
+                    <label class="checkbox-item">
+                        <input type="checkbox" class="${cssClass}" value="${option}">
+                        ${option}
+                    </label>
+                `).join("")}
+            </div>
+        `;
+    }
+
+    /**
+     * Eine Zeile der Arbeitstage: Typ (an/aus) mit Tagen gesamt, vor Ort und remote.
+     * @param {string} type Typ aus WorkModelConstants.WORK_DAY_TYPES.
+     * @returns {string} HTML.
+     */
+    workDayRow(type) {
+        const max = WorkModelConstants.MAX_DAYS;
+        const input = (name, label) => `
+            <label class="work-day__field">${label}
+                <input type="number" class="work-day__input work-day__${name}" min="0" max="${max}" step="1">
+            </label>
+        `;
+
+        return `
+            <div class="work-day" data-type="${type}">
+                <label class="checkbox-item work-day__type">
+                    <input type="checkbox" class="work-day__enabled">
+                    ${type}
+                </label>
+                ${input("days", "Tage")}
+                ${input("on-site", "vor Ort")}
+                ${input("remote", "zuhause")}
+            </div>
         `;
     }
 }

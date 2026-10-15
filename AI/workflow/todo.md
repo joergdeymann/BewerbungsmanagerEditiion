@@ -2,7 +2,7 @@
 
 Sammlung zurückgestellter Punkte und für später geplanter Funktionen.
 Erledigtes steht nicht mehr hier, sondern in `AI/log/log.md`.
-Stand: 2026-10-13
+Stand: 2026-10-13 (ArbeitsModel umgesetzt)
 
 ## Quellen (SourcesTemplate.js / Datenerfassung)
 - `SourcesTemplate.js`: Die Felder "Stellenanzeige" (Link zur Anzeige selbst) und "Quelle"
@@ -17,25 +17,6 @@ Stand: 2026-10-13
   (keine Live-Ableitung aus Firmenwebsite/Bildern).
 - Quellen-Liste: Sortierung per Spaltenüberschrift ist angelegt; die Filterfunktion
   (Suchbegriff) ist noch zu prüfen bzw. umzusetzen (siehe `workflow01.md`, Schritt 1.5).
-
-## Arbeitsmodell (WorkModel.js / ArbeitsModel)
-- Neues Model `WorkModel.js` (deutsch: ArbeitsModel), das alle Arbeitsmodelle einer Stelle
-  erfasst, statt nur der Tags in `job.workModel`:
-  - Schichtarbeit (ja/nein, Schichtform wenn genannt, z. B. Früh-/Spät-/Nachtschicht, Wechselschicht)
-  - Homeoffice / Remote (ja/nein, vollständig remote)
-  - x Tage pro Woche vor Ort
-  - x Tage pro Woche zuhause (Homeoffice)
-  - Bedingungen und Hinweise als Text (z. B. "nach erfolgreicher Probezeit 2 Tage pro Woche im Homeoffice")
-  - Gleitzeit / Teilzeit / Vollzeit bleiben in `employmentType`.
-- Beispiel INSIDE M2M (Info-Seite): "Arbeitsmodell: Hybrid", "Übliche Anwesenheit vor Ort:
-  3 Tage pro Woche", "nach der Probezeit 2 Tage pro Woche im Homeoffice, einige Bereiche mit
-  täglicher Präsenz".
-- Quellen: Zeile "Arbeitsmodell: ...", "Übliche Anwesenheit vor Ort", Fließtext
-  ("2 Tage pro Woche im Homeoffice"), Stichwörter (Schicht, Homeoffice, Remote, Hybrid).
-  Konstanten in `WorkModelConstants.js`, Extraktion in `WorkModelExtractor.js`.
-- Danach `AppRecord.json`, `Datenstruktur.md`, `Jobsinput.json` und Reiter/Detailansicht der
-  Stelle anpassen. Erst auf Anweisung umsetzen (Models nur auf Anweisung ändern).
-- Zu klären: "Übliche Anwesenheit vor Ort" und der Homeoffice-Hinweis gehören in das WorkModel.
 
 ## Legende / History (ApplicationTemplate.js)
 - "Neu angelegt" und "Antwort der Firma erhalten" werden beim Rendern aus `createDate`/`statusHistory`

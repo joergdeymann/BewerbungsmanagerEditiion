@@ -87,8 +87,15 @@ function buildTestRecord(recordIndex) {
         country: "Deutschland",
         postBox: ""
     };
-    app.job.employmentType = "Vollzeit";
-    app.job.workModel = ["Vor Ort", "Hybrid"];
+    app.job.workModel.data = {
+        type: ["Vollzeit"],
+        workTime: ["Gleitzeit"],
+        workDays: [
+            { type: "Vor Ort", days: 5, onSite: 5, remote: 0 },
+            { type: "Hybrid", days: 5, onSite: 3, remote: 2 }
+        ],
+        notes: ["2 Tage pro Woche Homeoffice nach erfolgreicher Probezeit"]
+    };
     app.job.wage.data = {
         yearly: { min: 40000 + recordIndex * 1000, max: 45000 + recordIndex * 1000 },
         monthly: null,

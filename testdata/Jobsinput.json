@@ -1,10 +1,10 @@
 {
     "app": [
         {
-            "id": "a47c8127-a62d-4d37-a42e-57bacbd609c3",
-            "createDate": "2026-10-04T09:25:34.529Z",
+            "id": "f58f40ab-e5b6-4a6d-bb1f-19b18004f40f",
+            "createDate": "2026-10-14T04:30:40.452Z",
             "status": "BEWORBEN",
-            "updatedAt": "2026-10-04T09:25:34.530Z",
+            "updatedAt": "2026-10-14T04:30:40.453Z",
             "job": {
                 "companyId": 1,
                 "contactId": 1,
@@ -18,11 +18,31 @@
                     "country": "Deutschland",
                     "postBox": ""
                 },
-                "employmentType": "Vollzeit",
-                "workModel": [
-                    "Vor Ort",
-                    "Hybrid"
-                ],
+                "workModel": {
+                    "type": [
+                        "Vollzeit"
+                    ],
+                    "workTime": [
+                        "Gleitzeit"
+                    ],
+                    "workDays": [
+                        {
+                            "type": "Vor Ort",
+                            "days": 5,
+                            "onSite": 5,
+                            "remote": 0
+                        },
+                        {
+                            "type": "Hybrid",
+                            "days": 5,
+                            "onSite": 3,
+                            "remote": 2
+                        }
+                    ],
+                    "notes": [
+                        "2 Tage pro Woche Homeoffice nach erfolgreicher Probezeit"
+                    ]
+                },
                 "wage": {
                     "yearly": {
                         "min": 41000,
@@ -63,6 +83,13 @@
                     "country": "Deutschland",
                     "postBox": ""
                 },
+                "branches": {
+                    "locations": [
+                        "Standort 1 – Musterweg 1, Quakenbrück, Deutschland 49611",
+                        "Standort 2 – Musterweg 2, Quakenbrück, Deutschland 49612"
+                    ],
+                    "count": 3
+                },
                 "website": "https://firma1.example.com",
                 "email": "",
                 "phone": "",
@@ -76,13 +103,6 @@
                     "Spezialgebiet2-1",
                     "Spezialgebiet3-1"
                 ],
-                "branches": {
-                    "locations": [
-                        "Standort 1 – Musterweg 1, Quakenbrück, Deutschland 49611",
-                        "Standort 2 – Musterweg 2, Quakenbrück, Deutschland 49612"
-                    ],
-                    "count": 3
-                },
                 "images": [
                     "bild1-1.png",
                     "bild2-1.png",
@@ -92,7 +112,7 @@
             },
             "contacts": [
                 {
-                    "id": "22ca6234-5eda-4440-abfe-973284304912",
+                    "id": "0f920ce8-09a6-4a1d-ab83-006124ea6d8c",
                     "role": "HR",
                     "name": {
                         "salutation": "Herr",
@@ -105,7 +125,7 @@
                     "phone": "+49 30 11111"
                 },
                 {
-                    "id": "5ad74164-7032-427e-8a3c-4bda70abe643",
+                    "id": "5f499a9e-46ba-4a43-98e9-1fbc8cca344d",
                     "role": "Fachbereich",
                     "name": {
                         "salutation": "Frau",
@@ -118,7 +138,7 @@
                     "phone": "+49 30 11112"
                 },
                 {
-                    "id": "aeac43b1-38fd-4392-806f-76574d2128c5",
+                    "id": "30ef158c-b78c-49f8-980e-b3fbfa857b06",
                     "role": "Fachbereich",
                     "name": {
                         "salutation": "Herr",
@@ -186,24 +206,24 @@
                 "appliedAt": "2026-09-01",
                 "channel": "portal",
                 "coverLetter": {
-                    "id": "770987f0-0c88-4891-8688-5862c9bc4c5b",
+                    "id": "a00d5970-d364-4454-af88-f6c37df5d8cd",
                     "originalName": "Anschreiben_Firma1.pdf",
                     "link": "/documents/anschreiben-1.pdf"
                 },
                 "resume": [
                     {
-                        "id": "c85bf7e4-7850-4bb7-a3ee-0e5af36f48b2",
+                        "id": "02a853a1-5f66-43df-9d00-05b9d3e9f114",
                         "originalName": "Lebenslauf_v1.pdf",
                         "link": "/documents/lebenslauf-1-1.pdf"
                     },
                     {
-                        "id": "001ebeab-66fa-4e4c-8839-3ec70ec6cc69",
+                        "id": "20a6e4be-66b7-40f9-b4e4-7c23a47b5c0a",
                         "originalName": "Lebenslauf_v2.pdf",
                         "link": "/documents/lebenslauf-1-2.pdf"
                     }
                 ],
                 "emailCoverLetter": {
-                    "id": "a2400277-55a7-4255-be30-5ab8ebb4221c",
+                    "id": "56d082f3-12e1-4d6a-ac4f-c97cadd5c4ab",
                     "originalName": "Mailanschreiben_Firma1.pdf",
                     "link": "/documents/mailanschreiben-1.pdf"
                 },
@@ -227,7 +247,7 @@
                 ],
                 "history": [
                     {
-                        "id": "85cf2be6-ece8-49e2-b499-59d51f850947",
+                        "id": "892863a6-498c-4d8e-8547-7a96e5062a56",
                         "channel": "portal",
                         "entry": {
                             "date": "2026-09-01",
@@ -239,7 +259,7 @@
                         }
                     },
                     {
-                        "id": "3a20b59e-b3e9-4402-aae9-e59c7fde5c31",
+                        "id": "90fba0ff-23d0-4558-819b-64c867e2d216",
                         "channel": "email",
                         "entry": {
                             "date": "2026-09-02",
@@ -255,7 +275,7 @@
                         }
                     },
                     {
-                        "id": "54fbfe23-b13c-4e04-acd0-d04b1b91e528",
+                        "id": "fcc64ee7-b1bd-4259-9b0f-6d545f561fb2",
                         "channel": "phone",
                         "entry": {
                             "date": "2026-09-03",
@@ -266,7 +286,7 @@
                         }
                     },
                     {
-                        "id": "42710d9a-b643-4a54-9006-4bfbfd5e8aa6",
+                        "id": "841a48a1-76c2-4045-8624-93abe8879824",
                         "channel": "personal",
                         "entry": {
                             "date": "2026-09-04",
@@ -278,21 +298,21 @@
             },
             "references": [
                 {
-                    "id": "ea2b3e10-88b4-43c9-a028-f3d142bb3c45",
+                    "id": "02e29643-aa57-4035-8f10-10f22c76ea39",
                     "url": "https://quelle1-1.example.com",
                     "capturedAt": "2026-09-01",
                     "content": "Inhalt der Quelle 1 (1)",
                     "name": "Quelle 1 (1)"
                 },
                 {
-                    "id": "a2a2ad0f-2923-442c-8e53-ef93d74ec36b",
+                    "id": "4580f9e4-7a52-48e2-8486-d9ed38d2ee43",
                     "url": "https://quelle2-1.example.com",
                     "capturedAt": "2026-09-01",
                     "content": "Inhalt der Quelle 2 (1)",
                     "name": "Quelle 2 (1)"
                 },
                 {
-                    "id": "4e93c7e9-ef56-4a99-b1c4-b93462028afe",
+                    "id": "247dcbca-ae2c-430f-988e-65212e48f25a",
                     "url": "https://quelle3-1.example.com",
                     "capturedAt": "2026-09-01",
                     "content": "Inhalt der Quelle 3 (1)",
@@ -306,19 +326,19 @@
             ],
             "importedRawData": [
                 {
-                    "id": "16c2e4f0-526d-456f-981d-05eb86b55a33",
+                    "id": "9cb6621a-6e22-4ccd-a260-67eb6ffddde9",
                     "url": "https://quelle1-1.example.com/stellenanzeige",
                     "capturedAt": "2026-09-01",
                     "content": "Rohdatenzeile 1 (1)"
                 },
                 {
-                    "id": "95fe7fc7-cd96-4135-9917-cf55a5e4dc4f",
+                    "id": "fabc7073-6463-4e5b-895a-f9c87bf4244e",
                     "url": "https://quelle2-1.example.com/stellenanzeige",
                     "capturedAt": "2026-09-02",
                     "content": "Rohdatenzeile 2 (1)"
                 },
                 {
-                    "id": "93f672d7-4024-4993-a878-b0d0b652c3c8",
+                    "id": "57b3c6bd-4b17-4a68-aa39-4148e684b6da",
                     "url": "https://quelle3-1.example.com/stellenanzeige",
                     "capturedAt": "2026-09-03",
                     "content": "Rohdatenzeile 3 (1)"
@@ -326,10 +346,10 @@
             ]
         },
         {
-            "id": "a25792c4-f9ea-42d0-a7df-bdcad95152a7",
-            "createDate": "2026-10-04T09:25:34.535Z",
+            "id": "0f52a5ff-6e12-4850-b71d-5d3fea167fa3",
+            "createDate": "2026-10-14T04:30:40.455Z",
             "status": "BEWORBEN",
-            "updatedAt": "2026-10-04T09:25:34.535Z",
+            "updatedAt": "2026-10-14T04:30:40.456Z",
             "job": {
                 "companyId": 2,
                 "contactId": 2,
@@ -343,11 +363,31 @@
                     "country": "Deutschland",
                     "postBox": ""
                 },
-                "employmentType": "Vollzeit",
-                "workModel": [
-                    "Vor Ort",
-                    "Hybrid"
-                ],
+                "workModel": {
+                    "type": [
+                        "Vollzeit"
+                    ],
+                    "workTime": [
+                        "Gleitzeit"
+                    ],
+                    "workDays": [
+                        {
+                            "type": "Vor Ort",
+                            "days": 5,
+                            "onSite": 5,
+                            "remote": 0
+                        },
+                        {
+                            "type": "Hybrid",
+                            "days": 5,
+                            "onSite": 3,
+                            "remote": 2
+                        }
+                    ],
+                    "notes": [
+                        "2 Tage pro Woche Homeoffice nach erfolgreicher Probezeit"
+                    ]
+                },
                 "wage": {
                     "yearly": {
                         "min": 42000,
@@ -388,6 +428,13 @@
                     "country": "Deutschland",
                     "postBox": ""
                 },
+                "branches": {
+                    "locations": [
+                        "Standort 1 – Musterweg 1, Quakenbrück, Deutschland 49611",
+                        "Standort 2 – Musterweg 2, Quakenbrück, Deutschland 49612"
+                    ],
+                    "count": 3
+                },
                 "website": "https://firma2.example.com",
                 "email": "",
                 "phone": "",
@@ -401,13 +448,6 @@
                     "Spezialgebiet2-2",
                     "Spezialgebiet3-2"
                 ],
-                "branches": {
-                    "locations": [
-                        "Standort 1 – Musterweg 1, Quakenbrück, Deutschland 49611",
-                        "Standort 2 – Musterweg 2, Quakenbrück, Deutschland 49612"
-                    ],
-                    "count": 3
-                },
                 "images": [
                     "bild1-2.png",
                     "bild2-2.png",
@@ -417,7 +457,7 @@
             },
             "contacts": [
                 {
-                    "id": "eca1c187-a70b-426d-91b6-fc576a0e5065",
+                    "id": "7b31442d-24f0-4fad-9c0e-300952831091",
                     "role": "HR",
                     "name": {
                         "salutation": "Herr",
@@ -430,7 +470,7 @@
                     "phone": "+49 30 11121"
                 },
                 {
-                    "id": "1eeb23ef-0909-4b84-913f-687ac02c4cca",
+                    "id": "09284e81-6092-4e40-b799-bbdc99cb8320",
                     "role": "Fachbereich",
                     "name": {
                         "salutation": "Frau",
@@ -443,7 +483,7 @@
                     "phone": "+49 30 11122"
                 },
                 {
-                    "id": "3f8a4418-2e4c-4858-b4a2-c474dfece19b",
+                    "id": "f1324639-874a-4031-a6d4-b2e8ab089145",
                     "role": "Fachbereich",
                     "name": {
                         "salutation": "Herr",
@@ -511,24 +551,24 @@
                 "appliedAt": "2026-09-01",
                 "channel": "portal",
                 "coverLetter": {
-                    "id": "2b891738-98d2-442d-9b93-16e33f1daf5b",
+                    "id": "06f0359f-1877-4dee-9a1a-bae3e84bca84",
                     "originalName": "Anschreiben_Firma2.pdf",
                     "link": "/documents/anschreiben-2.pdf"
                 },
                 "resume": [
                     {
-                        "id": "d3cda303-f81c-4616-bbf5-30af462a5974",
+                        "id": "9be3e3c6-2cfc-49fa-ba6c-18cd8fb12041",
                         "originalName": "Lebenslauf_v1.pdf",
                         "link": "/documents/lebenslauf-2-1.pdf"
                     },
                     {
-                        "id": "8fbeadd2-35cf-45dc-9b75-0d9c4c3ac51a",
+                        "id": "3e3959de-6d56-48bf-940b-21b96a8829e8",
                         "originalName": "Lebenslauf_v2.pdf",
                         "link": "/documents/lebenslauf-2-2.pdf"
                     }
                 ],
                 "emailCoverLetter": {
-                    "id": "bc82eb2c-b655-4748-98e9-d67c7ec411ed",
+                    "id": "61f37df1-8047-42e9-9576-7e30fc3c38d9",
                     "originalName": "Mailanschreiben_Firma2.pdf",
                     "link": "/documents/mailanschreiben-2.pdf"
                 },
@@ -552,7 +592,7 @@
                 ],
                 "history": [
                     {
-                        "id": "56469af6-3f8a-483b-981f-09142c1d7ceb",
+                        "id": "846802cf-a198-4e5d-ac40-21766a8b61a7",
                         "channel": "portal",
                         "entry": {
                             "date": "2026-09-01",
@@ -564,7 +604,7 @@
                         }
                     },
                     {
-                        "id": "90bc0b77-3434-435a-9793-a57c1df9cfaa",
+                        "id": "446bf638-9800-4393-a4bb-e4bc767fd886",
                         "channel": "email",
                         "entry": {
                             "date": "2026-09-02",
@@ -580,7 +620,7 @@
                         }
                     },
                     {
-                        "id": "6862478a-3ecf-443b-8b4d-66bef08462e9",
+                        "id": "50e37ace-e550-4084-b16f-be9497c652d0",
                         "channel": "phone",
                         "entry": {
                             "date": "2026-09-03",
@@ -591,7 +631,7 @@
                         }
                     },
                     {
-                        "id": "04c0ed95-4f64-4bb5-a35b-85e599b0faad",
+                        "id": "9200ad9f-ca67-4e9a-b6d6-0526fc0dd8f3",
                         "channel": "personal",
                         "entry": {
                             "date": "2026-09-04",
@@ -603,21 +643,21 @@
             },
             "references": [
                 {
-                    "id": "8a0b551b-5557-4aeb-9980-8e6fada9a0ec",
+                    "id": "a7789c27-d595-45e5-8793-6c3204e71e67",
                     "url": "https://quelle1-2.example.com",
                     "capturedAt": "2026-09-01",
                     "content": "Inhalt der Quelle 1 (2)",
                     "name": "Quelle 1 (2)"
                 },
                 {
-                    "id": "745c6649-f514-4045-a277-88789785a857",
+                    "id": "66491b85-910c-4243-822d-fd70c7c0e875",
                     "url": "https://quelle2-2.example.com",
                     "capturedAt": "2026-09-01",
                     "content": "Inhalt der Quelle 2 (2)",
                     "name": "Quelle 2 (2)"
                 },
                 {
-                    "id": "4dcd350e-744f-45ad-9a2e-d1bab7e9433a",
+                    "id": "e6531c7c-2e27-4b9d-9099-01bbecc5d7a2",
                     "url": "https://quelle3-2.example.com",
                     "capturedAt": "2026-09-01",
                     "content": "Inhalt der Quelle 3 (2)",
@@ -631,19 +671,19 @@
             ],
             "importedRawData": [
                 {
-                    "id": "a741963e-b474-427c-95a8-0170adff6f88",
+                    "id": "4b1a66c2-af64-4019-9a15-72c22d3caa73",
                     "url": "https://quelle1-2.example.com/stellenanzeige",
                     "capturedAt": "2026-09-01",
                     "content": "Rohdatenzeile 1 (2)"
                 },
                 {
-                    "id": "667e479f-7a21-48aa-b668-1c5c96fe190c",
+                    "id": "ab9894f0-961c-409d-93b8-98b9f35239ed",
                     "url": "https://quelle2-2.example.com/stellenanzeige",
                     "capturedAt": "2026-09-02",
                     "content": "Rohdatenzeile 2 (2)"
                 },
                 {
-                    "id": "2d0010f0-5fd9-48a5-a496-8cde636e785d",
+                    "id": "3166fc9c-5bd6-4148-a5aa-3a19f0ef87b4",
                     "url": "https://quelle3-2.example.com/stellenanzeige",
                     "capturedAt": "2026-09-03",
                     "content": "Rohdatenzeile 3 (2)"
@@ -651,10 +691,10 @@
             ]
         },
         {
-            "id": "0d662bb4-8fbf-4d86-bf13-c968a6f81783",
-            "createDate": "2026-10-04T09:25:34.535Z",
+            "id": "a47feb6f-4cbf-4969-8cbe-57c80d4967a5",
+            "createDate": "2026-10-14T04:30:40.456Z",
             "status": "BEWORBEN",
-            "updatedAt": "2026-10-04T09:25:34.535Z",
+            "updatedAt": "2026-10-14T04:30:40.456Z",
             "job": {
                 "companyId": 3,
                 "contactId": 3,
@@ -668,11 +708,31 @@
                     "country": "Deutschland",
                     "postBox": ""
                 },
-                "employmentType": "Vollzeit",
-                "workModel": [
-                    "Vor Ort",
-                    "Hybrid"
-                ],
+                "workModel": {
+                    "type": [
+                        "Vollzeit"
+                    ],
+                    "workTime": [
+                        "Gleitzeit"
+                    ],
+                    "workDays": [
+                        {
+                            "type": "Vor Ort",
+                            "days": 5,
+                            "onSite": 5,
+                            "remote": 0
+                        },
+                        {
+                            "type": "Hybrid",
+                            "days": 5,
+                            "onSite": 3,
+                            "remote": 2
+                        }
+                    ],
+                    "notes": [
+                        "2 Tage pro Woche Homeoffice nach erfolgreicher Probezeit"
+                    ]
+                },
                 "wage": {
                     "yearly": {
                         "min": 43000,
@@ -713,6 +773,13 @@
                     "country": "Deutschland",
                     "postBox": ""
                 },
+                "branches": {
+                    "locations": [
+                        "Standort 1 – Musterweg 1, Quakenbrück, Deutschland 49611",
+                        "Standort 2 – Musterweg 2, Quakenbrück, Deutschland 49612"
+                    ],
+                    "count": 3
+                },
                 "website": "https://firma3.example.com",
                 "email": "",
                 "phone": "",
@@ -726,13 +793,6 @@
                     "Spezialgebiet2-3",
                     "Spezialgebiet3-3"
                 ],
-                "branches": {
-                    "locations": [
-                        "Standort 1 – Musterweg 1, Quakenbrück, Deutschland 49611",
-                        "Standort 2 – Musterweg 2, Quakenbrück, Deutschland 49612"
-                    ],
-                    "count": 3
-                },
                 "images": [
                     "bild1-3.png",
                     "bild2-3.png",
@@ -742,7 +802,7 @@
             },
             "contacts": [
                 {
-                    "id": "3625872e-b700-4e7f-bfea-629829c42a2e",
+                    "id": "da466c31-2d53-4a30-b8a5-445790c575a0",
                     "role": "HR",
                     "name": {
                         "salutation": "Herr",
@@ -755,7 +815,7 @@
                     "phone": "+49 30 11131"
                 },
                 {
-                    "id": "70da5aff-1186-4342-96a2-776d2da35db7",
+                    "id": "3976672b-900d-4e61-a496-c81899c19ed1",
                     "role": "Fachbereich",
                     "name": {
                         "salutation": "Frau",
@@ -768,7 +828,7 @@
                     "phone": "+49 30 11132"
                 },
                 {
-                    "id": "048edbc0-7b07-4a5b-9dc5-a1a5b4802475",
+                    "id": "769afaf3-f253-4cb5-9568-01d51bff5d73",
                     "role": "Fachbereich",
                     "name": {
                         "salutation": "Herr",
@@ -836,24 +896,24 @@
                 "appliedAt": "2026-09-01",
                 "channel": "portal",
                 "coverLetter": {
-                    "id": "df29e5be-73bb-4817-a094-057f331dca64",
+                    "id": "9305c364-dfd2-4a2e-b44c-fb5ec4121c6a",
                     "originalName": "Anschreiben_Firma3.pdf",
                     "link": "/documents/anschreiben-3.pdf"
                 },
                 "resume": [
                     {
-                        "id": "7b67d97e-b6dc-48cd-a342-8610df411418",
+                        "id": "1b239d88-fde3-424b-83dd-67536735758d",
                         "originalName": "Lebenslauf_v1.pdf",
                         "link": "/documents/lebenslauf-3-1.pdf"
                     },
                     {
-                        "id": "7fe4956b-066f-4584-9e04-95973e817758",
+                        "id": "0b3703df-d1e9-489e-bab5-6dbc35caaab7",
                         "originalName": "Lebenslauf_v2.pdf",
                         "link": "/documents/lebenslauf-3-2.pdf"
                     }
                 ],
                 "emailCoverLetter": {
-                    "id": "3591d3bd-888a-469e-9438-ccde38efde5b",
+                    "id": "b79b2985-0d48-4cf9-bf8c-6e90317b1f39",
                     "originalName": "Mailanschreiben_Firma3.pdf",
                     "link": "/documents/mailanschreiben-3.pdf"
                 },
@@ -877,7 +937,7 @@
                 ],
                 "history": [
                     {
-                        "id": "74c7f349-b5a3-4e07-b531-7aa4ca450789",
+                        "id": "2e5cca13-d491-4b06-a6ff-832832d32104",
                         "channel": "portal",
                         "entry": {
                             "date": "2026-09-01",
@@ -889,7 +949,7 @@
                         }
                     },
                     {
-                        "id": "c2e882b5-5c96-4e0d-8bb5-9467b55e68d2",
+                        "id": "a9bb01d1-8907-4c2b-8da2-dc7ac23a63af",
                         "channel": "email",
                         "entry": {
                             "date": "2026-09-02",
@@ -905,7 +965,7 @@
                         }
                     },
                     {
-                        "id": "d0d1fa89-24e0-472e-b5ec-e37b6b9291f2",
+                        "id": "ff235728-c42d-4ca5-a40a-0ee0c0e79888",
                         "channel": "phone",
                         "entry": {
                             "date": "2026-09-03",
@@ -916,7 +976,7 @@
                         }
                     },
                     {
-                        "id": "999ee905-d7b3-40c6-9f5e-94b8e46908fd",
+                        "id": "fb3f29a4-ed81-44a7-b079-816b275923ed",
                         "channel": "personal",
                         "entry": {
                             "date": "2026-09-04",
@@ -928,21 +988,21 @@
             },
             "references": [
                 {
-                    "id": "fb8888c4-54fe-4f14-850f-e7fc06ca7cae",
+                    "id": "0654c884-6d06-44c9-abd7-4f4b7b662add",
                     "url": "https://quelle1-3.example.com",
                     "capturedAt": "2026-09-01",
                     "content": "Inhalt der Quelle 1 (3)",
                     "name": "Quelle 1 (3)"
                 },
                 {
-                    "id": "09070ab3-e7d5-4fec-8c19-12c06bbabd55",
+                    "id": "c20921bc-e65c-4b62-b06b-39fa9e532808",
                     "url": "https://quelle2-3.example.com",
                     "capturedAt": "2026-09-01",
                     "content": "Inhalt der Quelle 2 (3)",
                     "name": "Quelle 2 (3)"
                 },
                 {
-                    "id": "f2063aa6-af93-4555-b86e-e43acf20c152",
+                    "id": "7b960512-1589-446b-8f40-35e2230ca1f3",
                     "url": "https://quelle3-3.example.com",
                     "capturedAt": "2026-09-01",
                     "content": "Inhalt der Quelle 3 (3)",
@@ -956,19 +1016,19 @@
             ],
             "importedRawData": [
                 {
-                    "id": "ecbaa33e-b5c0-4acb-b7b6-8e460a9f1cc9",
+                    "id": "428821f4-38e3-4998-93fe-d7881ebe61cc",
                     "url": "https://quelle1-3.example.com/stellenanzeige",
                     "capturedAt": "2026-09-01",
                     "content": "Rohdatenzeile 1 (3)"
                 },
                 {
-                    "id": "46c73f4b-0560-4b8d-bfc0-e69fd0204928",
+                    "id": "373a7015-1459-458f-91ff-2abefa6a535e",
                     "url": "https://quelle2-3.example.com/stellenanzeige",
                     "capturedAt": "2026-09-02",
                     "content": "Rohdatenzeile 2 (3)"
                 },
                 {
-                    "id": "7079f568-0a0d-494f-8467-0cc59685a1fd",
+                    "id": "fbb1e640-7a14-40ee-bd86-3cbe29f41bff",
                     "url": "https://quelle3-3.example.com/stellenanzeige",
                     "capturedAt": "2026-09-03",
                     "content": "Rohdatenzeile 3 (3)"
@@ -976,10 +1036,10 @@
             ]
         },
         {
-            "id": "a11739e0-be6b-41cf-8940-3314e3d3fba6",
-            "createDate": "2026-10-04T09:25:34.535Z",
+            "id": "a9626781-c710-4bac-b01f-dfe7463b419b",
+            "createDate": "2026-10-14T04:30:40.456Z",
             "status": "BEWORBEN",
-            "updatedAt": "2026-10-04T09:25:34.535Z",
+            "updatedAt": "2026-10-14T04:30:40.456Z",
             "job": {
                 "companyId": 4,
                 "contactId": 4,
@@ -993,11 +1053,31 @@
                     "country": "Deutschland",
                     "postBox": ""
                 },
-                "employmentType": "Vollzeit",
-                "workModel": [
-                    "Vor Ort",
-                    "Hybrid"
-                ],
+                "workModel": {
+                    "type": [
+                        "Vollzeit"
+                    ],
+                    "workTime": [
+                        "Gleitzeit"
+                    ],
+                    "workDays": [
+                        {
+                            "type": "Vor Ort",
+                            "days": 5,
+                            "onSite": 5,
+                            "remote": 0
+                        },
+                        {
+                            "type": "Hybrid",
+                            "days": 5,
+                            "onSite": 3,
+                            "remote": 2
+                        }
+                    ],
+                    "notes": [
+                        "2 Tage pro Woche Homeoffice nach erfolgreicher Probezeit"
+                    ]
+                },
                 "wage": {
                     "yearly": {
                         "min": 44000,
@@ -1038,6 +1118,13 @@
                     "country": "Deutschland",
                     "postBox": ""
                 },
+                "branches": {
+                    "locations": [
+                        "Standort 1 – Musterweg 1, Quakenbrück, Deutschland 49611",
+                        "Standort 2 – Musterweg 2, Quakenbrück, Deutschland 49612"
+                    ],
+                    "count": 3
+                },
                 "website": "https://firma4.example.com",
                 "email": "",
                 "phone": "",
@@ -1051,13 +1138,6 @@
                     "Spezialgebiet2-4",
                     "Spezialgebiet3-4"
                 ],
-                "branches": {
-                    "locations": [
-                        "Standort 1 – Musterweg 1, Quakenbrück, Deutschland 49611",
-                        "Standort 2 – Musterweg 2, Quakenbrück, Deutschland 49612"
-                    ],
-                    "count": 3
-                },
                 "images": [
                     "bild1-4.png",
                     "bild2-4.png",
@@ -1067,7 +1147,7 @@
             },
             "contacts": [
                 {
-                    "id": "8d185fde-c6c5-401e-9d7d-50a6418a3ea7",
+                    "id": "a48835b6-40bc-4547-96d3-bca51bd2d624",
                     "role": "HR",
                     "name": {
                         "salutation": "Herr",
@@ -1080,7 +1160,7 @@
                     "phone": "+49 30 11141"
                 },
                 {
-                    "id": "d038d77b-4b3d-4d93-871f-bba39ee2a65d",
+                    "id": "88874640-ab44-48e7-a55a-654dbc2016b3",
                     "role": "Fachbereich",
                     "name": {
                         "salutation": "Frau",
@@ -1093,7 +1173,7 @@
                     "phone": "+49 30 11142"
                 },
                 {
-                    "id": "e0cb020e-f5d7-4152-9ff2-21202a27ca36",
+                    "id": "2bb7afd5-6ac9-41fd-9b45-d92ce15553a8",
                     "role": "Fachbereich",
                     "name": {
                         "salutation": "Herr",
@@ -1161,24 +1241,24 @@
                 "appliedAt": "2026-09-01",
                 "channel": "portal",
                 "coverLetter": {
-                    "id": "f0248577-82f1-487b-b668-b5e42c865353",
+                    "id": "ebfbcaf5-3326-4c74-8cab-8b371382af2f",
                     "originalName": "Anschreiben_Firma4.pdf",
                     "link": "/documents/anschreiben-4.pdf"
                 },
                 "resume": [
                     {
-                        "id": "d50761cb-9a2c-41b7-a21b-83f26bc778df",
+                        "id": "0efe03cb-9d97-48d5-87ce-748b4cf54735",
                         "originalName": "Lebenslauf_v1.pdf",
                         "link": "/documents/lebenslauf-4-1.pdf"
                     },
                     {
-                        "id": "a5cd1ade-0ef7-4935-9b36-0b52c17ed007",
+                        "id": "465f9aa2-207e-4d79-8a92-a43ff7bbbcd0",
                         "originalName": "Lebenslauf_v2.pdf",
                         "link": "/documents/lebenslauf-4-2.pdf"
                     }
                 ],
                 "emailCoverLetter": {
-                    "id": "e6b3efdb-7f9c-4f90-b0be-a185a2e8386c",
+                    "id": "fe74b131-031d-42d4-bae5-3af4f7f760f0",
                     "originalName": "Mailanschreiben_Firma4.pdf",
                     "link": "/documents/mailanschreiben-4.pdf"
                 },
@@ -1202,7 +1282,7 @@
                 ],
                 "history": [
                     {
-                        "id": "7884a730-b500-4f52-81fb-9aed279ad7cd",
+                        "id": "79714f25-3ace-472f-aac4-9fd6742c0b43",
                         "channel": "portal",
                         "entry": {
                             "date": "2026-09-01",
@@ -1214,7 +1294,7 @@
                         }
                     },
                     {
-                        "id": "90efd619-e771-4889-ae08-1ee8bcc56a1a",
+                        "id": "3e713178-fadb-4fdf-b2fa-52432a2c716c",
                         "channel": "email",
                         "entry": {
                             "date": "2026-09-02",
@@ -1230,7 +1310,7 @@
                         }
                     },
                     {
-                        "id": "b0612274-69be-47d6-b385-930b19ffe18a",
+                        "id": "44e44489-a601-42b9-a3cc-5a68d2cb307b",
                         "channel": "phone",
                         "entry": {
                             "date": "2026-09-03",
@@ -1241,7 +1321,7 @@
                         }
                     },
                     {
-                        "id": "9deb89f5-8e64-4546-852b-0ac7fd7ebdbb",
+                        "id": "e2519c73-dfed-475e-bbbe-2c68b78123ba",
                         "channel": "personal",
                         "entry": {
                             "date": "2026-09-04",
@@ -1253,21 +1333,21 @@
             },
             "references": [
                 {
-                    "id": "272407f7-cc0b-45d1-9e9d-8d47b2ee5951",
+                    "id": "8fc38eb9-eb1b-4cf6-b285-725e9c1f28df",
                     "url": "https://quelle1-4.example.com",
                     "capturedAt": "2026-09-01",
                     "content": "Inhalt der Quelle 1 (4)",
                     "name": "Quelle 1 (4)"
                 },
                 {
-                    "id": "a6c53538-9da9-4cb1-88e2-708ec590664f",
+                    "id": "44c53a57-4555-4d7a-980e-a9e30eea00a7",
                     "url": "https://quelle2-4.example.com",
                     "capturedAt": "2026-09-01",
                     "content": "Inhalt der Quelle 2 (4)",
                     "name": "Quelle 2 (4)"
                 },
                 {
-                    "id": "8bb59a4b-854d-4a51-977d-b82222c953d2",
+                    "id": "dbf089f8-0b43-43d9-904c-383c1b735797",
                     "url": "https://quelle3-4.example.com",
                     "capturedAt": "2026-09-01",
                     "content": "Inhalt der Quelle 3 (4)",
@@ -1281,19 +1361,19 @@
             ],
             "importedRawData": [
                 {
-                    "id": "c55fdbb2-d914-4950-8265-a21407713f02",
+                    "id": "576c7e9b-a000-4b53-894d-9d840173c3c1",
                     "url": "https://quelle1-4.example.com/stellenanzeige",
                     "capturedAt": "2026-09-01",
                     "content": "Rohdatenzeile 1 (4)"
                 },
                 {
-                    "id": "74ad7605-4ddd-4bd8-a16f-b5e5c7136e0c",
+                    "id": "75ea172a-45c1-442e-b978-7d91a1dc3db7",
                     "url": "https://quelle2-4.example.com/stellenanzeige",
                     "capturedAt": "2026-09-02",
                     "content": "Rohdatenzeile 2 (4)"
                 },
                 {
-                    "id": "6563b2a2-8c2f-44e8-a344-080f1d52f98c",
+                    "id": "158ee082-f02d-4d18-b83b-76124883c44a",
                     "url": "https://quelle3-4.example.com/stellenanzeige",
                     "capturedAt": "2026-09-03",
                     "content": "Rohdatenzeile 3 (4)"
@@ -1301,10 +1381,10 @@
             ]
         },
         {
-            "id": "1d015d2b-2cb4-432a-b959-5ee5378dcadf",
-            "createDate": "2026-10-04T09:25:34.535Z",
+            "id": "c3736341-9326-4781-a4af-dd5cc57a4653",
+            "createDate": "2026-10-14T04:30:40.456Z",
             "status": "BEWORBEN",
-            "updatedAt": "2026-10-04T09:25:34.535Z",
+            "updatedAt": "2026-10-14T04:30:40.456Z",
             "job": {
                 "companyId": 5,
                 "contactId": 5,
@@ -1318,11 +1398,31 @@
                     "country": "Deutschland",
                     "postBox": ""
                 },
-                "employmentType": "Vollzeit",
-                "workModel": [
-                    "Vor Ort",
-                    "Hybrid"
-                ],
+                "workModel": {
+                    "type": [
+                        "Vollzeit"
+                    ],
+                    "workTime": [
+                        "Gleitzeit"
+                    ],
+                    "workDays": [
+                        {
+                            "type": "Vor Ort",
+                            "days": 5,
+                            "onSite": 5,
+                            "remote": 0
+                        },
+                        {
+                            "type": "Hybrid",
+                            "days": 5,
+                            "onSite": 3,
+                            "remote": 2
+                        }
+                    ],
+                    "notes": [
+                        "2 Tage pro Woche Homeoffice nach erfolgreicher Probezeit"
+                    ]
+                },
                 "wage": {
                     "yearly": {
                         "min": 45000,
@@ -1363,6 +1463,13 @@
                     "country": "Deutschland",
                     "postBox": ""
                 },
+                "branches": {
+                    "locations": [
+                        "Standort 1 – Musterweg 1, Quakenbrück, Deutschland 49611",
+                        "Standort 2 – Musterweg 2, Quakenbrück, Deutschland 49612"
+                    ],
+                    "count": 3
+                },
                 "website": "https://firma5.example.com",
                 "email": "",
                 "phone": "",
@@ -1376,13 +1483,6 @@
                     "Spezialgebiet2-5",
                     "Spezialgebiet3-5"
                 ],
-                "branches": {
-                    "locations": [
-                        "Standort 1 – Musterweg 1, Quakenbrück, Deutschland 49611",
-                        "Standort 2 – Musterweg 2, Quakenbrück, Deutschland 49612"
-                    ],
-                    "count": 3
-                },
                 "images": [
                     "bild1-5.png",
                     "bild2-5.png",
@@ -1392,7 +1492,7 @@
             },
             "contacts": [
                 {
-                    "id": "7abcfab1-8574-4a75-9b5b-507d13ce66eb",
+                    "id": "111e3a1c-99ce-4a6d-8caf-34882315836f",
                     "role": "HR",
                     "name": {
                         "salutation": "Herr",
@@ -1405,7 +1505,7 @@
                     "phone": "+49 30 11151"
                 },
                 {
-                    "id": "7c3cc16b-afc0-4124-9546-4512dbad47b0",
+                    "id": "2e101a19-8fc2-405f-a533-ccdf03b51326",
                     "role": "Fachbereich",
                     "name": {
                         "salutation": "Frau",
@@ -1418,7 +1518,7 @@
                     "phone": "+49 30 11152"
                 },
                 {
-                    "id": "75bcb52f-ad2e-4b87-a533-987d96a10101",
+                    "id": "2e046b02-5bf5-40ba-8043-38c5f2ee5923",
                     "role": "Fachbereich",
                     "name": {
                         "salutation": "Herr",
@@ -1486,24 +1586,24 @@
                 "appliedAt": "2026-09-01",
                 "channel": "portal",
                 "coverLetter": {
-                    "id": "840ca03c-6d70-4dd4-9ca3-8006c2367c9d",
+                    "id": "f722496a-420c-4866-b0db-8d89a5566cfa",
                     "originalName": "Anschreiben_Firma5.pdf",
                     "link": "/documents/anschreiben-5.pdf"
                 },
                 "resume": [
                     {
-                        "id": "12df2aba-7bad-45c9-996e-178ea1662c9f",
+                        "id": "29d56d7b-dd6e-408d-948c-df100ecd0bba",
                         "originalName": "Lebenslauf_v1.pdf",
                         "link": "/documents/lebenslauf-5-1.pdf"
                     },
                     {
-                        "id": "c48532f7-b9a5-4ed0-af9f-573263aa68ee",
+                        "id": "2f8171ad-15ed-4e45-866a-55d48da5e836",
                         "originalName": "Lebenslauf_v2.pdf",
                         "link": "/documents/lebenslauf-5-2.pdf"
                     }
                 ],
                 "emailCoverLetter": {
-                    "id": "6f418f3c-0983-4138-b000-8a12c35f7a7a",
+                    "id": "4d53f895-8c77-476a-bd5a-57490c6ae63f",
                     "originalName": "Mailanschreiben_Firma5.pdf",
                     "link": "/documents/mailanschreiben-5.pdf"
                 },
@@ -1527,7 +1627,7 @@
                 ],
                 "history": [
                     {
-                        "id": "2aec993e-0787-46b7-b9ce-cd1b776aa510",
+                        "id": "262a3b7e-cefa-4408-8b51-44ecff42e78e",
                         "channel": "portal",
                         "entry": {
                             "date": "2026-09-01",
@@ -1539,7 +1639,7 @@
                         }
                     },
                     {
-                        "id": "f04d42d7-097a-466e-8729-f0f5c384154f",
+                        "id": "8e40b012-729e-4b9d-a72a-2c5f30029a4c",
                         "channel": "email",
                         "entry": {
                             "date": "2026-09-02",
@@ -1555,7 +1655,7 @@
                         }
                     },
                     {
-                        "id": "596e8d8e-8a26-4466-aceb-10ff9827f359",
+                        "id": "21cb246b-3267-498a-a7a8-e8695ef463f0",
                         "channel": "phone",
                         "entry": {
                             "date": "2026-09-03",
@@ -1566,7 +1666,7 @@
                         }
                     },
                     {
-                        "id": "a9181869-45f9-4279-a197-ea6a4accae19",
+                        "id": "9267d771-7f1a-44ba-adef-259a81ed8388",
                         "channel": "personal",
                         "entry": {
                             "date": "2026-09-04",
@@ -1578,21 +1678,21 @@
             },
             "references": [
                 {
-                    "id": "0c40a945-58c5-4d82-82b7-4ca30320d997",
+                    "id": "569e786e-d8d0-4871-ae17-adb9f7451bab",
                     "url": "https://quelle1-5.example.com",
                     "capturedAt": "2026-09-01",
                     "content": "Inhalt der Quelle 1 (5)",
                     "name": "Quelle 1 (5)"
                 },
                 {
-                    "id": "d1227884-1040-430a-9cbc-03621f4c55fe",
+                    "id": "9c503d4a-5069-49d0-b07c-afb5501a09b9",
                     "url": "https://quelle2-5.example.com",
                     "capturedAt": "2026-09-01",
                     "content": "Inhalt der Quelle 2 (5)",
                     "name": "Quelle 2 (5)"
                 },
                 {
-                    "id": "1020ce13-ae38-4e58-88c3-328abccfc245",
+                    "id": "1283de10-0333-4808-9c58-a084cd36eb3e",
                     "url": "https://quelle3-5.example.com",
                     "capturedAt": "2026-09-01",
                     "content": "Inhalt der Quelle 3 (5)",
@@ -1606,19 +1706,19 @@
             ],
             "importedRawData": [
                 {
-                    "id": "90475928-889b-4e46-90ac-919bd2e65d12",
+                    "id": "f02aeae4-a70f-4f41-b571-ce3ed3285ecd",
                     "url": "https://quelle1-5.example.com/stellenanzeige",
                     "capturedAt": "2026-09-01",
                     "content": "Rohdatenzeile 1 (5)"
                 },
                 {
-                    "id": "d45793cb-9539-4d57-a150-e73c14c13b5c",
+                    "id": "211f4982-efe4-47a4-bbee-ff084a57c9e1",
                     "url": "https://quelle2-5.example.com/stellenanzeige",
                     "capturedAt": "2026-09-02",
                     "content": "Rohdatenzeile 2 (5)"
                 },
                 {
-                    "id": "9014b120-712c-4fdf-be79-91ac3a44a9b3",
+                    "id": "f26cec06-4377-4498-b2d2-b0b792b8dace",
                     "url": "https://quelle3-5.example.com/stellenanzeige",
                     "capturedAt": "2026-09-03",
                     "content": "Rohdatenzeile 3 (5)"

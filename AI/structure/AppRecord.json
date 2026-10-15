@@ -17,8 +17,12 @@
                 "country": "",
                 "postBox": ""
             },
-            "employmentType": "",
-            "workModel": [],
+            "workModel": {
+                "type": [],
+                "workTime": [],
+                "workDays": [],
+                "notes": []
+            },
             "wage": {
                 "yearly": null,
                 "monthly": null,

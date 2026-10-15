@@ -13,9 +13,21 @@ Alle Models stellen ihre Daten über `get data` / `set data` bereit. Die flache 
   `actionHistory`, `importedRawData`.
 - `JobModel` – Stellendaten (vormals `JobDetailModel`, entspricht JSON-Schlüssel
   `job`): `companyId`, `contactId`, `title`, `workLocation` (`AddressModel`),
-  `employmentType`, `workModel` (Liste), `wage` (`WageModel`), `referenceNumber`,
+  `workModel` (`WorkModel`), `wage` (`WageModel`), `referenceNumber`,
   `tasks`, `tags`. `contactId` verweist auf den Primärkontakt der Liste
   `app.contacts` (siehe `AppModel.primaryContact`).
+- `WorkModel` – Arbeitsmodell der Stelle (Schlüssel `job.workModel`, ersetzt
+  `job.employmentType` und die frühere Liste `job.workModel`): `type` (Art der
+  Anstellung als Liste, z. B. Vollzeit, Teilzeit, Werkstudent), `workTime`
+  (Arbeitszeit als Liste, z. B. Gleitzeit, Schichtarbeit, Nachtschicht),
+  `workDays` (Liste von `WorkDayModel`), `notes` (Liste kurzer Hinweise im
+  Originalwortlaut, höchstens 20 Wörter je Hinweis). Altdaten werden beim Laden
+  übernommen: eine Liste wie `["Hybrid"]` wird zu `workDays`, `job.employmentType`
+  zu `type`.
+- `WorkDayModel` – Arbeitstage pro Woche je Typ: `type` (Vor Ort, Hybrid,
+  Homeoffice, Remote), `days` (Standard 5), `onSite` (Tage vor Ort), `remote`
+  (Tage zuhause); `null` = unbekannt. Standard: Vor Ort 5/0, Homeoffice und
+  Remote 0/5, Hybrid unbekannt.
 - `WageModel` – Gehaltsangaben: `yearly` (`{ min, max }` in Jahr, `null` wenn keine
   Angabe), `monthly`, `gross` (`true` = brutto, `false` = netto; **Vorgabe ist
   brutto**, weil Stellenanzeigen ohne Angabe in der Regel Bruttobeträge nennen),
@@ -91,7 +103,7 @@ Alle Models stellen ihre Daten über `get data` / `set data` bereit. Die flache 
 
 ```text
 AppModel
- ├─ JobModel
+ ├─ JobModel ─ WorkModel ─ WorkDayModel (Liste)
  ├─ CompanyModel ─ AddressModel ─ StreetModel
  │              │              └ CityModel
  │              └ BranchModel

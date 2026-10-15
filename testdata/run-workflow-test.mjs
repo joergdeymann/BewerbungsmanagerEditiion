@@ -50,8 +50,8 @@ check("Leere Adresse bleibt leer", (r => r.zipCountry === "" && r.country === ""
 // ---------- 2. Kopfbereich in der Analyse: Titel, Beschäftigungsart, Arbeitsmodell ----------
 const withTop = analyze(`${topCard}\n${jobText}\n\n----\n\n${infoText}`);
 check("Stelle: Titel erkannt", withTop.job.title === "Frontend Developer (M/W/D)");
-check("Beschäftigungsart Vollzeit erkannt", withTop.job.employmentType === "Vollzeit");
-check("Arbeitsmodell Hybrid erkannt", JSON.stringify(withTop.job.workModel) === JSON.stringify(["Hybrid"]));
+check("Beschäftigungsart Vollzeit erkannt", withTop.job.workModel.type.includes("Vollzeit"));
+check("Arbeitsmodell Hybrid erkannt", withTop.job.workModel.workDays.map(day => day.type).join() === "Hybrid");
 
 // ---------- 3. Arbeitsort: Osnabrück = Bissendorf (aus Text und Standortliste) ----------
 const app = new AppModel();
@@ -176,8 +176,8 @@ if (JSDOM) {
     check("Import: ähnliche Jobs bleiben abgeschnitten", !result.text.includes("Ähnlicher Job"));
 
     const analysed = analyze(result.text);
-    check("Import -> Analyse: Titel, Vollzeit, Hybrid, Ort", analysed.job.title === "Frontend Developer (M/W/D)" && analysed.job.employmentType === "Vollzeit"
-        && analysed.job.workModel[0] === "Hybrid" && analysed.job.workLocation.city === "Bissendorf");
+    check("Import -> Analyse: Titel, Vollzeit, Hybrid, Ort", analysed.job.title === "Frontend Developer (M/W/D)" && analysed.job.workModel.type.includes("Vollzeit")
+        && analysed.job.workModel.workDays[0]?.type === "Hybrid" && analysed.job.workLocation.city === "Bissendorf");
 
     const small = page(top).replace(/<section><h2>Ähnliche Jobs<\/h2>.*<\/section>/s, "");
     const smallResult = importer.extract(small, url);

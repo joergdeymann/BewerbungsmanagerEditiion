@@ -38,7 +38,7 @@ AI/
     ├── content/          # Inhalte & Sektionen (badges, benefits, cards, communication,
     │                     #   contact-list, content-frame, dynamic-fields, history-entries,
     │                     #   image-gallery, import-history, important-badges, list-row,
-    │                     #   page-frame, section-header, sources, subsections)
+    │                     #   page-frame, section-header, sources, subsections, work-days)
     ├── layout/           # Grundgerüst (body, footer, header)
     └── pages/            # Seiten-Styles (editor, overview, skills)
 ```
@@ -50,11 +50,11 @@ AI/
     ├── analysis/         # Parser & Data-Extractor (Regex, Text-Cleaning)
     │   ├── Analyzer.js   # Orchestrierung der Extraktoren
     │   ├── extractors/   # Benefit-, Branch-, Company-, Contact-, Email-, Industry-, Job-, Location-,
-    │   │                 #   Money-, Phone-, PostBox-, Qualification-, Street-, TaskExtractor, WorkLocationResolver
+    │   │                 #   Money-, Phone-, PostBox-, Qualification-, Street-, TaskExtractor, WorkLocationResolver, WorkModelExtractor
     │   └── parser/       # LineParser, ParseText, RequirementSplitter, SectionParser, SectionPart, TextCleaner
     ├── api/              # Netzwerk-Schnittstellen (UrlImporter.js)
     ├── constants/        # Systemweite Konstanten (Address, Benefit, Branch, Company, Contact, Industry, Job,
-    │                     #   Import, Location, Parser, PostBox, Skill, SkillAlias, Web)
+    │                     #   Import, Location, Parser, PostBox, Skill, SkillAlias, Web, WorkModel)
     ├── controllers/      # Ablaufsteuerung: Repository-Zugriff, Verarbeitung, Speichern
     │   ├── CommunicationController.js
     │   ├── detail/       # Communication-, Contact-, DocumentsSectionController.js
@@ -69,7 +69,7 @@ AI/
     │   └── skills/       # SkillsEvent.js
     ├── store/             # Caching und IndexedDB-Wrapper (AppDB, AppCache, LocalDB, SkillDB, SkillCache)
     ├── io/               # Seitenimport: ImportJobPage.js (Anzeigenbereich, Rohzeilen, Links), ImportInbox.js (Übergabe Bookmarklet -> Import-Reiter), BookmarkletBuilder.js (Lesezeichen-Link)
-    ├── models/           # Datenmodelle (Application-, App-, Branch-, Company-, Contact-, Skill-, WageModel …)
+    ├── models/           # Datenmodelle (Application-, App-, Branch-, Company-, Contact-, Skill-, Wage-, WorkModel, WorkDayModel …)
     ├── templates/        # HTML-Strukturen der Views
     │   ├── EditorView.html
     │   ├── detail/       # Application-, Benefits-, Communication-, Company-, Contact-, Job-,
@@ -100,7 +100,7 @@ AI/
 ### 📂 Daten, Tests, Dokumente & System (Ausgeblendet/Ignoriert)
 - `admin/` — Lokale Administrations-Oberfläche (`admin/index.html`, `admin/admin.js`).
 - `testdata/` — Testdaten und Testläufe: `Jobsinput.json` (Eingabedatensätze),
-  `run-analysis-test.mjs` (`npm run test:analysis`), `run-workflow-test.mjs` (`npm run test:workflow`;
+  `run-analysis-test.mjs` (`npm run test:analysis`), `run-workmodel-test.mjs` (`npm run test:workmodel`), `run-workflow-test.mjs` (`npm run test:workflow`;
   Import-Teil nur mit `npm install --no-save jsdom`), `run-tests.mjs`, `seed-browser.js`,
   `readme.md`.
 - `documents/` — Hochgeladene Nutzerdateien (PDFs, JPGs).

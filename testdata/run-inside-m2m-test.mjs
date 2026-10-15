@@ -63,7 +63,7 @@ const checks = [
     ["Info-Seite: Telefon", both.company.phone === "0049 5137 90950-11"],
     ["Info-Seite: Website", both.company.website === "https://www.inside-m2m.de"],
     ["Info-Seite: Spezialgebiete als Liste", both.company.specialties.length >= 10],
-    ["Info-Seite: Arbeitsmodell Hybrid", both.job.workModel.includes("Hybrid")],
+    ["Info-Seite: Arbeitsmodell Hybrid", both.job.workModel.workDays.some(day => day.type === "Hybrid")],
     ["Beschreibung ohne doppelte Zeilen", new Set(both.company.description.split("\n")).size === both.company.description.split("\n").length],
     ["Beschreibung ohne Kopfzeilen-Reste", !/verknüpfte Mitglieder|Follower|51-200/.test(both.company.description)],
 

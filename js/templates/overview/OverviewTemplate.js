@@ -1,4 +1,5 @@
 import { JobConstants } from "../../constants/JobConstants.js";
+import { WorkModelConstants } from "../../constants/WorkModelConstants.js";
 
 export class OverviewTemplate {
 
@@ -61,13 +62,13 @@ export class OverviewTemplate {
     }
 
     createWorkModelOptions() {
-        return JobConstants.WORK_MODEL
+        return WorkModelConstants.WORK_DAY_TYPES
             .map(option => `<option value="${option}">${option}</option>`)
             .join("");
     }
 
     createEmploymentTypeOptions() {
-        return JobConstants.EMPLOYMENT_TYPE
+        return WorkModelConstants.TYPE
             .map(option => `<option value="${option}">${option}</option>`)
             .join("");
     }

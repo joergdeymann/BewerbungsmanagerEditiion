@@ -2,8 +2,10 @@ import { MoneyExtractor } from "./MoneyExtractor.js";
 import { TaskExtractor } from "./TaskExtractor.js";
 import { LocationExtractor } from "./LocationExtractor.js";
 import { StreetExtractor } from "./StreetExtractor.js";
+import { WorkModelExtractor } from "./WorkModelExtractor.js";
 import { JobConstants } from "../../constants/JobConstants.js";
 import { ParserConstants } from "../../constants/ParserConstants.js";
+import { WorkModelConstants } from "../../constants/WorkModelConstants.js";
 
 /**
  * Ermittelt die Stellendaten aus dem Anzeigentext.
@@ -33,15 +35,13 @@ export class JobExtractor {
      * @returns {object} Stellendaten passend zum JobModel.
      */
     extractJob() {
-        const employmentType = this.findEmploymentType();
-        const workModel = this.findWorkModel();
+        const workModel = new WorkModelExtractor(this.sections, this.allLines).extract();
 
         return {
             title: this.findTitle(),
             referenceNumber: this.findReferenceNumber(),
-            employmentType,
             workModel,
-            tags: this.findTags(employmentType, workModel),
+            tags: this.findTags(workModel),
             wage: new MoneyExtractor(this.wageLines()).extractMoney(),
             workLocation: this.findWorkLocation(),
             tasks: new TaskExtractor().extract(
@@ -158,70 +158,23 @@ export class JobExtractor {
     }
 
     /**
-     * Sucht die Beschaeftigungsart anhand JobConstants.EMPLOYMENT_TYPE.
-     * @returns {string} Beschaeftigungsart oder "".
-     */
-    findEmploymentType() {
-        return this.findInConstants(this.sections.general?.lines, JobConstants.EMPLOYMENT_TYPE);
-    }
-
-    /**
-     * Sucht das Arbeitsmodell anhand JobConstants.WORK_MODEL.
-     * @returns {string[]} erkannte Arbeitsmodelle.
-     */
-    findWorkModel() {
-        const found = this.findInConstants(this.sections.general?.lines, JobConstants.WORK_MODEL)
-            || this.findLabeledWorkModel();
-
-        return found ? [found] : [];
-    }
-
-    /**
-     * Sucht eine Zeile "Arbeitsmodell: <Wert>" im gesamten Text.
-     * @returns {string} Wert aus JobConstants.WORK_MODEL oder "".
-     */
-    findLabeledWorkModel() {
-        for (const line of this.allLines) {
-            const value = line.trim().match(JobConstants.WORK_MODEL_LABEL_REGEX)?.[1];
-            const found = value ? this.findInConstants([value], JobConstants.WORK_MODEL) : "";
-            if (found) return found;
-        }
-
-        return "";
-    }
-
-    /**
-     * Sucht eine Zeile aus einer Liste bekannter Werte.
-     * @param {string[]} lines Kandidatenzeilen.
-     * @param {string[]} values Bekannte Werte aus den Constants.
-     * @returns {string} gefundener Wert oder "".
-     */
-    findInConstants(lines, values) {
-        for (const line of lines ?? []) {
-            const value = line.trim().toLowerCase();
-            const match = values.find(entry => value === entry.toLowerCase());
-            if (match) return match;
-        }
-
-        return "";
-    }
-
-    /**
      * Sammelt Badges aus ParserConstants.JOB_TAG_KEYWORDS. Begriffe, die bereits
-     * als Arbeitsmodell oder Beschaeftigungsart erkannt wurden, werden nicht
-     * doppelt als Badge uebernommen.
-     * @param {string} employmentType Erkannte Beschaeftigungsart.
-     * @param {string[]} workModel Erkannte Arbeitsmodelle.
+     * als Art der Anstellung oder als Arbeitstage (WorkModel) erkannt wurden,
+     * werden nicht doppelt als Badge uebernommen (auch nicht in anderer
+     * Schreibweise, z. B. "Home Office" fuer Homeoffice).
+     * @param {{type: string[], workDays: {type: string}[]}} workModel Erkanntes Arbeitsmodell.
      * @returns {string[]} Badge-Begriffe.
      */
-    findTags(employmentType, workModel) {
-        const used = [employmentType, ...workModel].map(value => (value || "").toLowerCase());
+    findTags(workModel) {
+        const used = [...workModel.type, ...workModel.workDays.map(day => day.type)]
+            .map(value => value.toLowerCase());
         const lines = (this.sections.general?.lines ?? []).map(line => line.trim().toLowerCase());
         const tags = [];
 
         for (const keyword of ParserConstants.JOB_TAG_KEYWORDS) {
             const value = keyword.toLowerCase();
             if (used.includes(value)) continue;
+            if (used.includes(WorkModelConstants.canonical(keyword).toLowerCase())) continue;
             if (!lines.includes(value)) continue;
 
             tags.push(keyword);
