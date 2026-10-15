@@ -10,7 +10,9 @@ Stand: 2026-10-13 (ArbeitsModel umgesetzt)
   in einem Model.
 - Quellen (`references[]`) sollen bei der Erfassung automatisch gespeichert werden.
   Importierte Texte sind bereits umgesetzt. Offen:
-  - Firmenwebsite als eigener `ReferenceModel`-Eintrag.
+  - Firmenwebsite (Firmenseite) als eigener `ReferenceModel`-Eintrag. Die Seite wird beim Import
+    seit 2026-10-14 immer mitgeladen und als Eintrag unter "Übernommene Texte" abgelegt; die
+    Verknüpfung in `references[]` fehlt noch.
   - Bild-URLs der Ansprechpartner (`contact.img`) als eigene `ReferenceModel`-Einträge.
     Bilder werden nur für Ansprechpartner benötigt, daher nur diese.
 - `SourcesTemplate.js` zeigt bewusst nur, was in `references[]` gespeichert ist
@@ -31,6 +33,9 @@ Stand: 2026-10-13 (ArbeitsModel umgesetzt)
   Namen ohne Anrede (reine Namenszeile, "Ihr Ansprechpartner: …") werden nicht gefunden.
 - Die Positionszeile wird nur erkannt, wenn der Name als alleinstehende Zeile oder am
   Zeilenende vorkommt (nächste Zeile = Position).
+- Bilder der Ansprechpartner auf der Firmenseite (Website der Firma) finden, dem Kontakt
+  zuordnen (`contact.img`) und als Quelle verknüpfen. Die Firmenseite wird geladen, die Suche nach
+  Bildern und die Zuordnung zum Namen fehlen noch.
 - `ContactModel` unterstützt ein Bild (`img`). Bilder werden nur für Ansprechpartner benötigt;
   Ablage in den Quellen siehe oben.
 
@@ -59,6 +64,10 @@ Stand: 2026-10-13 (ArbeitsModel umgesetzt)
 - Mögliche Erweiterung: "Aktuelle LinkedIn-Stelle importieren" per Knopf in der App. Der Server
   liest dann den geöffneten LinkedIn-Tab im vom Server gesteuerten Chrome (Tabs per Titel/Adresse
   suchbar), braucht kein Lesezeichen und funktioniert auch von Handy-Apps aus.
+- Paralleles Laden von Hauptseite, Nebenseite und Firmenseite: bewusst zurückgestellt. Heute
+  nacheinander (Hauptseite, Nebenseiten auf LinkedIn wie /about/, dann Firmenseite); der Server
+  (`BrowserSession`) führt Abrufe ohnehin nacheinander aus, der Link zur Info-Seite wird erst
+  nach dem vollständigen Laden der Hauptseite gebildet.
 - Seiten, die den Text erst per JavaScript nachladen (z. B. mit Login), liefert der
   Server-Abruf ohne Browser leer; das Bookmarklet bzw. der Chrome-Abruf liefert dort das
   gerenderte HTML.

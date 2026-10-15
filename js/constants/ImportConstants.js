@@ -52,8 +52,37 @@ export class ImportConstants {
         dialog: "Eingabefenster Webadresse",
         bookmarklet: "Lesezeichen",
         fallback: "automatischer Abruf, weil vom Lesezeichen nichts ankam",
-        company: "Info-Seite der Firma"
+        company: "Info-Seite der Firma",
+        website: "Firmenseite"
     };
+
+    /**
+     * Die drei Seitenarten eines Imports: Hauptseite (die Anzeige, wird zuerst gelesen),
+     * Nebenseite (weitere LinkedIn-Seiten, z. B. die Info-Seite unter /about/) und
+     * Firmenseite (die Website der Firma selbst). label = Anzeige im Kopfbereich,
+     * busy = Beschriftung des Knopfes während des Abrufs, done = Meldung nach der Übernahme.
+     */
+    static PAGE = {
+        main: {
+            label: "Hauptseite",
+            busy: "Wird abgerufen...",
+            done: 'Seite abgerufen und übernommen (siehe "Übernommene Texte" unten).'
+        },
+        side: {
+            label: "Nebenseite",
+            busy: "Info-Seite der Firma wird abgerufen...",
+            done: 'Info-Seite der Firma übernommen (zweiter Eintrag unter "Übernommene Texte").'
+        },
+        company: {
+            label: "Firmenseite",
+            busy: "Firmenseite wird abgerufen...",
+            done: 'Firmenseite übernommen (weiterer Eintrag unter "Übernommene Texte").'
+        }
+    };
+
+    /** Anzeige im Kopfbereich (rechts unten): Element und Dauer, die das Ergebnis stehen bleibt. */
+    static STATUS_SELECTOR = "#importStatus";
+    static STATUS_HIDE_MS = 3000;
 
     /** Wartezeit auf das Bookmarklet, danach wird die URL über den Server abgerufen. */
     static FALLBACK_DELAY_MS = 5000;

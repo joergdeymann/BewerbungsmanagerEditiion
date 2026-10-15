@@ -1,0 +1,18 @@
+/* ---------- Anzeige der geladenen Seite im Kopfbereich (Neue Bewerbung) ---------- */
+
+.edit-header {
+    position: relative;
+}
+
+.import-status {
+    position: absolute;
+    right: 16px;
+    bottom: 2px;
+    font-size: 13px;
+    line-height: 1.2;
+    color: var(--header-text-muted);
+}
+
+.import-status[hidden] {
+    display: none;
+}

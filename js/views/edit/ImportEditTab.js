@@ -6,6 +6,7 @@ import { UrlPrompt } from "../windows/UrlPrompt.js";
 import { UrlImporter } from "../../api/UrlImporter.js";
 import { Analyzer } from "../../analysis/Analyzer.js";
 import { ImportInbox } from "../../io/ImportInbox.js";
+import { ImportStatus } from "../../ui/edit/ImportStatus.js";
 import { ImportConstants } from "../../constants/ImportConstants.js";
 import { BrowserConstants } from "../../../shared/BrowserConstants.js";
 
@@ -27,6 +28,7 @@ export class ImportEditTab extends BaseEditTab {
         this.selectedId = null;
         this.lastCommittedText = "";
         this.loading = new Set();
+        this.status = new ImportStatus();
 
         const input = this.root.querySelector("#originalText");
 
@@ -151,12 +153,16 @@ export class ImportEditTab extends BaseEditTab {
     async importCompanyPayload(url, html) {
         if (this.hasEntry(url)) return;
 
-        if (html && !await this.importPage(url, async () => this.urlImporter.fromHtml(html, url), true)) return;
+        const imported = html ? !await this.importPage(url, async () => this.urlImporter.fromHtml(html, url), true) : false;
 
-        const home = url.endsWith(ImportConstants.COMPANY_ABOUT_SUFFIX)
-            ? url.slice(0, -ImportConstants.COMPANY_ABOUT_SUFFIX.length) + ImportConstants.COMPANY_HOME_SUFFIX
-            : "";
-        await this.loadCompanyPage(url, home);
+        if (!imported) {
+            const home = url.endsWith(ImportConstants.COMPANY_ABOUT_SUFFIX)
+                ? url.slice(0, -ImportConstants.COMPANY_ABOUT_SUFFIX.length) + ImportConstants.COMPANY_HOME_SUFFIX
+                : "";
+            await this.loadCompanyPage(url, home);
+        }
+
+        await this.loadWebsite();
     }
 
     /**
@@ -167,9 +173,11 @@ export class ImportEditTab extends BaseEditTab {
      * @param {boolean} [optional] true für die Info-Seite der Firma: Fehler sind nur ein Hinweis.
      * @param {boolean} [fetchCompany] false, wenn die Info-Seite anders geliefert wird (Bookmarklet).
      * @param {string} [source] Woher der Abruf stammt (ImportConstants.SOURCE_LABELS), für die Fehlermeldung.
+     * @param {"main"|"side"|"company"} [kind] Seitenart (ImportConstants.PAGE): Hauptseite, Nebenseite
+     *        (z. B. Info-Seite) oder Firmenseite; bestimmt Anzeige im Kopfbereich und Meldungen.
      * @returns {Promise<string>} "" bei Erfolg, sonst der Grund, warum die Seite nicht übernommen wurde.
      */
-    async importPage(url, load, optional = false, fetchCompany = true, source = "") {
+    async importPage(url, load, optional = false, fetchCompany = true, source = "", kind = optional ? "side" : "main") {
         if (this.loading.has(url)) {
             console.info(`[Import] Seite wird bereits geladen, doppelter Abruf übersprungen: ${url}`);
             return "Die Seite wird bereits geladen";
@@ -178,7 +186,7 @@ export class ImportEditTab extends BaseEditTab {
 
         const button = this.root.querySelector("#fetchUrl");
         button.disabled = true;
-        button.textContent = optional ? "Info-Seite der Firma wird abgerufen..." : "Wird abgerufen...";
+        button.textContent = ImportConstants.PAGE[kind].busy;
 
         // Seiten mit Anmeldung lädt der Server in einem Chrome; dort kann eine Anmeldung nötig sein.
         const signInHint = UrlImporter.usesBrowser(url)
@@ -188,7 +196,7 @@ export class ImportEditTab extends BaseEditTab {
             : null;
 
         try {
-            const result = await load();
+            const result = await this.loadWithStatus(kind, load);
             this.logImport(result);
 
             const reason = this.rejectReason(result, optional);
@@ -198,14 +206,13 @@ export class ImportEditTab extends BaseEditTab {
             }
 
             this.addHistoryEntry(result.text, url);
-            Toast.show(
-                optional
-                    ? 'Info-Seite der Firma übernommen (zweiter Eintrag unter "Übernommene Texte").'
-                    : 'Seite abgerufen und übernommen (siehe "Übernommene Texte" unten).',
-                "success"
-            );
+            Toast.show(ImportConstants.PAGE[kind].done, "success");
 
-            if (!optional && fetchCompany) await this.loadCompanyPage(result.companyAboutUrl, result.companyUrl);
+            // Reihenfolge: Hauptseite, Nebenseite(n) auf LinkedIn, zuletzt die Firmenseite (nacheinander).
+            if (!optional && fetchCompany) {
+                await this.loadCompanyPage(result.companyAboutUrl, result.companyUrl);
+                await this.loadWebsite();
+            }
             return "";
         } catch (error) {
             console.error(error);
@@ -257,6 +264,61 @@ export class ImportEditTab extends BaseEditTab {
         }
 
         this.showCompanyPageHint(urls[0], reasons[0]);
+    }
+
+    /**
+     * Führt einen Abruf aus und zeigt im Kopfbereich, welche Seite gerade geladen wird.
+     * @param {"main"|"side"|"company"} kind Seitenart (ImportConstants.PAGE).
+     * @param {() => Promise<object>} load Liefert das Ergebnis des UrlImporter.
+     * @returns {Promise<object>} Ergebnis von load.
+     */
+    async loadWithStatus(kind, load) {
+        let ok = false;
+        this.status.begin(kind);
+
+        try {
+            const result = await load();
+            ok = true;
+            return result;
+        } finally {
+            this.status.end(kind, ok);
+        }
+    }
+
+    /**
+     * Webadresse der Firma (die Firmenseite selbst, nicht LinkedIn) aus den erfassten Firmendaten.
+     * @returns {string} Adresse mit https://, "" ohne Angabe oder für LinkedIn-Adressen.
+     */
+    websiteUrl() {
+        const raw = String(this.application.company?.website ?? "").trim();
+        if (!raw) return "";
+
+        try {
+            const url = new URL(/^https?:\/\//i.test(raw) ? raw : `https://${raw}`).href;
+            return UrlImporter.usesBrowser(url) ? "" : url;
+        } catch {
+            return "";
+        }
+    }
+
+    /**
+     * Lädt immer die Firmenseite (Website der Firma) über den Server und übernimmt sie als weiteren
+     * Eintrag, damit fehlende Angaben daraus gelesen werden. Ohne bekannte Webadresse oder bei
+     * bereits übernommener Seite passiert nichts; ein Fehler ist nur ein Hinweis.
+     */
+    async loadWebsite() {
+        const url = this.websiteUrl();
+        if (!url) {
+            console.info("[Import] Firmenseite: keine Webadresse bekannt, übersprungen.");
+            return;
+        }
+        if (this.hasEntry(url) || this.loading.has(url)) return;
+
+        const reason = await this.importPage(url, () => this.urlImporter.fetch(url), true, false, "website", "company");
+        if (reason) {
+            console.warn(`Firmenseite nicht übernommen (${url}): ${reason}`);
+            Toast.show(`Firmenseite nicht übernommen: ${reason}.`, "info", BrowserConstants.HINT_DURATION_MS);
+        }
     }
 
     showCompanyPageHint(url, reason) {

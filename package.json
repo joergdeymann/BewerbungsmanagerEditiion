@@ -8,6 +8,7 @@
     "test:inside": "node testdata/run-inside-m2m-test.mjs",
     "test:workflow": "node testdata/run-workflow-test.mjs",
     "test:workmodel": "node testdata/run-workmodel-test.mjs",
+    "test:importflow": "node testdata/run-importflow-test.mjs",
     "browser:check": "node server/BrowserCheck.js"
   },
   "devDependencies": {

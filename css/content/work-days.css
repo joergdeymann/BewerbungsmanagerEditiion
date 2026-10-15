@@ -29,3 +29,9 @@
 .work-day__input {
     width: 70px;
 }
+
+/* Nicht gewählte Arbeitstage: Tage, vor Ort und zuhause samt Eingabefeld ausblenden.
+   Der Typ selbst (Vor Ort, Hybrid, Homeoffice, Remote) bleibt immer sichtbar. */
+.work-day:has(.work-day__enabled:not(:checked)) .work-day__field {
+    display: none;
+}

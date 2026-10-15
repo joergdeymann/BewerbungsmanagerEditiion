@@ -38,7 +38,7 @@ AI/
     ├── content/          # Inhalte & Sektionen (badges, benefits, cards, communication,
     │                     #   contact-list, content-frame, dynamic-fields, history-entries,
     │                     #   image-gallery, import-history, important-badges, list-row,
-    │                     #   page-frame, section-header, sources, subsections, work-days)
+    │                     #   page-frame, section-header, sources, subsections, work-days, import-status)
     ├── layout/           # Grundgerüst (body, footer, header)
     └── pages/            # Seiten-Styles (editor, overview, skills)
 ```
@@ -81,7 +81,7 @@ AI/
     │   └── windows/      # Call-, Contact-, Info-, Input-, Url-, VerifyPromptTemplate
     ├── ui/               # Datenfluss zwischen Models und Views
     │   ├── detail/       # UiCompany.js, UiContact.js, UiJob.js
-    │   ├── edit/         # CompanyImageList.js
+    │   ├── edit/         # CompanyImageList.js, ImportStatus.js
     │   ├── overview/     # OverviewFilter.js
     │   ├── windows/      # reserviert (leer)
     │   └── work/         # reserviert (nur README.md)
@@ -100,7 +100,7 @@ AI/
 ### 📂 Daten, Tests, Dokumente & System (Ausgeblendet/Ignoriert)
 - `admin/` — Lokale Administrations-Oberfläche (`admin/index.html`, `admin/admin.js`).
 - `testdata/` — Testdaten und Testläufe: `Jobsinput.json` (Eingabedatensätze),
-  `run-analysis-test.mjs` (`npm run test:analysis`), `run-workmodel-test.mjs` (`npm run test:workmodel`), `run-workflow-test.mjs` (`npm run test:workflow`;
+  `run-analysis-test.mjs` (`npm run test:analysis`), `run-workmodel-test.mjs` (`npm run test:workmodel`), `run-importflow-test.mjs` (`npm run test:importflow`), `run-workflow-test.mjs` (`npm run test:workflow`;
   Import-Teil nur mit `npm install --no-save jsdom`), `run-tests.mjs`, `seed-browser.js`,
   `readme.md`.
 - `documents/` — Hochgeladene Nutzerdateien (PDFs, JPGs).

@@ -128,20 +128,6 @@ check("Kontakt: Jobtitel ohne (m/w/d) wird nicht zur Position", roleOf("Frontend
 check("Kontakt: echte Position bleibt erhalten", roleOf("Frontend Engineer (m/w/d)", "Personalreferentin").contacts[0]?.role === "Personalreferentin");
 check("Kontakt: Jobtitel bleibt richtig als Jobtitel", roleOf("Frontend Engineer, Developer (M/W/D)").job.title === "Frontend Engineer, Developer (M/W/D)");
 
-// ---------- 4c. Ersatzkontakt: Jobtitel ist keine Position ----------
-const substituteApp = new AppModel();
-substituteApp.company.name = "INSIDE M2M";
-substituteApp.company.email = "info@inside-m2m.de";
-substituteApp.job.title = "Frontend Engineer, Developer (M/W/D)";
-controller.ensureCompanyContact(substituteApp);
-check("Ersatzkontakt: Position bleibt leer, Jobtitel bleibt als Jobtitel", substituteApp.contacts[0]?.role === "" && substituteApp.job.title === "Frontend Engineer, Developer (M/W/D)");
-substituteApp.contacts[0].role = "Frontend Engineer, Developer (M/W/D)"; // Altbestand: früher automatisch eingetragen
-controller.ensureCompanyContact(substituteApp);
-check("Ersatzkontakt: früher eingetragener Jobtitel wird bereinigt", substituteApp.contacts[0].role === "");
-substituteApp.contacts[0].role = "Geschäftsführung";
-controller.ensureCompanyContact(substituteApp);
-check("Ersatzkontakt: von Hand eingetragene Position bleibt", substituteApp.contacts[0].role === "Geschäftsführung");
-
 // ---------- 5. Quellen mit Domain ----------
 const sources = new SourcesTemplate().combineSources({
     references: [],

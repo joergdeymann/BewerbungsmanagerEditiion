@@ -138,6 +138,7 @@ detailApp.job.workModel.data = {
 };
 const detailHtml = new JobTemplate().render(detailApp);
 const editHtml = new JobEditTemplate().render();
+const workDaysCss = fs.readFileSync(new URL("../css/content/work-days.css", import.meta.url), "utf8");
 
 const checks = [
     // Models
@@ -203,6 +204,9 @@ const checks = [
     ["Editor-Template: Auswahl für alle Arten und Arbeitszeiten", WorkModelConstants.TYPE.every(type => editHtml.includes(`value="${type}"`))
         && WorkModelConstants.WORK_TIME.every(time => editHtml.includes(`value="${time}"`))],
     ["Editor-Template: eine Zeile je Arbeitstage-Typ", (editHtml.match(/class="work-day"/g) ?? []).length === 4 && editHtml.includes('id="workNotes"')],
+
+    ["Editor-CSS: Felder nicht gewählter Arbeitstage werden ausgeblendet, der Typ bleibt", /\.work-day:has\(\.work-day__enabled:not\(:checked\)\)\s+\.work-day__field\s*\{\s*display:\s*none/.test(workDaysCss)
+        && !/\.work-day__type[^{]*\{[^}]*display:\s*none/.test(workDaysCss)],
 
     // Übersichtsfilter
     ["Filter Arbeitsmodell: Hybrid trifft", filter.matchesWorkModel(hybridApp, "Hybrid") && !filter.matchesWorkModel(hybridApp, "Remote")],
