@@ -162,7 +162,7 @@ const fallbackChecks = [
     ["Ersatzkontakt: Firmenname als Name", fallbackContact?.name?.lastname === "Muster GmbH"],
     ["Ersatzkontakt: Firmen-E-Mail übernommen", fallbackContact?.email === "kontakt@muster.de"],
     ["Ersatzkontakt: Firmen-Telefon übernommen", fallbackContact?.phone === "089 9876543"],
-    ["Ersatzkontakt: Position aus der Stellenbezeichnung", fallbackContact?.role === "Softwareentwickler"],
+    ["Ersatzkontakt: keine Position (die Stellenbezeichnung gehört nicht dorthin)", fallbackContact?.role === ""],
     ["Erneuter Lauf dupliziert den Ersatzkontakt nicht", (() => {
         analysisController.apply(fallbackApp, { contacts: [] });
         return fallbackApp.contacts.length === 1;

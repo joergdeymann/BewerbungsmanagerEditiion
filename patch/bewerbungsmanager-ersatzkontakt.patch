@@ -1,0 +1,119 @@
+diff --git a/AI/log/log.md b/AI/log/log.md
+index 2d5b6bc..1970732 100644
+--- a/AI/log/log.md
++++ b/AI/log/log.md
+@@ -188,3 +188,6 @@
+ 2026-10-13 22:30 | [UPDATE] | Bestehende Tests (run-tests, run-analysis-test, run-inside-m2m-test, run-workflow-test) an die neue Struktur angepasst.
+ 2026-10-13 22:30 | [INFO] | Hinweise bleiben im Originalwortlaut (keine Übersetzung); Entscheidung: höchstens 20 Wörter, Standard-Arbeitstage 5.
+ 2026-10-13 22:30 | [INFO] | Offen, nicht Teil dieser Umsetzung: Test run-workflow-test.mjs "CSS: keine eigene Datei ..." schlägt weiterhin fehl, weil css/content/text-block.css existiert (Test nachziehen oder Datei entfernen).
++2026-10-15 20:23 | [FIX] | Position des Ersatzkontakts (Firmendaten) war die Stellenbezeichnung: AnalysisController.createCompanyContact() und refreshCompanyContact() trugen bewusst job.title ein (seit 2026-10-03), sichtbar erst seit der Kopfbereich importiert wird. Jetzt bleibt die Position leer; ein frueher automatisch eingetragener, mit dem Jobtitel identischer Wert wird beim naechsten Lauf entfernt, von Hand eingetragene Positionen bleiben. Der Schutz fuer gefundene Ansprechpartner (ContactExtractor.isRoleLine, ParseText.dropJobTitleRoles) bleibt.
++2026-10-15 20:23 | [UPDATE] | testdata/run-analysis-test.mjs: Pruefung "Ersatzkontakt: Position aus der Stellenbezeichnung" ersetzt durch "keine Position" (bewusste Aenderung der Vorgabe vom 2026-10-03); testdata/run-workflow-test.mjs: Pruefungen zum Ersatzkontakt (leer, Altbestand bereinigt, Handeingabe bleibt).
++2026-10-15 20:23 | [REMOVE] | css/content/text-block.css und der Link in index.html entfernt (seit der Umstellung der Selbstbeschreibung auf <p class="text-content"> ungenutzt; vorhandene Stile statt neuer Formate).
+diff --git a/css/content/text-block.css b/css/content/text-block.css
+deleted file mode 100644
+index e4eff31..0000000
+--- a/css/content/text-block.css
++++ /dev/null
+@@ -1,30 +0,0 @@
+-/* ---------- Formatierter Text (z. B. Selbstbeschreibung der Firma) ---------- */
+-
+-.text-block {
+-   display: flex;
+-   flex-direction: column;
+-   gap: 10px;
+-   line-height: 1.5;
+-}
+-
+-.text-block__heading {
+-   margin: 8px 0 0;
+-   font-size: 1em;
+-   font-weight: 600;
+-}
+-
+-.text-block__paragraph {
+-   margin: 0;
+-}
+-
+-.text-block__list {
+-   display: flex;
+-   flex-direction: column;
+-   gap: 4px;
+-   margin: 0;
+-   padding-left: 1.25em;
+-}
+-
+-.text-block__item {
+-   margin: 0;
+-}
+diff --git a/index.html b/index.html
+index 01af546..5f741ef 100644
+--- a/index.html
++++ b/index.html
+@@ -26,7 +26,6 @@
+   <link rel="stylesheet" href="css/content/subsections.css">
+   <link rel="stylesheet" href="css/content/contact-list.css">
+   <link rel="stylesheet" href="css/content/sources.css">
+-  <link rel="stylesheet" href="css/content/text-block.css">
+   <link rel="stylesheet" href="css/content/dynamic-fields.css">
+   <link rel="stylesheet" href="css/content/important-badges.css">
+   <link rel="stylesheet" href="css/content/benefits.css">
+diff --git a/js/controllers/edit/AnalysisController.js b/js/controllers/edit/AnalysisController.js
+index 584d887..f58f95e 100644
+--- a/js/controllers/edit/AnalysisController.js
++++ b/js/controllers/edit/AnalysisController.js
+@@ -242,7 +242,8 @@ export class AnalysisController {
+                 contact.name.lastname = company.name;
+                 contact.email = company.email;
+                 contact.phone = company.phone;
+-                contact.role = contact.role || application.job?.title || "";
++                // Die Stellenbezeichnung ist keine Position der Firma: früher automatisch eingetragenen Wert entfernen.
++                if (contact.role && contact.role === application.job?.title) contact.role = "";
+             });
+     }
+ 
+@@ -270,7 +271,6 @@ export class AnalysisController {
+ 
+         const contact = new ContactModel();
+         contact.name.data = { lastname: company.name };
+-        contact.role = application.job?.title ?? "";
+         contact.email = company.email;
+         contact.phone = company.phone;
+ 
+diff --git a/testdata/run-analysis-test.mjs b/testdata/run-analysis-test.mjs
+index 5bac50e..983e73b 100644
+--- a/testdata/run-analysis-test.mjs
++++ b/testdata/run-analysis-test.mjs
+@@ -162,7 +162,7 @@ const fallbackChecks = [
+     ["Ersatzkontakt: Firmenname als Name", fallbackContact?.name?.lastname === "Muster GmbH"],
+     ["Ersatzkontakt: Firmen-E-Mail übernommen", fallbackContact?.email === "kontakt@muster.de"],
+     ["Ersatzkontakt: Firmen-Telefon übernommen", fallbackContact?.phone === "089 9876543"],
+-    ["Ersatzkontakt: Position aus der Stellenbezeichnung", fallbackContact?.role === "Softwareentwickler"],
++    ["Ersatzkontakt: keine Position (die Stellenbezeichnung gehört nicht dorthin)", fallbackContact?.role === ""],
+     ["Erneuter Lauf dupliziert den Ersatzkontakt nicht", (() => {
+         analysisController.apply(fallbackApp, { contacts: [] });
+         return fallbackApp.contacts.length === 1;
+diff --git a/testdata/run-workflow-test.mjs b/testdata/run-workflow-test.mjs
+index 40bb87a..ac53532 100644
+--- a/testdata/run-workflow-test.mjs
++++ b/testdata/run-workflow-test.mjs
+@@ -128,6 +128,20 @@ check("Kontakt: Jobtitel ohne (m/w/d) wird nicht zur Position", roleOf("Frontend
+ check("Kontakt: echte Position bleibt erhalten", roleOf("Frontend Engineer (m/w/d)", "Personalreferentin").contacts[0]?.role === "Personalreferentin");
+ check("Kontakt: Jobtitel bleibt richtig als Jobtitel", roleOf("Frontend Engineer, Developer (M/W/D)").job.title === "Frontend Engineer, Developer (M/W/D)");
+ 
++// ---------- 4c. Ersatzkontakt: Jobtitel ist keine Position ----------
++const substituteApp = new AppModel();
++substituteApp.company.name = "INSIDE M2M";
++substituteApp.company.email = "info@inside-m2m.de";
++substituteApp.job.title = "Frontend Engineer, Developer (M/W/D)";
++controller.ensureCompanyContact(substituteApp);
++check("Ersatzkontakt: Position bleibt leer, Jobtitel bleibt als Jobtitel", substituteApp.contacts[0]?.role === "" && substituteApp.job.title === "Frontend Engineer, Developer (M/W/D)");
++substituteApp.contacts[0].role = "Frontend Engineer, Developer (M/W/D)"; // Altbestand: früher automatisch eingetragen
++controller.ensureCompanyContact(substituteApp);
++check("Ersatzkontakt: früher eingetragener Jobtitel wird bereinigt", substituteApp.contacts[0].role === "");
++substituteApp.contacts[0].role = "Geschäftsführung";
++controller.ensureCompanyContact(substituteApp);
++check("Ersatzkontakt: von Hand eingetragene Position bleibt", substituteApp.contacts[0].role === "Geschäftsführung");
++
+ // ---------- 5. Quellen mit Domain ----------
+ const sources = new SourcesTemplate().combineSources({
+     references: [],
