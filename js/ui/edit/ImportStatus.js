@@ -31,24 +31,31 @@ export class ImportStatus {
     /**
      * Ein Abruf beginnt (oder die App wartet auf eine Seite).
      * @param {"main"|"side"|"company"} kind Seitenart (Schlüssel von ImportConstants.PAGE).
+     * @param {string} [detail] Unterseite, z. B. "Kontakt" (Anzeige: "Firmenseite (Kontakt) ...").
      */
-    begin(kind) {
+    begin(kind, detail = "") {
         this.pending++;
-        this.enqueue(`${ImportConstants.PAGE[kind].label} wird geladen ...`);
+        this.enqueue(`${this.label(kind, detail)} wird geladen ...`);
     }
 
     /**
      * Ein Abruf ist beendet. Läuft kein weiterer, bleibt das Ergebnis kurz sichtbar.
      * @param {"main"|"side"|"company"} kind Seitenart (Schlüssel von ImportConstants.PAGE).
      * @param {boolean} [ok] false, wenn der Abruf fehlgeschlagen ist.
+     * @param {string} [detail] Unterseite, z. B. "Kontakt".
      */
-    end(kind, ok = true) {
-        const label = ImportConstants.PAGE[kind].label;
+    end(kind, ok = true, detail = "") {
+        const label = this.label(kind, detail);
 
         this.pending = Math.max(0, this.pending - 1);
         this.enqueue(ok ? `${label} geladen` : `${label} nicht geladen`);
 
         if (!this.pending && !this.holding && !this.queue.length) this.scheduleHide();
+    }
+
+    label(kind, detail) {
+        const label = ImportConstants.PAGE[kind].label;
+        return detail ? `${label} (${detail})` : label;
     }
 
     enqueue(text) {

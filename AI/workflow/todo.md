@@ -10,9 +10,9 @@ Stand: 2026-10-13 (ArbeitsModel umgesetzt)
   in einem Model.
 - Quellen (`references[]`) sollen bei der Erfassung automatisch gespeichert werden.
   Importierte Texte sind bereits umgesetzt. Offen:
-  - Firmenwebsite (Firmenseite) als eigener `ReferenceModel`-Eintrag. Die Seite wird beim Import
-    seit 2026-10-14 immer mitgeladen und als Eintrag unter "Übernommene Texte" abgelegt; die
-    Verknüpfung in `references[]` fehlt noch.
+  - Firmenwebsite (Firmenseite) samt Unterseiten Kontakt, Karriere und Impressum als eigene
+    `ReferenceModel`-Einträge. Die Seiten werden beim Import seit 2026-10-14 immer mitgeladen
+    und als Einträge unter "Übernommene Texte" abgelegt; die Verknüpfung in `references[]` fehlt noch.
   - Bild-URLs der Ansprechpartner (`contact.img`) als eigene `ReferenceModel`-Einträge.
     Bilder werden nur für Ansprechpartner benötigt, daher nur diese.
 - `SourcesTemplate.js` zeigt bewusst nur, was in `references[]` gespeichert ist
@@ -64,6 +64,14 @@ Stand: 2026-10-13 (ArbeitsModel umgesetzt)
 - Mögliche Erweiterung: "Aktuelle LinkedIn-Stelle importieren" per Knopf in der App. Der Server
   liest dann den geöffneten LinkedIn-Tab im vom Server gesteuerten Chrome (Tabs per Titel/Adresse
   suchbar), braucht kein Lesezeichen und funktioniert auch von Handy-Apps aus.
+- Angaben zur Stelle von Kontakt- und Karriereseite der Firma (Aufgaben, Anforderungen, Gehalt,
+  Arbeitsmodell) werden bewusst nicht übernommen: Dort stehen meist andere Stellen. Möglich wäre
+  eine Übernahme nur bei erkannter gleicher Stelle (Titel oder Kennziffer steht auf der Seite).
+  Erst mit echten Beispielseiten entscheiden.
+- Unterseiten der Firmenseite: Es werden nur Kontakt, Karriere und Impressum gesucht (einmal je
+  Seite, nur Links der Firmenseite). Weitere (Über uns, Team, Datenschutz) und Seiten, die den Text
+  erst per JavaScript nachladen, fehlen. Das Impressum ergänzt nur leere Felder (kein Überschreiben
+  der Angaben aus der Anzeige).
 - Paralleles Laden von Hauptseite, Nebenseite und Firmenseite: bewusst zurückgestellt. Heute
   nacheinander (Hauptseite, Nebenseiten auf LinkedIn wie /about/, dann Firmenseite); der Server
   (`BrowserSession`) führt Abrufe ohnehin nacheinander aus, der Link zur Info-Seite wird erst

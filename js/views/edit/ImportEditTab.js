@@ -7,6 +7,7 @@ import { UrlImporter } from "../../api/UrlImporter.js";
 import { Analyzer } from "../../analysis/Analyzer.js";
 import { ImportInbox } from "../../io/ImportInbox.js";
 import { ImportStatus } from "../../ui/edit/ImportStatus.js";
+import { CompanySubpages } from "../../io/CompanySubpages.js";
 import { ImportConstants } from "../../constants/ImportConstants.js";
 import { BrowserConstants } from "../../../shared/BrowserConstants.js";
 
@@ -215,9 +216,10 @@ export class ImportEditTab extends BaseEditTab {
      * @param {string} [source] Woher der Abruf stammt (ImportConstants.SOURCE_LABELS), für die Fehlermeldung.
      * @param {"main"|"side"|"company"} [kind] Seitenart (ImportConstants.PAGE): Hauptseite, Nebenseite
      *        (z. B. Info-Seite) oder Firmenseite; bestimmt Anzeige im Kopfbereich und Meldungen.
+     * @param {string} [detail] Unterseite der Firmenseite, z. B. "Kontakt" (nur Anzeige und Meldungen).
      * @returns {Promise<string>} "" bei Erfolg, sonst der Grund, warum die Seite nicht übernommen wurde.
      */
-    async importPage(url, load, optional = false, fetchCompany = true, source = "", kind = optional ? "side" : "main") {
+    async importPage(url, load, optional = false, fetchCompany = true, source = "", kind = optional ? "side" : "main", detail = "") {
         if (this.loading.has(url)) {
             console.info(`[Import] Seite wird bereits geladen, doppelter Abruf übersprungen: ${url}`);
             return "Die Seite wird bereits geladen";
@@ -226,7 +228,7 @@ export class ImportEditTab extends BaseEditTab {
 
         const button = this.root.querySelector("#fetchUrl");
         button.disabled = true;
-        button.textContent = ImportConstants.PAGE[kind].busy;
+        button.textContent = detail ? `Firmenseite (${detail}) wird abgerufen...` : ImportConstants.PAGE[kind].busy;
 
         // Seiten mit Anmeldung lädt der Server in einem Chrome; dort kann eine Anmeldung nötig sein.
         const signInHint = UrlImporter.usesBrowser(url)
@@ -236,17 +238,17 @@ export class ImportEditTab extends BaseEditTab {
             : null;
 
         try {
-            const result = await this.loadWithStatus(kind, load);
+            const result = await this.loadWithStatus(kind, load, detail);
             this.logImport(result);
 
-            const reason = this.rejectReason(result, optional);
+            const reason = this.rejectReason(result, optional, kind === "company");
             if (reason) {
                 if (!optional) Toast.show(`Seite nicht übernommen: ${reason}.`, "error");
                 return reason;
             }
 
-            this.addHistoryEntry(result.text, url);
-            Toast.show(ImportConstants.PAGE[kind].done, "success");
+            this.addHistoryEntry(result.text, url, kind === "company");
+            Toast.show(detail ? `Firmenseite (${detail}) übernommen (weiterer Eintrag unter "Übernommene Texte").` : ImportConstants.PAGE[kind].done, "success");
 
             // Reihenfolge: Hauptseite, Nebenseite(n) auf LinkedIn, zuletzt die Firmenseite (nacheinander).
             if (!optional && fetchCompany) {
@@ -274,11 +276,14 @@ export class ImportEditTab extends BaseEditTab {
      * bei der Info-Seite außerdem zu wenig Text.
      * @param {{blocked: boolean, text: string}} result Ergebnis des UrlImporter.
      * @param {boolean} optional true für die Info-Seite der Firma.
+     * @param {boolean} [company] Seite der Firmen-Website (darf kürzer sein, z. B. Kontakt, Impressum).
      * @returns {string} Grund oder "".
      */
-    rejectReason(result, optional) {
+    rejectReason(result, optional, company = false) {
         if (result.blocked) return "Die Seite zeigt eine Cookie-Abfrage oder Anmeldung statt des Inhalts";
-        if (optional && result.text.length < ImportConstants.MIN_OPTIONAL_CHARS) return "Die Seite lieferte kaum Text";
+
+        const minimum = company ? ImportConstants.MIN_COMPANY_PAGE_CHARS : ImportConstants.MIN_OPTIONAL_CHARS;
+        if (optional && result.text.length < minimum) return "Die Seite lieferte kaum Text";
 
         return "";
     }
@@ -310,18 +315,19 @@ export class ImportEditTab extends BaseEditTab {
      * Führt einen Abruf aus und zeigt im Kopfbereich, welche Seite gerade geladen wird.
      * @param {"main"|"side"|"company"} kind Seitenart (ImportConstants.PAGE).
      * @param {() => Promise<object>} load Liefert das Ergebnis des UrlImporter.
+     * @param {string} [detail] Unterseite der Firmenseite, z. B. "Kontakt".
      * @returns {Promise<object>} Ergebnis von load.
      */
-    async loadWithStatus(kind, load) {
+    async loadWithStatus(kind, load, detail = "") {
         let ok = false;
-        this.status.begin(kind);
+        this.status.begin(kind, detail);
 
         try {
             const result = await load();
             ok = true;
             return result;
         } finally {
-            this.status.end(kind, ok);
+            this.status.end(kind, ok, detail);
         }
     }
 
@@ -343,8 +349,9 @@ export class ImportEditTab extends BaseEditTab {
 
     /**
      * Lädt immer die Firmenseite (Website der Firma) über den Server und übernimmt sie als weiteren
-     * Eintrag, damit fehlende Angaben daraus gelesen werden. Ohne bekannte Webadresse oder bei
-     * bereits übernommener Seite passiert nichts; ein Fehler ist nur ein Hinweis.
+     * Eintrag, danach deren Unterseiten Kontakt, Karriere und zuletzt Impressum (soweit verlinkt).
+     * Die Seiten ergänzen nur: leere Felder werden gefüllt, Neues angefügt (AnalysisController.supplement).
+     * Ohne bekannte Webadresse oder bei bereits übernommener Seite passiert nichts; ein Fehler ist nur ein Hinweis.
      */
     async loadWebsite() {
         const url = this.websiteUrl();
@@ -354,10 +361,38 @@ export class ImportEditTab extends BaseEditTab {
         }
         if (this.hasEntry(url) || this.loading.has(url)) return;
 
-        const reason = await this.importPage(url, () => this.urlImporter.fetch(url), true, false, "website", "company");
+        let page = null;
+        const reason = await this.importPage(url, async () => (page = await this.urlImporter.fetch(url)), true, false, "website", "company");
         if (reason) {
             console.warn(`Firmenseite nicht übernommen (${url}): ${reason}`);
             Toast.show(`Firmenseite nicht übernommen: ${reason}.`, "info", BrowserConstants.HINT_DURATION_MS);
+            return;
+        }
+
+        await this.loadSubpages(page, url);
+    }
+
+    /**
+     * Lädt die Unterseiten der Firmenseite nacheinander (Reihenfolge: ImportConstants.SUBPAGES,
+     * Impressum zuletzt). Nicht erreichbare Seiten werden in einem Hinweis zusammengefasst.
+     * @param {{links?: object[], url?: string}} page Ergebnis der Firmenseite.
+     * @param {string} fallbackUrl Adresse der Firmenseite, falls das Ergebnis keine nennt.
+     */
+    async loadSubpages(page, fallbackUrl) {
+        const failed = [];
+
+        for (const sub of CompanySubpages.find(page?.links ?? [], page?.url || fallbackUrl)) {
+            if (this.hasEntry(sub.url) || this.loading.has(sub.url)) continue;
+
+            const reason = await this.importPage(sub.url, () => this.urlImporter.fetch(sub.url), true, false, "website", "company", sub.label);
+            if (reason) {
+                console.warn(`Firmenseite (${sub.label}) nicht übernommen (${sub.url}): ${reason}`);
+                failed.push(`${sub.label} (${reason})`);
+            }
+        }
+
+        if (failed.length) {
+            Toast.show(`Nicht übernommen: ${failed.join(", ")}.`, "info", BrowserConstants.HINT_DURATION_MS);
         }
     }
 
@@ -380,10 +415,17 @@ export class ImportEditTab extends BaseEditTab {
         console.groupEnd();
     }
 
-    addHistoryEntry(content, url = "") {
+    /**
+     * Legt einen Eintrag unter "Übernommene Texte" an und wertet alle Einträge neu aus.
+     * @param {string} content Text der Seite.
+     * @param {string} [url] Adresse der Seite.
+     * @param {boolean} [supplement] true bei Seiten der Firmen-Website (ergänzen nur, siehe ImportedTextModel).
+     */
+    addHistoryEntry(content, url = "", supplement = false) {
         const entry = new ImportedTextModel();
         entry.content = content;
         entry.url = url;
+        entry.supplement = supplement;
         entry.capturedAt = new Date().toISOString();
 
         this.application.importedRawData.push(entry);
@@ -391,11 +433,20 @@ export class ImportEditTab extends BaseEditTab {
         this.runCombinedAnalysis();
     }
 
+    /**
+     * Wertet die Einträge aus: Anzeige und LinkedIn-Seiten gemeinsam (überschreibt mit gefundenen Werten),
+     * danach jede Seite der Firmen-Website einzeln und der Reihe nach (füllt nur Leeres, ergänzt Neues).
+     * Bleiben nur Seiten der Firmen-Website übrig, werden sie wie die Anzeige behandelt.
+     */
     runCombinedAnalysis() {
         const entries = this.application.importedRawData;
         if (!entries.length) return;
 
-        const combinedText = entries.map(entry => entry.content).join("\n\n----\n\n");
+        const main = entries.filter(entry => !entry.supplement);
+        const base = main.length ? main : entries;
+        const extras = main.length ? entries.filter(entry => entry.supplement) : [];
+
+        const combinedText = base.map(entry => entry.content).join("\n\n----\n\n");
 
         let result;
         try {
@@ -413,7 +464,21 @@ export class ImportEditTab extends BaseEditTab {
             kontakte: result.contacts?.length
         });
 
-        this.applyAnalysisToAllTabs(result);
+        this.applyAnalysisToAllTabs(result, "apply");
+
+        for (const entry of extras) this.supplementFrom(entry);
+    }
+
+    /**
+     * Ergänzt das Model um eine Seite der Firmen-Website.
+     * @param {ImportedTextModel} entry Eintrag der Seite.
+     */
+    supplementFrom(entry) {
+        try {
+            this.applyAnalysisToAllTabs(this.analyzer.analyze(entry.content), "supplement");
+        } catch (error) {
+            console.error(`Fehler beim Ergänzen aus ${entry.url}:`, error);
+        }
     }
 
     editEntry(id) {

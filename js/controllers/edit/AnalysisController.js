@@ -1,5 +1,7 @@
 import { ContactModel } from "../../models/ContactModel.js";
+import { ImportConstants } from "../../constants/ImportConstants.js";
 import { LocationConstants } from "../../constants/LocationConstants.js";
+import { TextMerge } from "../../utils/TextMerge.js";
 
 /**
  * Zentrale Schreibstelle der Textanalyse: Das Ergebnis des Parsers wird
@@ -21,6 +23,129 @@ export class AnalysisController {
         this.applyQualifications(application, result.qualifications);
         this.applyBenefits(application, result.benefits);
         this.applyContacts(application, result.contacts);
+    }
+
+    /**
+     * Ergänzt das Model um das Ergebnis einer Seite der Firmen-Website (Firmenseite, Kontakt, Karriere,
+     * Impressum). Anders als apply() überschreibt es nichts: Leere Felder werden gefüllt, Listen und
+     * Texte nur um Neues ergänzt (ohne doppelte Information). Angaben zur Stelle (Aufgaben,
+     * Anforderungen, Gehalt, Arbeitsmodell) bleiben unberührt, weil auf Karriereseiten meist andere
+     * Stellen stehen.
+     * @param {object} application Ziel-Model (AppModel).
+     * @param {object} result Ergebnis der Textanalyse der Seite.
+     */
+    supplement(application, result) {
+        if (!application || !result) return;
+
+        this.supplementCompany(application, result.company);
+        this.supplementBenefits(application, result.benefits);
+        this.supplementContacts(application, result.contacts);
+
+        // Arbeitsort und Ersatzkontakt folgen den (ergänzten) Firmendaten.
+        this.applyWorkLocation(application, {});
+        this.ensureCompanyContact(application);
+    }
+
+    /**
+     * Füllt leere Firmenfelder und ergänzt Beschreibung, Schwerpunkte und Standorte um Neues.
+     * @param {object} application Ziel-Model.
+     * @param {object} [company] Analysierte Firmendaten.
+     */
+    supplementCompany(application, company) {
+        if (!company) return;
+
+        const target = application.company;
+
+        for (const key of ["email", "phone", "website", "legalForm", "ownership", "industry", "size", "founded"]) {
+            if (!target[key] && company[key]) target[key] = company[key];
+        }
+
+        // Ein Firmenname von einer Website ist nur mit Rechtsform verlässlich (sonst oft ein Ansprechpartner).
+        if (!target.name && company.name && company.legalForm) target.name = company.name;
+
+        target.description = TextMerge.supplementText(target.description, company.description, ImportConstants.MAX_SUPPLEMENT_SENTENCES);
+        target.specialties = TextMerge.union(target.specialties, company.specialties);
+
+        if (company.branches?.locations?.length || company.branches?.count) {
+            target.branches.data = {
+                locations: TextMerge.union(target.branches.locations, company.branches.locations),
+                count: target.branches.count || company.branches.count || 0
+            };
+        }
+
+        this.supplementAddress(target, company);
+    }
+
+    /**
+     * Füllt nur leere Teile der Firmenadresse (Strasse, Ort, Postfach).
+     * @param {object} target Company-Model.
+     * @param {object} company Analysierte Firmendaten.
+     */
+    supplementAddress(target, company) {
+        const current = target.address.data;
+        const found = {
+            street: company.street?.name,
+            houseNumber: company.street?.houseNumber,
+            zip: company.location?.zip,
+            city: company.location?.city,
+            country: company.location?.country,
+            postBox: company.postbox
+        };
+
+        const next = { ...current };
+        for (const [key, value] of Object.entries(found)) {
+            if (!current[key] && value) next[key] = value;
+        }
+
+        if (JSON.stringify(next) === JSON.stringify(current)) return;
+        target.address.data = this.completeCountry(next);
+    }
+
+    /**
+     * Ergänzt die Benefits (Firma) um Neues; Zeilen ohne erkannten Benefit (z. B. Stellentitel) bleiben draußen.
+     * @param {object} application Ziel-Model.
+     * @param {{tags?: string[], content?: string[]}} [benefits] Analysierte Benefits.
+     */
+    supplementBenefits(application, benefits) {
+        if (!benefits) return;
+
+        // Karriereseiten führen den Benefit-Abschnitt oft in Stellenlisten weiter: nur Zeilen mit erkanntem Benefit.
+        const tags = benefits.tags ?? [];
+        const content = (benefits.content ?? []).filter(line =>
+            tags.some(tag => TextMerge.normalize(line).includes(TextMerge.normalize(tag)))
+        );
+
+        const target = application.benefits;
+        target.data = {
+            tags: TextMerge.union(target.tags, tags),
+            content: TextMerge.union(target.content, content)
+        };
+    }
+
+    /**
+     * Fügt neue Ansprechpartner hinzu (nicht, wenn Name oder E-Mail schon vorkommen); der
+     * Primärkontakt bleibt unverändert.
+     * @param {object} application Ziel-Model.
+     * @param {Array} [contacts] Analysierte Ansprechpartner.
+     */
+    supplementContacts(application, contacts) {
+        const fresh = (contacts ?? [])
+            .filter(raw => !this.hasContact(application, raw) && !this.hasContactEmail(application, raw))
+            .slice(0, ImportConstants.MAX_SUPPLEMENT_CONTACTS);
+
+        fresh.forEach(raw => this.addContact(application, raw));
+    }
+
+    /**
+     * @param {object} application Ziel-Model.
+     * @param {{email?: string}} raw Analyseergebnis eines Kontakts.
+     * @returns {boolean} true, wenn ein Kontakt mit dieser E-Mail-Adresse vorliegt.
+     */
+    hasContactEmail(application, raw) {
+        const email = String(raw.email ?? "").trim().toLowerCase();
+        if (!email) return false;
+
+        return application.contacts.some(contact => String(contact.email ?? "").trim().toLowerCase() === email);
     }
 
     /**

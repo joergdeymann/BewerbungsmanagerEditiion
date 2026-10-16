@@ -77,7 +77,10 @@ Alle Models stellen ihre Daten über `get data` / `set data` bereit. Die flache 
   `capturedAt`, `content`, zusätzlich `name`. Wird als Liste (`references`) direkt von
   `AppModel` geführt; erscheint in der Detail-Ansicht unter "Quellen".
 - `ImportedTextModel` (erbt `CapturedContentModel`) – ein roher, importierter Textblock
-  für die Analyse-Pipeline im Editor: `id`, `url`, `capturedAt`, `content`. Wird als Liste
+  für die Analyse-Pipeline im Editor: `id`, `url`, `capturedAt`, `content`, zusätzlich
+  `supplement` (true bei Seiten der Firmen-Website: Firmenseite, Kontakt, Karriere,
+  Impressum; sie werden getrennt von der Anzeige ausgewertet und füllen nur leere Felder
+  oder ergänzen Neues, ohne doppelte Information). Wird als Liste
   (`importedRawData`) direkt von `AppModel` geführt. Erscheint einseitig zusätzlich in der
   Detail-"Quellen"-Liste (Anzeige-Ebene only), nie umgekehrt - `references` bleibt von
   `importedRawData` komplett unabhängig.

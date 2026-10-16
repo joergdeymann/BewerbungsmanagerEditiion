@@ -51,7 +51,7 @@ function build(pages, { website } = {}) {
     tab.loading = new Set();
     tab.status = new ImportStatus(() => element, 0);
     tab.sideWait = null;
-    tab.applyAnalysisToAllTabs = analysis => new AnalysisController().apply(app, analysis);
+    tab.applyAnalysisToAllTabs = (analysis, mode) => (mode === "supplement" ? new AnalysisController().supplement(app, analysis) : new AnalysisController().apply(app, analysis));
     tab.urlImporter = {
         fetch: async url => {
             events.push(`load:${url}`);

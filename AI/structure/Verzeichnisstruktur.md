@@ -68,7 +68,7 @@ AI/
     │   ├── overview/     # OverviewEvent.js, OverviewFilterEvent.js, OverviewListEvent.js
     │   └── skills/       # SkillsEvent.js
     ├── store/             # Caching und IndexedDB-Wrapper (AppDB, AppCache, LocalDB, SkillDB, SkillCache)
-    ├── io/               # Seitenimport: ImportJobPage.js (Anzeigenbereich, Rohzeilen, Links), ImportInbox.js (Übergabe Bookmarklet -> Import-Reiter), BookmarkletBuilder.js (Lesezeichen-Link)
+    ├── io/               # Seitenimport: ImportJobPage.js (Anzeigenbereich, Rohzeilen, Links), ImportInbox.js (Übergabe Bookmarklet -> Import-Reiter), CompanySubpages.js (Links zu Kontakt, Karriere, Impressum auf der Firmenseite), BookmarkletBuilder.js (Lesezeichen-Link)
     ├── models/           # Datenmodelle (Application-, App-, Branch-, Company-, Contact-, Skill-, Wage-, WorkModel, WorkDayModel …)
     ├── templates/        # HTML-Strukturen der Views
     │   ├── EditorView.html
@@ -85,7 +85,7 @@ AI/
     │   ├── overview/     # OverviewFilter.js
     │   ├── windows/      # reserviert (leer)
     │   └── work/         # reserviert (nur README.md)
-    ├── utils/            # Hilfsfunktionen (FormatUtils, GlobalUtils, HtmlUtils, TextBlockFormatter)
+    ├── utils/            # Hilfsfunktionen (FormatUtils, GlobalUtils, HtmlUtils, TextBlockFormatter, TextMerge)
     └── views/            # Orchestrierung: Template rendern, Events verdrahten
         ├── detail/       # DetailView.js
         ├── edit/         # EditView.js + BaseEditTab und die *EditTab.js (Benefits, Company,
@@ -100,7 +100,7 @@ AI/
 ### 📂 Daten, Tests, Dokumente & System (Ausgeblendet/Ignoriert)
 - `admin/` — Lokale Administrations-Oberfläche (`admin/index.html`, `admin/admin.js`).
 - `testdata/` — Testdaten und Testläufe: `Jobsinput.json` (Eingabedatensätze),
-  `run-analysis-test.mjs` (`npm run test:analysis`), `run-workmodel-test.mjs` (`npm run test:workmodel`), `run-importflow-test.mjs` (`npm run test:importflow`), `run-workflow-test.mjs` (`npm run test:workflow`;
+  `run-analysis-test.mjs` (`npm run test:analysis`), `run-workmodel-test.mjs` (`npm run test:workmodel`), `run-importflow-test.mjs` (`npm run test:importflow`), `run-subpages-test.mjs` (`npm run test:subpages`), `run-workflow-test.mjs` (`npm run test:workflow`;
   Import-Teil nur mit `npm install --no-save jsdom`), `run-tests.mjs`, `seed-browser.js`,
   `readme.md`.
 - `documents/` — Hochgeladene Nutzerdateien (PDFs, JPGs).

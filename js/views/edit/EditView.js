@@ -51,7 +51,7 @@ export class EditView {
         content.innerHTML = this.tabs.map(tab => tab.render()).join("");
         this.tabs.forEach(tab => {
             if (tab instanceof ImportEditTab) {
-                tab.init(application, result => this.applyAnalysisToAllTabs(result));
+                tab.init(application, (result, mode) => this.applyAnalysisToAllTabs(result, mode));
             } else {
                 tab.init(application);
             }
@@ -76,9 +76,15 @@ export class EditView {
      * Übernimmt das Analyseergebnis in das Model und lädt danach alle Reiter neu
      * aus dem Model. Die Reiter selbst schreiben nichts ins Model.
      * @param {object} result Ergebnis der Textanalyse.
+     * @param {"apply"|"supplement"} [mode] apply überschreibt mit gefundenen Werten (Anzeige),
+     *        supplement füllt nur Leeres und ergänzt Neues (Seiten der Firmen-Website).
      */
-    applyAnalysisToAllTabs(result) {
-        this.controller.analysisController.apply(this.application, result);
+    applyAnalysisToAllTabs(result, mode = "apply") {
+        const controller = this.controller.analysisController;
+
+        if (mode === "supplement") controller.supplement(this.application, result);
+        else controller.apply(this.application, result);
+
         this.reloadTabs();
     }
 

@@ -41,6 +41,9 @@ export class ImportConstants {
     /** Eine optionale Seite (Info-Seite der Firma) mit weniger Text gilt als leer und wird nicht übernommen. */
     static MIN_OPTIONAL_CHARS = 400;
 
+    /** Seiten der Firmen-Website (Kontakt, Impressum, ...) sind oft kurz; darunter gilt die Seite als leer. */
+    static MIN_COMPANY_PAGE_CHARS = 80;
+
     /** Info-Seite der Firma im Browser laden (unsichtbarer Rahmen, mit der Anmeldung des Benutzers): Wartezeit bis die Seite aufgebaut ist. */
     static FRAME_WAIT_MS = 3000;
 
@@ -79,6 +82,26 @@ export class ImportConstants {
             done: 'Firmenseite übernommen (weiterer Eintrag unter "Übernommene Texte").'
         }
     };
+
+    /**
+     * Unterseiten der Firmenseite (Website der Firma), die zusätzlich geladen werden, wenn die Firmenseite
+     * einen passenden Link hat. Reihenfolge = Reihenfolge des Ladens: das Impressum kommt zuletzt.
+     * words: Begriffe (klein) im Linktext oder im Pfad der Adresse.
+     */
+    static SUBPAGES = [
+        { key: "contact", label: "Kontakt", words: ["kontakt", "contact"] },
+        { key: "career", label: "Karriere", words: ["karriere", "stellenangebote", "stellenanzeigen", "jobs", "career"] },
+        { key: "imprint", label: "Impressum", words: ["impressum", "imprint", "legal notice"] }
+    ];
+
+    /** Adressen, die keine Seite sind (Dateien). */
+    static SUBPAGE_FILE_REGEX = /\.(pdf|jpe?g|png|gif|svg|webp|zip|docx?|xlsx?|pptx?)(\?|$)/i;
+
+    /** Höchstzahl neuer Ansprechpartner je ergänzter Seite (Kontaktseiten listen oft ein ganzes Team). */
+    static MAX_SUPPLEMENT_CONTACTS = 5;
+
+    /** Höchstzahl ergänzter Sätze der Firmenbeschreibung je Seite. */
+    static MAX_SUPPLEMENT_SENTENCES = 5;
 
     /** Anzeige im Kopfbereich (rechts unten): Element und Dauer, die das Ergebnis stehen bleibt. */
     static STATUS_SELECTOR = "#importStatusBar";

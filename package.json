@@ -9,6 +9,7 @@
     "test:workflow": "node testdata/run-workflow-test.mjs",
     "test:workmodel": "node testdata/run-workmodel-test.mjs",
     "test:importflow": "node testdata/run-importflow-test.mjs",
+    "test:subpages": "node testdata/run-subpages-test.mjs",
     "browser:check": "node server/BrowserCheck.js"
   },
   "devDependencies": {
