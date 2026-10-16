@@ -81,8 +81,14 @@ export class ImportConstants {
     };
 
     /** Anzeige im Kopfbereich (rechts unten): Element und Dauer, die das Ergebnis stehen bleibt. */
-    static STATUS_SELECTOR = "#importStatus";
+    static STATUS_SELECTOR = "#importStatusBar";
     static STATUS_HIDE_MS = 3000;
+
+    /** Jede Meldung der Anzeige bleibt mindestens so lange stehen (sonst sieht man schnelle Schritte nicht). */
+    static STATUS_MIN_VISIBLE_MS = 600;
+
+    /** Wartet die App auf die Info-Seite vom Lesezeichen: Zeitzugabe zur Wartezeit des Lesezeichens, dann Abbruch. */
+    static SIDE_WAIT_EXTRA_MS = 5000;
 
     /** Wartezeit auf das Bookmarklet, danach wird die URL über den Server abgerufen. */
     static FALLBACK_DELAY_MS = 5000;

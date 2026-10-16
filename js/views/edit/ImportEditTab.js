@@ -29,6 +29,7 @@ export class ImportEditTab extends BaseEditTab {
         this.lastCommittedText = "";
         this.loading = new Set();
         this.status = new ImportStatus();
+        this.sideWait = null;
 
         const input = this.root.querySelector("#originalText");
 
@@ -114,7 +115,10 @@ export class ImportEditTab extends BaseEditTab {
         const load = html
             ? async () => this.urlImporter.fromHtml(html, url)
             : () => this.urlImporter.fetch(url);
-        await this.importPage(url, load, false, !aboutExpected, source);
+        const reason = await this.importPage(url, load, false, !aboutExpected, source);
+
+        // Das Lesezeichen liest die Info-Seite noch im LinkedIn-Tab: bis sie ankommt, ist das die Nebenseite im Laden.
+        if (aboutExpected && !reason && !this.hasAboutEntry()) this.expectSide();
     }
 
     /**
@@ -151,18 +155,54 @@ export class ImportEditTab extends BaseEditTab {
      * @param {string|null} html HTML aus dem Rahmen des Bookmarklets.
      */
     async importCompanyPayload(url, html) {
-        if (this.hasEntry(url)) return;
+        try {
+            if (this.hasEntry(url)) return;
 
-        const imported = html ? !await this.importPage(url, async () => this.urlImporter.fromHtml(html, url), true) : false;
+            const imported = html ? !await this.importPage(url, async () => this.urlImporter.fromHtml(html, url), true) : false;
 
-        if (!imported) {
-            const home = url.endsWith(ImportConstants.COMPANY_ABOUT_SUFFIX)
-                ? url.slice(0, -ImportConstants.COMPANY_ABOUT_SUFFIX.length) + ImportConstants.COMPANY_HOME_SUFFIX
-                : "";
-            await this.loadCompanyPage(url, home);
+            if (!imported) {
+                const home = url.endsWith(ImportConstants.COMPANY_ABOUT_SUFFIX)
+                    ? url.slice(0, -ImportConstants.COMPANY_ABOUT_SUFFIX.length) + ImportConstants.COMPANY_HOME_SUFFIX
+                    : "";
+                await this.loadCompanyPage(url, home);
+            }
+        } finally {
+            this.releaseSide(true);
         }
 
         await this.loadWebsite();
+    }
+
+    /**
+     * Wartet die App auf die Info-Seite vom Lesezeichen, zeigt der Kopfbereich "Nebenseite wird geladen".
+     * Kommt sie nicht an (Tab geschlossen), endet die Anzeige nach der Wartezeit des Lesezeichens.
+     */
+    expectSide() {
+        if (this.sideWait) return;
+
+        this.status.begin("side");
+        this.sideWait = setTimeout(
+            () => this.releaseSide(false),
+            ImportConstants.FRAME_TIMEOUT_MS + ImportConstants.SIDE_WAIT_EXTRA_MS
+        );
+        this.sideWait.unref?.();
+    }
+
+    /**
+     * Beendet das Warten auf die Info-Seite.
+     * @param {boolean} ok false, wenn sie nicht angekommen ist.
+     */
+    releaseSide(ok) {
+        if (!this.sideWait) return;
+
+        clearTimeout(this.sideWait);
+        this.sideWait = null;
+        this.status.end("side", ok);
+    }
+
+    /** @returns {boolean} true, wenn schon eine Info-Seite der Firma übernommen ist. */
+    hasAboutEntry() {
+        return this.application.importedRawData.some(entry => entry.url?.endsWith(ImportConstants.COMPANY_ABOUT_SUFFIX));
     }
 
     /**

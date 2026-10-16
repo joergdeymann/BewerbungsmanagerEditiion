@@ -6,7 +6,7 @@ export class EditHeaderTemplate {
         const isNew = !application.id;
 
         return `
-            <header class="app-header edit-header pb-0">
+            <header class="app-header pb-0">
                 <div class="shrink-to-left">
                     <h1>${isNew ? "Neue Bewerbung" : HtmlUtils.escape(application.company?.name || "Bewerbung bearbeiten")}</h1>
                     <p>${isNew ? "Alle Angaben können später ergänzt werden." : HtmlUtils.escape(application.job?.title || "")}</p>
@@ -16,8 +16,6 @@ export class EditHeaderTemplate {
                     <button class="warning" data-action="cancel">Abbrechen</button>
                     <button class="primary" data-action="save">Speichern</button>
                 </nav>
-
-                <span id="importStatus" class="import-status" role="status" aria-live="polite" hidden></span>
             </header>
         `;
     }

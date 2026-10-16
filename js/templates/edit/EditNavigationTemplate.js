@@ -11,6 +11,8 @@ export class EditNavigationTemplate {
                     <button type="button" data-section="requirements">Anforderungen</button>
                     <button type="button" data-section="benefits">Benefits</button>
                 </nav>
+
+                <span id="importStatusBar" class="import-status" role="status" aria-live="polite" hidden></span>
             </header>
 
             <main id="editorTabContent" class="content-frame"></main>

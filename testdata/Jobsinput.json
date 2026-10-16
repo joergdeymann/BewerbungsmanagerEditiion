@@ -1,10 +1,10 @@
 {
     "app": [
         {
-            "id": "4680b2ce-35b7-4bb2-8f67-2688e29de5be",
-            "createDate": "2026-10-15T21:06:45.505Z",
+            "id": "1de7eb04-8b9c-4558-bad3-d9b8725325ff",
+            "createDate": "2026-10-16T05:37:27.694Z",
             "status": "BEWORBEN",
-            "updatedAt": "2026-10-15T21:06:45.506Z",
+            "updatedAt": "2026-10-16T05:37:27.694Z",
             "job": {
                 "companyId": 1,
                 "contactId": 1,
@@ -112,7 +112,7 @@
             },
             "contacts": [
                 {
-                    "id": "9bc33e0b-ae24-4bb4-8ce8-782fbb0c229f",
+                    "id": "09a74824-5396-4c10-b16b-045b931a5814",
                     "role": "HR",
                     "name": {
                         "salutation": "Herr",
@@ -125,7 +125,7 @@
                     "phone": "+49 30 11111"
                 },
                 {
-                    "id": "d9cd91c1-33cf-439b-93c3-7df8677cc4e0",
+                    "id": "016c8ebe-4f2c-4b80-aac1-bb7a87a9b4a3",
                     "role": "Fachbereich",
                     "name": {
                         "salutation": "Frau",
@@ -138,7 +138,7 @@
                     "phone": "+49 30 11112"
                 },
                 {
-                    "id": "015925bd-573b-4786-b489-48c7bfa66223",
+                    "id": "52668283-4fd1-4777-a25d-1048c9ad941a",
                     "role": "Fachbereich",
                     "name": {
                         "salutation": "Herr",
@@ -206,24 +206,24 @@
                 "appliedAt": "2026-09-01",
                 "channel": "portal",
                 "coverLetter": {
-                    "id": "63c8e974-774c-4ba3-95af-ca74eea31d64",
+                    "id": "c53eb3aa-c1fe-49ae-8a3e-6588a2571eb2",
                     "originalName": "Anschreiben_Firma1.pdf",
                     "link": "/documents/anschreiben-1.pdf"
                 },
                 "resume": [
                     {
-                        "id": "57335446-7727-4fb3-9b12-0cff37ec99b8",
+                        "id": "3b064892-c7e4-457d-8403-4d41ad3d9571",
                         "originalName": "Lebenslauf_v1.pdf",
                         "link": "/documents/lebenslauf-1-1.pdf"
                     },
                     {
-                        "id": "989bc419-04d2-4814-90e4-25a6ff2adb2f",
+                        "id": "cee1bf5d-edbd-4f63-8b65-30cf10d148a1",
                         "originalName": "Lebenslauf_v2.pdf",
                         "link": "/documents/lebenslauf-1-2.pdf"
                     }
                 ],
                 "emailCoverLetter": {
-                    "id": "4901c9c0-2179-4316-8923-4afbb343ce83",
+                    "id": "77fb3640-8240-429c-b2d6-1d231efbe43a",
                     "originalName": "Mailanschreiben_Firma1.pdf",
                     "link": "/documents/mailanschreiben-1.pdf"
                 },
@@ -247,7 +247,7 @@
                 ],
                 "history": [
                     {
-                        "id": "d2622978-a4de-44e3-b652-9a5438050839",
+                        "id": "2d0434e2-6780-42a4-9705-8838594e7689",
                         "channel": "portal",
                         "entry": {
                             "date": "2026-09-01",
@@ -259,7 +259,7 @@
                         }
                     },
                     {
-                        "id": "3e26a0aa-2c0c-4065-93d7-d9dce19eff1d",
+                        "id": "44d1a677-0a77-4ba4-b299-032643cf824c",
                         "channel": "email",
                         "entry": {
                             "date": "2026-09-02",
@@ -275,7 +275,7 @@
                         }
                     },
                     {
-                        "id": "d8138550-042d-49a8-ad08-c08ad837a1c9",
+                        "id": "746165f1-4bb4-4e47-aaf6-d31f04287ea8",
                         "channel": "phone",
                         "entry": {
                             "date": "2026-09-03",
@@ -286,7 +286,7 @@
                         }
                     },
                     {
-                        "id": "bb49b2a7-9a98-4dca-bb26-c73902ee8bd1",
+                        "id": "09162494-43db-4561-9bd9-2d1ab6c780e6",
                         "channel": "personal",
                         "entry": {
                             "date": "2026-09-04",
@@ -298,21 +298,21 @@
             },
             "references": [
                 {
-                    "id": "d893d1d0-6581-4f93-b51e-2940d4cfae7c",
+                    "id": "2f12dce6-8caa-49ee-a415-c2b04c4ab735",
                     "url": "https://quelle1-1.example.com",
                     "capturedAt": "2026-09-01",
                     "content": "Inhalt der Quelle 1 (1)",
                     "name": "Quelle 1 (1)"
                 },
                 {
-                    "id": "ffbf5100-495a-46ff-9b94-429a49408484",
+                    "id": "9ca20795-a0c7-4f5a-a0c6-eac6cd427ef8",
                     "url": "https://quelle2-1.example.com",
                     "capturedAt": "2026-09-01",
                     "content": "Inhalt der Quelle 2 (1)",
                     "name": "Quelle 2 (1)"
                 },
                 {
-                    "id": "0235bc3b-1f81-4c51-8cb5-07588c664f40",
+                    "id": "0f588273-640d-45e1-a80e-848fcbec30c2",
                     "url": "https://quelle3-1.example.com",
                     "capturedAt": "2026-09-01",
                     "content": "Inhalt der Quelle 3 (1)",
@@ -326,19 +326,19 @@
             ],
             "importedRawData": [
                 {
-                    "id": "fa78f88c-c408-4b18-98db-4dd3e6ef6765",
+                    "id": "0917b5c3-18d9-4d3f-8a90-266d9f756324",
                     "url": "https://quelle1-1.example.com/stellenanzeige",
                     "capturedAt": "2026-09-01",
                     "content": "Rohdatenzeile 1 (1)"
                 },
                 {
-                    "id": "bbbc7160-9a14-4173-b793-25ec65463e5c",
+                    "id": "cdad98f9-b96a-4891-84bd-031ad3e569ad",
                     "url": "https://quelle2-1.example.com/stellenanzeige",
                     "capturedAt": "2026-09-02",
                     "content": "Rohdatenzeile 2 (1)"
                 },
                 {
-                    "id": "0d3c83b2-4b07-4fbd-9710-6c8a3e7e2a46",
+                    "id": "50fd0af0-f0ac-43e1-b029-5faaee7219f5",
                     "url": "https://quelle3-1.example.com/stellenanzeige",
                     "capturedAt": "2026-09-03",
                     "content": "Rohdatenzeile 3 (1)"
@@ -346,10 +346,10 @@
             ]
         },
         {
-            "id": "a00b56cb-8518-4844-8170-5146bfc22313",
-            "createDate": "2026-10-15T21:06:45.509Z",
+            "id": "9e7daaa8-2614-4c4f-85a2-6f9d717b9d72",
+            "createDate": "2026-10-16T05:37:27.697Z",
             "status": "BEWORBEN",
-            "updatedAt": "2026-10-15T21:06:45.509Z",
+            "updatedAt": "2026-10-16T05:37:27.697Z",
             "job": {
                 "companyId": 2,
                 "contactId": 2,
@@ -457,7 +457,7 @@
             },
             "contacts": [
                 {
-                    "id": "13eb3cd8-6a4a-4653-b8c8-8716e1fc8c20",
+                    "id": "84b6b77e-e7e8-4fcc-8e57-74ec7b1d1747",
                     "role": "HR",
                     "name": {
                         "salutation": "Herr",
@@ -470,7 +470,7 @@
                     "phone": "+49 30 11121"
                 },
                 {
-                    "id": "35365af7-7258-44a2-80a7-139ee759ccb9",
+                    "id": "07a7679a-d02b-47f7-97a1-fc5f38622915",
                     "role": "Fachbereich",
                     "name": {
                         "salutation": "Frau",
@@ -483,7 +483,7 @@
                     "phone": "+49 30 11122"
                 },
                 {
-                    "id": "abdbb501-a30b-465d-bd2b-8e510d440bfc",
+                    "id": "1a69fe45-994d-4aeb-b134-7528bdf7fec3",
                     "role": "Fachbereich",
                     "name": {
                         "salutation": "Herr",
@@ -551,24 +551,24 @@
                 "appliedAt": "2026-09-01",
                 "channel": "portal",
                 "coverLetter": {
-                    "id": "6dd3450a-47d2-49c6-95e1-d0909b4b2288",
+                    "id": "29a6b1a1-2998-4833-9d8e-2bdef3416699",
                     "originalName": "Anschreiben_Firma2.pdf",
                     "link": "/documents/anschreiben-2.pdf"
                 },
                 "resume": [
                     {
-                        "id": "d90c3a25-ef47-44b4-9a97-ba3b2b1ae050",
+                        "id": "620df4ba-94e1-4cc3-92a8-81e9317ba480",
                         "originalName": "Lebenslauf_v1.pdf",
                         "link": "/documents/lebenslauf-2-1.pdf"
                     },
                     {
-                        "id": "b541792e-2c10-4820-bcec-397ff3899828",
+                        "id": "a49034cb-499d-4a1b-9055-97aaabc699b1",
                         "originalName": "Lebenslauf_v2.pdf",
                         "link": "/documents/lebenslauf-2-2.pdf"
                     }
                 ],
                 "emailCoverLetter": {
-                    "id": "328c4226-d9a6-405b-93a5-262bbc419df4",
+                    "id": "9a211db9-0a9c-42f6-ac35-652497fe73f7",
                     "originalName": "Mailanschreiben_Firma2.pdf",
                     "link": "/documents/mailanschreiben-2.pdf"
                 },
@@ -592,7 +592,7 @@
                 ],
                 "history": [
                     {
-                        "id": "d4c510e9-a419-475a-89e9-1f7f50e632f5",
+                        "id": "16146766-7dcb-4616-970e-9be8eb7e9062",
                         "channel": "portal",
                         "entry": {
                             "date": "2026-09-01",
@@ -604,7 +604,7 @@
                         }
                     },
                     {
-                        "id": "b0e0daae-b8d0-4d89-97c2-6112b98379b5",
+                        "id": "d1b8cc58-aec8-473e-8c7a-ed8d1bb13ec3",
                         "channel": "email",
                         "entry": {
                             "date": "2026-09-02",
@@ -620,7 +620,7 @@
                         }
                     },
                     {
-                        "id": "e0f97b95-c6b8-4f9e-940c-49c39e873262",
+                        "id": "6d96554a-5272-4c03-a36c-f1d52652d5e4",
                         "channel": "phone",
                         "entry": {
                             "date": "2026-09-03",
@@ -631,7 +631,7 @@
                         }
                     },
                     {
-                        "id": "a659918b-a88f-4880-aaa1-1e7ec45922ef",
+                        "id": "c4a626ea-b4ef-48af-8d01-708010fc505a",
                         "channel": "personal",
                         "entry": {
                             "date": "2026-09-04",
@@ -643,21 +643,21 @@
             },
             "references": [
                 {
-                    "id": "ecfa81aa-b990-4e0c-b16c-4655703b4d1c",
+                    "id": "d8da1c7c-0a8a-482a-8904-62f29529ddc7",
                     "url": "https://quelle1-2.example.com",
                     "capturedAt": "2026-09-01",
                     "content": "Inhalt der Quelle 1 (2)",
                     "name": "Quelle 1 (2)"
                 },
                 {
-                    "id": "3e0f08e5-f30b-45ad-bd23-f19da8aa6c18",
+                    "id": "f3e16777-bc2f-4c4e-a1fa-bd6c2ec646eb",
                     "url": "https://quelle2-2.example.com",
                     "capturedAt": "2026-09-01",
                     "content": "Inhalt der Quelle 2 (2)",
                     "name": "Quelle 2 (2)"
                 },
                 {
-                    "id": "1e9428cd-601e-4e44-ad05-2bb1fe65dd1a",
+                    "id": "f6a35108-88d6-48e5-862f-9e1f866fce62",
                     "url": "https://quelle3-2.example.com",
                     "capturedAt": "2026-09-01",
                     "content": "Inhalt der Quelle 3 (2)",
@@ -671,19 +671,19 @@
             ],
             "importedRawData": [
                 {
-                    "id": "e4aafe8b-15af-42fe-8fac-d5d2b02a7bc6",
+                    "id": "e329a50e-6a39-4c73-9c22-670ff0ce7d7a",
                     "url": "https://quelle1-2.example.com/stellenanzeige",
                     "capturedAt": "2026-09-01",
                     "content": "Rohdatenzeile 1 (2)"
                 },
                 {
-                    "id": "dc68947e-a2f7-4b15-a614-447b716e5a73",
+                    "id": "5ff82212-9a0b-420f-8317-809dd11ae86c",
                     "url": "https://quelle2-2.example.com/stellenanzeige",
                     "capturedAt": "2026-09-02",
                     "content": "Rohdatenzeile 2 (2)"
                 },
                 {
-                    "id": "c079a957-2a05-4fc6-925e-add804959ea1",
+                    "id": "d05758aa-6014-403f-9bd8-f42a6bb998d3",
                     "url": "https://quelle3-2.example.com/stellenanzeige",
                     "capturedAt": "2026-09-03",
                     "content": "Rohdatenzeile 3 (2)"
@@ -691,10 +691,10 @@
             ]
         },
         {
-            "id": "99040130-c770-4cfa-bd44-c7385b265ce5",
-            "createDate": "2026-10-15T21:06:45.509Z",
+            "id": "52f0d8a4-eb71-49ba-b2d7-1c3500dd6b13",
+            "createDate": "2026-10-16T05:37:27.697Z",
             "status": "BEWORBEN",
-            "updatedAt": "2026-10-15T21:06:45.509Z",
+            "updatedAt": "2026-10-16T05:37:27.697Z",
             "job": {
                 "companyId": 3,
                 "contactId": 3,
@@ -802,7 +802,7 @@
             },
             "contacts": [
                 {
-                    "id": "eb532ae7-d468-4675-81d1-8ec03f3583d8",
+                    "id": "5d8a2e39-9220-4330-8927-34bd896fff6e",
                     "role": "HR",
                     "name": {
                         "salutation": "Herr",
@@ -815,7 +815,7 @@
                     "phone": "+49 30 11131"
                 },
                 {
-                    "id": "d535cf99-7b19-45ea-8793-2760df631000",
+                    "id": "ca4f5788-2a81-4b8d-b0b1-1858d2b44c84",
                     "role": "Fachbereich",
                     "name": {
                         "salutation": "Frau",
@@ -828,7 +828,7 @@
                     "phone": "+49 30 11132"
                 },
                 {
-                    "id": "8780cb33-eee1-4c4a-9f37-3ac6954ad312",
+                    "id": "027acc0c-46ca-463a-97f2-3de8e067661d",
                     "role": "Fachbereich",
                     "name": {
                         "salutation": "Herr",
@@ -896,24 +896,24 @@
                 "appliedAt": "2026-09-01",
                 "channel": "portal",
                 "coverLetter": {
-                    "id": "f34acc8a-96fc-4cf5-a1de-64ca1c135f5b",
+                    "id": "0e353142-76a1-4322-a1a9-911b85723b00",
                     "originalName": "Anschreiben_Firma3.pdf",
                     "link": "/documents/anschreiben-3.pdf"
                 },
                 "resume": [
                     {
-                        "id": "da12d62c-e64d-4c7a-a0be-fe565f53031b",
+                        "id": "98b4e092-5399-4c63-8681-99f6d8daae3f",
                         "originalName": "Lebenslauf_v1.pdf",
                         "link": "/documents/lebenslauf-3-1.pdf"
                     },
                     {
-                        "id": "ccddae6a-e515-4995-a6b5-f2eccdc9fbd3",
+                        "id": "2519391b-1946-491a-99fb-b26a5db0a968",
                         "originalName": "Lebenslauf_v2.pdf",
                         "link": "/documents/lebenslauf-3-2.pdf"
                     }
                 ],
                 "emailCoverLetter": {
-                    "id": "6db6e8bc-d0a5-46ef-a10d-bf8a32bd93d4",
+                    "id": "dc4cde4b-283e-4aec-950a-c58322838c21",
                     "originalName": "Mailanschreiben_Firma3.pdf",
                     "link": "/documents/mailanschreiben-3.pdf"
                 },
@@ -937,7 +937,7 @@
                 ],
                 "history": [
                     {
-                        "id": "f9b00975-6380-4f49-b897-03fedcb665ba",
+                        "id": "a7f1d5e5-7555-48a5-8d8a-42ef136927bd",
                         "channel": "portal",
                         "entry": {
                             "date": "2026-09-01",
@@ -949,7 +949,7 @@
                         }
                     },
                     {
-                        "id": "f286493b-70a9-4ec5-8348-0aa937e5685d",
+                        "id": "0aab858b-1f79-4d08-aa09-78958a5bc4d5",
                         "channel": "email",
                         "entry": {
                             "date": "2026-09-02",
@@ -965,7 +965,7 @@
                         }
                     },
                     {
-                        "id": "6c2bbf1f-3458-4067-9e00-00ffc3ec6783",
+                        "id": "71bcae5a-b8f3-44d2-a23d-537bd32de2b3",
                         "channel": "phone",
                         "entry": {
                             "date": "2026-09-03",
@@ -976,7 +976,7 @@
                         }
                     },
                     {
-                        "id": "655fbef1-2b6e-4439-9c2d-d5dcbc659c52",
+                        "id": "833b33ab-cbd5-4a71-b4b7-f0a688de28c0",
                         "channel": "personal",
                         "entry": {
                             "date": "2026-09-04",
@@ -988,21 +988,21 @@
             },
             "references": [
                 {
-                    "id": "d8919c7a-8c82-49b7-8159-0aa9e72ecabb",
+                    "id": "ebffbe1a-8d55-470e-aa4b-e905ee90e20e",
                     "url": "https://quelle1-3.example.com",
                     "capturedAt": "2026-09-01",
                     "content": "Inhalt der Quelle 1 (3)",
                     "name": "Quelle 1 (3)"
                 },
                 {
-                    "id": "9a6239e7-2ec1-4725-839f-83da38800b6e",
+                    "id": "c504ff35-d63d-4f5c-bff3-0960f9c07c06",
                     "url": "https://quelle2-3.example.com",
                     "capturedAt": "2026-09-01",
                     "content": "Inhalt der Quelle 2 (3)",
                     "name": "Quelle 2 (3)"
                 },
                 {
-                    "id": "31f41e75-372d-4981-b220-12b266990699",
+                    "id": "3d6afce6-2b79-49bd-bbe0-81c26625fbc1",
                     "url": "https://quelle3-3.example.com",
                     "capturedAt": "2026-09-01",
                     "content": "Inhalt der Quelle 3 (3)",
@@ -1016,19 +1016,19 @@
             ],
             "importedRawData": [
                 {
-                    "id": "8f0603e0-072d-4d73-a3fd-ae5fe58cc7e4",
+                    "id": "2c65d899-6d8d-4d21-b5fd-0296276ba9d4",
                     "url": "https://quelle1-3.example.com/stellenanzeige",
                     "capturedAt": "2026-09-01",
                     "content": "Rohdatenzeile 1 (3)"
                 },
                 {
-                    "id": "194572b8-2679-4f65-8042-4d34f541cd8f",
+                    "id": "39bd714c-15e5-46e5-9347-2ba3629ca7b0",
                     "url": "https://quelle2-3.example.com/stellenanzeige",
                     "capturedAt": "2026-09-02",
                     "content": "Rohdatenzeile 2 (3)"
                 },
                 {
-                    "id": "91535aa8-baca-4176-9659-f058e0c00e75",
+                    "id": "85e8af04-faff-4469-9c5a-303bf9a87fd5",
                     "url": "https://quelle3-3.example.com/stellenanzeige",
                     "capturedAt": "2026-09-03",
                     "content": "Rohdatenzeile 3 (3)"
@@ -1036,10 +1036,10 @@
             ]
         },
         {
-            "id": "13635505-1d04-4174-a01b-684ecae208c9",
-            "createDate": "2026-10-15T21:06:45.510Z",
+            "id": "b5081156-ba6e-41f5-9ebc-159191ba900a",
+            "createDate": "2026-10-16T05:37:27.697Z",
             "status": "BEWORBEN",
-            "updatedAt": "2026-10-15T21:06:45.510Z",
+            "updatedAt": "2026-10-16T05:37:27.697Z",
             "job": {
                 "companyId": 4,
                 "contactId": 4,
@@ -1147,7 +1147,7 @@
             },
             "contacts": [
                 {
-                    "id": "d40170a0-953d-4fec-8875-de5a6399e6a5",
+                    "id": "292647f9-344d-45f5-8b1a-9e39687093be",
                     "role": "HR",
                     "name": {
                         "salutation": "Herr",
@@ -1160,7 +1160,7 @@
                     "phone": "+49 30 11141"
                 },
                 {
-                    "id": "3523d66a-096c-414a-a0f0-d07056af4a20",
+                    "id": "76bc4ec5-5310-4bd3-b763-ff4020df8c2f",
                     "role": "Fachbereich",
                     "name": {
                         "salutation": "Frau",
@@ -1173,7 +1173,7 @@
                     "phone": "+49 30 11142"
                 },
                 {
-                    "id": "ca5a59df-b215-4b03-acd1-d9e3e2a3106d",
+                    "id": "f3d49f59-c3de-4a9c-9723-f4d5c7cad988",
                     "role": "Fachbereich",
                     "name": {
                         "salutation": "Herr",
@@ -1241,24 +1241,24 @@
                 "appliedAt": "2026-09-01",
                 "channel": "portal",
                 "coverLetter": {
-                    "id": "b8fd912a-1763-4df8-a6e0-25ab1fd3fc1e",
+                    "id": "8246d93f-df09-441a-ae4a-3bfd225a6688",
                     "originalName": "Anschreiben_Firma4.pdf",
                     "link": "/documents/anschreiben-4.pdf"
                 },
                 "resume": [
                     {
-                        "id": "8662c5b9-a927-4176-ac0f-de34d12c6f5e",
+                        "id": "f6c72b77-e26d-49f6-b440-f5815f9815bd",
                         "originalName": "Lebenslauf_v1.pdf",
                         "link": "/documents/lebenslauf-4-1.pdf"
                     },
                     {
-                        "id": "787fa144-1aaa-4db0-9e87-2f92a7c39cd2",
+                        "id": "524ea053-8d21-4610-a427-5eab85fde74d",
                         "originalName": "Lebenslauf_v2.pdf",
                         "link": "/documents/lebenslauf-4-2.pdf"
                     }
                 ],
                 "emailCoverLetter": {
-                    "id": "acabe2a7-8c47-46e8-89f7-ae4b97f423ba",
+                    "id": "7462339b-66d4-4643-b0d1-e1e0d76bb30f",
                     "originalName": "Mailanschreiben_Firma4.pdf",
                     "link": "/documents/mailanschreiben-4.pdf"
                 },
@@ -1282,7 +1282,7 @@
                 ],
                 "history": [
                     {
-                        "id": "37179511-56b4-47d3-9aae-33edd1d21249",
+                        "id": "d6758f0a-ab49-496a-b4be-45133c57a227",
                         "channel": "portal",
                         "entry": {
                             "date": "2026-09-01",
@@ -1294,7 +1294,7 @@
                         }
                     },
                     {
-                        "id": "caf34938-3fd7-431e-a12b-562d32ba9eee",
+                        "id": "496a26b2-bde8-4a63-8b72-d593171a6306",
                         "channel": "email",
                         "entry": {
                             "date": "2026-09-02",
@@ -1310,7 +1310,7 @@
                         }
                     },
                     {
-                        "id": "5d01d5c7-c08f-4c56-a5c8-7072ba3a7289",
+                        "id": "cb03e90a-be86-4124-bdc8-937abd5ebf53",
                         "channel": "phone",
                         "entry": {
                             "date": "2026-09-03",
@@ -1321,7 +1321,7 @@
                         }
                     },
                     {
-                        "id": "6b934c11-205d-4c41-81bf-8e89689d8ea8",
+                        "id": "5d755650-783b-44d2-a1b7-6ac6efd7ca7d",
                         "channel": "personal",
                         "entry": {
                             "date": "2026-09-04",
@@ -1333,21 +1333,21 @@
             },
             "references": [
                 {
-                    "id": "cc0efbee-87c0-4978-99d8-b3bd8fb685db",
+                    "id": "79e12a94-738a-460d-99b5-d5f29bb58159",
                     "url": "https://quelle1-4.example.com",
                     "capturedAt": "2026-09-01",
                     "content": "Inhalt der Quelle 1 (4)",
                     "name": "Quelle 1 (4)"
                 },
                 {
-                    "id": "40f3d72e-da41-4e56-a491-b5ce00ec3edd",
+                    "id": "9aa7fa45-2881-4d61-b01e-7f71efdf7427",
                     "url": "https://quelle2-4.example.com",
                     "capturedAt": "2026-09-01",
                     "content": "Inhalt der Quelle 2 (4)",
                     "name": "Quelle 2 (4)"
                 },
                 {
-                    "id": "015e11cb-8d75-492e-b0db-2f923898b663",
+                    "id": "437bde59-06bc-4e98-95e2-0d1dfb2cb64c",
                     "url": "https://quelle3-4.example.com",
                     "capturedAt": "2026-09-01",
                     "content": "Inhalt der Quelle 3 (4)",
@@ -1361,19 +1361,19 @@
             ],
             "importedRawData": [
                 {
-                    "id": "b91d0a90-4b5d-4e4b-95d3-d34b1fcfa243",
+                    "id": "d69675a3-c3a7-4835-a953-3fbbbcc7e294",
                     "url": "https://quelle1-4.example.com/stellenanzeige",
                     "capturedAt": "2026-09-01",
                     "content": "Rohdatenzeile 1 (4)"
                 },
                 {
-                    "id": "c000541f-fa6d-4d65-997b-32b7e6a94454",
+                    "id": "ceb47e33-e970-4419-836d-7fa9e24b981d",
                     "url": "https://quelle2-4.example.com/stellenanzeige",
                     "capturedAt": "2026-09-02",
                     "content": "Rohdatenzeile 2 (4)"
                 },
                 {
-                    "id": "e9b8d715-8573-45b5-8b15-65514af9599f",
+                    "id": "b17e7c3e-7de5-4460-93ad-404ac2de4ac2",
                     "url": "https://quelle3-4.example.com/stellenanzeige",
                     "capturedAt": "2026-09-03",
                     "content": "Rohdatenzeile 3 (4)"
@@ -1381,10 +1381,10 @@
             ]
         },
         {
-            "id": "8c6e8d5f-c4e0-40ab-b587-e56354e0ed39",
-            "createDate": "2026-10-15T21:06:45.510Z",
+            "id": "b7fff84d-8957-445c-9e7f-185f37cd9053",
+            "createDate": "2026-10-16T05:37:27.698Z",
             "status": "BEWORBEN",
-            "updatedAt": "2026-10-15T21:06:45.510Z",
+            "updatedAt": "2026-10-16T05:37:27.698Z",
             "job": {
                 "companyId": 5,
                 "contactId": 5,
@@ -1492,7 +1492,7 @@
             },
             "contacts": [
                 {
-                    "id": "a670e509-61b6-4b56-b3a2-96a755700c85",
+                    "id": "6690383a-9535-4b2c-a074-3c564be58694",
                     "role": "HR",
                     "name": {
                         "salutation": "Herr",
@@ -1505,7 +1505,7 @@
                     "phone": "+49 30 11151"
                 },
                 {
-                    "id": "ff95cd0f-58a3-4358-9a6b-0fed04760236",
+                    "id": "e7fe9d14-2c8e-4311-b0bb-632fb2ee1d52",
                     "role": "Fachbereich",
                     "name": {
                         "salutation": "Frau",
@@ -1518,7 +1518,7 @@
                     "phone": "+49 30 11152"
                 },
                 {
-                    "id": "5cb08617-4fae-4fc1-96bc-fc2fd9e8fd13",
+                    "id": "4c6ac82b-9dbf-419f-98a1-874db2970215",
                     "role": "Fachbereich",
                     "name": {
                         "salutation": "Herr",
@@ -1586,24 +1586,24 @@
                 "appliedAt": "2026-09-01",
                 "channel": "portal",
                 "coverLetter": {
-                    "id": "2579b37f-2597-4324-b233-78bc64782b48",
+                    "id": "350e5d69-c7e0-4eed-a210-d512ef4b0ab3",
                     "originalName": "Anschreiben_Firma5.pdf",
                     "link": "/documents/anschreiben-5.pdf"
                 },
                 "resume": [
                     {
-                        "id": "0017b1bf-3de2-4528-89f6-c6e407e7c3bc",
+                        "id": "9d552118-4cb3-40fa-bb13-b513b8296b88",
                         "originalName": "Lebenslauf_v1.pdf",
                         "link": "/documents/lebenslauf-5-1.pdf"
                     },
                     {
-                        "id": "f3c82603-aa46-4766-a0e7-a7a9a5363f49",
+                        "id": "912ea44c-0eb7-40a1-8909-14aadb11c6a9",
                         "originalName": "Lebenslauf_v2.pdf",
                         "link": "/documents/lebenslauf-5-2.pdf"
                     }
                 ],
                 "emailCoverLetter": {
-                    "id": "55433a59-ec62-41b7-8a6d-f0bb37ee439a",
+                    "id": "dd461dc6-0fd9-414d-a728-cc5e71d352e6",
                     "originalName": "Mailanschreiben_Firma5.pdf",
                     "link": "/documents/mailanschreiben-5.pdf"
                 },
@@ -1627,7 +1627,7 @@
                 ],
                 "history": [
                     {
-                        "id": "729ccdc5-21a3-43d5-b570-d396b6ff465d",
+                        "id": "f3d43bde-7abd-4a46-a153-de214af41ea8",
                         "channel": "portal",
                         "entry": {
                             "date": "2026-09-01",
@@ -1639,7 +1639,7 @@
                         }
                     },
                     {
-                        "id": "2f05735e-e8e2-4a9c-9855-936cb60df445",
+                        "id": "9bb1b4cd-0db9-4bcd-8e5f-ae34978cd46a",
                         "channel": "email",
                         "entry": {
                             "date": "2026-09-02",
@@ -1655,7 +1655,7 @@
                         }
                     },
                     {
-                        "id": "2de375c7-c874-46f7-8e94-ecc6a55bd00b",
+                        "id": "6024d374-0f9a-4178-aea4-3593c289efa3",
                         "channel": "phone",
                         "entry": {
                             "date": "2026-09-03",
@@ -1666,7 +1666,7 @@
                         }
                     },
                     {
-                        "id": "9b9d0695-ecd5-4314-9ccf-7ee71956c2e5",
+                        "id": "ae0cd960-e210-4374-a708-11096f924840",
                         "channel": "personal",
                         "entry": {
                             "date": "2026-09-04",
@@ -1678,21 +1678,21 @@
             },
             "references": [
                 {
-                    "id": "34f679d4-1e97-4b7b-ab78-c29281348883",
+                    "id": "c5765563-3317-4b59-ab78-f8de4f111058",
                     "url": "https://quelle1-5.example.com",
                     "capturedAt": "2026-09-01",
                     "content": "Inhalt der Quelle 1 (5)",
                     "name": "Quelle 1 (5)"
                 },
                 {
-                    "id": "e23168e7-3cbd-4e1a-9753-c30ba7dde8fe",
+                    "id": "11b1ec7e-452b-4541-b576-fb783f46ffef",
                     "url": "https://quelle2-5.example.com",
                     "capturedAt": "2026-09-01",
                     "content": "Inhalt der Quelle 2 (5)",
                     "name": "Quelle 2 (5)"
                 },
                 {
-                    "id": "34f319cb-b103-41c2-be9b-761f964e9a39",
+                    "id": "12cb4e6f-aac3-4d54-99f5-89bbb0062756",
                     "url": "https://quelle3-5.example.com",
                     "capturedAt": "2026-09-01",
                     "content": "Inhalt der Quelle 3 (5)",
@@ -1706,19 +1706,19 @@
             ],
             "importedRawData": [
                 {
-                    "id": "d806d303-9d72-452e-9dc7-490b366c995e",
+                    "id": "f27dff00-bc30-4e69-99bb-8489684a643c",
                     "url": "https://quelle1-5.example.com/stellenanzeige",
                     "capturedAt": "2026-09-01",
                     "content": "Rohdatenzeile 1 (5)"
                 },
                 {
-                    "id": "bac03815-f45f-4bc0-9c34-020d21b5aac0",
+                    "id": "7bd588b6-c8d3-48ee-8214-f6132c85bf98",
                     "url": "https://quelle2-5.example.com/stellenanzeige",
                     "capturedAt": "2026-09-02",
                     "content": "Rohdatenzeile 2 (5)"
                 },
                 {
-                    "id": "1b2b2f40-58bd-46c1-a753-9f1674f4397c",
+                    "id": "904b09b7-e56b-4e67-8262-8110b55d7c03",
                     "url": "https://quelle3-5.example.com/stellenanzeige",
                     "capturedAt": "2026-09-03",
                     "content": "Rohdatenzeile 3 (5)"

@@ -1,29 +1,40 @@
 import { ImportConstants } from "../../constants/ImportConstants.js";
 
 /**
- * Anzeige im Kopfbereich ("Neue Bewerbung", rechts unten): welche Seite gerade geladen wird
- * (Hauptseite, Nebenseite, Firmenseite). Nach dem letzten Abruf bleibt das Ergebnis kurz
- * stehen und verschwindet dann.
+ * Anzeige im Kopfbereich ("Neue Bewerbung", rechts in der Reiterzeile): welche Seite gerade
+ * geladen wird (Hauptseite, Nebenseite, Firmenseite) und wie der Abruf ausgegangen ist.
+ *
+ * Schnelle Schritte (z. B. eine Seite, die das Lesezeichen schon fertig liefert) bleiben je
+ * mindestens dwellMs sichtbar und erscheinen nacheinander in der richtigen Reihenfolge; der Import
+ * selbst wartet darauf nicht. Nach dem letzten Abruf verschwindet die Anzeige nach STATUS_HIDE_MS.
  */
 export class ImportStatus {
     /**
      * @param {() => (HTMLElement|null)} [findElement] Liefert das Anzeigeelement (wird bei jeder
      *        Meldung neu gesucht, der Kopfbereich kann neu aufgebaut worden sein).
+     * @param {number} [dwellMs] Mindestdauer jeder Meldung in Millisekunden.
      */
-    constructor(findElement = () => document.querySelector(ImportConstants.STATUS_SELECTOR)) {
+    constructor(
+        findElement = () => document.querySelector(ImportConstants.STATUS_SELECTOR),
+        dwellMs = ImportConstants.STATUS_MIN_VISIBLE_MS
+    ) {
         this.findElement = findElement;
+        this.dwellMs = dwellMs;
         this.pending = 0;
-        this.timer = null;
+        this.queue = [];
+        this.last = "";
+        this.holding = false;
+        this.dwellTimer = null;
+        this.hideTimer = null;
     }
 
     /**
-     * Ein Abruf beginnt.
+     * Ein Abruf beginnt (oder die App wartet auf eine Seite).
      * @param {"main"|"side"|"company"} kind Seitenart (Schlüssel von ImportConstants.PAGE).
      */
     begin(kind) {
-        clearTimeout(this.timer);
         this.pending++;
-        this.show(`${ImportConstants.PAGE[kind].label} wird geladen ...`);
+        this.enqueue(`${ImportConstants.PAGE[kind].label} wird geladen ...`);
     }
 
     /**
@@ -32,14 +43,46 @@ export class ImportStatus {
      * @param {boolean} [ok] false, wenn der Abruf fehlgeschlagen ist.
      */
     end(kind, ok = true) {
-        this.pending = Math.max(0, this.pending - 1);
-        if (this.pending) return;
-
         const label = ImportConstants.PAGE[kind].label;
-        this.show(ok ? `${label} geladen` : `${label} nicht geladen`);
 
-        this.timer = setTimeout(() => this.hide(), ImportConstants.STATUS_HIDE_MS);
-        this.timer.unref?.();
+        this.pending = Math.max(0, this.pending - 1);
+        this.enqueue(ok ? `${label} geladen` : `${label} nicht geladen`);
+
+        if (!this.pending && !this.holding && !this.queue.length) this.scheduleHide();
+    }
+
+    enqueue(text) {
+        clearTimeout(this.hideTimer);
+        if (text === (this.queue.at(-1) ?? this.last)) return;
+
+        this.queue.push(text);
+        this.showNext();
+    }
+
+    showNext() {
+        if (this.holding || !this.queue.length) return;
+
+        this.last = this.queue.shift();
+        this.show(this.last);
+        this.holding = true;
+
+        this.dwellTimer = this.timer(() => {
+            this.holding = false;
+
+            if (this.queue.length) this.showNext();
+            else if (!this.pending) this.scheduleHide();
+        }, this.dwellMs);
+    }
+
+    scheduleHide() {
+        clearTimeout(this.hideTimer);
+        this.hideTimer = this.timer(() => this.hide(), ImportConstants.STATUS_HIDE_MS);
+    }
+
+    timer(callback, delay) {
+        const id = setTimeout(callback, delay);
+        id.unref?.();
+        return id;
     }
 
     show(text) {
@@ -51,6 +94,8 @@ export class ImportStatus {
     }
 
     hide() {
+        this.last = "";
+
         const element = this.findElement();
         if (!element) return;
 
