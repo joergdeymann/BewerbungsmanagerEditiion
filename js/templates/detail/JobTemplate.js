@@ -33,31 +33,37 @@ export class JobTemplate extends DetailBaseTemplate {
                         <label>Arbeitszeit</label>
                         <p>${HtmlUtils.escape((application.job?.workModel?.workTime || []).join(", ") || "—")}</p>
                     </div>
-                    <div class="field">
-                        <label>Arbeitsmodell</label>
-                        <p>${HtmlUtils.escape((application.job?.workModel?.workDays || []).map(day => day.type).join(", ") || "—")}</p>
+                    <div class="field-column">
+                        <div class="field">
+                            <label>Arbeitsmodell</label>
+                            <p>${HtmlUtils.escape((application.job?.workModel?.workDays || []).map(day => day.type).join(", ") || "—")}</p>
+                        </div>
+                        <div class="field">
+                            <label>Arbeitstage pro Woche</label>
+                            ${this.workDays(application)}
+                            ${this.workNotes(application)}
+                        </div>
                     </div>
-                    <div class="field">
-                        <label>Arbeitstage pro Woche</label>
-                        ${this.workDays(application)}
-                        ${this.workNotes(application)}
+                    <div class="field-column">
+                        <div class="field">
+                            <label>Gehalt</label>
+                            <p>${this.wageRangeText(application.job?.wage?.yearly, application.job?.wage)}</p>
+                        </div>
+                        <div class="field">
+                            <label>Urlaubsgeld</label>
+                            <p>${HtmlUtils.escape(FormatUtils.formatCurrency(application.job?.wage?.holiday) || "—")}</p>
+                            ${this.holidayNote(application)}
+                        </div>
+                        <div class="field">
+                            <label>Weihnachtsgeld</label>
+                            <p>${HtmlUtils.escape(FormatUtils.formatCurrency(application.job?.wage?.christmas) || "—")}</p>
+                        </div>
                     </div>
-                    <div class="field">
-                        <label>Gehalt</label>
-                        <p>${this.wageRangeText(application.job?.wage?.yearly, application.job?.wage)}</p>
-                    </div>
-                    <div class="field">
-                        <label>Urlaubsgeld</label>
-                        <p>${HtmlUtils.escape(FormatUtils.formatCurrency(application.job?.wage?.holiday) || "—")}</p>
-                        ${this.holidayNote(application)}
-                    </div>
-                    <div class="field">
-                        <label>Weihnachtsgeld</label>
-                        <p>${HtmlUtils.escape(FormatUtils.formatCurrency(application.job?.wage?.christmas) || "—")}</p>
-                    </div>
-                    <div class="field">
-                        <label>Kennziffer</label>
-                        <p>${HtmlUtils.escape(application.job?.referenceNumber || "—")}</p>
+                    <div class="field-column">
+                        <div class="field">
+                            <label>Kennziffer</label>
+                            <p>${HtmlUtils.escape(application.job?.referenceNumber || "—")}</p>
+                        </div>
                     </div>
                 </section>
 

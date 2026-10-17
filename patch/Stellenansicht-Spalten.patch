@@ -1,0 +1,119 @@
+diff --git a/AI/log/log.md b/AI/log/log.md
+index 76c5e6a..098c9e4 100644
+--- a/AI/log/log.md
++++ b/AI/log/log.md
+@@ -215,3 +215,4 @@
+ 2026-10-14 17:10 | [NEW] | Stellenanzeige: neues Feld job.url (JobModel, AppRecord.json, Datenstruktur.md). ImportEditTab.importPage setzt es von Anfang an auf die Adresse der ersten Hauptseite (auch beim Lesezeichen) und ändert es nie, wenn es gefüllt ist; Info-Seite und Firmenseiten setzen es nicht. Im Editor (Reiter Stelle) als "Link zur Stellenanzeige" änderbar; in den Quellen als Link angezeigt, bei älteren Datensätzen ohne Eintrag die Adresse des ersten importierten Textes der Anzeige.
+ 2026-10-14 17:10 | [REMOVE] | js/templates/detail/SourcesTemplate copy.js entfernt (Kopie ohne Verwendung).
+ 2026-10-14 17:10 | [INFO] | js/templates/EditorView.html bleibt (wird nirgends geladen), weil sie Felder enthält, die es noch nicht gibt: mehrere Telefonnummern und E-Mail-Adressen der Firma, freie Stellenbeschreibung, Quellen von Hand hinzufügen, Notizen; Einträge in todo.md.
++2026-10-14 18:05 | [UPDATE] | Detailansicht Stelle in drei Spalten: Arbeitsort, Beschäftigungsart und Arbeitszeit in der ersten Reihe; darunter Spalte 1 Arbeitsmodell und Arbeitstage pro Woche untereinander, Spalte 2 Gehalt, Urlaubsgeld und Weihnachtsgeld untereinander, Spalte 3 Kennziffer (JobTemplate, neue Klasse .field-column in css/components/input.css); Tests ergänzt.
+diff --git a/css/components/input.css b/css/components/input.css
+index 386ccea..a5e7e30 100644
+--- a/css/components/input.css
++++ b/css/components/input.css
+@@ -92,6 +92,14 @@ textarea::-webkit-resizer {
+    display: grid;
+ }
+ 
++/* Spalte im Feld-Grid: Felder untereinander (z. B. Arbeitsmodell und Arbeitstage in der Detailansicht). */
++.field-column {
++   display: flex;
++   flex-direction: column;
++   gap: 20px;
++   min-width: 0;
++}
++
+ .field-wide {
+    grid-column: span 2;
+ }
+diff --git a/js/templates/detail/JobTemplate.js b/js/templates/detail/JobTemplate.js
+index 4502437..02518ef 100644
+--- a/js/templates/detail/JobTemplate.js
++++ b/js/templates/detail/JobTemplate.js
+@@ -33,31 +33,37 @@ export class JobTemplate extends DetailBaseTemplate {
+                         <label>Arbeitszeit</label>
+                         <p>${HtmlUtils.escape((application.job?.workModel?.workTime || []).join(", ") || "—")}</p>
+                     </div>
+-                    <div class="field">
+-                        <label>Arbeitsmodell</label>
+-                        <p>${HtmlUtils.escape((application.job?.workModel?.workDays || []).map(day => day.type).join(", ") || "—")}</p>
+-                    </div>
+-                    <div class="field">
+-                        <label>Arbeitstage pro Woche</label>
+-                        ${this.workDays(application)}
+-                        ${this.workNotes(application)}
+-                    </div>
+-                    <div class="field">
+-                        <label>Gehalt</label>
+-                        <p>${this.wageRangeText(application.job?.wage?.yearly, application.job?.wage)}</p>
+-                    </div>
+-                    <div class="field">
+-                        <label>Urlaubsgeld</label>
+-                        <p>${HtmlUtils.escape(FormatUtils.formatCurrency(application.job?.wage?.holiday) || "—")}</p>
+-                        ${this.holidayNote(application)}
++                    <div class="field-column">
++                        <div class="field">
++                            <label>Arbeitsmodell</label>
++                            <p>${HtmlUtils.escape((application.job?.workModel?.workDays || []).map(day => day.type).join(", ") || "—")}</p>
++                        </div>
++                        <div class="field">
++                            <label>Arbeitstage pro Woche</label>
++                            ${this.workDays(application)}
++                            ${this.workNotes(application)}
++                        </div>
+                     </div>
+-                    <div class="field">
+-                        <label>Weihnachtsgeld</label>
+-                        <p>${HtmlUtils.escape(FormatUtils.formatCurrency(application.job?.wage?.christmas) || "—")}</p>
++                    <div class="field-column">
++                        <div class="field">
++                            <label>Gehalt</label>
++                            <p>${this.wageRangeText(application.job?.wage?.yearly, application.job?.wage)}</p>
++                        </div>
++                        <div class="field">
++                            <label>Urlaubsgeld</label>
++                            <p>${HtmlUtils.escape(FormatUtils.formatCurrency(application.job?.wage?.holiday) || "—")}</p>
++                            ${this.holidayNote(application)}
++                        </div>
++                        <div class="field">
++                            <label>Weihnachtsgeld</label>
++                            <p>${HtmlUtils.escape(FormatUtils.formatCurrency(application.job?.wage?.christmas) || "—")}</p>
++                        </div>
+                     </div>
+-                    <div class="field">
+-                        <label>Kennziffer</label>
+-                        <p>${HtmlUtils.escape(application.job?.referenceNumber || "—")}</p>
++                    <div class="field-column">
++                        <div class="field">
++                            <label>Kennziffer</label>
++                            <p>${HtmlUtils.escape(application.job?.referenceNumber || "—")}</p>
++                        </div>
+                     </div>
+                 </section>
+ 
+diff --git a/testdata/run-workmodel-test.mjs b/testdata/run-workmodel-test.mjs
+index 2d4ff48..2bf8b02 100644
+--- a/testdata/run-workmodel-test.mjs
++++ b/testdata/run-workmodel-test.mjs
+@@ -143,6 +143,8 @@ detailApp.job.workModel.data = {
+     notes: ["Übliche Anwesenheit vor Ort: 3 Tage pro Woche", "<b>Test</b>"]
+ };
+ const detailHtml = new JobTemplate().render(detailApp);
++const columns = detailHtml.split('class="field-column"').slice(1);
++const inputCss = fs.readFileSync(new URL("../css/components/input.css", import.meta.url), "utf8");
+ const editHtml = new JobEditTemplate().render();
+ const workDaysCss = fs.readFileSync(new URL("../css/content/work-days.css", import.meta.url), "utf8");
+ 
+@@ -229,6 +231,12 @@ const checks = [
+     ["Detailansicht: Arbeitszeit", detailHtml.includes("Gleitzeit")],
+     ["Detailansicht: Arbeitsmodell nennt nur die Typen (mehrere möglich)", /Arbeitsmodell<\/label>\s*<p>Hybrid, Remote<\/p>/.test(detailHtml)],
+     ["Detailansicht: zweites Feld Arbeitstage mit einer Zeile je Typ aus dem Model", /Arbeitstage pro Woche<\/label>\s*<p>Hybrid: 5 Tage \(3 vor Ort · 2 zuhause\)<\/p><p>Remote: 5 Tage<\/p>/.test(detailHtml)],
++    ["Detailansicht: drei Spalten (Arbeitsmodell und Arbeitstage | Gehalt, Urlaubsgeld, Weihnachtsgeld | Kennziffer)", columns.length === 3
++        && ["Arbeitsmodell", "Arbeitstage pro Woche"].every(label => columns[0].includes(`<label>${label}</label>`))
++        && ["Gehalt", "Urlaubsgeld", "Weihnachtsgeld"].every(label => columns[1].includes(`<label>${label}</label>`))
++        && columns[2].includes("<label>Kennziffer</label>") && !columns[2].includes("<label>Gehalt</label>")],
++    ["Detailansicht: Arbeitsort, Beschäftigungsart und Arbeitszeit stehen vor den Spalten", ["Arbeitsort", "Beschäftigungsart", "Arbeitszeit"].every(label => detailHtml.indexOf(`<label>${label}</label>`) < detailHtml.indexOf('class="field-column"'))],
++    ["Detailansicht: Spalten untereinander im CSS", /\.field-column\s*\{[^}]*flex-direction:\s*column/.test(inputCss)],
+     ["Detailansicht: ohne Arbeitstage in beiden Feldern ein Strich", /Arbeitsmodell<\/label>\s*<p>—<\/p>/.test(detail) && /Arbeitstage pro Woche<\/label>\s*<p>—<\/p>/.test(detail)],
+     ["Detailansicht: Hinweise und Maskierung", detailHtml.includes("Übliche Anwesenheit vor Ort: 3 Tage pro Woche") && detailHtml.includes("&lt;b&gt;Test&lt;/b&gt;") && !detailHtml.includes("<b>Test</b>")],
+     ["Detailansicht: ohne Daten Strich", typeof detail === "string" && /Beschäftigungsart<\/label>\s*<p>—<\/p>/.test(detail)]

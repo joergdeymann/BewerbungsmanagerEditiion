@@ -92,6 +92,14 @@ textarea::-webkit-resizer {
    display: grid;
 }
 
+/* Spalte im Feld-Grid: Felder untereinander (z. B. Arbeitsmodell und Arbeitstage in der Detailansicht). */
+.field-column {
+   display: flex;
+   flex-direction: column;
+   gap: 20px;
+   min-width: 0;
+}
+
 .field-wide {
    grid-column: span 2;
 }

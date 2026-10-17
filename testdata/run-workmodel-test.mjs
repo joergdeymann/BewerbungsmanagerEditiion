@@ -143,6 +143,8 @@ detailApp.job.workModel.data = {
     notes: ["Übliche Anwesenheit vor Ort: 3 Tage pro Woche", "<b>Test</b>"]
 };
 const detailHtml = new JobTemplate().render(detailApp);
+const columns = detailHtml.split('class="field-column"').slice(1);
+const inputCss = fs.readFileSync(new URL("../css/components/input.css", import.meta.url), "utf8");
 const editHtml = new JobEditTemplate().render();
 const workDaysCss = fs.readFileSync(new URL("../css/content/work-days.css", import.meta.url), "utf8");
 
@@ -229,6 +231,12 @@ const checks = [
     ["Detailansicht: Arbeitszeit", detailHtml.includes("Gleitzeit")],
     ["Detailansicht: Arbeitsmodell nennt nur die Typen (mehrere möglich)", /Arbeitsmodell<\/label>\s*<p>Hybrid, Remote<\/p>/.test(detailHtml)],
     ["Detailansicht: zweites Feld Arbeitstage mit einer Zeile je Typ aus dem Model", /Arbeitstage pro Woche<\/label>\s*<p>Hybrid: 5 Tage \(3 vor Ort · 2 zuhause\)<\/p><p>Remote: 5 Tage<\/p>/.test(detailHtml)],
+    ["Detailansicht: drei Spalten (Arbeitsmodell und Arbeitstage | Gehalt, Urlaubsgeld, Weihnachtsgeld | Kennziffer)", columns.length === 3
+        && ["Arbeitsmodell", "Arbeitstage pro Woche"].every(label => columns[0].includes(`<label>${label}</label>`))
+        && ["Gehalt", "Urlaubsgeld", "Weihnachtsgeld"].every(label => columns[1].includes(`<label>${label}</label>`))
+        && columns[2].includes("<label>Kennziffer</label>") && !columns[2].includes("<label>Gehalt</label>")],
+    ["Detailansicht: Arbeitsort, Beschäftigungsart und Arbeitszeit stehen vor den Spalten", ["Arbeitsort", "Beschäftigungsart", "Arbeitszeit"].every(label => detailHtml.indexOf(`<label>${label}</label>`) < detailHtml.indexOf('class="field-column"'))],
+    ["Detailansicht: Spalten untereinander im CSS", /\.field-column\s*\{[^}]*flex-direction:\s*column/.test(inputCss)],
     ["Detailansicht: ohne Arbeitstage in beiden Feldern ein Strich", /Arbeitsmodell<\/label>\s*<p>—<\/p>/.test(detail) && /Arbeitstage pro Woche<\/label>\s*<p>—<\/p>/.test(detail)],
     ["Detailansicht: Hinweise und Maskierung", detailHtml.includes("Übliche Anwesenheit vor Ort: 3 Tage pro Woche") && detailHtml.includes("&lt;b&gt;Test&lt;/b&gt;") && !detailHtml.includes("<b>Test</b>")],
     ["Detailansicht: ohne Daten Strich", typeof detail === "string" && /Beschäftigungsart<\/label>\s*<p>—<\/p>/.test(detail)]
