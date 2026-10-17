@@ -367,7 +367,8 @@ export class AnalysisController {
                 contact.name.lastname = company.name;
                 contact.email = company.email;
                 contact.phone = company.phone;
-                contact.role = contact.role || application.job?.title || "";
+                // Die Stellenbezeichnung ist keine Position der Firma: früher automatisch eingetragenen Wert entfernen.
+                if (contact.role && contact.role === application.job?.title) contact.role = "";
             });
     }
 
@@ -395,7 +396,6 @@ export class AnalysisController {
 
         const contact = new ContactModel();
         contact.name.data = { lastname: company.name };
-        contact.role = application.job?.title ?? "";
         contact.email = company.email;
         contact.phone = company.phone;
 

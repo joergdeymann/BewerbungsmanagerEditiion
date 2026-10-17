@@ -153,9 +153,11 @@ const checks = [
     ["Altdaten: employmentType wird zu type", legacyJob.workModel.type.join() === "Teilzeit" && legacyJob.workModel.workDayTypes.join() === "Hybrid"],
     ["JobModel.data enthält kein employmentType mehr", !("employmentType" in legacyJob.data) && typeof legacyJob.data.workModel === "object" && !Array.isArray(legacyJob.data.workModel)],
     ["JobModel: Rundlauf nach Migration unverändert", JSON.stringify(cleanJob.data) === JSON.stringify(legacyJob.data)],
-    ["Anzeigetext Hybrid ohne bekannte Tage: nur Typ", legacyList.workDays[1].label === "Hybrid" && new WorkDayModel("Hybrid").label === "Hybrid"],
-    ["Anzeigetext: 3 Tage vor Ort · 2 Tage Homeoffice", loaded.workDays[0].label === "Hybrid (3 Tage vor Ort · 2 Tage Homeoffice)"],
-    ["Anzeigetext: Einzahl 1 Tag", Object.assign(new WorkDayModel("Hybrid"), { onSite: 1, remote: 4 }).label === "Hybrid (1 Tag vor Ort · 4 Tage Homeoffice)"],
+    ["Anzeigetext Hybrid ohne bekannte Aufteilung: nur Tage", legacyList.workDays[1].label === "Hybrid (5 Tage)" && new WorkDayModel("Hybrid").label === "Hybrid (5 Tage)"],
+    ["Anzeigetext Vor Ort und Remote mit Tagen aus dem Model", legacyList.workDays[0].label === "Vor Ort (5 Tage)" && legacyList.workDays[2].label === "Remote (5 Tage)"],
+    ["Anzeigetext: Hybrid mit Aufteilung", loaded.workDays[0].label === "Hybrid (5 Tage: 3 vor Ort · 2 zuhause)"],
+    ["Anzeigetext: nur Tage vor Ort bekannt", Object.assign(new WorkDayModel("Hybrid"), { onSite: 2 }).label === "Hybrid (5 Tage: 2 vor Ort)"],
+    ["Anzeigetext: Einzahl 1 Tag", Object.assign(new WorkDayModel("Vor Ort"), { days: 1 }).label === "Vor Ort (1 Tag)"],
 
     // Erkennung: LinkedIn-Beispiel INSIDE M2M
     ["Info-Seite: Hybrid mit 5 Tagen", hybrid?.type === "Hybrid" && hybrid.days === 5],
@@ -217,7 +219,8 @@ const checks = [
     // Detailansicht
     ["Detailansicht: Arten mit Komma", detailHtml.includes("Vollzeit, Teilzeit")],
     ["Detailansicht: Arbeitszeit", detailHtml.includes("Gleitzeit")],
-    ["Detailansicht: Arbeitstage mit Aufteilung", detailHtml.includes("Hybrid (3 Tage vor Ort · 2 Tage Homeoffice), Remote")],
+    ["Detailansicht: Arbeitstage je Typ eine Zeile mit den Daten des Models", detailHtml.includes("<p>Hybrid (5 Tage: 3 vor Ort · 2 zuhause)</p>") && detailHtml.includes("<p>Remote (5 Tage)</p>")],
+    ["Detailansicht: ohne Arbeitstage ein Strich", /Arbeitsmodell<\/label>\s*<p>—<\/p>/.test(detail)],
     ["Detailansicht: Hinweise und Maskierung", detailHtml.includes("Übliche Anwesenheit vor Ort: 3 Tage pro Woche") && detailHtml.includes("&lt;b&gt;Test&lt;/b&gt;") && !detailHtml.includes("<b>Test</b>")],
     ["Detailansicht: ohne Daten Strich", typeof detail === "string" && /Beschäftigungsart<\/label>\s*<p>—<\/p>/.test(detail)]
 ];

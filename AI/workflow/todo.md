@@ -5,9 +5,9 @@ Erledigtes steht nicht mehr hier, sondern in `AI/log/log.md`.
 Stand: 2026-10-13 (ArbeitsModel umgesetzt)
 
 ## Quellen (SourcesTemplate.js / Datenerfassung)
-- `SourcesTemplate.js`: Die Felder "Stellenanzeige" (Link zur Anzeige selbst) und "Quelle"
-  (z. B. LinkedIn/Indeed) zeigen noch "Noch nicht implementiert". Sie haben keine Entsprechung
-  in einem Model.
+- `SourcesTemplate.js`: Das Feld "Stellenanzeige" (Link zur Anzeige selbst) zeigt noch
+  "Noch nicht implementiert" und hat keine Entsprechung in einem Model. Das Feld "Quelle"
+  (z. B. LinkedIn/Indeed) ist am 2026-10-14 entfernt worden.
 - Quellen (`references[]`) sollen bei der Erfassung automatisch gespeichert werden.
   Importierte Texte sind bereits umgesetzt. Offen:
   - Firmenwebsite (Firmenseite) samt Unterseiten Kontakt, Karriere und Impressum als eigene

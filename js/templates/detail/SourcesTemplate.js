@@ -36,11 +36,6 @@ export class SourcesTemplate extends DetailBaseTemplate {
                         <p>${this.link(application.company?.website)}</p>
                     </div>
 
-                    <div class="field">
-                        <label>Quelle</label>
-                        <p class="muted">Noch nicht implementiert</p>
-                    </div>
-
                     <div class="field field-ultra-wide">
                         <label>Weitere Quellen</label>
                         <div id="sourcesList" class="contact-list">

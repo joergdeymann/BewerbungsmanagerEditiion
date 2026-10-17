@@ -35,7 +35,7 @@ export class JobTemplate extends DetailBaseTemplate {
                     </div>
                     <div class="field">
                         <label>Arbeitsmodell</label>
-                        <p>${HtmlUtils.escape((application.job?.workModel?.workDays || []).map(day => day.label).join(", ") || "—")}</p>
+                        ${this.workDays(application)}
                         ${this.workNotes(application)}
                     </div>
                     <div class="field">
@@ -89,6 +89,18 @@ export class JobTemplate extends DetailBaseTemplate {
             <p class="muted">${HtmlUtils.escape(wage.holidayText || "")}</p>
             ${note ? `<p class="muted">${HtmlUtils.escape(note)}</p>` : ""}
         `;
+    }
+
+    /**
+     * Arbeitstage je Typ, eine Zeile je Typ mit den Daten des Models (Tage, vor Ort, zuhause).
+     * @param {object} application Application-Model.
+     * @returns {string} HTML, ohne Angaben ein Strich.
+     */
+    workDays(application) {
+        const days = application.job?.workModel?.workDays ?? [];
+        if (!days.length) return "<p>—</p>";
+
+        return days.map(day => `<p>${HtmlUtils.escape(day.label)}</p>`).join("");
     }
 
     /**
