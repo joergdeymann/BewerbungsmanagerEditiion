@@ -228,6 +228,9 @@ export class ImportEditTab extends BaseEditTab {
 
         const button = this.root.querySelector("#fetchUrl");
         button.disabled = true;
+        // Der Link der Stellenanzeige steht von Anfang an fest: die erste Hauptseite, nie überschrieben.
+        if (kind === "main" && !this.application.job.url) this.application.job.url = url;
+
         button.textContent = detail ? `Firmenseite (${detail}) wird abgerufen...` : ImportConstants.PAGE[kind].busy;
 
         // Seiten mit Anmeldung lädt der Server in einem Chrome; dort kann eine Anmeldung nötig sein.

@@ -13,7 +13,8 @@ Alle Models stellen ihre Daten über `get data` / `set data` bereit. Die flache 
   `actionHistory`, `importedRawData`.
 - `JobModel` – Stellendaten (vormals `JobDetailModel`, entspricht JSON-Schlüssel
   `job`): `companyId`, `contactId`, `title`, `workLocation` (`AddressModel`),
-  `workModel` (`WorkModel`), `wage` (`WageModel`), `referenceNumber`,
+  `url` (Link zur Stellenanzeige, wird beim ersten Import gesetzt und danach nicht mehr
+  überschrieben), `workModel` (`WorkModel`), `wage` (`WageModel`), `referenceNumber`,
   `tasks`, `tags`. `contactId` verweist auf den Primärkontakt der Liste
   `app.contacts` (siehe `AppModel.primaryContact`).
 - `WorkModel` – Arbeitsmodell der Stelle (Schlüssel `job.workModel`, ersetzt

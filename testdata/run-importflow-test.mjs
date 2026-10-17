@@ -95,6 +95,20 @@ await quiet(() => full.tab.loadWebsite());
 await quiet(() => full.tab.loadWebsite());
 const repeated = full.events.length - beforeRepeat;
 
+// 2b. Link zur Stellenanzeige: die erste Hauptseite, nie überschrieben; Nebenseiten und Firmenseiten zählen nicht
+const OTHER = "https://www.linkedin.com/jobs/view/4200000002/";
+pages[OTHER] = result(OTHER, `Backend Developer (m/w/d)\n${LONG}`);
+const second = build(pages);
+await quiet(() => second.tab.importPage(MAIN, () => second.tab.urlImporter.fetch(MAIN), false, true, "dialog"));
+const firstUrl = second.app.job.url;
+await quiet(() => second.tab.importPage(OTHER, () => second.tab.urlImporter.fetch(OTHER), false, true, "dialog"));
+const afterSecond = second.app.job.url;
+const preset = build(pages);
+preset.app.job.url = "https://www.firma.de/stelle/1";
+await quiet(() => preset.tab.importPage(MAIN, () => preset.tab.urlImporter.fetch(MAIN), false, true, "dialog"));
+const sideFirst = build(pages, { website: "" });
+await quiet(() => sideFirst.tab.importCompanyPayload(ABOUT, "<html></html>"));
+
 // 3. Keine Webadresse bekannt: nur Hauptseite
 const lonely = build({ [MAIN]: result(MAIN, "Frontend Developer (m/w/d)\nOsnabrück\nWir suchen dich für unser Team.") });
 await quiet(() => lonely.tab.importPage(MAIN, () => lonely.tab.urlImporter.fetch(MAIN), false, true, "dialog"));
@@ -196,6 +210,13 @@ const checks = [
     ["Ablauf: nacheinander, nie zwei Abrufe gleichzeitig", full.overlapped() === false],
     ["Wiederholung: Firmenseite wird nicht doppelt geladen", repeated === 0],
     ["Knopf nach dem Import wieder frei", full.button.disabled === false && full.button.textContent === "Webadresse der Stellenanzeige"],
+
+    // Link zur Stellenanzeige
+    ["Stellenanzeige: Link der ersten Hauptseite von Anfang an gesetzt", full.app.job.url === MAIN && firstUrl === MAIN],
+    ["Stellenanzeige: zweiter Import ändert den Link nicht", afterSecond === MAIN && second.app.importedRawData.some(entry => entry.url === OTHER)],
+    ["Stellenanzeige: vorhandener Eintrag wird nicht geändert", preset.app.job.url === "https://www.firma.de/stelle/1"],
+    ["Stellenanzeige: Info-Seite oder Firmenseite setzen den Link nicht", sideFirst.app.job.url === "" && bookmarklet.app.job.url === ""],
+    ["Stellenanzeige: Lesezeichen setzt den Link ebenfalls", marked.app.job.url === MAIN],
 
     // Anzeige im Kopfbereich
     ["Anzeige: Hauptseite, Nebenseite, Firmenseite in dieser Reihenfolge", fullTexts.join(" | ") === [

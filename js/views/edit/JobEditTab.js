@@ -21,6 +21,7 @@ export class JobEditTab extends BaseEditTab {
         this.set("holidayText", wage?.holidayText);
         this.set("christmasPay", wage?.christmas ?? "");
         this.set("referenceNumber", job?.referenceNumber);
+        this.set("jobUrl", job?.url);
         this.set("jobTags", (job?.tags || []).join("\n"));
         this.set("tasks", (job?.tasks || []).join("\n"));
         this.set("jobStreet", job?.workLocation?.street?.name);
@@ -169,6 +170,7 @@ export class JobEditTab extends BaseEditTab {
         application.job.wage.holidayText = this.get("holidayText").trim();
         application.job.wage.christmas = this.number("christmasPay");
         application.job.referenceNumber = this.get("referenceNumber");
+        application.job.url = String(this.get("jobUrl") ?? "").trim();
         application.job.tags = this.list("jobTags");
         application.job.tasks = this.list("tasks");
         application.job.workModel.data = {

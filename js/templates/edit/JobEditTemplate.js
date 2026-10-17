@@ -9,6 +9,7 @@ export class JobEditTemplate {
                 <div class="field-grid">
                     <div class="field"><label>Jobtitel</label><input id="jobTitle"></div>
                     <div class="field"><label>Kennziffer</label><input id="referenceNumber"></div>
+                    <div class="field field-ultra-wide"><label>Link zur Stellenanzeige</label><input id="jobUrl" type="url" placeholder="https://..."></div>
                     <div class="field"></div>
 
                     <div class="field field-ultra-wide">

@@ -63,13 +63,12 @@ export class WorkDayModel {
     }
 
     /**
-     * Anzeigetext mit den Daten des Models, z. B. "Vor Ort (5 Tage)" oder
-     * "Hybrid (5 Tage: 3 vor Ort · 2 zuhause)". Die Aufteilung gibt es nur bei Hybrid und nur,
-     * soweit bekannt.
-     * @returns {string} Anzeigetext.
+     * Arbeitstage pro Woche als Text, z. B. "5 Tage" oder "5 Tage (3 vor Ort · 2 zuhause)".
+     * Die Aufteilung gibt es nur bei Hybrid und nur, soweit bekannt.
+     * @returns {string} Text, leer ohne Angabe der Tage.
      */
-    get label() {
-        if (typeof this.days !== "number") return this.type;
+    get daysText() {
+        if (typeof this.days !== "number") return "";
 
         const split = [];
         if (this.type === WorkModelConstants.WORK_DAY_TYPE.HYBRID) {
@@ -78,6 +77,14 @@ export class WorkDayModel {
         }
 
         const days = `${this.days} ${this.days === 1 ? "Tag" : "Tage"}`;
-        return `${this.type} (${days}${split.length ? `: ${split.join(" · ")}` : ""})`;
+        return split.length ? `${days} (${split.join(" · ")})` : days;
+    }
+
+    /**
+     * Anzeigetext mit Typ und Tagen, z. B. "Hybrid: 5 Tage (3 vor Ort · 2 zuhause)".
+     * @returns {string} Anzeigetext.
+     */
+    get label() {
+        return this.daysText ? `${this.type}: ${this.daysText}` : this.type;
     }
 }

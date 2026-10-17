@@ -1,0 +1,457 @@
+diff --git a/AI/log/log.md b/AI/log/log.md
+index 63047bc..76c5e6a 100644
+--- a/AI/log/log.md
++++ b/AI/log/log.md
+@@ -210,3 +210,8 @@
+ 2026-10-14 15:20 | [FIX] | Eigene Änderungen der Zip-Pakete (ab Statusanzeige) hatten den Commit "Ansprechparnert Position nicht mehr gleich die Jobtitel" überschrieben (Position des Ersatzkontakts wieder der Jobtitel, Link auf css/content/text-block.css, Prüfungen, Logeinträge). Wiederhergestellt: AnalysisController (createCompanyContact, refreshCompanyContact), index.html, run-analysis-test.mjs, run-workflow-test.mjs, drei Logeinträge vom 2026-10-15.
+ 2026-10-14 15:20 | [UPDATE] | Detailansicht Stelle, Arbeitsmodell: je Typ eine Zeile mit den Daten des Models (Tage, bei Hybrid die Aufteilung vor Ort und zuhause), z. B. "Hybrid (5 Tage: 3 vor Ort · 2 zuhause)", "Vor Ort (5 Tage)" (WorkDayModel.label, JobTemplate.workDays); Tests angepasst.
+ 2026-10-14 15:20 | [REMOVE] | Detailansicht Quellen: das einzelne, nicht umgesetzte Feld "Quelle" entfernt (SourcesTemplate.js); "Stellenanzeige" bleibt vorerst. Der Eintrag in todo.md angepasst, Prüfung in run-workflow-test.mjs ergänzt.
++2026-10-14 17:10 | [REMOVE] | testdata/run-workflow-test.mjs: Prüfung "CSS: keine eigene Datei ..." entfernt (css/content/text-block.css und der Link in index.html gibt es nicht mehr, der Link ist nicht wieder drin).
++2026-10-14 17:10 | [UPDATE] | Detailansicht Stelle: Das Feld Arbeitsmodell nennt nur die Typen (Vor Ort, Hybrid, Homeoffice, Remote; mehrere möglich, durch Komma getrennt). Neues zweites Feld "Arbeitstage pro Woche" mit einer Zeile je Typ und den Daten des Models, z. B. "Hybrid: 5 Tage (3 vor Ort · 2 zuhause)", darunter die Hinweise (WorkDayModel.daysText und label, JobTemplate.workDays).
++2026-10-14 17:10 | [NEW] | Stellenanzeige: neues Feld job.url (JobModel, AppRecord.json, Datenstruktur.md). ImportEditTab.importPage setzt es von Anfang an auf die Adresse der ersten Hauptseite (auch beim Lesezeichen) und ändert es nie, wenn es gefüllt ist; Info-Seite und Firmenseiten setzen es nicht. Im Editor (Reiter Stelle) als "Link zur Stellenanzeige" änderbar; in den Quellen als Link angezeigt, bei älteren Datensätzen ohne Eintrag die Adresse des ersten importierten Textes der Anzeige.
++2026-10-14 17:10 | [REMOVE] | js/templates/detail/SourcesTemplate copy.js entfernt (Kopie ohne Verwendung).
++2026-10-14 17:10 | [INFO] | js/templates/EditorView.html bleibt (wird nirgends geladen), weil sie Felder enthält, die es noch nicht gibt: mehrere Telefonnummern und E-Mail-Adressen der Firma, freie Stellenbeschreibung, Quellen von Hand hinzufügen, Notizen; Einträge in todo.md.
+diff --git a/AI/structure/AppRecord.json b/AI/structure/AppRecord.json
+index f3ad275..a08316d 100644
+--- a/AI/structure/AppRecord.json
++++ b/AI/structure/AppRecord.json
+@@ -33,6 +33,7 @@
+                 "holidayText": "",
+                 "holidayFraction": null
+             },
++            "url": "",
+             "referenceNumber": "",
+             "tasks": [],
+             "tags": []
+diff --git a/AI/structure/Datenstruktur.md b/AI/structure/Datenstruktur.md
+index d979003..59f61f8 100644
+--- a/AI/structure/Datenstruktur.md
++++ b/AI/structure/Datenstruktur.md
+@@ -13,7 +13,8 @@ Alle Models stellen ihre Daten über `get data` / `set data` bereit. Die flache
+   `actionHistory`, `importedRawData`.
+ - `JobModel` – Stellendaten (vormals `JobDetailModel`, entspricht JSON-Schlüssel
+   `job`): `companyId`, `contactId`, `title`, `workLocation` (`AddressModel`),
+-  `workModel` (`WorkModel`), `wage` (`WageModel`), `referenceNumber`,
++  `url` (Link zur Stellenanzeige, wird beim ersten Import gesetzt und danach nicht mehr
++  überschrieben), `workModel` (`WorkModel`), `wage` (`WageModel`), `referenceNumber`,
+   `tasks`, `tags`. `contactId` verweist auf den Primärkontakt der Liste
+   `app.contacts` (siehe `AppModel.primaryContact`).
+ - `WorkModel` – Arbeitsmodell der Stelle (Schlüssel `job.workModel`, ersetzt
+diff --git a/AI/workflow/todo.md b/AI/workflow/todo.md
+index 7e6cff1..79c0e5e 100644
+--- a/AI/workflow/todo.md
++++ b/AI/workflow/todo.md
+@@ -5,9 +5,6 @@ Erledigtes steht nicht mehr hier, sondern in `AI/log/log.md`.
+ Stand: 2026-10-13 (ArbeitsModel umgesetzt)
+ 
+ ## Quellen (SourcesTemplate.js / Datenerfassung)
+-- `SourcesTemplate.js`: Das Feld "Stellenanzeige" (Link zur Anzeige selbst) zeigt noch
+-  "Noch nicht implementiert" und hat keine Entsprechung in einem Model. Das Feld "Quelle"
+-  (z. B. LinkedIn/Indeed) ist am 2026-10-14 entfernt worden.
+ - Quellen (`references[]`) sollen bei der Erfassung automatisch gespeichert werden.
+   Importierte Texte sind bereits umgesetzt. Offen:
+   - Firmenwebsite (Firmenseite) samt Unterseiten Kontakt, Karriere und Impressum als eigene
+@@ -20,6 +17,18 @@ Stand: 2026-10-13 (ArbeitsModel umgesetzt)
+ - Quellen-Liste: Sortierung per Spaltenüberschrift ist angelegt; die Filterfunktion
+   (Suchbegriff) ist noch zu prüfen bzw. umzusetzen (siehe `workflow01.md`, Schritt 1.5).
+ 
++## Altes Editor-Template (js/templates/EditorView.html, wird nirgends geladen)
++Die Datei bleibt, bis die folgenden Felder umgesetzt oder verworfen sind. Alles andere daraus
++(Import, Firma, Ansprechpartner, Eckdaten, Anforderungen, Benefits, Verifiziert am, Bewerbung &
++Ausgabe als Detailansicht) ist im neuen Editor oder in der Detailansicht vorhanden.
++- Firma: mehrere Telefonnummern und E-Mail-Adressen (je eine pro Zeile). Das Company-Model hat nur
++  `phone` und `email`.
++- Stelle: freier Text "Stellenbeschreibung" (Was soll in dieser Position gemacht werden?). Das
++  Job-Model hat nur die Liste `tasks`.
++- Quellen: im Editor von Hand Quellen hinzufügen und entfernen (Quelle + Adresse). Es gibt nur die
++  Anzeige in der Detailansicht und die automatisch erfassten Quellen.
++- Notizen: freies Notizfeld zur Bewerbung. Es gibt kein Feld dafür im Model.
++
+ ## Legende / History (ApplicationTemplate.js)
+ - "Neu angelegt" und "Antwort der Firma erhalten" werden beim Rendern aus `createDate`/`statusHistory`
+   abgeleitet (nicht als echte `history`-Einträge gespeichert). Sobald der Editor Datensätze anlegt
+diff --git a/js/models/JobModel.js b/js/models/JobModel.js
+index 511ab9c..c45fe89 100644
+--- a/js/models/JobModel.js
++++ b/js/models/JobModel.js
+@@ -7,6 +7,7 @@ export class JobModel {
+         this.companyId = 0;
+         this.contactId = 0;
+         this.title = "";
++        this.url = "";
+         this.workLocation = new AddressModel();
+         this.workModel = new WorkModel();
+         this.wage = new WageModel();
+@@ -20,6 +21,7 @@ export class JobModel {
+             companyId: this.companyId,
+             contactId: this.contactId,
+             title: this.title,
++            url: this.url,
+             workLocation: this.workLocation.data,
+             workModel: this.workModel.data,
+             wage: this.wage.data,
+@@ -34,6 +36,7 @@ export class JobModel {
+         this.companyId = raw.companyId ?? this.companyId;
+         this.contactId = raw.contactId ?? this.contactId;
+         this.title = raw.title ?? this.title;
++        this.url = raw.url ?? this.url;
+         if (raw.workLocation) this.workLocation.data = raw.workLocation;
+         if (raw.workModel) this.workModel.data = raw.workModel;
+         if (raw.wage) this.wage.data = raw.wage;
+diff --git a/js/models/WorkDayModel.js b/js/models/WorkDayModel.js
+index b5c3bd9..482c97a 100644
+--- a/js/models/WorkDayModel.js
++++ b/js/models/WorkDayModel.js
+@@ -63,13 +63,12 @@ export class WorkDayModel {
+     }
+ 
+     /**
+-     * Anzeigetext mit den Daten des Models, z. B. "Vor Ort (5 Tage)" oder
+-     * "Hybrid (5 Tage: 3 vor Ort · 2 zuhause)". Die Aufteilung gibt es nur bei Hybrid und nur,
+-     * soweit bekannt.
+-     * @returns {string} Anzeigetext.
++     * Arbeitstage pro Woche als Text, z. B. "5 Tage" oder "5 Tage (3 vor Ort · 2 zuhause)".
++     * Die Aufteilung gibt es nur bei Hybrid und nur, soweit bekannt.
++     * @returns {string} Text, leer ohne Angabe der Tage.
+      */
+-    get label() {
+-        if (typeof this.days !== "number") return this.type;
++    get daysText() {
++        if (typeof this.days !== "number") return "";
+ 
+         const split = [];
+         if (this.type === WorkModelConstants.WORK_DAY_TYPE.HYBRID) {
+@@ -78,6 +77,14 @@ export class WorkDayModel {
+         }
+ 
+         const days = `${this.days} ${this.days === 1 ? "Tag" : "Tage"}`;
+-        return `${this.type} (${days}${split.length ? `: ${split.join(" · ")}` : ""})`;
++        return split.length ? `${days} (${split.join(" · ")})` : days;
++    }
++
++    /**
++     * Anzeigetext mit Typ und Tagen, z. B. "Hybrid: 5 Tage (3 vor Ort · 2 zuhause)".
++     * @returns {string} Anzeigetext.
++     */
++    get label() {
++        return this.daysText ? `${this.type}: ${this.daysText}` : this.type;
+     }
+ }
+diff --git a/js/templates/detail/JobTemplate.js b/js/templates/detail/JobTemplate.js
+index a9fe156..4502437 100644
+--- a/js/templates/detail/JobTemplate.js
++++ b/js/templates/detail/JobTemplate.js
+@@ -35,6 +35,10 @@ export class JobTemplate extends DetailBaseTemplate {
+                     </div>
+                     <div class="field">
+                         <label>Arbeitsmodell</label>
++                        <p>${HtmlUtils.escape((application.job?.workModel?.workDays || []).map(day => day.type).join(", ") || "—")}</p>
++                    </div>
++                    <div class="field">
++                        <label>Arbeitstage pro Woche</label>
+                         ${this.workDays(application)}
+                         ${this.workNotes(application)}
+                     </div>
+@@ -92,7 +96,7 @@ export class JobTemplate extends DetailBaseTemplate {
+     }
+ 
+     /**
+-     * Arbeitstage je Typ, eine Zeile je Typ mit den Daten des Models (Tage, vor Ort, zuhause).
++     * Arbeitstage je Arbeitsmodell, eine Zeile je Typ mit den Daten des Models (Tage, vor Ort, zuhause).
+      * @param {object} application Application-Model.
+      * @returns {string} HTML, ohne Angaben ein Strich.
+      */
+diff --git a/js/templates/detail/SourcesTemplate copy.js b/js/templates/detail/SourcesTemplate copy.js
+deleted file mode 100644
+index eae3bfc..0000000
+--- a/js/templates/detail/SourcesTemplate copy.js	
++++ /dev/null
+@@ -1,72 +0,0 @@
+-import { DetailBaseTemplate } from "./DetailBaseTemplate.js";
+-import { HtmlUtils } from "../../utils/HtmlUtils.js";
+-
+-export class SourcesTemplate extends DetailBaseTemplate {
+-
+-    render(application) {
+-
+-        const references = application.references || [];
+-
+-        return `
+-            <section class="subsection-display">
+-                <section class="section-header">
+-                    <div>
+-                        <span class="section-icon">🌐</span>
+-                        <div>
+-                            <h2>Quellen</h2>
+-                            <p>Information wo die Daten herkommen</p>
+-                        </div>
+-                    </div>
+-                </section>
+-                
+-                <section class="section-body">
+-                    <div class="field">
+-                        <label>Gesuchte Stelle</label>
+-                        <p>${HtmlUtils.escape(application.job?.title || "—")}</p>
+-                    </div>
+-
+-                    
+-                    <div class="field">
+-                        <label>Stellenanzeige</label>
+-                        <p class="muted">Noch nicht implementiert</p>
+-                    </div>
+-
+-                    <div class="field">
+-                        <label>Unternehmensseite</label>
+-                        <p>${this.link(application.company?.website)}</p>
+-                    </div>
+-
+-                    <div class="field">
+-                        <label>Quelle</label>
+-                        <p class="muted">Noch nicht implementiert</p>
+-                    </div>
+-
+-                    <div class="field field-ultra-wide">
+-                        <label>Weitere Quellen</label>
+-                        <div id="sourcesList" class="contact-list">
+-                            <div class="field-with-button contact-row sources-header">
+-                                <span data-sort="date">Datum <span class="sort-arrow" data-sort-arrow="date"></span></span>
+-                                <span data-sort="name">Name <span class="sort-arrow" data-sort-arrow="name"></span></span>
+-                            </div>
+-                            ${this.sourceRows(references)}
+-                        </div>
+-                    </div>
+-                </section>
+-            </section>
+-        `;
+-
+-    }
+-
+-    sourceRows(references) {
+-        if (!references.length) {
+-            return `<p class="muted">Keine weiteren Quellen erfasst.</p>`;
+-        }
+-
+-        return references.map(reference => `
+-            <div class="field-with-button contact-row" data-url="${HtmlUtils.escape(reference.url)}" data-date="${HtmlUtils.escape(reference.capturedAt || "")}" data-name="${HtmlUtils.escape(reference.name || "")}">
+-                <span>${HtmlUtils.escape(reference.capturedAt || "—")}</span>
+-                <span>${this.link(reference.url, reference.name)}</span>
+-            </div>
+-        `).join("");
+-    }
+-}
+\ No newline at end of file
+diff --git a/js/templates/detail/SourcesTemplate.js b/js/templates/detail/SourcesTemplate.js
+index 53ae26e..fe98cc7 100644
+--- a/js/templates/detail/SourcesTemplate.js
++++ b/js/templates/detail/SourcesTemplate.js
+@@ -28,7 +28,7 @@ export class SourcesTemplate extends DetailBaseTemplate {
+                     
+                     <div class="field">
+                         <label>Stellenanzeige</label>
+-                        <p class="muted">Noch nicht implementiert</p>
++                        <p>${this.link(this.postingUrl(application))}</p>
+                     </div>
+ 
+                     <div class="field">
+@@ -52,6 +52,18 @@ export class SourcesTemplate extends DetailBaseTemplate {
+ 
+     }
+ 
++    /**
++     * Link zur Stellenanzeige: das Feld job.url, bei älteren Datensätzen ohne Eintrag die Adresse des
++     * ersten importierten Textes der Anzeige (Seiten der Firmen-Website zählen nicht).
++     * @param {object} application Application-Model.
++     * @returns {string} Adresse oder "".
++     */
++    postingUrl(application) {
++        if (application.job?.url) return application.job.url;
++
++        return (application.importedRawData ?? []).find(entry => entry.url && !entry.supplement)?.url ?? "";
++    }
++
+     sourceRows(references) {
+         if (!references.length) {
+             return `<p class="muted">Keine weiteren Quellen erfasst.</p>`;
+diff --git a/js/templates/edit/JobEditTemplate.js b/js/templates/edit/JobEditTemplate.js
+index 1dbbf1c..82c57d0 100644
+--- a/js/templates/edit/JobEditTemplate.js
++++ b/js/templates/edit/JobEditTemplate.js
+@@ -9,6 +9,7 @@ export class JobEditTemplate {
+                 <div class="field-grid">
+                     <div class="field"><label>Jobtitel</label><input id="jobTitle"></div>
+                     <div class="field"><label>Kennziffer</label><input id="referenceNumber"></div>
++                    <div class="field field-ultra-wide"><label>Link zur Stellenanzeige</label><input id="jobUrl" type="url" placeholder="https://..."></div>
+                     <div class="field"></div>
+ 
+                     <div class="field field-ultra-wide">
+diff --git a/js/views/edit/ImportEditTab.js b/js/views/edit/ImportEditTab.js
+index 9bd3a96..bec9812 100644
+--- a/js/views/edit/ImportEditTab.js
++++ b/js/views/edit/ImportEditTab.js
+@@ -228,6 +228,9 @@ export class ImportEditTab extends BaseEditTab {
+ 
+         const button = this.root.querySelector("#fetchUrl");
+         button.disabled = true;
++        // Der Link der Stellenanzeige steht von Anfang an fest: die erste Hauptseite, nie überschrieben.
++        if (kind === "main" && !this.application.job.url) this.application.job.url = url;
++
+         button.textContent = detail ? `Firmenseite (${detail}) wird abgerufen...` : ImportConstants.PAGE[kind].busy;
+ 
+         // Seiten mit Anmeldung lädt der Server in einem Chrome; dort kann eine Anmeldung nötig sein.
+diff --git a/js/views/edit/JobEditTab.js b/js/views/edit/JobEditTab.js
+index 5ddac0e..87acafd 100644
+--- a/js/views/edit/JobEditTab.js
++++ b/js/views/edit/JobEditTab.js
+@@ -21,6 +21,7 @@ export class JobEditTab extends BaseEditTab {
+         this.set("holidayText", wage?.holidayText);
+         this.set("christmasPay", wage?.christmas ?? "");
+         this.set("referenceNumber", job?.referenceNumber);
++        this.set("jobUrl", job?.url);
+         this.set("jobTags", (job?.tags || []).join("\n"));
+         this.set("tasks", (job?.tasks || []).join("\n"));
+         this.set("jobStreet", job?.workLocation?.street?.name);
+@@ -169,6 +170,7 @@ export class JobEditTab extends BaseEditTab {
+         application.job.wage.holidayText = this.get("holidayText").trim();
+         application.job.wage.christmas = this.number("christmasPay");
+         application.job.referenceNumber = this.get("referenceNumber");
++        application.job.url = String(this.get("jobUrl") ?? "").trim();
+         application.job.tags = this.list("jobTags");
+         application.job.tasks = this.list("tasks");
+         application.job.workModel.data = {
+diff --git a/testdata/run-importflow-test.mjs b/testdata/run-importflow-test.mjs
+index d992928..8e95d94 100644
+--- a/testdata/run-importflow-test.mjs
++++ b/testdata/run-importflow-test.mjs
+@@ -95,6 +95,20 @@ await quiet(() => full.tab.loadWebsite());
+ await quiet(() => full.tab.loadWebsite());
+ const repeated = full.events.length - beforeRepeat;
+ 
++// 2b. Link zur Stellenanzeige: die erste Hauptseite, nie überschrieben; Nebenseiten und Firmenseiten zählen nicht
++const OTHER = "https://www.linkedin.com/jobs/view/4200000002/";
++pages[OTHER] = result(OTHER, `Backend Developer (m/w/d)\n${LONG}`);
++const second = build(pages);
++await quiet(() => second.tab.importPage(MAIN, () => second.tab.urlImporter.fetch(MAIN), false, true, "dialog"));
++const firstUrl = second.app.job.url;
++await quiet(() => second.tab.importPage(OTHER, () => second.tab.urlImporter.fetch(OTHER), false, true, "dialog"));
++const afterSecond = second.app.job.url;
++const preset = build(pages);
++preset.app.job.url = "https://www.firma.de/stelle/1";
++await quiet(() => preset.tab.importPage(MAIN, () => preset.tab.urlImporter.fetch(MAIN), false, true, "dialog"));
++const sideFirst = build(pages, { website: "" });
++await quiet(() => sideFirst.tab.importCompanyPayload(ABOUT, "<html></html>"));
++
+ // 3. Keine Webadresse bekannt: nur Hauptseite
+ const lonely = build({ [MAIN]: result(MAIN, "Frontend Developer (m/w/d)\nOsnabrück\nWir suchen dich für unser Team.") });
+ await quiet(() => lonely.tab.importPage(MAIN, () => lonely.tab.urlImporter.fetch(MAIN), false, true, "dialog"));
+@@ -197,6 +211,13 @@ const checks = [
+     ["Wiederholung: Firmenseite wird nicht doppelt geladen", repeated === 0],
+     ["Knopf nach dem Import wieder frei", full.button.disabled === false && full.button.textContent === "Webadresse der Stellenanzeige"],
+ 
++    // Link zur Stellenanzeige
++    ["Stellenanzeige: Link der ersten Hauptseite von Anfang an gesetzt", full.app.job.url === MAIN && firstUrl === MAIN],
++    ["Stellenanzeige: zweiter Import ändert den Link nicht", afterSecond === MAIN && second.app.importedRawData.some(entry => entry.url === OTHER)],
++    ["Stellenanzeige: vorhandener Eintrag wird nicht geändert", preset.app.job.url === "https://www.firma.de/stelle/1"],
++    ["Stellenanzeige: Info-Seite oder Firmenseite setzen den Link nicht", sideFirst.app.job.url === "" && bookmarklet.app.job.url === ""],
++    ["Stellenanzeige: Lesezeichen setzt den Link ebenfalls", marked.app.job.url === MAIN],
++
+     // Anzeige im Kopfbereich
+     ["Anzeige: Hauptseite, Nebenseite, Firmenseite in dieser Reihenfolge", fullTexts.join(" | ") === [
+         "Hauptseite wird geladen ...", "Hauptseite geladen",
+diff --git a/testdata/run-workflow-test.mjs b/testdata/run-workflow-test.mjs
+index c22da01..137ff1b 100644
+--- a/testdata/run-workflow-test.mjs
++++ b/testdata/run-workflow-test.mjs
+@@ -94,10 +94,6 @@ check("Detailansicht: Beschreibung in einem einzigen <p class=\"text-content\">
+     rendered.includes('<p class="text-content"><strong>') === false && rendered.includes('<p class="text-content">Als IoT Pioniere')
+     && (rendered.match(/<p class="text-content">/g) ?? []).length === 1);
+ check("Detailansicht: ohne Beschreibung \"—\"", new CompanyTemplate().render(new AppModel()).includes('<p class="text-content">—</p>'));
+-const cssRoot = new URL("../css/content/", import.meta.url);
+-check("CSS: keine eigene Datei, vorhandene Klasse text-content (pre-line) wird genutzt",
+-    !fs.existsSync(new URL("text-block.css", cssRoot)) && !fs.readFileSync(new URL("../index.html", import.meta.url), "utf8").includes("text-block")
+-    && /\.text-content \{[^}]*white-space: pre-line/.test(fs.readFileSync(new URL("communication.css", cssRoot), "utf8")));
+ 
+ // ---------- 4a. Doppelte Firmenbeschreibung (lange Zeile der Info-Seite + Einzelzeilen der Stellenanzeige) ----------
+ const infoPage = read("Beispiel_LinkedIn_InsideM2M_Info_Seite.txt");
+@@ -154,6 +150,13 @@ const sources = new SourcesTemplate().combineSources({
+ check("Quellen: Import (linkedin.com)", sources[0] === "Import (linkedin.com)");
+ check("Quellen: manuell und ungültige Adresse", sources[1] === "Import (manuell)" && sources[2] === "Import (URL)");
+ const sourcesHtml = new SourcesTemplate().render({ references: [], importedRawData: [], job: { title: "Entwickler" }, company: {} });
++const postingOf = application => new SourcesTemplate().render({ references: [], company: {}, ...application });
++const linkedPosting = postingOf({ job: { url: "https://www.linkedin.com/jobs/view/1/" }, importedRawData: [{ url: "https://andere.de/", supplement: false }] });
++const oldRecord = postingOf({ job: {}, importedRawData: [{ url: "https://www.firma.de/website/", supplement: true }, { url: "https://www.linkedin.com/jobs/view/9/", supplement: false }] });
++const noPosting = postingOf({ job: {}, importedRawData: [] });
++check("Quellen: Stellenanzeige zeigt den Link aus job.url", /Stellenanzeige<\/label>\s*<p>\s*<a\s+href="https:\/\/www\.linkedin\.com\/jobs\/view\/1\/"/.test(linkedPosting) && !linkedPosting.includes("Noch nicht implementiert"));
++check("Quellen: ältere Datensätze ohne Link nutzen den ersten importierten Text der Anzeige (nicht die Firmen-Website)", /Stellenanzeige<\/label>\s*<p>\s*<a\s+href="https:\/\/www\.linkedin\.com\/jobs\/view\/9\/"/.test(oldRecord));
++check("Quellen: ohne Link ein Strich", /Stellenanzeige<\/label>\s*<p>—<\/p>/.test(noPosting));
+ check("Quellen: einzelnes Feld \"Quelle\" entfernt, \"Weitere Quellen\" bleibt", !sourcesHtml.includes("<label>Quelle</label>") && sourcesHtml.includes("Weitere Quellen"));
+ 
+ // ---------- 6. Import: Kopfbereich außerhalb des erkannten Bereichs (jsdom) ----------
+diff --git a/testdata/run-workmodel-test.mjs b/testdata/run-workmodel-test.mjs
+index d859221..2d4ff48 100644
+--- a/testdata/run-workmodel-test.mjs
++++ b/testdata/run-workmodel-test.mjs
+@@ -97,6 +97,7 @@ editApp.job.workModel.data = {
+     workDays: [{ type: "Hybrid", days: 5, onSite: 3, remote: 2 }],
+     notes: ["Einige Bereiche mit täglicher Präsenz", "Nach der Probezeit 2 Tage Homeoffice"]
+ };
++editApp.job.url = "https://www.linkedin.com/jobs/view/1/";
+ editTab.init(editApp);
+ const rowOf = type => rows.find(entry => entry.dataset.type === type).inputs;
+ const shown = {
+@@ -104,6 +105,7 @@ const shown = {
+     teilzeit: options.find(option => option.value === "Teilzeit").checked,
+     nacht: options.find(option => option.value === "Nachtschicht").checked,
+     notes: fields["#workNotes"].value,
++    url: fields["#jobUrl"].value,
+     hybridOn: rowOf("Hybrid")[".work-day__enabled"].checked,
+     hybridSite: rowOf("Hybrid")[".work-day__on-site"].value,
+     hybridRemote: rowOf("Hybrid")[".work-day__remote"].value,
+@@ -122,6 +124,10 @@ fields["#workNotes"].value = "Erster Hinweis\n\n  Zweiter Hinweis  ";
+ const saveApp = new AppModel();
+ editTab.save(saveApp);
+ const saved = saveApp.job.workModel.data;
++const shownUrl = shown.url;
++fields["#jobUrl"].value = "  https://www.firma.de/job/7  ";
++editTab.save(saveApp);
++const savedUrl = saveApp.job.url;
+ 
+ // ---------- Übersicht, Detailansicht, Template ----------
+ const filter = new OverviewFilter({ getAll: () => [] });
+@@ -153,11 +159,11 @@ const checks = [
+     ["Altdaten: employmentType wird zu type", legacyJob.workModel.type.join() === "Teilzeit" && legacyJob.workModel.workDayTypes.join() === "Hybrid"],
+     ["JobModel.data enthält kein employmentType mehr", !("employmentType" in legacyJob.data) && typeof legacyJob.data.workModel === "object" && !Array.isArray(legacyJob.data.workModel)],
+     ["JobModel: Rundlauf nach Migration unverändert", JSON.stringify(cleanJob.data) === JSON.stringify(legacyJob.data)],
+-    ["Anzeigetext Hybrid ohne bekannte Aufteilung: nur Tage", legacyList.workDays[1].label === "Hybrid (5 Tage)" && new WorkDayModel("Hybrid").label === "Hybrid (5 Tage)"],
+-    ["Anzeigetext Vor Ort und Remote mit Tagen aus dem Model", legacyList.workDays[0].label === "Vor Ort (5 Tage)" && legacyList.workDays[2].label === "Remote (5 Tage)"],
+-    ["Anzeigetext: Hybrid mit Aufteilung", loaded.workDays[0].label === "Hybrid (5 Tage: 3 vor Ort · 2 zuhause)"],
+-    ["Anzeigetext: nur Tage vor Ort bekannt", Object.assign(new WorkDayModel("Hybrid"), { onSite: 2 }).label === "Hybrid (5 Tage: 2 vor Ort)"],
+-    ["Anzeigetext: Einzahl 1 Tag", Object.assign(new WorkDayModel("Vor Ort"), { days: 1 }).label === "Vor Ort (1 Tag)"],
++    ["Anzeigetext Hybrid ohne bekannte Aufteilung: nur Tage", legacyList.workDays[1].label === "Hybrid: 5 Tage" && new WorkDayModel("Hybrid").label === "Hybrid: 5 Tage"],
++    ["Anzeigetext Vor Ort und Remote mit Tagen aus dem Model", legacyList.workDays[0].label === "Vor Ort: 5 Tage" && legacyList.workDays[2].label === "Remote: 5 Tage"],
++    ["Anzeigetext: Hybrid mit Aufteilung", loaded.workDays[0].label === "Hybrid: 5 Tage (3 vor Ort · 2 zuhause)" && loaded.workDays[0].daysText === "5 Tage (3 vor Ort · 2 zuhause)"],
++    ["Anzeigetext: nur Tage vor Ort bekannt", Object.assign(new WorkDayModel("Hybrid"), { onSite: 2 }).label === "Hybrid: 5 Tage (2 vor Ort)"],
++    ["Anzeigetext: Einzahl 1 Tag", Object.assign(new WorkDayModel("Vor Ort"), { days: 1 }).label === "Vor Ort: 1 Tag"],
+ 
+     // Erkennung: LinkedIn-Beispiel INSIDE M2M
+     ["Info-Seite: Hybrid mit 5 Tagen", hybrid?.type === "Hybrid" && hybrid.days === 5],
+@@ -203,6 +209,8 @@ const checks = [
+     ["Editor speichern: nur angehakte Arbeitstage", saved.workDays.length === 1 && saved.workDays[0].type === "Remote"],
+     ["Editor speichern: Tage 4, leeres Feld bleibt null", saved.workDays[0].days === 4 && saved.workDays[0].onSite === null],
+     ["Editor speichern: Hinweise ohne Leerzeilen", saved.notes.join("|") === "Erster Hinweis|Zweiter Hinweis"],
++    ["Editor: Link zur Stellenanzeige anzeigen und getrimmt speichern", shownUrl === "https://www.linkedin.com/jobs/view/1/" && savedUrl === "https://www.firma.de/job/7"],
++    ["Editor-Template: Feld Link zur Stellenanzeige", editHtml.includes('id="jobUrl"')],
+     ["Editor-Template: Auswahl für alle Arten und Arbeitszeiten", WorkModelConstants.TYPE.every(type => editHtml.includes(`value="${type}"`))
+         && WorkModelConstants.WORK_TIME.every(time => editHtml.includes(`value="${time}"`))],
+     ["Editor-Template: eine Zeile je Arbeitstage-Typ", (editHtml.match(/class="work-day"/g) ?? []).length === 4 && editHtml.includes('id="workNotes"')],
+@@ -219,8 +227,9 @@ const checks = [
+     // Detailansicht
+     ["Detailansicht: Arten mit Komma", detailHtml.includes("Vollzeit, Teilzeit")],
+     ["Detailansicht: Arbeitszeit", detailHtml.includes("Gleitzeit")],
+-    ["Detailansicht: Arbeitstage je Typ eine Zeile mit den Daten des Models", detailHtml.includes("<p>Hybrid (5 Tage: 3 vor Ort · 2 zuhause)</p>") && detailHtml.includes("<p>Remote (5 Tage)</p>")],
+-    ["Detailansicht: ohne Arbeitstage ein Strich", /Arbeitsmodell<\/label>\s*<p>—<\/p>/.test(detail)],
++    ["Detailansicht: Arbeitsmodell nennt nur die Typen (mehrere möglich)", /Arbeitsmodell<\/label>\s*<p>Hybrid, Remote<\/p>/.test(detailHtml)],
++    ["Detailansicht: zweites Feld Arbeitstage mit einer Zeile je Typ aus dem Model", /Arbeitstage pro Woche<\/label>\s*<p>Hybrid: 5 Tage \(3 vor Ort · 2 zuhause\)<\/p><p>Remote: 5 Tage<\/p>/.test(detailHtml)],
++    ["Detailansicht: ohne Arbeitstage in beiden Feldern ein Strich", /Arbeitsmodell<\/label>\s*<p>—<\/p>/.test(detail) && /Arbeitstage pro Woche<\/label>\s*<p>—<\/p>/.test(detail)],
+     ["Detailansicht: Hinweise und Maskierung", detailHtml.includes("Übliche Anwesenheit vor Ort: 3 Tage pro Woche") && detailHtml.includes("&lt;b&gt;Test&lt;/b&gt;") && !detailHtml.includes("<b>Test</b>")],
+     ["Detailansicht: ohne Daten Strich", typeof detail === "string" && /Beschäftigungsart<\/label>\s*<p>—<\/p>/.test(detail)]
+ ];

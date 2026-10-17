@@ -35,6 +35,10 @@ export class JobTemplate extends DetailBaseTemplate {
                     </div>
                     <div class="field">
                         <label>Arbeitsmodell</label>
+                        <p>${HtmlUtils.escape((application.job?.workModel?.workDays || []).map(day => day.type).join(", ") || "—")}</p>
+                    </div>
+                    <div class="field">
+                        <label>Arbeitstage pro Woche</label>
                         ${this.workDays(application)}
                         ${this.workNotes(application)}
                     </div>
@@ -92,7 +96,7 @@ export class JobTemplate extends DetailBaseTemplate {
     }
 
     /**
-     * Arbeitstage je Typ, eine Zeile je Typ mit den Daten des Models (Tage, vor Ort, zuhause).
+     * Arbeitstage je Arbeitsmodell, eine Zeile je Typ mit den Daten des Models (Tage, vor Ort, zuhause).
      * @param {object} application Application-Model.
      * @returns {string} HTML, ohne Angaben ein Strich.
      */

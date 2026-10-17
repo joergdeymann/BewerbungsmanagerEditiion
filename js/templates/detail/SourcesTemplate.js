@@ -28,7 +28,7 @@ export class SourcesTemplate extends DetailBaseTemplate {
                     
                     <div class="field">
                         <label>Stellenanzeige</label>
-                        <p class="muted">Noch nicht implementiert</p>
+                        <p>${this.link(this.postingUrl(application))}</p>
                     </div>
 
                     <div class="field">
@@ -50,6 +50,18 @@ export class SourcesTemplate extends DetailBaseTemplate {
             </section>
         `;
 
+    }
+
+    /**
+     * Link zur Stellenanzeige: das Feld job.url, bei älteren Datensätzen ohne Eintrag die Adresse des
+     * ersten importierten Textes der Anzeige (Seiten der Firmen-Website zählen nicht).
+     * @param {object} application Application-Model.
+     * @returns {string} Adresse oder "".
+     */
+    postingUrl(application) {
+        if (application.job?.url) return application.job.url;
+
+        return (application.importedRawData ?? []).find(entry => entry.url && !entry.supplement)?.url ?? "";
     }
 
     sourceRows(references) {

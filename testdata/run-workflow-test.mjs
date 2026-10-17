@@ -94,10 +94,6 @@ check("Detailansicht: Beschreibung in einem einzigen <p class=\"text-content\"> 
     rendered.includes('<p class="text-content"><strong>') === false && rendered.includes('<p class="text-content">Als IoT Pioniere')
     && (rendered.match(/<p class="text-content">/g) ?? []).length === 1);
 check("Detailansicht: ohne Beschreibung \"—\"", new CompanyTemplate().render(new AppModel()).includes('<p class="text-content">—</p>'));
-const cssRoot = new URL("../css/content/", import.meta.url);
-check("CSS: keine eigene Datei, vorhandene Klasse text-content (pre-line) wird genutzt",
-    !fs.existsSync(new URL("text-block.css", cssRoot)) && !fs.readFileSync(new URL("../index.html", import.meta.url), "utf8").includes("text-block")
-    && /\.text-content \{[^}]*white-space: pre-line/.test(fs.readFileSync(new URL("communication.css", cssRoot), "utf8")));
 
 // ---------- 4a. Doppelte Firmenbeschreibung (lange Zeile der Info-Seite + Einzelzeilen der Stellenanzeige) ----------
 const infoPage = read("Beispiel_LinkedIn_InsideM2M_Info_Seite.txt");
@@ -154,6 +150,13 @@ const sources = new SourcesTemplate().combineSources({
 check("Quellen: Import (linkedin.com)", sources[0] === "Import (linkedin.com)");
 check("Quellen: manuell und ungültige Adresse", sources[1] === "Import (manuell)" && sources[2] === "Import (URL)");
 const sourcesHtml = new SourcesTemplate().render({ references: [], importedRawData: [], job: { title: "Entwickler" }, company: {} });
+const postingOf = application => new SourcesTemplate().render({ references: [], company: {}, ...application });
+const linkedPosting = postingOf({ job: { url: "https://www.linkedin.com/jobs/view/1/" }, importedRawData: [{ url: "https://andere.de/", supplement: false }] });
+const oldRecord = postingOf({ job: {}, importedRawData: [{ url: "https://www.firma.de/website/", supplement: true }, { url: "https://www.linkedin.com/jobs/view/9/", supplement: false }] });
+const noPosting = postingOf({ job: {}, importedRawData: [] });
+check("Quellen: Stellenanzeige zeigt den Link aus job.url", /Stellenanzeige<\/label>\s*<p>\s*<a\s+href="https:\/\/www\.linkedin\.com\/jobs\/view\/1\/"/.test(linkedPosting) && !linkedPosting.includes("Noch nicht implementiert"));
+check("Quellen: ältere Datensätze ohne Link nutzen den ersten importierten Text der Anzeige (nicht die Firmen-Website)", /Stellenanzeige<\/label>\s*<p>\s*<a\s+href="https:\/\/www\.linkedin\.com\/jobs\/view\/9\/"/.test(oldRecord));
+check("Quellen: ohne Link ein Strich", /Stellenanzeige<\/label>\s*<p>—<\/p>/.test(noPosting));
 check("Quellen: einzelnes Feld \"Quelle\" entfernt, \"Weitere Quellen\" bleibt", !sourcesHtml.includes("<label>Quelle</label>") && sourcesHtml.includes("Weitere Quellen"));
 
 // ---------- 6. Import: Kopfbereich außerhalb des erkannten Bereichs (jsdom) ----------

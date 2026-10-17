@@ -5,9 +5,6 @@ Erledigtes steht nicht mehr hier, sondern in `AI/log/log.md`.
 Stand: 2026-10-13 (ArbeitsModel umgesetzt)
 
 ## Quellen (SourcesTemplate.js / Datenerfassung)
-- `SourcesTemplate.js`: Das Feld "Stellenanzeige" (Link zur Anzeige selbst) zeigt noch
-  "Noch nicht implementiert" und hat keine Entsprechung in einem Model. Das Feld "Quelle"
-  (z. B. LinkedIn/Indeed) ist am 2026-10-14 entfernt worden.
 - Quellen (`references[]`) sollen bei der Erfassung automatisch gespeichert werden.
   Importierte Texte sind bereits umgesetzt. Offen:
   - Firmenwebsite (Firmenseite) samt Unterseiten Kontakt, Karriere und Impressum als eigene
@@ -19,6 +16,18 @@ Stand: 2026-10-13 (ArbeitsModel umgesetzt)
   (keine Live-Ableitung aus Firmenwebsite/Bildern).
 - Quellen-Liste: Sortierung per Spaltenüberschrift ist angelegt; die Filterfunktion
   (Suchbegriff) ist noch zu prüfen bzw. umzusetzen (siehe `workflow01.md`, Schritt 1.5).
+
+## Altes Editor-Template (js/templates/EditorView.html, wird nirgends geladen)
+Die Datei bleibt, bis die folgenden Felder umgesetzt oder verworfen sind. Alles andere daraus
+(Import, Firma, Ansprechpartner, Eckdaten, Anforderungen, Benefits, Verifiziert am, Bewerbung &
+Ausgabe als Detailansicht) ist im neuen Editor oder in der Detailansicht vorhanden.
+- Firma: mehrere Telefonnummern und E-Mail-Adressen (je eine pro Zeile). Das Company-Model hat nur
+  `phone` und `email`.
+- Stelle: freier Text "Stellenbeschreibung" (Was soll in dieser Position gemacht werden?). Das
+  Job-Model hat nur die Liste `tasks`.
+- Quellen: im Editor von Hand Quellen hinzufügen und entfernen (Quelle + Adresse). Es gibt nur die
+  Anzeige in der Detailansicht und die automatisch erfassten Quellen.
+- Notizen: freies Notizfeld zur Bewerbung. Es gibt kein Feld dafür im Model.
 
 ## Legende / History (ApplicationTemplate.js)
 - "Neu angelegt" und "Antwort der Firma erhalten" werden beim Rendern aus `createDate`/`statusHistory`

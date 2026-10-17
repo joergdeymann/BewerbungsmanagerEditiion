@@ -97,6 +97,7 @@ editApp.job.workModel.data = {
     workDays: [{ type: "Hybrid", days: 5, onSite: 3, remote: 2 }],
     notes: ["Einige Bereiche mit täglicher Präsenz", "Nach der Probezeit 2 Tage Homeoffice"]
 };
+editApp.job.url = "https://www.linkedin.com/jobs/view/1/";
 editTab.init(editApp);
 const rowOf = type => rows.find(entry => entry.dataset.type === type).inputs;
 const shown = {
@@ -104,6 +105,7 @@ const shown = {
     teilzeit: options.find(option => option.value === "Teilzeit").checked,
     nacht: options.find(option => option.value === "Nachtschicht").checked,
     notes: fields["#workNotes"].value,
+    url: fields["#jobUrl"].value,
     hybridOn: rowOf("Hybrid")[".work-day__enabled"].checked,
     hybridSite: rowOf("Hybrid")[".work-day__on-site"].value,
     hybridRemote: rowOf("Hybrid")[".work-day__remote"].value,
@@ -122,6 +124,10 @@ fields["#workNotes"].value = "Erster Hinweis\n\n  Zweiter Hinweis  ";
 const saveApp = new AppModel();
 editTab.save(saveApp);
 const saved = saveApp.job.workModel.data;
+const shownUrl = shown.url;
+fields["#jobUrl"].value = "  https://www.firma.de/job/7  ";
+editTab.save(saveApp);
+const savedUrl = saveApp.job.url;
 
 // ---------- Übersicht, Detailansicht, Template ----------
 const filter = new OverviewFilter({ getAll: () => [] });
@@ -153,11 +159,11 @@ const checks = [
     ["Altdaten: employmentType wird zu type", legacyJob.workModel.type.join() === "Teilzeit" && legacyJob.workModel.workDayTypes.join() === "Hybrid"],
     ["JobModel.data enthält kein employmentType mehr", !("employmentType" in legacyJob.data) && typeof legacyJob.data.workModel === "object" && !Array.isArray(legacyJob.data.workModel)],
     ["JobModel: Rundlauf nach Migration unverändert", JSON.stringify(cleanJob.data) === JSON.stringify(legacyJob.data)],
-    ["Anzeigetext Hybrid ohne bekannte Aufteilung: nur Tage", legacyList.workDays[1].label === "Hybrid (5 Tage)" && new WorkDayModel("Hybrid").label === "Hybrid (5 Tage)"],
-    ["Anzeigetext Vor Ort und Remote mit Tagen aus dem Model", legacyList.workDays[0].label === "Vor Ort (5 Tage)" && legacyList.workDays[2].label === "Remote (5 Tage)"],
-    ["Anzeigetext: Hybrid mit Aufteilung", loaded.workDays[0].label === "Hybrid (5 Tage: 3 vor Ort · 2 zuhause)"],
-    ["Anzeigetext: nur Tage vor Ort bekannt", Object.assign(new WorkDayModel("Hybrid"), { onSite: 2 }).label === "Hybrid (5 Tage: 2 vor Ort)"],
-    ["Anzeigetext: Einzahl 1 Tag", Object.assign(new WorkDayModel("Vor Ort"), { days: 1 }).label === "Vor Ort (1 Tag)"],
+    ["Anzeigetext Hybrid ohne bekannte Aufteilung: nur Tage", legacyList.workDays[1].label === "Hybrid: 5 Tage" && new WorkDayModel("Hybrid").label === "Hybrid: 5 Tage"],
+    ["Anzeigetext Vor Ort und Remote mit Tagen aus dem Model", legacyList.workDays[0].label === "Vor Ort: 5 Tage" && legacyList.workDays[2].label === "Remote: 5 Tage"],
+    ["Anzeigetext: Hybrid mit Aufteilung", loaded.workDays[0].label === "Hybrid: 5 Tage (3 vor Ort · 2 zuhause)" && loaded.workDays[0].daysText === "5 Tage (3 vor Ort · 2 zuhause)"],
+    ["Anzeigetext: nur Tage vor Ort bekannt", Object.assign(new WorkDayModel("Hybrid"), { onSite: 2 }).label === "Hybrid: 5 Tage (2 vor Ort)"],
+    ["Anzeigetext: Einzahl 1 Tag", Object.assign(new WorkDayModel("Vor Ort"), { days: 1 }).label === "Vor Ort: 1 Tag"],
 
     // Erkennung: LinkedIn-Beispiel INSIDE M2M
     ["Info-Seite: Hybrid mit 5 Tagen", hybrid?.type === "Hybrid" && hybrid.days === 5],
@@ -203,6 +209,8 @@ const checks = [
     ["Editor speichern: nur angehakte Arbeitstage", saved.workDays.length === 1 && saved.workDays[0].type === "Remote"],
     ["Editor speichern: Tage 4, leeres Feld bleibt null", saved.workDays[0].days === 4 && saved.workDays[0].onSite === null],
     ["Editor speichern: Hinweise ohne Leerzeilen", saved.notes.join("|") === "Erster Hinweis|Zweiter Hinweis"],
+    ["Editor: Link zur Stellenanzeige anzeigen und getrimmt speichern", shownUrl === "https://www.linkedin.com/jobs/view/1/" && savedUrl === "https://www.firma.de/job/7"],
+    ["Editor-Template: Feld Link zur Stellenanzeige", editHtml.includes('id="jobUrl"')],
     ["Editor-Template: Auswahl für alle Arten und Arbeitszeiten", WorkModelConstants.TYPE.every(type => editHtml.includes(`value="${type}"`))
         && WorkModelConstants.WORK_TIME.every(time => editHtml.includes(`value="${time}"`))],
     ["Editor-Template: eine Zeile je Arbeitstage-Typ", (editHtml.match(/class="work-day"/g) ?? []).length === 4 && editHtml.includes('id="workNotes"')],
@@ -219,8 +227,9 @@ const checks = [
     // Detailansicht
     ["Detailansicht: Arten mit Komma", detailHtml.includes("Vollzeit, Teilzeit")],
     ["Detailansicht: Arbeitszeit", detailHtml.includes("Gleitzeit")],
-    ["Detailansicht: Arbeitstage je Typ eine Zeile mit den Daten des Models", detailHtml.includes("<p>Hybrid (5 Tage: 3 vor Ort · 2 zuhause)</p>") && detailHtml.includes("<p>Remote (5 Tage)</p>")],
-    ["Detailansicht: ohne Arbeitstage ein Strich", /Arbeitsmodell<\/label>\s*<p>—<\/p>/.test(detail)],
+    ["Detailansicht: Arbeitsmodell nennt nur die Typen (mehrere möglich)", /Arbeitsmodell<\/label>\s*<p>Hybrid, Remote<\/p>/.test(detailHtml)],
+    ["Detailansicht: zweites Feld Arbeitstage mit einer Zeile je Typ aus dem Model", /Arbeitstage pro Woche<\/label>\s*<p>Hybrid: 5 Tage \(3 vor Ort · 2 zuhause\)<\/p><p>Remote: 5 Tage<\/p>/.test(detailHtml)],
+    ["Detailansicht: ohne Arbeitstage in beiden Feldern ein Strich", /Arbeitsmodell<\/label>\s*<p>—<\/p>/.test(detail) && /Arbeitstage pro Woche<\/label>\s*<p>—<\/p>/.test(detail)],
     ["Detailansicht: Hinweise und Maskierung", detailHtml.includes("Übliche Anwesenheit vor Ort: 3 Tage pro Woche") && detailHtml.includes("&lt;b&gt;Test&lt;/b&gt;") && !detailHtml.includes("<b>Test</b>")],
     ["Detailansicht: ohne Daten Strich", typeof detail === "string" && /Beschäftigungsart<\/label>\s*<p>—<\/p>/.test(detail)]
 ];

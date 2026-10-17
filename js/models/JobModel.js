@@ -7,6 +7,7 @@ export class JobModel {
         this.companyId = 0;
         this.contactId = 0;
         this.title = "";
+        this.url = "";
         this.workLocation = new AddressModel();
         this.workModel = new WorkModel();
         this.wage = new WageModel();
@@ -20,6 +21,7 @@ export class JobModel {
             companyId: this.companyId,
             contactId: this.contactId,
             title: this.title,
+            url: this.url,
             workLocation: this.workLocation.data,
             workModel: this.workModel.data,
             wage: this.wage.data,
@@ -34,6 +36,7 @@ export class JobModel {
         this.companyId = raw.companyId ?? this.companyId;
         this.contactId = raw.contactId ?? this.contactId;
         this.title = raw.title ?? this.title;
+        this.url = raw.url ?? this.url;
         if (raw.workLocation) this.workLocation.data = raw.workLocation;
         if (raw.workModel) this.workModel.data = raw.workModel;
         if (raw.wage) this.wage.data = raw.wage;
